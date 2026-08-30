@@ -1,0 +1,82 @@
+{
+  "Checkout": {
+    "hero": {
+      "title": "Checkout"
+    },
+    "details": {
+      "subtitle": "Complete your purchase securely",
+      "title": "Checkout"
+    },
+    "emptyCart": {
+      "title": "Your cart is empty",
+      "description": "Add items to your cart before checking out.",
+      "continueShopping": "Continue shopping"
+    },
+    "section": {
+      "shippingAddress": "Shipping address",
+      "shippingMethod": "Shipping method",
+      "paymentMethod": "Payment method"
+    },
+    "address": {
+      "default": "Default",
+      "noSaved": "You don't have any saved addresses.",
+      "addFromProfile": "Add your address from profile"
+    },
+    "guest": {
+      "addressTitle": "Address title *",
+      "addressTitlePlaceholder": "Home, office, etc.",
+      "fullName": "Full name *",
+      "fullNamePlaceholder": "John Doe",
+      "email": "Email *",
+      "emailPlaceholder": "you@example.com",
+      "phone": "Phone *",
+      "phonePlaceholder": "+962 7 1234 5678",
+      "addressLine": "Address *",
+      "addressLinePlaceholder": "123 Main St",
+      "city": "City *",
+      "cityPlaceholder": "Amman",
+      "state": "State *",
+      "statePlaceholder": "Amman",
+      "postalCode": "Postal code *",
+      "postalCodePlaceholder": "11111",
+      "country": "Country *",
+      "countryPlaceholder": "Jordan"
+    },
+    "shipping": {
+      "noOptions": "No shipping options available.",
+      "oneDay": "1 day",
+      "multipleDays": "{count} days",
+      "range": "{min} – {max} days",
+      "currencySuffix": "JOD"
+    },
+    "payment": {
+      "codTitle": "Cash on delivery",
+      "codSubtitle": "Pay when you receive your order",
+      "secure": "Secure & safe"
+    },
+    "orderSummary": {
+      "title": "Order summary",
+      "qty": "Qty: {count}",
+      "noImage": "No image",
+      "couponPlaceholder": "Promo code",
+      "apply": "Apply",
+      "removeCouponAria": "Remove coupon",
+      "couponAppliesTo": "Applies to",
+      "subtotal": "Subtotal",
+      "discount": "Discount ({code})",
+      "shippingLine": "Shipping",
+      "total": "Total",
+      "completePurchase": "Complete purchase",
+      "processing": "Processing…",
+      "terms": "By completing your purchase you agree to our",
+      "termsLink": "Terms & conditions",
+      "and": "and",
+      "privacyLink": "Privacy policy"
+    },
+    "toast": {
+      "orderPlaced": "Order placed successfully!",
+      "couponApplied": "Coupon applied! −{amount}",
+      "invalidCoupon": "Invalid coupon."
+    }
+  }
+}

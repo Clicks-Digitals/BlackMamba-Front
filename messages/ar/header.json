@@ -1,0 +1,40 @@
+{
+  "Header": {
+    "nav": {
+      "home": "الرئيسية",
+      "categories": "الفئات",
+"serviceCenter": "مركز الخدمة",
+      "products": "المنتجات",
+      "pcBuilder": "ابنِ حاسوبك"
+    },
+    "search": "بحث",
+    "profile": "الملف الشخصي",
+    "myAccount": "حسابي",
+    "signOut": "تسجيل الخروج",
+    "login": "تسجيل الدخول",
+    "storeName": "بلاك مامبا",
+    "wishlist": "المفضلة",
+    "cart": "السلة",
+    "allCategories": "كل الفئات",
+    "shop": "المتجر",
+    "openMenu": "فتح القائمة",
+    "newRelease": "إصدارات جديدة",
+    "clearanceSale": "تصفية المخزون",
+    "searchUi": {
+      "placeholder": "ابحث عن منتجات أو #فئة…",
+      "close": "إغلاق البحث",
+      "noResults": "لا نتائج لـ \"{query}\"",
+      "noImage": "لا صورة",
+      "viewAll": "عرض كل النتائج",
+      "viewAllCategory": "تصفح كل {category}",
+      "exploreCategories": "استعرض كل الفئات",
+      "recent": "البحث الأخير",
+      "clearAll": "مسح الكل",
+      "categoryTip": "نصيحة: اكتب # للبحث في الفئات",
+      "inCategories": "في الفئات",
+      "browseCategory": "تصفح فئة",
+      "products": "المنتجات",
+      "tryCategory": "جرب تصفح فئة"
+    }
+  }
+}

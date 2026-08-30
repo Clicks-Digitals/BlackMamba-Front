@@ -1,0 +1,162 @@
+{
+  "PCBuilder": {
+    "badge": "بلاك مامبا",
+    "title": "اصنع جهازك",
+    "subtitle": "اختر قطعة واحدة لكل فتحة — نتحقق من التوافق مباشرة ونطبق خصم الباقة كلما أضفت أكثر.",
+    "browseAllParts": "تصفح جميع القطع",
+    "browseReadyMade": "تصفح أجهزة جاهزة",
+    "hud": {
+      "chipSlots": "٩ فتحات بناء",
+      "chipCompat": "توافق مباشر",
+      "chipDiscount": "خصومات الباقة",
+      "slotsFilled": "{filled} / {total}",
+      "slotsLabel": "فتحات جاهزة",
+      "powerLabel": "استهلاك الجهاز",
+      "watts": "{watts} واط",
+      "chassis": "الهيكل المباشر",
+      "emptyBay": "فتحة فارغة",
+      "viewBuild": "جهازك",
+      "expandBuild": "فتح الهيكل المباشر",
+      "collapseBuild": "إغلاق الهيكل",
+      "systemsClear": "الأنظمة جاهزة",
+      "selected": "مختار",
+      "empty": "فارغ",
+      "powerOn": "تشغيل",
+      "powerOff": "إيقاف",
+      "powerHint": "اضغط زر التشغيل"
+    },
+    "backToBuilder": "رجوع إلى صانع الجهاز",
+    "slots": {
+      "CPU": "المعالج",
+      "CPU_COOLER": "مروحة المعالج",
+      "MOTHERBOARD": "اللوحة الأم",
+      "RAM": "الذاكرة (RAM)",
+      "GPU": "كرت الشاشة",
+      "STORAGE": "التخزين",
+      "PSU": "مزود الطاقة",
+      "CASE": "الكيس",
+      "OS": "نظام التشغيل"
+    },
+    "select": "اختر {slot}",
+    "preferences": {
+      "processor": "المعالج",
+      "graphics": "كرت الشاشة",
+      "buildColour": "لون الجهاز",
+      "any": "أي",
+      "intel": "إنتل",
+      "amd": "AMD",
+      "nvidia": "إنفيديا",
+      "black": "أسود",
+      "white": "أبيض"
+    },
+    "autoBuilders": {
+      "quickStart": "بداية سريعة",
+      "budget": "اقتصادي",
+      "midRange": "متوسط",
+      "highEnd": "عالي الأداء",
+      "ultra": "فائق",
+      "surpriseMe": "فاجئني",
+      "budgetPlaceholder": "الميزانية بالدينار",
+      "buildToBudget": "بناء حسب الميزانية",
+      "invalidBudget": "أدخل قيمة ميزانية صحيحة."
+    },
+    "summary": {
+      "title": "جهازك",
+      "allCompatible": "جميع القطع المختارة متوافقة — لا توجد مشاكل",
+      "issuesToResolve": "{count} مشكلة توافق يجب حلها",
+      "noPartsYet": "لم تختر أي قطعة بعد.",
+      "subtotal": "المجموع الفرعي",
+      "bundleDiscount": "خصم الباقة",
+      "total": "الإجمالي",
+      "maxDiscountUnlocked": "تم فتح أقصى خصم للباقة!",
+      "addMoreParts": "أضف {count} قطعة إضافية لفتح خصم {pct}%",
+      "applyFix": "تطبيق الحل: {name}",
+      "applying": "جارٍ التطبيق...",
+      "browseCategory": "تصفح {slot}",
+      "addToCart": "أضف الجهاز إلى السلة",
+      "shareTitle": "حفظ / مشاركة الجهاز",
+      "shareLinkCopied": "تم نسخ رابط المشاركة!"
+    },
+    "picker": {
+      "description": "تصفح القطع واختر واحدة لهذه الفتحة.",
+      "searchPlaceholder": "ابحث عن قطعة...",
+      "compatibleOnly": "المتوافقة فقط",
+      "noPartsFound": "لم يتم العثور على قطع.",
+      "inStock": "متوفر",
+      "outOfStock": "غير متوفر",
+      "chooseOption": "اختر خياراً",
+      "added": "تمت إضافة {name}."
+    },
+    "catalogue": {
+      "title": "تصفح القطع",
+      "subtitle": "تصفح جميع القطع كمتجر إلكتروني — صفّ حسب الفتحة والمواصفات، وأضف مباشرة إلى جهازك.",
+      "allParts": "جميع القطع",
+      "filters": "عوامل التصفية",
+      "priceRange": "نطاق السعر (د.أ)",
+      "min": "الأدنى",
+      "max": "الأقصى",
+      "noMatch": "لا توجد قطع مطابقة لهذه العوامل.",
+      "page": "صفحة {page} من {total}",
+      "addedToBuild": "تمت إضافة {name} إلى جهازك.",
+      "chooseOption": "اختر خياراً"
+    },
+    "filters": {
+      "priceRange": "نطاق السعر (د.أ)",
+      "min": "الأدنى",
+      "max": "الأقصى",
+      "processorBrand": "ماركة المعالج",
+      "graphicsBrand": "ماركة كرت الشاشة",
+      "socket": "نوع المقبس",
+      "memoryType": "نوع الذاكرة",
+      "formFactor": "حجم اللوحة",
+      "maxFormFactor": "أقصى حجم لوحة",
+      "colour": "اللون",
+      "wattage": "الطاقة (واط)",
+      "any": "أي"
+    },
+    "specs": {
+      "socket": "نوع المقبس",
+      "tdp": "استهلاك الطاقة (TDP)",
+      "memoryType": "نوع الذاكرة",
+      "formFactor": "حجم اللوحة",
+      "maxFormFactor": "أقصى حجم لوحة مدعوم",
+      "ratedTdp": "التبريد المقدّر",
+      "powerDraw": "استهلاك الطاقة",
+      "wattage": "الطاقة",
+      "processorBrand": "ماركة المعالج",
+      "graphicsBrand": "ماركة كرت الشاشة",
+      "colour": "اللون",
+      "kitType": "نوع الطقم",
+      "dualChannel": "ثنائي القناة (عصاتان)",
+      "singleStick": "عصا واحدة"
+    },
+    "badges": {
+      "compatible": "متوافق",
+      "incompatible": "غير متوافق",
+      "outOfStock": "غير متوفر",
+      "addToBuild": "أضف إلى الجهاز"
+    },
+    "detail": {
+      "compatible": "متوافقة مع جهازك الحالي",
+      "incompatible": "غير متوافقة مع جهازك الحالي",
+      "addToBuild": "أضف إلى الجهاز",
+      "outOfStock": "غير متوفر",
+      "otherOptions": "خيارات {slot} أخرى"
+    },
+    "readyMade": {
+      "title": "أجهزة جاهزة",
+      "subtitle": "أجهزة جاهزة ومتوافقة بالكامل — خصصها أو أضفها مباشرة إلى السلة.",
+      "noBuilds": "لا توجد أجهزة جاهزة متاحة حالياً.",
+      "customize": "تخصيص",
+      "addToCart": "أضف إلى السلة",
+      "bundlePrice": "سعر الباقة",
+      "morePartsCount": "+{count} قطعة أخرى"
+    },
+    "shared": {
+      "badge": "جهاز مشارك",
+      "defaultName": "جهاز مخصص",
+      "customizeThisBuild": "خصص هذا الجهاز",
+      "partsCount": "{count} قطعة"
+    }
+  }
+}

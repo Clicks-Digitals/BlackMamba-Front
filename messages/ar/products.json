@@ -1,0 +1,23 @@
+{
+  "Products": {
+    "title": "المنتجات",
+    "count": "عرض {count} منتجًا",
+    "filter": "تصفية",
+    "filtersTitle": "عوامل التصفية",
+    "searchPlaceholder": "البحث عن منتجات…",
+    "sortBy": "ترتيب حسب",
+    "sort": {
+      "latest": "الأحدث",
+      "oldest": "الأقدم",
+      "priceAsc": "السعر: من الأقل للأعلى",
+      "priceDesc": "السعر: من الأعلى للأقل"
+    },
+    "subcategoryTitle": "فئة فرعية",
+    "noResults": "لا توجد منتجات تطابق عوامل التصفية.",
+    "categories": "الفئات",
+    "clearAll": "مسح الكل",
+    "newRelease": "إصدارات جديدة",
+    "clearanceSale": "تصفية المخزون",
+    "brandsTitle": "العلامات التجارية"
+  }
+}

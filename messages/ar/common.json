@@ -1,0 +1,9 @@
+{
+  "InfiniteScroll": {
+    "noMoreItems": "لا يوجد المزيد من العناصر.",
+    "noItemsFound": "لم يتم العثور على عناصر."
+  },
+  "ConfirmDialog": {
+    "cancel": "إلغاء"
+  }
+}

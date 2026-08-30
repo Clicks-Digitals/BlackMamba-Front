@@ -1,0 +1,57 @@
+{
+  "Footer": {
+    "brand": {
+      "tagline": "Tech & electronics marketplace built in Amman — genuine products, honest advice, fast local delivery and cash on delivery across Jordan.",
+      "newsletterTitle": "Get deals first",
+      "newsletterPlaceholder": "Your email",
+      "newsletterButton": "Join",
+      "newsletterSubmitting": "Joining...",
+      "newsletterSuccess": "Subscribed! Watch your inbox for deals."
+    },
+    "columns": {
+      "discover": "Shop",
+      "blackMamba": "Black Mamba",
+      "offers": "Offers",
+      "company": "Company"
+    },
+    "navLinks": {
+      "home": "Home",
+      "categories": "Categories",
+      "products": "Products",
+      "cart": "Cart"
+    },
+    "discoverLinks": {
+      "headphone": "Headphone",
+      "cameras": "Cameras",
+      "keyboard": "Keyboard",
+      "accessories": "Accessories",
+      "watches": "Watches",
+      "footwear": "Footwear"
+    },
+    "blackMambaLinks": {
+      "buildPc": "Build Your PC",
+      "browseParts": "Browse Parts",
+      "readyMade": "Ready-Made PCs"
+    },
+    "offerLinks": {
+      "bestDeals": "Best Deals",
+      "bestSeller": "Best Seller",
+      "latestProducts": "Latest Products"
+    },
+    "companyLinks": {
+      "account": "My Account",
+      "wishlist": "Favourites",
+      "serviceCenter": "Service Center",
+      "instagram": "Instagram",
+      "facebook": "Facebook"
+    },
+    "copyright": "© {year} Black Mamba · Amman, Jordan",
+    "payBadges": {
+      "cod": "Cash on Delivery",
+      "visa": "Visa",
+      "mastercard": "Mastercard",
+      "cliq": "CliQ"
+    },
+    "wordmark": "BLACK MAMBA"
+  }
+}

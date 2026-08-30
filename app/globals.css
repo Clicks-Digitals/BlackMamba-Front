@@ -1,0 +1,831 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@plugin "@tailwindcss/typography";
+
+/*
+ * Chillax — Latin UI typeface of the Black Mamba brand.
+ * Variable file (wght 200–700) covers Regular 400 / Medium 500 / Semibold 600
+ * in one request. Self-hosted per the ITF Free Font License (see
+ * public/fonts/Chillax-LICENSE.txt) — the file is served exactly as shipped;
+ * subsetting and format conversion are not permitted.
+ */
+@font-face {
+  font-family: "Chillax";
+  src: url("/fonts/Chillax-Variable.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+ * Beckman — Black Mamba display font.
+ * Reserved for BIG headlines (hero titles, wordmark, "BUILD YOUR PC"); small/medium
+ * headers use Chillax / Bebas — Beckman's stylized glyphs garble at small sizes.
+ */
+@font-face {
+  font-family: "Beckman";
+  src: url("/fonts/Beckman.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Colors: shadcn */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* Colors: brand + storefront shell */
+  
+  --color-header-dark: var(--header-dark);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-secondary-text: var(--secondary-text);
+  --color-blue-tint: var(--blue-tint);
+  --color-blue-hover: var(--blue-hover);
+  --color-blue-pressed: var(--blue-pressed);
+  --color-deal: var(--deal);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-store-nav: var(--store-nav-bg);
+  --color-store-nav-fg: var(--store-nav-fg);
+  --color-store-subnav-bg: var(--store-subnav-bg);
+  --color-store-subnav-fg: var(--store-subnav-fg);
+  --color-store-footer: var(--store-footer-bg);
+  --color-store-footer-link: var(--store-footer-link);
+  --color-store-footer-label: var(--store-footer-label);
+
+  /*
+   * Google Fonts via next/font → --font-*-src on <html> (see app/layout.tsx).
+   * Chillax → self-hosted @font-face at top of this file.
+   * Arabic keeps Cairo: Chillax ships no Arabic glyphs at all.
+   */
+  --font-sans: "Chillax", ui-sans-serif, sans-serif;
+  --font-serif: "Times New Roman", Times, ui-serif, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-heading: "Chillax", ui-sans-serif, sans-serif;
+  --font-chillax: "Chillax", ui-sans-serif, sans-serif;
+  --font-bebas: var(--font-bebas-src), "Bebas Neue", ui-sans-serif, sans-serif;
+  --font-cairo: var(--font-cairo-src), ui-sans-serif, sans-serif;
+  --font-beckman: "Beckman", var(--font-bebas-src), ui-sans-serif, sans-serif;
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --animate-infinite-scroll: infinite-scroll 40s linear infinite;
+
+  @keyframes infinite-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+:root {
+  /*
+   * Black Mamba palette — matched to the Build Your PC page.
+   * Near-black surfaces, crimson for buttons / active / brand marks,
+   * pale paper (#EDEFF0) for type on dark. Ink stays near-black for
+   * text that sits on light product wells and form fields.
+   */
+
+  /* —— UI kit (shadcn) —— */
+  --background: #0d0e0e;
+  --foreground: #edeff0;
+  --card: #17181b;
+  --card-foreground: #edeff0;
+  --popover: #17181b;
+  --popover-foreground: #edeff0;
+  --primary: #9e1d20;
+  --primary-foreground: #ffffff;
+  --secondary: #241516;
+  --secondary-foreground: #edeff0;
+  --muted: #141516;
+  --muted-foreground: #9aa3a8;
+  --accent: #2a1618;
+  --accent-foreground: #d12f27;
+  --destructive: #d12f27;
+  --border: #26292c;
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #d12f27;
+  --chart-1: #d12f27;
+  --chart-2: #9aa3a8;
+  --chart-3: #ff7a1a;
+  --chart-4: #1e9e5a;
+  --chart-5: #b7791f;
+  /*
+   * Corner radius. Tight Black Mamba scale:
+   * sm 5 · md 6 · lg 8 · xl 11 · 2xl 14 · 3xl 18 · 4xl 21.
+   */
+  --radius: 8px;
+  --sidebar: #161718;
+  --sidebar-foreground: #edeff0;
+  --sidebar-primary: #9e1d20;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #241516;
+  --sidebar-accent-foreground: #d12f27;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #d12f27;
+
+  /* —— Brand —— */
+  --surface: #17181b;
+  --ink: #0b0b0d;
+  --secondary-text: #9aa3a8;
+  --blue-tint: #241516;
+  --blue-hover: #7a1618;
+  --blue-pressed: #5c1012;
+  /* Deal accent: discounts, sale prices and countdowns ONLY — never regular UI. */
+  --deal: #ff7a1a;
+  --success: #1e9e5a;
+  --warning: #b7791f;
+  --header-dark: #edeff0;
+
+  /*
+   * Storefront chrome (nav, subnav, footer).
+   * Full dark stack with a slightly lifted subnav so the two bars read
+   * as one piece of Black Mamba chrome, not a light strip under a dark header.
+   */
+  --store-primary: #9e1d20;
+  --store-nav-bg: #0b0b0d;
+  --store-nav-fg: #ffffff;
+  --store-subnav-bg: #121314;
+  --store-subnav-fg: #edeff0;
+  --store-footer-bg: #0b0b0d;
+  --store-footer-link: #ffffff;
+  --store-footer-label: rgba(255, 255, 255, 0.6);
+
+  /* —— Layout ( widths, gutters, section rhythm ) —— */
+  --layout-banner-height: 44px;
+  --layout-header-bar-height: 72px;
+  --layout-subnav-height: 40px;
+  --layout-chrome-top: calc(var(--layout-header-bar-height) + var(--layout-subnav-height));
+  --layout-page-max: 1440px;
+  --layout-gutter-x: clamp(16px, 4vw, 64px);
+  --layout-section-y: clamp(2.5rem, 5vw, 5rem);
+  --layout-hero-radius: 12px;
+  --layout-hero-radius-sm: 12px;
+
+  /* —— Elevation —— */
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 12px 40px -20px rgba(0, 0, 0, 0.55);
+  --shadow-card-hover: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 22px 50px -18px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(158, 29, 32, 0.28);
+  --shadow-chrome: 0 12px 40px -18px rgba(0, 0, 0, 0.65);
+  --glow-crimson: 0 0 48px -8px rgba(158, 29, 32, 0.45);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html[lang="ar"] {
+    --font-sans: var(--font-cairo-src), ui-sans-serif, sans-serif;
+    --font-heading: var(--font-cairo-src), ui-sans-serif, sans-serif;
+  }
+
+  body {
+    @apply overflow-x-hidden bg-background text-foreground font-chillax;
+  }
+
+  html[lang="ar"] body {
+    @apply font-cairo;
+  }
+
+  /* Pointer cursor for interactive controls (override with cursor-* per element if needed). */
+  a[href],
+  button:enabled,
+  input[type="submit"]:enabled,
+  input[type="button"]:enabled,
+  input[type="reset"]:enabled,
+  [role="button"]:not([aria-disabled="true"]):not([disabled]) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  button[disabled],
+  input[type="submit"]:disabled,
+  input[type="button"]:disabled,
+  input[type="reset"]:disabled,
+  a[aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}
+
+/* —— Promo ticker —— */
+.banner-track {
+  @apply animate-infinite-scroll flex w-max hover:[animation-play-state:paused] motion-reduce:animate-none;
+}
+
+[dir="rtl"] .banner-track {
+  animation-direction: reverse;
+}
+
+.banner-wrapper {
+  @apply flex w-max shrink-0 items-center gap-0;
+}
+
+/* —— Global page scrollbar (branded) —— */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #3a1c1e transparent;
+}
+
+html::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: #3a1c1e;
+  background-clip: content-box;
+  border: 3px solid transparent;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background-color: #9e1d20;
+}
+
+html::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.no-scrollbar,
+.custom-no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar,
+.custom-no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Custom Scrollbar Styling */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #3a1c1e transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+  margin-block: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #3a1c1e;
+  border-radius: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: #9e1d20;
+}
+
+.scrollbar-thin::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.\[\&_a\]\:underline a {
+  text-decoration-line: none;
+}
+
+/* —— Hero / carousel motion —— */
+@keyframes reveal-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-item {
+  opacity: 0;
+}
+
+.reveal-active .reveal-item,
+.slide-active .reveal-item {
+  animation: reveal-up 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.reveal-delay-1 {
+  animation-delay: 0.2s !important;
+}
+
+.reveal-delay-2 {
+  animation-delay: 0.4s !important;
+}
+
+.reveal-delay-3 {
+  animation-delay: 0.6s !important;
+}
+
+.reveal-delay-4 {
+  animation-delay: 0.8s !important;
+}
+
+@keyframes hero-ken-burns {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.12);
+  }
+}
+
+.animate-zoom {
+  transform-origin: center center;
+  transform: scale(1);
+}
+
+.slide-active .animate-zoom {
+  animation: hero-ken-burns 15s linear forwards;
+}
+
+@keyframes bm-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bm-reveal {
+  animation: bm-reveal 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-zoom,
+  .slide-active .animate-zoom {
+    animation: none !important;
+    transition: none !important;
+    transform: scale(1) !important;
+  }
+
+  .bm-reveal,
+  .reveal-item,
+  .reveal-active .reveal-item,
+  .slide-active .reveal-item {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Layout helpers (prefer these over one-off max-width / padding in pages)      */
+/* -------------------------------------------------------------------------- */
+@layer utilities {
+  .layout-page {
+    width: 100%;
+    max-width: var(--layout-page-max);
+    margin-inline: auto;
+  }
+
+  .layout-gutter-x {
+    padding-inline: var(--layout-gutter-x);
+  }
+
+  .layout-section-y {
+    padding-block: var(--layout-section-y);
+  }
+
+  .bm-card {
+    border: 1px solid #26292c;
+    background: #17181b;
+    border-radius: 10px;
+    box-shadow: var(--shadow-card);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .bm-card:hover {
+    border-color: color-mix(in srgb, #9e1d20 42%, #26292c);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .bm-panel {
+    border: 1px solid color-mix(in srgb, #9e1d20 18%, transparent);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+  }
+
+  .bm-field {
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+    color: #edeff0;
+  }
+
+  .bm-page-hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background:
+      radial-gradient(1200px 280px at 12% -40%, rgba(158, 29, 32, 0.22), transparent 60%),
+      linear-gradient(180deg, #121314 0%, #0d0e0e 100%);
+  }
+
+  .bm-kicker {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, #d12f27 80%, white);
+  }
+}
+
+/* —— Build Your PC stage —— */
+@keyframes bm-builder-fan {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bm-builder-led {
+  0%, 100% { opacity: 0.45; filter: drop-shadow(0 0 2px #9e1d20); }
+  50% { opacity: 1; filter: drop-shadow(0 0 6px #d12f27); }
+}
+
+@keyframes bm-circuit-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes bm-boot-scan {
+  0% { transform: translateY(-120%); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translateY(120%); opacity: 0; }
+}
+
+@keyframes bm-ambient-sweep {
+  0% { transform: translateX(-40%) translateY(-10%); opacity: 0; }
+  20% { opacity: 0.35; }
+  80% { opacity: 0.2; }
+  100% { transform: translateX(40%) translateY(10%); opacity: 0; }
+}
+
+@keyframes bm-energy-dash {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes bm-confirm-pulse {
+  0% { transform: scale(0.4); opacity: 0.9; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+@keyframes bm-check-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes bm-case-ring {
+  0% { stroke-dashoffset: 980; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes bm-grid-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bm-warn-pulse {
+  0%, 100% { box-shadow: inset 3px 0 0 0 rgba(255, 107, 112, 0.85), 0 0 0 0 rgba(255, 107, 112, 0); }
+  45% { box-shadow: inset 3px 0 0 0 rgba(255, 107, 112, 1), 0 0 0 4px rgba(255, 107, 112, 0.18); }
+}
+
+@keyframes bm-power-click {
+  0% { transform: scale(1); }
+  40% { transform: scale(0.84); }
+  100% { transform: scale(1); }
+}
+
+.bm-power-click {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bm-power-click 0.2s ease-out;
+}
+
+.bm-builder-stage {
+  --bm-fill: 0;
+}
+
+.bm-builder-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 85% 70% at 50% 18%, #000 18%, transparent 78%);
+  animation: bm-grid-in 0.45s ease-out both;
+}
+
+.bm-circuit-line {
+  fill: none;
+  stroke: #9e1d20;
+  stroke-width: 1;
+  stroke-linecap: round;
+  opacity: 0.55;
+  stroke-dasharray: 280;
+  stroke-dashoffset: 280;
+  animation: bm-circuit-draw 0.7s ease-out 0.08s forwards;
+}
+
+.bm-boot-scan {
+  position: absolute;
+  inset-inline: 8%;
+  height: 22%;
+  background: linear-gradient(to bottom, transparent, rgba(209, 47, 39, 0.16), transparent);
+  animation: bm-boot-scan 0.9s ease-out 0.85s both;
+  pointer-events: none;
+}
+
+.bm-ambient-sweep {
+  position: absolute;
+  inset: 8% 12%;
+  background: linear-gradient(115deg, transparent 30%, rgba(158, 29, 32, 0.14) 50%, transparent 70%);
+  animation: bm-ambient-sweep 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.bm-fan-spin {
+  transform-origin: center;
+  animation: bm-builder-fan 1.8s linear infinite;
+}
+
+.bm-led-live {
+  animation: bm-builder-led 2.4s ease-in-out infinite;
+}
+
+.bm-confirm-pulse {
+  animation: bm-confirm-pulse 0.55s ease-out forwards;
+}
+
+.bm-check-draw {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: bm-check-draw 0.35s ease-out forwards;
+}
+
+.bm-case-ring {
+  stroke-dasharray: 980;
+  stroke-dashoffset: 980;
+  animation: bm-case-ring 1.1s ease-out forwards;
+}
+
+.bm-energy-path {
+  fill: none;
+  stroke: #d12f27;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px #9e1d20);
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+  animation: bm-energy-dash 0.45s ease-out forwards;
+}
+
+.bm-fan-boost {
+  transform-origin: center;
+  animation: bm-builder-fan 0.4s linear 5;
+}
+
+.bm-warn-pulse {
+  animation: bm-warn-pulse 0.7s ease-out 1;
+}
+
+.bm-assemble-scan {
+  position: absolute;
+  inset-block: 0;
+  width: 28%;
+  background: linear-gradient(90deg, transparent, rgba(209, 47, 39, 0.14), transparent);
+  animation: bm-assemble-scan 1.1s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* —— Storefront cinematic chrome (not used by Build Your PC internals) —— */
+.bm-chrome {
+  background: #0b0b0d;
+}
+
+.bm-stage {
+  position: relative;
+  isolation: isolate;
+}
+
+.bm-stage::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 55% at 50% 0%, #000 10%, transparent 72%);
+}
+
+.bm-red-edge {
+  position: relative;
+}
+
+.bm-red-edge::after {
+  content: "";
+  position: absolute;
+  inset-block: 14%;
+  inset-inline-start: 0;
+  width: 2px;
+  background: #d12f27;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bm-red-edge:hover::after,
+.bm-red-edge:focus-visible::after {
+  transform: scaleY(1);
+}
+
+.bm-nav-active {
+  position: relative;
+}
+
+.bm-nav-active::after {
+  content: "";
+  position: absolute;
+  inset-inline: 12px;
+  bottom: 4px;
+  height: 1.5px;
+  background: #d12f27;
+  box-shadow: 0 0 8px rgba(209, 47, 39, 0.55);
+}
+
+.bm-footer-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #9e1d20, transparent);
+  transform: scaleX(0);
+  transform-origin: center;
+}
+
+.bm-footer-line.is-on {
+  animation: bm-footer-draw 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes bm-footer-draw {
+  to { transform: scaleX(1); }
+}
+
+@keyframes service-scan {
+  0% { transform: translateY(-20%); opacity: 0; }
+  18% { opacity: 0.55; }
+  100% { transform: translateY(380%); opacity: 0; }
+}
+
+.service-scan {
+  background: linear-gradient(to bottom, transparent, rgba(209, 47, 39, 0.18), transparent);
+  animation: service-scan 3.8s ease-in-out 0.6s infinite;
+}
+
+@keyframes bm-hero-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.bm-hero-progress {
+  transform-origin: left center;
+  animation: bm-hero-progress 7s linear forwards;
+}
+
+[dir="rtl"] .bm-hero-progress {
+  transform-origin: right center;
+}
+
+@keyframes bm-pdp-cue {
+  0% { box-shadow: 0 0 0 0 rgba(209, 47, 39, 0.55), 0 0 40px -10px rgba(209, 47, 39, 0.7); }
+  100% { box-shadow: 0 0 0 14px rgba(209, 47, 39, 0), 0 0 0 0 rgba(209, 47, 39, 0); }
+}
+
+@keyframes bm-badge-pop {
+  0% { transform: scale(0.7); }
+  55% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bm-red-edge::after,
+  .bm-footer-line,
+  .bm-badge-pop,
+  .bm-pdp-cue,
+  .bm-hero-progress,
+  .service-scan {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  .bm-footer-line {
+    transform: scaleX(1) !important;
+  }
+  .bm-red-edge::after {
+    transform: scaleY(1) !important;
+  }
+  .service-scan {
+    opacity: 0 !important;
+  }
+  .bm-hero-progress {
+    transform: scaleX(1) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bm-circuit-line,
+  .bm-boot-scan,
+  .bm-ambient-sweep,
+  .bm-fan-spin,
+  .bm-led-live,
+  .bm-confirm-pulse,
+  .bm-check-draw,
+  .bm-case-ring,
+  .bm-energy-path,
+  .bm-builder-grid,
+  .bm-fan-boost,
+  .bm-warn-pulse,
+  .bm-assemble-scan,
+  .bm-power-click {
+    animation: none !important;
+  }
+  .bm-circuit-line,
+  .bm-check-draw,
+  .bm-case-ring,
+  .bm-energy-path {
+    stroke-dashoffset: 0 !important;
+  }
+  .bm-boot-scan,
+  .bm-ambient-sweep,
+  .bm-assemble-scan {
+    opacity: 0 !important;
+  }
+}

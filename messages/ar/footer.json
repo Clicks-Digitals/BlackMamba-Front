@@ -1,0 +1,57 @@
+{
+  "Footer": {
+    "brand": {
+      "tagline": "متجر للتقنية والإلكترونيات في عمّان — منتجات أصلية، نصائح موثوقة، توصيل سريع والدفع عند الاستلام في كل الأردن.",
+      "newsletterTitle": "احصل على العروض أولاً",
+      "newsletterPlaceholder": "بريدك الإلكتروني",
+      "newsletterButton": "اشترك",
+      "newsletterSubmitting": "جاري الاشتراك...",
+      "newsletterSuccess": "تم الاشتراك! تابع بريدك للعروض القادمة."
+    },
+    "columns": {
+      "discover": "تسوق",
+      "blackMamba": "Black Mamba",
+      "offers": "العروض",
+      "company": "الشركة"
+    },
+    "navLinks": {
+      "home": "الرئيسية",
+      "categories": "الفئات",
+      "products": "المنتجات",
+      "cart": "السلة"
+    },
+    "discoverLinks": {
+      "headphone": "سماعات",
+      "cameras": "كاميرات",
+      "keyboard": "لوحة مفاتيح",
+      "accessories": "إكسسوارات",
+      "watches": "ساعات",
+      "footwear": "أحذية"
+    },
+    "blackMambaLinks": {
+      "buildPc": "بناء جهازك",
+      "browseParts": "تصفح القطع",
+      "readyMade": "أجهزة جاهزة"
+    },
+    "offerLinks": {
+      "bestDeals": "أفضل العروض",
+      "bestSeller": "الأكثر مبيعاً",
+      "latestProducts": "أحدث المنتجات"
+    },
+    "companyLinks": {
+      "account": "حسابي",
+      "wishlist": "المفضلة",
+      "serviceCenter": "مركز الخدمة",
+      "instagram": "إنستغرام",
+      "facebook": "فيسبوك"
+    },
+    "copyright": "© {year} Black Mamba · عمّان، الأردن",
+    "payBadges": {
+      "cod": "الدفع عند الاستلام",
+      "visa": "فيزا",
+      "mastercard": "ماستركارد",
+      "cliq": "CliQ"
+    },
+    "wordmark": "BLACK MAMBA"
+  }
+}

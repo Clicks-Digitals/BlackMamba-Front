@@ -1,0 +1,43 @@
+# Ignore node modules and dependencies
+node_modules
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Ignore build and output directories
+.next
+.build
+dist
+out
+.temp
+
+# Ignore test coverage reports
+coverage
+
+# Ignore public assets (e.g., source maps)
+public/**/*.map
+
+# Ignore TypeScript build outputs
+*.d.ts
+tsconfig.tsbuildinfo
+
+# Ignore editor settings and local environment files
+.vscode
+.idea
+*.log
+*.swp
+*.swo
+.DS_Store
+.env
+.env.local
+.env.*.local
+
+# Ignore overrides for Prettier itself
+.prettierignore
+.prettierrc
+prettier.config.js
+prettier.config.cjs
+
+# Ignore Tailwind CSS and PostCSS cache files
+tailwind.config.js
+postcss.config.js

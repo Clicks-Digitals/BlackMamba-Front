@@ -1,0 +1,9 @@
+{
+  "InfiniteScroll": {
+    "noMoreItems": "No more items.",
+    "noItemsFound": "No items found."
+  },
+  "ConfirmDialog": {
+    "cancel": "Cancel"
+  }
+}

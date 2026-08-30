@@ -1,0 +1,95 @@
+{
+  "ServiceCenter": {
+    "pageTitle": "Service Center",
+    "hero": {
+      "kicker": "Technical Support & Repair",
+      "subtitle": "Expert electronics repair and maintenance — certified technicians, genuine parts, and fast turnaround for every device.",
+      "cta": "Submit Request",
+      "chips": {
+        "repairs": "Expert Repairs",
+        "parts": "Genuine Parts",
+        "turnaround": "Fast Turnaround",
+        "warranty": "Warranty Included"
+      }
+    },
+    "ourStory": {
+      "word1": "Our",
+      "word2": "Story",
+      "kicker": "About the bay",
+      "paragraph1": "Black Mamba was created to make discovering and buying electronics simple, reliable, and enjoyable—bringing the latest technology together in one trusted marketplace.",
+      "paragraph2": "Every product on Black Mamba is carefully selected, quality-checked, and sourced from trusted brands to ensure performance you can rely on. From everyday essentials to cutting-edge devices, we understand technology because it's part of how we live, work, and connect every day.",
+      "tags": {
+        "technology": "Technology",
+        "trust": "Trust",
+        "performance": "Performance"
+      }
+    },
+    "process": {
+      "kicker": "Service protocol",
+      "heading": "How Our Electronics Service Works",
+      "description": "Our electronics service center follows a proven process to ensure your devices are repaired efficiently with the highest quality standards and genuine components.",
+      "steps": {
+        "step1": {
+          "title": "Device Drop-off & Assessment",
+          "description": "Bring your device to our center or schedule a pickup for initial assessment."
+        },
+        "step2": {
+          "title": "Diagnostics & Issue Detection",
+          "description": "Our technicians run comprehensive diagnostics to identify hardware and software issues."
+        },
+        "step3": {
+          "title": "Repair & Component Replacement",
+          "description": "Certified experts repair or replace faulty components using genuine parts."
+        },
+        "step4": {
+          "title": "Quality Testing & Verification",
+          "description": "Every device undergoes rigorous testing to ensure optimal performance before return."
+        },
+        "step5": {
+          "title": "Device Return & Warranty",
+          "description": "Collect your fully serviced device with warranty coverage and ongoing support."
+        }
+      }
+    },
+    "getInTouch": {
+      "heading": "Get in Touch",
+      "kicker": "Customer Support",
+      "intro": "Our expert team is ready to help with any electronics service or repair request. Reach out and we'll respond within 24 hours.",
+      "hoursLabel": "Office Hours",
+      "hoursDays": "Sunday – Thursday",
+      "hoursTime": "8:00 AM – 6:00 PM (GMT+3)",
+      "replyNote": "Typically replies within 24 hrs",
+      "formTitle": "Send Us a Message",
+      "formHint": "Fill in the form below and our team will contact you shortly.",
+      "privacy": "We respect your privacy. Your information will never be shared.",
+      "receivedTitle": "Request Received!",
+      "receivedBody": "We'll review your request and get back to you within 24 hours.",
+      "another": "Submit another request",
+      "nameLabel": "Full Name",
+      "namePlaceholder": "Enter your full name",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email address",
+      "phoneLabel": "Phone Number",
+      "phonePlaceholder": "Enter your phone number",
+      "locationLabel": "Location",
+      "locationPlaceholder": "Enter your city or area",
+      "subjectLabel": "Subject",
+      "subjectPlaceholder": "Enter the subject of your request",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Please describe your service request or inquiry in detail",
+      "submitBtn": "Submit Request",
+      "submittingBtn": "Submitting…",
+      "successMessage": "Request submitted successfully!",
+      "validation": {
+        "fixErrors": "Please fix the errors in the form.",
+        "nameRequired": "Name is required",
+        "phoneRequired": "Phone number is required",
+        "phoneInvalid": "Enter a valid phone number (e.g. +962791234567)",
+        "locationRequired": "Location is required",
+        "emailInvalid": "Enter a valid email address",
+        "subjectRequired": "Subject is required",
+        "messageRequired": "Message is required"
+      }
+    }
+  }
+}

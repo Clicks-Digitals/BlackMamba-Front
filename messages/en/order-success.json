@@ -1,0 +1,18 @@
+{
+  "OrderSuccess": {
+    "title": "Order confirmed!",
+    "subtitle": "Thank you for your purchase. We're preparing your order.",
+    "orderNumberLabel": "Your order number",
+    "copyHint": "Tap the icon to copy your order number",
+    "copyAria": "Copy order number",
+    "copyToast": "Order number copied",
+    "emailNote": "A confirmation email will be sent to your email address",
+    "whatsNext": "What's next?",
+    "stepEmail": "We'll send you a confirmation email with your full order details",
+    "stepProfile": "You can review your orders anytime from your profile",
+    "viewProfile": "View profile",
+    "continueShopping": "Continue shopping",
+    "support": "Need help?",
+    "supportLink": "Contact us"
+  }
+}

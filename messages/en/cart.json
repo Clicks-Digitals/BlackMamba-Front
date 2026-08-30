@@ -1,0 +1,28 @@
+{
+  "Cart": {
+    "title": "Your cart",
+    "emptyTitle": "Cart is empty",
+    "emptyDescription": "Looks like you haven't added anything to your cart yet.",
+    "continueShopping": "Continue shopping",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "tax": "Tax",
+    "total": "Total",
+    "checkoutBtn": "Proceed to checkout",
+    "remove": "Remove",
+    "quantity": "Quantity",
+    "tableOrder": "Order",
+    "tablePrice": "Price",
+    "tableQty": "Qty",
+    "paymentSummary": "Payment summary",
+    "summaryOrder": "Order summary",
+    "shippingFees": "Shipping fees",
+    "paymentMethod": "Payment method",
+    "cashOnDelivery": "Cash on delivery",
+    "totalAmount": "Total amount",
+    "orderNow": "Order now",
+    "youMayAlsoLike": "You may also like",
+    "viewMore": "View more",
+    "removeAria": "Remove item from cart"
+  }
+}

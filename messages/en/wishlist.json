@@ -1,0 +1,9 @@
+{
+  "Wishlist": {
+    "title": "Favourites",
+    "empty": "No favourites yet.",
+    "emptyDescription": "Save products you love and they will show up here.",
+    "continueShopping": "Browse products",
+    "loginToSave": "Sign in to save favourites"
+  }
+}

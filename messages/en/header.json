@@ -1,0 +1,40 @@
+{
+  "Header": {
+    "nav": {
+      "home": "Home",
+      "categories": "Categories",
+"serviceCenter": "Service Center",
+      "products": "Products",
+      "pcBuilder": "Build Your PC"
+    },
+    "search": "Search",
+    "profile": "Profile",
+    "myAccount": "My Account",
+    "signOut": "Sign out",
+    "login": "Log in",
+    "storeName": "Black Mamba",
+    "wishlist": "Favourites",
+    "cart": "Cart",
+    "allCategories": "All Categories",
+    "shop": "Shop",
+    "openMenu": "Open menu",
+    "newRelease": "New Release",
+    "clearanceSale": "Clearance Sale",
+    "searchUi": {
+      "placeholder": "Search products or #category…",
+      "close": "Close search",
+      "noResults": "No results for \"{query}\"",
+      "noImage": "No image",
+      "viewAll": "View all results",
+      "viewAllCategory": "Browse all in {category}",
+      "exploreCategories": "Explore all categories",
+      "recent": "Recent",
+      "clearAll": "Clear all",
+      "categoryTip": "Tip: type # to browse categories",
+      "inCategories": "In categories",
+      "browseCategory": "Browse category",
+      "products": "Products",
+      "tryCategory": "Try browsing a category"
+    }
+  }
+}

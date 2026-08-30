@@ -1,0 +1,162 @@
+{
+  "PCBuilder": {
+    "badge": "Black Mamba",
+    "title": "Build Your PC",
+    "subtitle": "Pick one part per slot — we check compatibility live and apply a bundle discount as you go.",
+    "browseAllParts": "Browse All Parts",
+    "browseReadyMade": "Browse Ready-Made PCs",
+    "hud": {
+      "chipSlots": "9 Build Slots",
+      "chipCompat": "Live Compatibility",
+      "chipDiscount": "Bundle Discounts",
+      "slotsFilled": "{filled} / {total}",
+      "slotsLabel": "Slots armed",
+      "powerLabel": "System draw",
+      "watts": "{watts}W",
+      "chassis": "Live chassis",
+      "emptyBay": "Empty bay",
+      "viewBuild": "Your build",
+      "expandBuild": "Open live build",
+      "collapseBuild": "Close live build",
+      "systemsClear": "Systems clear",
+      "selected": "Selected",
+      "empty": "Empty",
+      "powerOn": "Power on",
+      "powerOff": "Shut down",
+      "powerHint": "Press the power button"
+    },
+    "backToBuilder": "Back to Build Your PC",
+    "slots": {
+      "CPU": "CPU",
+      "CPU_COOLER": "CPU Cooler",
+      "MOTHERBOARD": "Motherboard",
+      "RAM": "Memory (RAM)",
+      "GPU": "Graphics Card",
+      "STORAGE": "Storage",
+      "PSU": "Power Supply",
+      "CASE": "Case",
+      "OS": "Operating System"
+    },
+    "select": "Select {slot}",
+    "preferences": {
+      "processor": "Processor",
+      "graphics": "Graphics",
+      "buildColour": "Build Colour",
+      "any": "Any",
+      "intel": "Intel",
+      "amd": "AMD",
+      "nvidia": "NVIDIA",
+      "black": "Black",
+      "white": "White"
+    },
+    "autoBuilders": {
+      "quickStart": "Quick-start",
+      "budget": "Budget",
+      "midRange": "Mid-Range",
+      "highEnd": "High-End",
+      "ultra": "Ultra",
+      "surpriseMe": "Surprise me",
+      "budgetPlaceholder": "Budget in JOD",
+      "buildToBudget": "Build to budget",
+      "invalidBudget": "Enter a valid budget amount."
+    },
+    "summary": {
+      "title": "Your Build",
+      "allCompatible": "All selected parts are compatible — no blocking issues",
+      "issuesToResolve": "{count} compatibility issue(s) to resolve",
+      "noPartsYet": "No parts selected yet.",
+      "subtotal": "Subtotal",
+      "bundleDiscount": "Bundle discount",
+      "total": "Total",
+      "maxDiscountUnlocked": "Maximum bundle discount unlocked!",
+      "addMoreParts": "Add {count} more part(s) to unlock {pct}% off",
+      "applyFix": "Apply fix: {name}",
+      "applying": "Applying...",
+      "browseCategory": "Browse {slot}",
+      "addToCart": "Add Build to Cart",
+      "shareTitle": "Save / Share build",
+      "shareLinkCopied": "Share link copied to clipboard!"
+    },
+    "picker": {
+      "description": "Search the catalog and pick a part for this slot.",
+      "searchPlaceholder": "Search parts...",
+      "compatibleOnly": "Compatible only",
+      "noPartsFound": "No parts found.",
+      "inStock": "In stock",
+      "outOfStock": "Out of stock",
+      "chooseOption": "Choose an option",
+      "added": "{name} added."
+    },
+    "catalogue": {
+      "title": "Browse Parts",
+      "subtitle": "An e-commerce-style view of every part — filter by slot and spec, add straight to your build.",
+      "allParts": "All Parts",
+      "filters": "Filters",
+      "priceRange": "Price Range (JOD)",
+      "min": "Min",
+      "max": "Max",
+      "noMatch": "No parts match these filters.",
+      "page": "Page {page} of {total}",
+      "addedToBuild": "{name} added to your build.",
+      "chooseOption": "Choose option"
+    },
+    "filters": {
+      "priceRange": "Price Range (JOD)",
+      "min": "Min",
+      "max": "Max",
+      "processorBrand": "Processor Brand",
+      "graphicsBrand": "Graphics Brand",
+      "socket": "Socket",
+      "memoryType": "Memory Type",
+      "formFactor": "Form Factor",
+      "maxFormFactor": "Max Form Factor",
+      "colour": "Colour",
+      "wattage": "Wattage (W)",
+      "any": "Any"
+    },
+    "specs": {
+      "socket": "Socket",
+      "tdp": "TDP",
+      "memoryType": "Memory Type",
+      "formFactor": "Form Factor",
+      "maxFormFactor": "Max Supported Form Factor",
+      "ratedTdp": "Rated TDP",
+      "powerDraw": "Power Draw",
+      "wattage": "Wattage",
+      "processorBrand": "Processor Brand",
+      "graphicsBrand": "Graphics Brand",
+      "colour": "Colour",
+      "kitType": "Kit Type",
+      "dualChannel": "Dual-channel (2 sticks)",
+      "singleStick": "Single stick"
+    },
+    "badges": {
+      "compatible": "Compatible",
+      "incompatible": "Incompatible",
+      "outOfStock": "Out of stock",
+      "addToBuild": "Add to build"
+    },
+    "detail": {
+      "compatible": "Compatible with your current build",
+      "incompatible": "Incompatible with your current build",
+      "addToBuild": "Add to Build",
+      "outOfStock": "Out of Stock",
+      "otherOptions": "Other {slot} options"
+    },
+    "readyMade": {
+      "title": "Ready-Made PCs",
+      "subtitle": "Pre-configured, fully compatible builds — customize any of them or add straight to cart.",
+      "noBuilds": "No ready-made builds available yet.",
+      "customize": "Customize",
+      "addToCart": "Add to Cart",
+      "bundlePrice": "Bundle price",
+      "morePartsCount": "+{count} more parts"
+    },
+    "shared": {
+      "badge": "Shared Build",
+      "defaultName": "Custom PC Build",
+      "customizeThisBuild": "Customize this build",
+      "partsCount": "{count} parts"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "Home": {
+    "shopNow": "تسوق الآن",
+    "categoriesTitle": "الفئات",
+    "categoriesEmpty": "لا توجد فئات.",
+    "categoriesEndOfList": "لقد وصلت إلى نهاية جميع الفئات.",
+    "exploreCollection": "استكشف المجموعة الآن",
+    "viewAll": "عرض الكل",
+    "viewMore": "عرض المزيد",
+    "heroKicker": "مميز",
+    "slideOf": "{current} / {total}",
+    "previousSlide": "الشريحة السابقة",
+    "nextSlide": "الشريحة التالية",
+    "topBrands": "أفضل العلامات",
+    "sale": "تخفيض",
+    "featured": "مميز",
+    "price": "السعر",
+    "primeOffers": "عروض مميزة",
+    "addToCart": "أضف إلى السلة",
+    "inCart": "في السلة",
+    "outOfStock": "نفد المخزون"
+  }
+}

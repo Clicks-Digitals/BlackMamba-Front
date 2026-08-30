@@ -1,0 +1,23 @@
+{
+  "Products": {
+    "title": "Products",
+    "count": "Showing {count} products",
+    "filter": "Filter",
+    "filtersTitle": "Filters",
+    "searchPlaceholder": "Search products…",
+    "sortBy": "Sort by",
+    "sort": {
+      "latest": "Latest",
+      "oldest": "Oldest",
+      "priceAsc": "Price: Low to High",
+      "priceDesc": "Price: High to Low"
+    },
+    "subcategoryTitle": "Sub-category",
+    "noResults": "No products match your filters.",
+    "categories": "Categories",
+    "clearAll": "Clear All",
+    "newRelease": "New Release",
+    "clearanceSale": "Clearance Sale",
+    "brandsTitle": "Brands"
+  }
+}

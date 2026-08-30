@@ -1,0 +1,82 @@
+{
+  "Checkout": {
+    "hero": {
+      "title": "إتمام الطلب"
+    },
+    "details": {
+      "subtitle": "أكمل عملية الشراء بأمان",
+      "title": "إتمام الطلب"
+    },
+    "emptyCart": {
+      "title": "سلة التسوق فارغة",
+      "description": "أضف منتجات إلى السلة قبل إتمام الطلب.",
+      "continueShopping": "متابعة التسوق"
+    },
+    "section": {
+      "shippingAddress": "عنوان الشحن",
+      "shippingMethod": "طريقة الشحن",
+      "paymentMethod": "طريقة الدفع"
+    },
+    "address": {
+      "default": "الافتراضي",
+      "noSaved": "لا توجد عناوين محفوظة.",
+      "addFromProfile": "أضف عنوانك من الملف الشخصي"
+    },
+    "guest": {
+      "addressTitle": "عنوان التوصيل *",
+      "addressTitlePlaceholder": "المنزل، العمل، إلخ",
+      "fullName": "الاسم الكامل *",
+      "fullNamePlaceholder": "الاسم الكامل",
+      "email": "البريد الإلكتروني *",
+      "emailPlaceholder": "you@example.com",
+      "phone": "الهاتف *",
+      "phonePlaceholder": "+962 7 1234 5678",
+      "addressLine": "العنوان *",
+      "addressLinePlaceholder": "شارع، بناء",
+      "city": "المدينة *",
+      "cityPlaceholder": "عمان",
+      "state": "المحافظة *",
+      "statePlaceholder": "عمان",
+      "postalCode": "الرمز البريدي *",
+      "postalCodePlaceholder": "11111",
+      "country": "البلد *",
+      "countryPlaceholder": "الأردن"
+    },
+    "shipping": {
+      "noOptions": "لا توجد خيارات شحن حالياً.",
+      "oneDay": "يوم واحد",
+      "multipleDays": "{count} أيام",
+      "range": "{min} – {max} أيام",
+      "currencySuffix": "د.أ"
+    },
+    "payment": {
+      "codTitle": "الدفع عند الاستلام",
+      "codSubtitle": "ادفع عند استلام طلبك",
+      "secure": "آمن ومضمون"
+    },
+    "orderSummary": {
+      "title": "ملخص الطلب",
+      "qty": "الكمية: {count}",
+      "noImage": "لا صورة",
+      "couponPlaceholder": "رمز الخصم",
+      "apply": "تطبيق",
+      "removeCouponAria": "إزالة القسيمة",
+      "couponAppliesTo": "ينطبق على",
+      "subtotal": "المجموع الفرعي",
+      "discount": "الخصم ({code})",
+      "shippingLine": "الشحن",
+      "total": "الإجمالي",
+      "completePurchase": "إتمام الشراء",
+      "processing": "جاري المعالجة…",
+      "terms": "بإتمام الشراء فإنك توافق على",
+      "termsLink": "الشروط والأحكام",
+      "and": "و",
+      "privacyLink": "سياسة الخصوصية"
+    },
+    "toast": {
+      "orderPlaced": "تم تأكيد الطلب بنجاح!",
+      "couponApplied": "تم تطبيق القسيمة! −{amount}",
+      "invalidCoupon": "قسيمة غير صالحة."
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "Cart": {
+    "title": "سلة التسوق",
+    "emptyTitle": "السلة فارغة",
+    "emptyDescription": "يبدو أنك لم تضف أي منتجات إلى السلة بعد.",
+    "continueShopping": "متابعة التسوق",
+    "subtotal": "المجموع الفرعي",
+    "shipping": "الشحن",
+    "tax": "الضريبة",
+    "total": "الإجمالي",
+    "checkoutBtn": "متابعة الدفع",
+    "remove": "إزالة",
+    "quantity": "الكمية",
+    "tableOrder": "المنتج",
+    "tablePrice": "السعر",
+    "tableQty": "الكمية",
+    "paymentSummary": "ملخص الدفع",
+    "summaryOrder": "ملخص الطلب",
+    "shippingFees": "رسوم الشحن",
+    "paymentMethod": "طريقة الدفع",
+    "cashOnDelivery": "الدفع عند الاستلام",
+    "totalAmount": "المبلغ الإجمالي",
+    "orderNow": "إتمام الطلب",
+    "youMayAlsoLike": "قد يعجبك أيضاً",
+    "viewMore": "عرض المزيد",
+    "removeAria": "إزالة المنتج من السلة"
+  }
+}

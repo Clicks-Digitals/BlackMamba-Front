@@ -1,0 +1,23 @@
+{
+  "Home": {
+    "shopNow": "Shop Now",
+    "categoriesTitle": "Categories",
+    "categoriesEmpty": "No categories found.",
+    "categoriesEndOfList": "You've reached the end of all categories.",
+    "exploreCollection": "Explore Collection Now",
+    "viewAll": "View All",
+    "viewMore": "View More",
+    "heroKicker": "Featured",
+    "slideOf": "{current} / {total}",
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "topBrands": "Top Brands",
+    "sale": "SALE",
+    "featured": "Featured",
+    "price": "Price",
+    "primeOffers": "Prime Offers",
+    "addToCart": "Add To Cart",
+    "inCart": "In Cart",
+    "outOfStock": "Out of Stock"
+  }
+}
