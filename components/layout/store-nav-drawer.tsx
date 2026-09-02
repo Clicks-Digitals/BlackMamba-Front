@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import { Cpu, Heart, LogOut, Menu, ShoppingCart } from "lucide-react";
+import { Cpu, Heart, LogOut, Menu, ShoppingCart, User as UserIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import {
@@ -13,6 +13,7 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { CurrencySwitcher, LocaleSwitcher } from "@/components/shared";
+import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { useStoreNavDrawer } from "@/stores/store-nav-drawer-store";
 import { useAuthStore } from "@/stores/auth-store";
 import { useCartStore } from "@/stores/cart-store";
@@ -29,17 +30,22 @@ type StoreNavDrawerProps = {
 };
 
 export function StoreNavDrawer({
-  locale, currencies, currentCurrency, currentLocale,
+  locale,
+  currencies,
+  currentCurrency,
+  currentLocale,
 }: StoreNavDrawerProps) {
-  const t      = useTranslations("Header");
+  const t = useTranslations("Header");
   const router = useRouter();
   const pathname = usePathname();
-  const open   = useStoreNavDrawer((s) => s.open);
+  const open = useStoreNavDrawer((s) => s.open);
   const setOpen = useStoreNavDrawer((s) => s.setOpen);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
   const cartCount = useCartStore((s) => s.count);
   const wishlistCount = useWishlistStore((s) => s.ids.length);
+  const loggedIn = isAuthenticated && !!user;
 
   const handleSignOut = async () => {
     await logout();
@@ -48,12 +54,11 @@ export function StoreNavDrawer({
     router.push("/");
   };
 
-  // links
-    const navLinks = [
-    { label: t("nav.home"),          href: "/" },
-    { label: t("nav.categories"),    href: "/categories" },
+  const navLinks = [
+    { label: t("nav.home"), href: "/" },
+    { label: t("nav.categories"), href: "/categories" },
     { label: t("nav.serviceCenter"), href: "/service-center" },
-    { label: t("nav.products"),      href: "/products" },
+    { label: t("nav.products"), href: "/products" },
   ];
 
   const isActive = (href: string) =>
@@ -62,14 +67,14 @@ export function StoreNavDrawer({
 
   return (
     <Drawer direction={locale === "ar" ? "right" : "left"} open={open} onOpenChange={setOpen}>
-      <DrawerContent className="max-h-svh max-w-sm bg-[#161718]">
+      <DrawerContent className="flex h-svh max-h-svh max-w-sm flex-col overflow-hidden bg-[#161718]">
         <DrawerHeader className="shrink-0 border-b border-white/8 py-4">
-          <DrawerTitle className="text-center font-beckman text-xl font-semibold tracking-widest text-white uppercase">
+          <DrawerTitle className="text-center font-letterman text-xl font-semibold tracking-widest text-white uppercase">
             {t("storeName")}
           </DrawerTitle>
         </DrawerHeader>
 
-        <nav className="custom-no-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-8">
+        <nav className="custom-no-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-6">
           <div className="pt-4 pb-4">
             <DrawerClose asChild>
               <Link
@@ -84,8 +89,8 @@ export function StoreNavDrawer({
                   <Cpu className="h-5 w-5 text-[#d12f27]" />
                 </div>
                 <div className="min-w-0">
-                  <p className="font-semibold text-[#d12f27] leading-tight">{t("nav.pcBuilder")}</p>
-                  <p className="text-xs text-white/50 leading-snug">
+                  <p className="leading-tight font-semibold text-[#d12f27]">{t("nav.pcBuilder")}</p>
+                  <p className="text-xs leading-snug text-white/50">
                     {locale === "ar" ? "صمّم جهازك بنفسك" : "Design your custom rig"}
                   </p>
                 </div>
@@ -93,7 +98,7 @@ export function StoreNavDrawer({
             </DrawerClose>
           </div>
 
-          <p className="mb-1 px-1 text-xs font-semibold tracking-widest uppercase text-white/45">
+          <p className="mb-1 px-1 text-xs font-semibold tracking-widest text-white/45 uppercase">
             {t("shop")}
           </p>
           <ul className="flex flex-col border-b border-white/8 pb-4">
@@ -109,7 +114,7 @@ export function StoreNavDrawer({
                         "flex py-3 text-base transition-colors",
                         active
                           ? "border-s-[3px] border-primary ps-3 font-semibold text-white"
-                          : "text-white/80 font-medium hover:text-white"
+                          : "font-medium text-white/80 hover:text-white"
                       )}
                     >
                       {link.label}
@@ -120,7 +125,7 @@ export function StoreNavDrawer({
             })}
           </ul>
 
-          <ul className="flex flex-col border-b border-white/8 pb-4 md:hidden">
+          <ul className="flex flex-col border-b border-white/8 pb-4">
             <li>
               <DrawerClose asChild>
                 <Link
@@ -132,7 +137,7 @@ export function StoreNavDrawer({
                     {t("wishlist")}
                   </span>
                   {wishlistCount > 0 && (
-                    <span className="bg-primary text-primary-foreground inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-bold leading-none">
+                    <span className="bg-primary text-primary-foreground inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] leading-none font-bold">
                       {wishlistCount > 99 ? "99+" : wishlistCount}
                     </span>
                   )}
@@ -143,17 +148,28 @@ export function StoreNavDrawer({
               <DrawerClose asChild>
                 <Link
                   href="/cart"
-                    className="flex items-center justify-between py-3 text-base font-medium text-white/80 transition-colors hover:text-white"
+                  className="flex items-center justify-between py-3 text-base font-medium text-white/80 transition-colors hover:text-white"
                 >
                   <span className="flex items-center gap-3">
                     <ShoppingCart className="size-5" strokeWidth={2} />
                     {t("cart")}
                   </span>
                   {cartCount > 0 && (
-                    <span className="bg-primary text-primary-foreground inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-bold leading-none">
+                    <span className="bg-primary text-primary-foreground inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] leading-none font-bold">
                       {cartCount > 99 ? "99+" : cartCount}
                     </span>
                   )}
+                </Link>
+              </DrawerClose>
+            </li>
+            <li>
+              <DrawerClose asChild>
+                <Link
+                  href={loggedIn ? "/profile" : "/login"}
+                  className="flex items-center gap-3 py-3 text-base font-medium text-white/80 transition-colors hover:text-white"
+                >
+                  <UserIcon className="size-5" strokeWidth={2} />
+                  {loggedIn ? t("myAccount") : t("login")}
                 </Link>
               </DrawerClose>
             </li>
@@ -166,21 +182,31 @@ export function StoreNavDrawer({
               currentCurrency={currentCurrency}
               variant="drawer"
             />
+            <ThemeToggle />
           </div>
         </nav>
 
-        {isAuthenticated && (
-          <div className="shrink-0 border-t border-white/8 bg-[#121314] p-4">
+        <div className="shrink-0 border-t border-white/8 bg-[#121314] p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+          {loggedIn ? (
             <button
               type="button"
               onClick={handleSignOut}
-              className="flex w-full items-center justify-center gap-2 rounded-md border border-white/15 bg-white/5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-white/10"
+              className="flex min-h-11 w-full items-center justify-center gap-2 rounded-md border border-white/15 bg-white/5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-white/10"
             >
               <LogOut className="size-4" />
               <span>{t("signOut")}</span>
             </button>
-          </div>
-        )}
+          ) : (
+            <DrawerClose asChild>
+              <Link
+                href="/login"
+                className="flex min-h-11 w-full items-center justify-center rounded-md bg-primary py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#d12f27]"
+              >
+                {t("login")}
+              </Link>
+            </DrawerClose>
+          )}
+        </div>
       </DrawerContent>
     </Drawer>
   );

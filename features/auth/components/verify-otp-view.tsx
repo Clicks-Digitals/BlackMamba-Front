@@ -51,8 +51,8 @@ export function VerifyOtpView({ email, onSuccess }: Props) {
   return (
     <div className="w-full max-w-md mx-auto space-y-6">
       <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold">{t("verifyOtpTitle", { defaultValue: "Verify OTP" })}</h1>
-        <p className="text-white/45">
+        <h1 className="text-3xl font-bold text-foreground">{t("verifyOtpTitle", { defaultValue: "Verify OTP" })}</h1>
+        <p className="text-muted-foreground">
           {t("verifyOtpDesc", { defaultValue: "Enter the code sent to your email." })}
         </p>
       </div>

@@ -73,7 +73,7 @@ export function LocaleSwitcher({ currentLocale, variant = "header" }: LocaleSwit
                 : isDrawer
                   ? "text-white/70 hover:bg-white/10 hover:text-white focus-visible:ring-white/30"
                   : isStoreNav
-                    ? "text-store-nav-fg/85 hover:bg-white/10 hover:text-white focus-visible:ring-white/40"
+                    ? "text-store-nav-fg/85 hover:bg-store-nav-fg/10 hover:text-store-nav-fg focus-visible:ring-store-nav-fg/40"
                     : "text-white/80 hover:bg-white/15 hover:text-white focus-visible:ring-white/60"
             ].join(" ")}
           >

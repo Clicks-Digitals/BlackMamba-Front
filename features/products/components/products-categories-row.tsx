@@ -77,7 +77,7 @@ export function ProductsCategoriesRow({
           type="button"
           onClick={() => api?.scrollPrev()}
           aria-label="Previous"
-          className="absolute inset-s-0 top-1/2 z-10 flex size-7 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-card text-foreground shadow-sm transition-colors hover:border-primary hover:bg-primary hover:text-white"
+          className="absolute inset-s-0 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-sm transition-colors hover:border-primary hover:bg-primary hover:text-white md:size-9"
         >
           <ChevronLeft className="size-4 rtl:rotate-180" />
         </button>
@@ -87,7 +87,7 @@ export function ProductsCategoriesRow({
           type="button"
           onClick={() => api?.scrollNext()}
           aria-label="Next"
-          className="absolute inset-e-0 top-1/2 z-10 flex size-7 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-card text-foreground shadow-sm transition-colors hover:border-primary hover:bg-primary hover:text-white"
+          className="absolute inset-e-0 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-sm transition-colors hover:border-primary hover:bg-primary hover:text-white md:size-9"
         >
           <ChevronRight className="size-4 rtl:rotate-180" />
         </button>

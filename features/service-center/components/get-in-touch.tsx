@@ -43,8 +43,8 @@ export function GetInTouch() {
   }, [state.status, state.message, t]);
 
   return (
-    <section id="service-contact" className="layout-page layout-gutter-x py-16 md:py-24">
-      <div className="overflow-hidden rounded-lg border border-white/10">
+    <section id="service-contact" className="layout-page layout-gutter-x scroll-mt-[calc(var(--layout-chrome-top)+1rem)] py-16 md:py-24">
+      <div className="dark overflow-hidden rounded-lg border border-white/10">
         <div className="grid grid-cols-1 lg:grid-cols-5">
           <div className="relative flex flex-col justify-between gap-8 overflow-hidden bg-[#121314] px-6 py-10 sm:px-8 lg:col-span-2 lg:px-10 lg:py-12">
             <div

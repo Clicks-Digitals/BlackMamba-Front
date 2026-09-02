@@ -116,7 +116,7 @@ export function AddressFormDialog({ open, onClose, onSuccess, editingAddress }: 
             <button
               type="button"
               onClick={onClose}
-              className="border-b border-primary pb-0.5 font-chillax text-[14px] font-medium text-[#EDEFF0] transition hover:opacity-60 cursor-pointer"
+              className="border-b border-primary pb-0.5 font-chillax text-[14px] font-medium text-muted-foreground transition hover:text-foreground cursor-pointer"
             >
               {t("cancel")}
             </button>

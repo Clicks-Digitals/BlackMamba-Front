@@ -48,13 +48,13 @@ export function ProductsHeader({
 
       <div className="flex w-full items-center gap-2 sm:gap-3">
         <label className="relative flex h-10 min-w-0 flex-1 items-center">
-          <Search className="absolute start-3 size-4 text-white/40" />
+          <Search className="absolute start-3 size-4 text-muted-foreground" />
           <input
             type="search"
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
             placeholder={t("searchPlaceholder")}
-            className="h-10 w-full rounded-full border border-white/10 bg-card ps-10 pe-4 text-sm text-foreground placeholder:text-white/40 focus:border-primary focus:outline-none"
+            className="h-10 w-full rounded-full border border-border bg-card ps-10 pe-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
           />
         </label>
 
@@ -69,7 +69,7 @@ export function ProductsHeader({
             type="button"
             onClick={onOpenFilters}
             aria-label={t("filter")}
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-card text-foreground transition-colors hover:border-primary hover:bg-primary hover:text-white md:hidden"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-primary hover:bg-primary hover:text-white md:hidden"
           >
             <SlidersHorizontal className="size-4" />
           </button>

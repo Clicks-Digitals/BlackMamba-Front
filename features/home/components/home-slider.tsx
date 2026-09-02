@@ -45,10 +45,10 @@ export function HomeSlider({
   if (!children.length) return null;
 
   const arrowBase =
-    "static size-11 translate-x-0 translate-y-0 rounded-full border border-white/10 shadow-none transition-colors disabled:opacity-30";
+    "static size-11 translate-x-0 translate-y-0 rounded-full border border-border shadow-none transition-colors disabled:opacity-30";
   const arrowStyle =
     arrowVariant === "light"
-      ? "bg-white/8 text-white hover:border-primary/40 hover:bg-primary hover:text-white"
+      ? "bg-card text-foreground hover:border-primary/40 hover:bg-primary hover:text-white"
       : "bg-primary/10 text-foreground hover:bg-primary hover:text-white";
 
   return (

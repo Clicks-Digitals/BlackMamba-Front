@@ -62,7 +62,7 @@ export function HomeProductSections({
               className={cn(
                 "relative",
                 band
-                  ? "left-1/2 w-screen max-w-[100vw] -translate-x-1/2 bg-[#121314] py-8 sm:py-10"
+                  ? "left-1/2 w-screen max-w-[100vw] -translate-x-1/2 bg-muted/50 py-8 sm:py-10"
                   : index === 0
                     ? "pt-5 pb-[clamp(1.75rem,3.5vw,3.25rem)] sm:pt-6"
                     : "layout-section-y"
@@ -139,7 +139,7 @@ function RowHeader({
         <p className="bm-kicker mb-2">{rtl ? "مجموعة" : "Collection"}</p>
         <h2
           className={cn(
-            "leading-none text-foreground",
+            "leading-none font-semibold text-foreground",
             "text-[clamp(1.35rem,2.6vw,2.1rem)]",
             !rtl && "font-chillax tracking-wide uppercase",
             rtl && "font-cairo font-semibold"
@@ -151,7 +151,7 @@ function RowHeader({
 
       <div className="flex shrink-0 items-center gap-2">
         <div
-          className="inline-flex h-9 items-center rounded-md border border-white/12 bg-black/20 p-0.5"
+          className="inline-flex h-9 items-center rounded-md border border-border bg-card p-0.5"
           role="group"
           aria-label={rtl ? "تخطيط المنتجات" : "Product layout"}
         >
@@ -165,7 +165,7 @@ function RowHeader({
               "inline-flex size-8 items-center justify-center rounded-[6px] transition-colors",
               layout === "grid"
                 ? "bg-primary text-white"
-                : "text-white/50 hover:text-white"
+                : "text-muted-foreground hover:text-foreground"
             )}
           >
             <LayoutGrid className="size-4" strokeWidth={1.75} />
@@ -180,7 +180,7 @@ function RowHeader({
               "inline-flex size-8 items-center justify-center rounded-[6px] transition-colors",
               layout === "swiper"
                 ? "bg-primary text-white"
-                : "text-white/50 hover:text-white"
+                : "text-muted-foreground hover:text-foreground"
             )}
           >
             <GalleryHorizontal className="size-4" strokeWidth={1.75} />
@@ -191,7 +191,7 @@ function RowHeader({
           href="/products"
           onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
           className={cn(
-            "inline-flex shrink-0 items-center rounded-md border border-white/12 px-4 py-1.5 text-sm font-semibold text-white/70 transition-colors duration-200 hover:border-primary/40 hover:text-white",
+            "inline-flex shrink-0 items-center rounded-md border border-border bg-card px-4 py-1.5 text-sm font-semibold text-foreground/80 transition-colors duration-200 hover:border-primary/40 hover:text-foreground",
             rtl && "font-cairo"
           )}
         >

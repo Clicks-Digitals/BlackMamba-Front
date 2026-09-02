@@ -24,7 +24,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
   ];
 
   return (
-    <div className="flex min-h-screen w-full flex-col lg:flex-row">
+    <div className="dark flex min-h-screen w-full flex-col lg:flex-row">
       {/* Brand panel — desktop only */}
       <div className="relative hidden w-[42%] shrink-0 flex-col justify-between overflow-hidden bg-[#0d0e0e] p-12 text-white lg:flex">
         <div

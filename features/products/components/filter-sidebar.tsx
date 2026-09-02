@@ -101,14 +101,14 @@ function CategoryNode({
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
-            className="flex shrink-0 items-center justify-center rounded p-0.5 text-white/30 transition-colors hover:text-white/70"
+            className="flex size-11 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
             <ChevronDown className={cn("size-3.5 transition-transform", !open && "-rotate-90")} />
           </button>
         )}
       </div>
       {hasChildren && open && (
-        <ul className="ms-2 mt-1 flex flex-col gap-1 border-s border-white/10 ps-1.5">
+        <ul className="ms-2 mt-1 flex flex-col gap-1 border-s border-border ps-1.5">
           {children.map((child) => (
             <CategoryNode
               key={child.id}
@@ -311,7 +311,7 @@ export function FiltersPanel({
 export function FilterSidebar(props: FiltersPanelProps) {
   return (
     <aside className="hidden w-full shrink-0 md:block md:w-56 lg:w-60">
-      <div className="sticky top-[calc(var(--layout-chrome-top)+1rem)] overflow-hidden rounded-lg border border-white/8 bg-card">
+      <div className="sticky top-[calc(var(--layout-chrome-top)+1rem)] overflow-hidden rounded-lg border border-border bg-card">
         <div className="border-b-2 border-primary px-5 py-3.5">
           <span className="font-chillax text-[17px] uppercase tracking-widest text-foreground">
             {props.locale === "ar" ? "التصفية" : "Filters"}
@@ -382,7 +382,7 @@ function Section({
       >
         <span className="text-[13px] font-semibold text-foreground">{title}</span>
         <ChevronDown
-          className={cn("size-4 text-white/40 transition-transform", !open && "-rotate-90 rtl:rotate-90")}
+          className={cn("size-4 text-muted-foreground transition-transform", !open && "-rotate-90 rtl:rotate-90")}
         />
       </button>
       {open && <div className="pt-2">{children}</div>}

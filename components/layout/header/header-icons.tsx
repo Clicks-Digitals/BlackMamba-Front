@@ -51,8 +51,8 @@ export function HeaderIcons() {
         aria-label={t("wishlist")}
         aria-current={favActive ? "page" : undefined}
         className={cn(
-          "relative inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-md transition-colors duration-200 hover:bg-white/8 hover:text-white",
-          favActive ? "bg-white/8 text-white" : "text-store-nav-fg/80"
+          "relative inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-md transition-colors duration-200 hover:bg-store-nav-fg/8 hover:text-store-nav-fg",
+          favActive ? "bg-store-nav-fg/8 text-store-nav-fg" : "text-store-nav-fg/80"
         )}
       >
         <Heart
@@ -67,8 +67,8 @@ export function HeaderIcons() {
         aria-label={t("cart")}
         aria-current={cartActive ? "page" : undefined}
         className={cn(
-          "relative inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-md transition-colors duration-200 hover:bg-white/8 hover:text-white",
-          cartActive ? "bg-white/8 text-white" : "text-store-nav-fg/80"
+          "relative inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-md transition-colors duration-200 hover:bg-store-nav-fg/8 hover:text-store-nav-fg",
+          cartActive ? "bg-store-nav-fg/8 text-store-nav-fg" : "text-store-nav-fg/80"
         )}
       >
         <ShoppingCart className="pointer-events-none size-5" strokeWidth={1.75} />

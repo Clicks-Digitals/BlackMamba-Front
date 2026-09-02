@@ -34,7 +34,7 @@ export function HomeCategoryGrid({
             <p className="bm-kicker mb-1.5">{rtl ? "اكتشف" : "Discover"}</p>
             <h2
               className={cn(
-                "leading-none text-foreground",
+                "leading-none font-semibold text-foreground",
                 "text-[clamp(1.65rem,3.2vw,2.5rem)]",
                 !rtl && "font-chillax tracking-wide",
                 rtl && "font-cairo font-semibold"
@@ -46,7 +46,7 @@ export function HomeCategoryGrid({
           <Link
             href="/categories"
             className={cn(
-              "hidden shrink-0 rounded-md border border-white/12 px-4 py-2 text-sm font-semibold text-white/75 transition-colors duration-200 hover:border-primary/40 hover:text-white sm:inline-flex",
+              "hidden shrink-0 rounded-md border border-border bg-card px-4 py-2 text-sm font-semibold text-foreground/80 transition-colors duration-200 hover:border-primary/40 hover:text-foreground sm:inline-flex",
               rtl && "font-cairo"
             )}
           >
@@ -67,7 +67,7 @@ export function HomeCategoryGrid({
               category={cat}
               locale={locale}
               exploreLabel={exploreLabel}
-              className="aspect-[4/5] w-full max-h-[17.5rem] sm:max-h-[18.5rem]"
+              className="aspect-4/5 w-full max-h-[17.5rem] sm:max-h-[18.5rem]"
             />
           ))}
         </HomeSlider>
@@ -76,7 +76,7 @@ export function HomeCategoryGrid({
           <Link
             href="/categories"
             className={cn(
-              "inline-flex h-11 items-center justify-center rounded-md border border-white/12 px-6 text-sm font-semibold text-white/80 transition-colors duration-200 hover:border-primary/40 hover:text-white",
+              "inline-flex h-11 items-center justify-center rounded-md border border-border bg-card px-6 text-sm font-semibold text-foreground/80 transition-colors duration-200 hover:border-primary/40 hover:text-foreground",
               rtl && "font-cairo"
             )}
           >

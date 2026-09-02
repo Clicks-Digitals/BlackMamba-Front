@@ -170,7 +170,7 @@ export function InfiniteScroll<TItem>({
     <div>
       {isEmpty ? (
         emptyState ?? (
-          <p className="text-center py-12 text-white/40 font-chillax text-sm">
+          <p className="text-center py-12 font-chillax text-sm text-muted-foreground">
             {t("noItemsFound")}
           </p>
         )
@@ -191,12 +191,12 @@ export function InfiniteScroll<TItem>({
       {isLoading && loadingUI !== null &&
         (loadingUI ?? (
           <div className="flex justify-center py-8">
-            <div className="w-6 h-6 border-2 border-white/30 border-t-primary rounded-full animate-spin" />
+            <div className="h-6 w-6 animate-spin rounded-full border-2 border-border border-t-primary" />
           </div>
         ))}
 
       {!hasMore && items.length > 0 && (
-        <div className="text-center py-8 text-white/40 font-chillax text-sm">
+        <div className="py-8 text-center font-chillax text-sm text-muted-foreground">
           {endMessage ?? t("noMoreItems")}
         </div>
       )}

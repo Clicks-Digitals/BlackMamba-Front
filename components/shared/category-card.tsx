@@ -49,10 +49,10 @@ export function CategoryCard({
     <Link
       href={href}
       className={cn(
-        "group relative block overflow-hidden rounded-lg border border-white/8 bg-[#121314] bm-red-edge",
+        "group relative block overflow-hidden rounded-lg border border-border bg-card bm-red-edge",
         "transition-[border-color,transform,box-shadow] duration-200",
-        "hover:-translate-y-0.5 hover:border-primary/45 hover:shadow-[0_18px_40px_-20px_rgba(0,0,0,0.7)]",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d0e0e]",
+        "hover:-translate-y-0.5 hover:border-primary/45 hover:shadow-[var(--shadow-card-hover)]",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         "motion-reduce:transform-none motion-reduce:hover:translate-y-0",
         !className?.includes("w-full") && !className?.includes("aspect") && "w-94.75 shrink-0 aspect-379/364",
         className

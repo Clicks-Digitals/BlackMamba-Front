@@ -15,7 +15,7 @@ export async function SubHeader({ categories }: SubHeaderProps) {
   return (
     <div
       data-subnav=""
-      className="w-full border-b border-white/6 bg-store-subnav"
+      className="w-full border-b border-white/6 bg-store-subnav text-store-subnav-fg"
       style={{ minHeight: "var(--layout-subnav-height)" }}
     >
       <div className="layout-page layout-gutter-x flex min-h-(--layout-subnav-height) items-center gap-2.5">

@@ -26,7 +26,7 @@ function Checkbox({ label, error, name, className, ...props }: CheckboxProps) {
         {label && (
           <label
             htmlFor={name}
-            className="cursor-pointer text-sm font-medium text-[#EDEFF0]/70 transition-colors select-none group-hover:text-[#EDEFF0]"
+            className="cursor-pointer text-sm font-medium text-muted-foreground transition-colors select-none group-hover:text-foreground"
           >
             {label}
           </label>

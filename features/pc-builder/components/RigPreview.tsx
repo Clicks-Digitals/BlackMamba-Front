@@ -126,7 +126,7 @@ export function RigPreview({ className }: { className?: string }) {
         {assembling && !reduceMotion && (
           <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
             <div className="bm-assemble-scan" />
-          </div>
+        </div>
         )}
 
         <svg viewBox="0 0 240 320" className="relative z-10 h-auto w-full" role="img" aria-label={t("hud.chassis")}>

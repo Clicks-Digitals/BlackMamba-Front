@@ -110,7 +110,7 @@ export function SectionHeading({
         {kicker ? <p className="bm-kicker mb-2">{kicker}</p> : null}
         <h2
           className={cn(
-            "leading-none text-foreground",
+            "leading-none font-semibold text-foreground",
             "text-[clamp(1.45rem,2.8vw,2.25rem)]",
             !rtl && "font-chillax tracking-wide",
             rtl && "font-cairo font-semibold"

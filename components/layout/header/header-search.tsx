@@ -634,7 +634,7 @@ function DesktopHeaderSearch({ search }: DesktopSearchProps) {
           dir={locale === "ar" ? "rtl" : "ltr"}
           aria-busy={search.isLoading}
           aria-label={t("search")}
-          className="min-w-0 flex-1 bg-transparent font-chillax text-sm text-foreground placeholder:text-white/35 focus:outline-none"
+          className="min-w-0 flex-1 bg-transparent font-chillax text-sm text-white placeholder:text-white/35 focus:outline-none"
         />
         {search.isLoading && <Loader2 size={14} className="shrink-0 animate-spin text-white/40" />}
         {(search.query || isOpen) && (
@@ -650,7 +650,7 @@ function DesktopHeaderSearch({ search }: DesktopSearchProps) {
       </div>
 
       {showPanel && (
-        <div className="scrollbar-thin absolute start-0 top-[calc(100%+8px)] z-50 max-h-[26rem] w-full overflow-y-auto rounded-lg border border-white/10 bg-[#161718] shadow-[0_16px_40px_-16px_rgba(0,0,0,0.7)] animate-in fade-in slide-in-from-top-1 duration-150">
+        <div className="dark scrollbar-thin absolute start-0 top-[calc(100%+8px)] z-50 max-h-[26rem] w-full overflow-y-auto rounded-lg border border-white/10 bg-[#161718] shadow-[0_16px_40px_-16px_rgba(0,0,0,0.7)] animate-in fade-in slide-in-from-top-1 duration-150">
           <ResultsPanel
             search={search}
             onSelect={() => { search.reset(); setIsOpen(false); }}
@@ -721,7 +721,7 @@ function MobileHeaderSearchOverlay({ search, isOpen, onClose }: MobileOverlayPro
         {/* Input */}
         <div className="mx-auto flex max-w-xl items-center gap-2">
           <div className="flex flex-1 items-center gap-2 rounded-md border border-white/20 bg-white/10 px-3 py-2">
-            <Search size={15} className="shrink-0 text-foreground/40" />
+            <Search size={15} className="shrink-0 text-white/40" />
             <input
               ref={inputRef}
               type="search"
@@ -731,9 +731,9 @@ function MobileHeaderSearchOverlay({ search, isOpen, onClose }: MobileOverlayPro
               placeholder={tUi("placeholder")}
               autoComplete="off"
               dir={locale === "ar" ? "rtl" : "ltr"}
-              className="min-w-0 flex-1 bg-transparent font-chillax text-sm text-foreground placeholder:text-foreground/35 focus:outline-none"
+              className="min-w-0 flex-1 bg-transparent font-chillax text-sm text-white placeholder:text-white/35 focus:outline-none"
             />
-            {search.isLoading && <Loader2 size={13} className="shrink-0 animate-spin text-foreground/40" />}
+            {search.isLoading && <Loader2 size={13} className="shrink-0 animate-spin text-white/40" />}
           </div>
           <button
             type="button"
@@ -747,7 +747,7 @@ function MobileHeaderSearchOverlay({ search, isOpen, onClose }: MobileOverlayPro
 
         {/* Panel */}
         {showPanel && (
-          <div className="scrollbar-thin mx-auto mt-2 max-h-[min(26rem,calc(100svh-9rem))] max-w-xl overflow-y-auto rounded-lg border border-white/10 bg-[#161718] shadow-xl">
+          <div className="dark scrollbar-thin mx-auto mt-2 max-h-[min(26rem,calc(100svh-9rem))] max-w-xl overflow-y-auto rounded-lg border border-white/10 bg-[#161718] shadow-xl">
             <ResultsPanel
               search={search}
               onSelect={() => { search.reset(); onClose(); }}
@@ -761,31 +761,46 @@ function MobileHeaderSearchOverlay({ search, isOpen, onClose }: MobileOverlayPro
 
 // ─── Public export ────────────────────────────────────────────────────────────
 
-export function HeaderSearch() {
+export function HeaderSearch({
+  variant = "all",
+}: {
+  variant?: "all" | "desktop" | "mobile";
+}) {
   const search = useSmartSearch();
   const t = useTranslations("Header");
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const desktop = (
+    <div className="hidden min-w-0 flex-1 xl:ms-auto xl:block xl:max-w-sm 2xl:max-w-md">
+      <DesktopHeaderSearch search={search} />
+    </div>
+  );
+
+  const mobile = (
+    <div className="xl:hidden">
+      <button
+        type="button"
+        onClick={() => setMobileOpen(true)}
+        aria-label={t("search")}
+        className="inline-flex size-10 shrink-0 items-center justify-center rounded-md text-white/70 transition-colors duration-200 hover:bg-white/10 hover:text-white"
+      >
+        <Search className="size-5 shrink-0" strokeWidth={1.75} />
+      </button>
+      <MobileHeaderSearchOverlay
+        search={search}
+        isOpen={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+      />
+    </div>
+  );
+
+  if (variant === "desktop") return desktop;
+  if (variant === "mobile") return mobile;
+
   return (
     <>
-      <div className="hidden min-w-0 flex-1 xl:ms-auto xl:block xl:max-w-sm 2xl:max-w-md">
-        <DesktopHeaderSearch search={search} />
-      </div>
-      <div className="xl:hidden">
-        <button
-          type="button"
-          onClick={() => setMobileOpen(true)}
-          aria-label={t("search")}
-          className="inline-flex size-10 shrink-0 items-center justify-center rounded-md text-white/70 transition-colors duration-200 hover:bg-white/10 hover:text-white"
-        >
-          <Search className="size-5 shrink-0" strokeWidth={1.75} />
-        </button>
-        <MobileHeaderSearchOverlay
-          search={search}
-          isOpen={mobileOpen}
-          onClose={() => setMobileOpen(false)}
-        />
-      </div>
+      {desktop}
+      {mobile}
     </>
   );
 }

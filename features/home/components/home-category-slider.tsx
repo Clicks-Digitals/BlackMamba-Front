@@ -24,7 +24,7 @@ export function HomeCategorySlider({ categories, locale, title, exploreLabel, vi
         {/* Left-aligned heading with amber rule */}
         <h2
           className={cn(
-            "flex items-center gap-3 text-[clamp(2.25rem,4.2vw,3rem)] leading-none text-foreground uppercase",
+            "flex items-center gap-3 text-[clamp(2.25rem,4.2vw,3rem)] leading-none font-semibold text-foreground uppercase",
             !rtl && "font-chillax",
             rtl && "font-cairo font-semibold normal-case"
           )}

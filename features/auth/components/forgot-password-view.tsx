@@ -36,8 +36,8 @@ export function ForgotPasswordView({ onSuccess }: Props) {
   return (
     <div className="w-full max-w-md mx-auto space-y-6">
       <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold">{t("forgotPasswordTitle", { defaultValue: "Forgot Password" })}</h1>
-        <p className="text-white/45">
+        <h1 className="text-3xl font-bold text-foreground">{t("forgotPasswordTitle", { defaultValue: "Forgot Password" })}</h1>
+        <p className="text-muted-foreground">
           {t("forgotPasswordDesc", { defaultValue: "Enter your email to receive a reset code." })}
         </p>
       </div>

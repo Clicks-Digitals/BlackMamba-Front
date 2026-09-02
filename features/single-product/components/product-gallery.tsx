@@ -120,7 +120,7 @@ export function ProductGallery({ images, thumbnail, productName }: ProductGaller
             <button
               type="button"
               onClick={() => navigate(-1)}
-              className="absolute start-2 top-1/2 z-10 flex size-8 -translate-y-1/2 items-center justify-center rounded-md border border-border bg-background/85 text-foreground opacity-0 transition-all group-hover:opacity-100 hover:bg-primary hover:text-white"
+              className="absolute start-2 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-md border border-border bg-background/85 text-foreground opacity-100 transition-all md:size-8 md:opacity-0 md:group-hover:opacity-100 hover:bg-primary hover:text-white"
               aria-label={t("previousImage")}
             >
               <ChevronLeft size={16} strokeWidth={2.5} className="rtl:rotate-180" />
@@ -128,7 +128,7 @@ export function ProductGallery({ images, thumbnail, productName }: ProductGaller
             <button
               type="button"
               onClick={() => navigate(1)}
-              className="absolute end-2 top-1/2 z-10 flex size-8 -translate-y-1/2 items-center justify-center rounded-md border border-border bg-background/85 text-foreground opacity-0 transition-all group-hover:opacity-100 hover:bg-primary hover:text-white"
+              className="absolute end-2 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-md border border-border bg-background/85 text-foreground opacity-100 transition-all md:size-8 md:opacity-0 md:group-hover:opacity-100 hover:bg-primary hover:text-white"
               aria-label={t("nextImage")}
             >
               <ChevronRight size={16} strokeWidth={2.5} className="rtl:rotate-180" />

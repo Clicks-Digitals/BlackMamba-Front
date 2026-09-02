@@ -8,3 +8,6 @@ export * from "./wishlist-button";
 export * from "./infinite-scroll";
 export * from "./scroll-top-link";
 export * from "./brand-logo";
+export * from "./theme-provider";
+export * from "./theme-toggle";
+export * from "./themed-toaster";

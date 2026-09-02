@@ -122,12 +122,92 @@
 
 :root {
   /*
-   * Black Mamba palette — graphite greys (not pure black).
-   * Navbar sits darker; page background is a lifted lighter grey
-   * so chrome and content read as separate planes.
+   * Black Mamba — light mode (default for preference storage; site defaults to dark via next-themes).
+   * Cool light greys — not cream. Crimson brand stays #9e1d20.
    */
 
   /* —— UI kit (shadcn) —— */
+  --background: #f3f4f5;
+  --foreground: #1a1c1e;
+  --card: #ffffff;
+  --card-foreground: #1a1c1e;
+  --popover: #ffffff;
+  --popover-foreground: #1a1c1e;
+  --primary: #9e1d20;
+  --primary-foreground: #ffffff;
+  --secondary: #eceeef;
+  --secondary-foreground: #1a1c1e;
+  --muted: #e8eaec;
+  --muted-foreground: #5c636a;
+  --accent: #f3e8e8;
+  --accent-foreground: #9e1d20;
+  --destructive: #d12f27;
+  --border: #d8dadd;
+  --input: rgba(26, 28, 30, 0.12);
+  --ring: #d12f27;
+  --chart-1: #d12f27;
+  --chart-2: #5c636a;
+  --chart-3: #ff7a1a;
+  --chart-4: #1e9e5a;
+  --chart-5: #b7791f;
+  --radius: 8px;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1a1c1e;
+  --sidebar-primary: #9e1d20;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f3e8e8;
+  --sidebar-accent-foreground: #9e1d20;
+  --sidebar-border: rgba(26, 28, 30, 0.1);
+  --sidebar-ring: #d12f27;
+
+  /* —— Brand —— */
+  --surface: #ffffff;
+  --ink: #1a1c1e;
+  --secondary-text: #5c636a;
+  --blue-tint: #f3e8e8;
+  --blue-hover: #7a1618;
+  --blue-pressed: #5c1012;
+  --deal: #e56700;
+  --success: #1e9e5a;
+  --warning: #b7791f;
+  --header-dark: #1a1c1e;
+
+  /* —— Storefront chrome —— always dark (same in light & dark mode) —— */
+  --store-primary: #9e1d20;
+  --store-nav-bg: #1c1e20;
+  --store-nav-fg: #ffffff;
+  --store-subnav-bg: #222426;
+  --store-subnav-fg: #edeff0;
+  --store-footer-bg: #1c1e20;
+  --store-footer-link: #ffffff;
+  --store-footer-label: rgba(255, 255, 255, 0.6);
+
+  /* —— Layout —— */
+  --layout-banner-height: 44px;
+  --layout-header-bar-height: 72px;
+  --layout-subnav-height: 40px;
+  --layout-chrome-top: calc(var(--layout-header-bar-height) + var(--layout-subnav-height));
+  --layout-page-max: 1440px;
+  --layout-gutter-x: clamp(16px, 4vw, 64px);
+  --layout-section-y: clamp(2.5rem, 5vw, 5rem);
+  --layout-hero-radius: 12px;
+  --layout-hero-radius-sm: 12px;
+
+  /* —— Elevation —— */
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 12px 40px -20px rgba(26, 28, 30, 0.18);
+  --shadow-card-hover: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 22px 50px -18px rgba(26, 28, 30, 0.22), 0 0 0 1px rgba(158, 29, 32, 0.2);
+  --shadow-chrome: 0 12px 40px -18px rgba(26, 28, 30, 0.2);
+  --glow-crimson: 0 0 48px -8px rgba(158, 29, 32, 0.28);
+
+  color-scheme: light;
+}
+
+.dark {
+  /*
+   * Black Mamba — graphite dark (not pure black).
+   * Navbar sits darker; page background is a lifted lighter grey.
+   */
+
   --background: #2a2c2e;
   --foreground: #edeff0;
   --card: #343638;
@@ -151,11 +231,6 @@
   --chart-3: #ff7a1a;
   --chart-4: #1e9e5a;
   --chart-5: #b7791f;
-  /*
-   * Corner radius. Tight Black Mamba scale:
-   * sm 5 · md 6 · lg 8 · xl 11 · 2xl 14 · 3xl 18 · 4xl 21.
-   */
-  --radius: 8px;
   --sidebar: #323436;
   --sidebar-foreground: #edeff0;
   --sidebar-primary: #9e1d20;
@@ -165,22 +240,17 @@
   --sidebar-border: rgba(255, 255, 255, 0.1);
   --sidebar-ring: #d12f27;
 
-  /* —— Brand —— */
   --surface: #343638;
-  --ink: #1a1c1e;
+  --ink: #edeff0;
   --secondary-text: #a8b0b6;
   --blue-tint: #3a2a2c;
   --blue-hover: #7a1618;
   --blue-pressed: #5c1012;
-  /* Deal accent: discounts, sale prices and countdowns ONLY — never regular UI. */
   --deal: #ff7a1a;
   --success: #1e9e5a;
   --warning: #b7791f;
   --header-dark: #edeff0;
 
-  /*
-   * Storefront chrome — dark grey navbar over a lighter grey page.
-   */
   --store-primary: #9e1d20;
   --store-nav-bg: #1c1e20;
   --store-nav-fg: #ffffff;
@@ -190,22 +260,12 @@
   --store-footer-link: #ffffff;
   --store-footer-label: rgba(255, 255, 255, 0.6);
 
-  /* —— Layout ( widths, gutters, section rhythm ) —— */
-  --layout-banner-height: 44px;
-  --layout-header-bar-height: 72px;
-  --layout-subnav-height: 40px;
-  --layout-chrome-top: calc(var(--layout-header-bar-height) + var(--layout-subnav-height));
-  --layout-page-max: 1440px;
-  --layout-gutter-x: clamp(16px, 4vw, 64px);
-  --layout-section-y: clamp(2.5rem, 5vw, 5rem);
-  --layout-hero-radius: 12px;
-  --layout-hero-radius-sm: 12px;
-
-  /* —— Elevation —— */
   --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 12px 40px -20px rgba(0, 0, 0, 0.55);
   --shadow-card-hover: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 22px 50px -18px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(158, 29, 32, 0.28);
   --shadow-chrome: 0 12px 40px -18px rgba(0, 0, 0, 0.65);
   --glow-crimson: 0 0 48px -8px rgba(158, 29, 32, 0.45);
+
+  color-scheme: dark;
 }
 
 @layer base {
@@ -458,31 +518,35 @@ html::-webkit-scrollbar-corner {
   }
 
   .bm-card {
-    border: 1px solid #26292c;
-    background: #17181b;
+    border: 1px solid var(--border);
+    background: var(--card);
     border-radius: 10px;
     box-shadow: var(--shadow-card);
     transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   }
 
   .bm-card:hover {
-    border-color: color-mix(in srgb, #9e1d20 42%, #26292c);
+    border-color: color-mix(in srgb, #9e1d20 42%, var(--border));
     box-shadow: var(--shadow-card-hover);
   }
 
   .bm-panel {
     border: 1px solid color-mix(in srgb, #9e1d20 18%, transparent);
-    background: rgba(255, 255, 255, 0.03);
+    background: color-mix(in srgb, var(--foreground) 3%, transparent);
     border-radius: 10px;
   }
 
   .bm-field {
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.05);
-    color: #edeff0;
+    border: 1px solid var(--border);
+    background: var(--muted);
+    color: var(--foreground);
   }
 
+  /*
+   * Listing / page heroes stay intentionally dark in both themes —
+   * titles inside must use light text (text-white), not text-foreground.
+   */
   .bm-page-hero {
     position: relative;
     overflow: hidden;
@@ -490,6 +554,7 @@ html::-webkit-scrollbar-corner {
     background:
       radial-gradient(1200px 280px at 12% -40%, rgba(158, 29, 32, 0.22), transparent 60%),
       linear-gradient(180deg, #121314 0%, #0d0e0e 100%);
+    color: #edeff0;
   }
 
   .bm-kicker {
@@ -497,6 +562,10 @@ html::-webkit-scrollbar-corner {
     font-weight: 700;
     letter-spacing: 0.22em;
     text-transform: uppercase;
+    color: #d12f27;
+  }
+
+  .dark .bm-kicker {
     color: color-mix(in srgb, #d12f27 80%, white);
   }
 }

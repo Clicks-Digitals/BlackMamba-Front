@@ -17,16 +17,16 @@ export async function ServiceOurStory() {
   ];
 
   return (
-    <section className="relative overflow-hidden border-b border-white/6">
-        <div className="layout-page layout-gutter-x py-16 md:py-20 lg:py-24">
+    <section className="relative overflow-hidden border-b border-border">
+      <div className="layout-page layout-gutter-x py-16 md:py-20 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:gap-16">
           <div>
             <p className="bm-kicker">{t("kicker")}</p>
             <h2
               className={cn(
-                "mt-3 leading-[0.92] text-white",
+                "mt-3 leading-[0.92] text-foreground",
                 "text-[clamp(2.2rem,5vw,4rem)]",
-                !rtl && "font-beckman uppercase tracking-wide",
+                !rtl && "font-letterman uppercase tracking-wide",
                 rtl && "font-cairo font-bold"
               )}
             >
@@ -37,7 +37,7 @@ export async function ServiceOurStory() {
           <div>
             <p
               className={cn(
-                "max-w-xl text-[16px] leading-relaxed text-white/55 sm:text-[17px]",
+                "max-w-xl text-[16px] leading-relaxed text-muted-foreground sm:text-[17px]",
                 rtl && "font-cairo"
               )}
             >
@@ -45,7 +45,7 @@ export async function ServiceOurStory() {
             </p>
             <p
               className={cn(
-                "mt-5 max-w-xl text-[16px] leading-relaxed text-white/55 sm:text-[17px]",
+                "mt-5 max-w-xl text-[16px] leading-relaxed text-muted-foreground sm:text-[17px]",
                 rtl && "font-cairo"
               )}
             >
@@ -54,7 +54,7 @@ export async function ServiceOurStory() {
           </div>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-white/10 bg-white/10 sm:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-3">
           {tags.map((tag) => (
             <div key={tag.label} className="bg-[#121314] px-5 py-5 sm:px-6">
               <p className="font-mono text-[11px] tracking-[0.18em] text-[#d12f27]">{tag.n}</p>

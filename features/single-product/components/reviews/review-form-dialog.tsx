@@ -87,7 +87,7 @@ function ReviewFormFields({
         <button
           type="button"
           onClick={onClose}
-          className="font-chillax text-sm font-medium text-white/50 underline-offset-2 hover:underline hover:text-[#EDEFF0]"
+          className="font-chillax text-sm font-medium text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
         >
           {t("cancelReview")}
         </button>
@@ -107,14 +107,14 @@ function RatingStars({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <span className="font-chillax text-sm font-medium text-[#EDEFF0]">{label}</span>
+      <span className="font-chillax text-sm font-medium text-foreground">{label}</span>
       <div className="flex gap-1">
         {[1, 2, 3, 4, 5].map((n) => (
           <button
             key={n}
             type="button"
             onClick={() => onChange(n)}
-            className="rounded p-0.5 text-amber-400 transition hover:scale-110 focus:ring-2 focus:ring-primary/30 focus:outline-none"
+            className="flex size-11 items-center justify-center rounded text-amber-400 transition hover:scale-110 focus:ring-2 focus:ring-primary/30 focus:outline-none"
             aria-label={`${n}`}
           >
             <Star

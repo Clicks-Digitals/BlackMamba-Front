@@ -38,8 +38,8 @@ export function HeaderNav({ navLinks, pcBuilderLabel, rtl }: HeaderNavProps) {
             className={cn(
               "relative rounded-md px-2.5 py-1.5 whitespace-nowrap transition-colors duration-200",
               active
-                ? "bg-white/8 text-white bm-nav-active"
-                : "text-white/60 hover:bg-white/6 hover:text-white"
+                ? "bg-store-nav-fg/8 text-store-nav-fg bm-nav-active"
+                : "text-store-nav-fg/60 hover:bg-store-nav-fg/6 hover:text-store-nav-fg"
             )}
           >
             {link.label}
@@ -54,7 +54,7 @@ export function HeaderNav({ navLinks, pcBuilderLabel, rtl }: HeaderNavProps) {
           "ms-1 inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5 transition-colors duration-200",
           pcBuilderActive
             ? "border-primary bg-primary text-white"
-            : "border-primary/40 bg-primary/10 text-white hover:border-primary hover:bg-primary/20",
+            : "border-primary/40 bg-primary/10 text-store-nav-fg hover:border-primary hover:bg-primary/20",
           rtl ? "font-cairo font-bold" : "text-[12px] font-semibold uppercase tracking-wider"
         )}
       >

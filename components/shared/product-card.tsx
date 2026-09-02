@@ -120,9 +120,9 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
 
   const cartButtonClass = cn(
     "inline-flex size-9 shrink-0 items-center justify-center rounded-md transition-all duration-200",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#17181b]",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-card",
     outOfStock
-      ? "cursor-not-allowed bg-white/8 text-white/30"
+      ? "cursor-not-allowed bg-muted text-muted-foreground/50"
       : isInCart
       ? "bg-primary text-white hover:bg-[#d12f27]"
       : "bg-primary text-white hover:bg-[#d12f27] active:scale-95",
@@ -140,9 +140,9 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
   return (
     <article
       className={cn(
-        "group relative flex h-full w-full flex-col overflow-hidden rounded-lg bg-[#17181b]",
-        "border border-white/10 transition-[border-color,box-shadow,transform] duration-200",
-        "hover:-translate-y-0.5 hover:border-primary hover:shadow-[0_16px_40px_-22px_rgba(158,29,32,0.55)]",
+        "group relative flex h-full w-full flex-col overflow-hidden rounded-lg bg-card",
+        "border border-border transition-[border-color,box-shadow,transform] duration-200",
+        "hover:-translate-y-0.5 hover:border-primary hover:shadow-[var(--shadow-card-hover)]",
         "motion-reduce:transform-none motion-reduce:hover:translate-y-0",
         outOfStock && "opacity-85",
         className
@@ -151,7 +151,7 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
       <Link href={`/products/${product.slug}`} className="block">
         <div
           data-card-media
-          className="relative aspect-square w-full overflow-hidden border-b border-white/8 bg-[#1e1f22]"
+          className="relative aspect-square w-full overflow-hidden border-b border-border bg-muted/40"
         >
           {img ? (
             <Image
@@ -163,15 +163,15 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
               unoptimized
             />
           ) : (
-            <div className="absolute inset-0 bg-[#1e1f22]" />
+            <div className="absolute inset-0 bg-muted/40" />
           )}
 
           {outOfStock && (
-            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 bg-background/40" />
           )}
 
           {badge && (
-            <span className="absolute top-2.5 start-2.5 z-20 inline-flex h-[22px] items-center rounded-md bg-primary/15 px-2 text-[10px] font-bold uppercase tracking-wide text-[#d12f27]">
+            <span className="absolute top-2.5 start-2.5 z-20 inline-flex h-[22px] items-center rounded-md bg-primary/15 px-2 text-[10px] font-bold uppercase tracking-wide text-primary">
               {badge}
             </span>
           )}
@@ -179,7 +179,7 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
           <div className="absolute top-2 end-2 z-20">
             <WishlistButton
               productId={product.id}
-              className="size-8 rounded-full border-transparent bg-transparent p-0 text-white/70 shadow-none hover:border-transparent hover:bg-white/10 hover:text-white"
+              className="size-8 rounded-full border-transparent bg-background/70 p-0 text-foreground/70 shadow-none hover:border-transparent hover:bg-background hover:text-foreground"
             />
           </div>
 
@@ -195,7 +195,7 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
         <Link href={`/products/${product.slug}`}>
           <p
             className={cn(
-              "line-clamp-2 min-h-[2.5rem] text-[13px] font-medium leading-snug text-[#EDEFF0] sm:text-[14px]",
+              "line-clamp-2 min-h-[2.5rem] text-[13px] font-medium leading-snug text-foreground sm:text-[14px]",
               rtl && "font-cairo"
             )}
           >
@@ -205,17 +205,17 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
 
         <div className="mt-auto flex items-end justify-between gap-3 pt-3">
           <div className="min-w-0">
-            <p className={cn("text-[11px] font-normal text-white/40", rtl && "font-cairo")}>
+            <p className={cn("text-[11px] font-normal text-muted-foreground", rtl && "font-cairo")}>
               {t("price")}
             </p>
             <div className="mt-0.5 flex flex-wrap items-baseline gap-1.5">
               {finalPrice && (
-                <span className={cn("text-[16px] font-bold leading-none text-white sm:text-[17px]", hasCampaign && "text-deal")}>
+                <span className={cn("text-[16px] font-bold leading-none text-foreground sm:text-[17px]", hasCampaign && "text-deal")}>
                   {sym}{finalPrice}
                 </span>
               )}
               {origPrice && (
-                <span className="text-[11px] leading-none text-white/35 line-through">
+                <span className="text-[11px] leading-none text-muted-foreground line-through">
                   {sym}{origPrice}
                 </span>
               )}

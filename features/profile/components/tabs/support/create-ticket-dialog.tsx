@@ -184,10 +184,10 @@ function OrderPicker({ defaultValue, error, label, locale }: OrderPickerProps) {
   }
 
   return (
-    <div ref={wrapperRef} className="relative">
+    <div ref={wrapperRef} className="dark relative">
       <input type="hidden" name="order" value={selected?.order_number ?? ""} />
 
-      <label className="mb-1.5 block text-sm font-medium text-white/70">{label}</label>
+      <label className="mb-1.5 block text-sm font-medium text-muted-foreground">{label}</label>
 
       {/* Trigger — div (not button) to avoid nested <button> */}
       <div
@@ -429,11 +429,11 @@ export function CreateTicketDialog({ open, onClose, onSuccess, isGuest = false }
             {/* ── TOPIC ── */}
             <section className="space-y-3">
               <div className="flex items-center gap-2">
-                <div className="h-px flex-1 bg-white/8" />
-                <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/40">
+                <div className="h-px flex-1 bg-border" />
+                <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground">
                   {t("topic")}
                 </span>
-                <div className="h-px flex-1 bg-white/8" />
+                <div className="h-px flex-1 bg-border" />
               </div>
 
               <Select
@@ -465,11 +465,11 @@ export function CreateTicketDialog({ open, onClose, onSuccess, isGuest = false }
             {/* ── DETAILS ── */}
             <section className="space-y-4">
               <div className="flex items-center gap-2">
-                <div className="h-px flex-1 bg-white/8" />
-                <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/40">
+                <div className="h-px flex-1 bg-border" />
+                <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground">
                   {t("details")}
                 </span>
-                <div className="h-px flex-1 bg-white/8" />
+                <div className="h-px flex-1 bg-border" />
               </div>
 
               <Input

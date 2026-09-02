@@ -36,20 +36,20 @@ export function MobileFiltersDrawer({
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange} direction={locale === "ar" ? "left" : "right"}>
-      <DrawerContent className="md:hidden">
-        <DrawerHeader className="flex flex-row items-center justify-between border-b border-white/8">
+      <DrawerContent className="bg-card md:hidden">
+        <DrawerHeader className="flex flex-row items-center justify-between border-b border-border px-4">
           <DrawerTitle className="text-[14px] font-semibold uppercase tracking-wide text-foreground">
             {t("filtersTitle")}
           </DrawerTitle>
           <DrawerClose
             aria-label="Close"
-            className="inline-flex size-8 items-center justify-center rounded-full text-white/60 hover:bg-white/8 hover:text-foreground"
+            className="inline-flex size-11 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
             <X className="size-4" />
           </DrawerClose>
         </DrawerHeader>
 
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
           <div className="mb-4">
             <h3 className="mb-2 text-[13px] font-semibold uppercase tracking-wide text-foreground">
               {t("sortBy")}
@@ -63,7 +63,7 @@ export function MobileFiltersDrawer({
                       type="button"
                       onClick={() => onSortChange(opt.value)}
                       className={cn(
-                        "flex w-full items-center rounded-md px-2 py-2 text-start text-[13px] transition-colors",
+                        "flex min-h-11 w-full items-center rounded-md px-3 py-2.5 text-start text-[13px] transition-colors",
                         isActive
                           ? "bg-primary text-white"
                           : "text-foreground/85 hover:bg-primary/10 hover:text-foreground"
@@ -77,7 +77,7 @@ export function MobileFiltersDrawer({
             </ul>
           </div>
 
-          <div className="border-t border-black/5 pt-4">
+          <div className="border-t border-border pt-4">
             {/* Categories are intentionally suppressed here because the
                 mobile category selectbox already covers parent + sub picking. */}
             <FiltersPanel {...panelProps} categories={[]} childCategories={[]} />

@@ -6,6 +6,7 @@ import { HeaderSearch } from "@/components/layout/header/header-search";
 import { HeaderNav } from "@/components/layout/header/header-nav";
 import { LocaleSwitcher, CurrencySwitcher } from "@/components/shared";
 import { BrandLogo } from "@/components/shared/brand-logo";
+import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { getCurrencies, DEFAULT_CURRENCY } from "@/actions/getCurrencies";
 
 export async function Header() {
@@ -28,19 +29,19 @@ export async function Header() {
 
   return (
     <header
-      className="relative w-full border-b border-white/6 bg-store-nav"
+      className="relative w-full border-b border-white/6 bg-store-nav text-store-nav-fg"
       style={{ height: "var(--layout-header-bar-height)" }}
     >
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-primary/70 to-transparent"
         aria-hidden
       />
-      <div className="layout-page layout-gutter-x flex h-full items-center gap-3 lg:gap-5">
-        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+      <div className="layout-page layout-gutter-x flex h-full items-center gap-2 sm:gap-3 lg:gap-5">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
           <div className="flex xl:hidden">
             <NavDrawerOpenButton
               label={t("openMenu")}
-              className="flex size-10 items-center justify-center rounded-md text-white/75 transition-colors duration-200 hover:bg-white/8 hover:text-white"
+              className="flex size-10 items-center justify-center rounded-md text-store-nav-fg/75 transition-colors duration-200 hover:bg-store-nav-fg/8 hover:text-store-nav-fg"
             />
           </div>
           <Link href="/" aria-label="Black Mamba" className="flex shrink-0 items-center">
@@ -50,16 +51,19 @@ export async function Header() {
 
         <HeaderNav navLinks={navLinks} pcBuilderLabel={t("nav.pcBuilder")} rtl={rtl} />
 
-        <HeaderSearch />
+        <HeaderSearch variant="desktop" />
 
-        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+        <div className="ms-auto flex shrink-0 items-center gap-0.5 sm:gap-1">
+          <HeaderSearch variant="mobile" />
           <div className="hidden items-center gap-2 xl:flex">
             <LocaleSwitcher currentLocale={locale} variant="storeNav" />
             <CurrencySwitcher currencies={currencies} currentCurrency={currentCurrency} />
           </div>
-
           <HeaderIcons />
-          <HeaderUserMenu />
+          <ThemeToggle />
+          <div className="hidden xl:block">
+            <HeaderUserMenu />
+          </div>
         </div>
       </div>
     </header>

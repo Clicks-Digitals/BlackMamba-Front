@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { Bebas_Neue, Cairo } from "next/font/google";
-import { Toaster } from "sonner";
 import { AppLoader } from "@/components/shared/app-loader";
 import { NavProgress } from "@/components/shared/nav-progress";
 import { ConfirmDialogProvider } from "@/components/shared/confirm-dialog-provider";
+import { ThemeProvider } from "@/components/shared/theme-provider";
+import { ThemedToaster } from "@/components/shared/themed-toaster";
 import "./globals.css";
 
 /*
@@ -34,15 +35,22 @@ export default async function RootLayout({
   const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
-    <html lang={locale} dir={dir} className={`${cairo.variable} ${bebasNeue.variable}`}>
-      <body dir={dir}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <NavProgress />
-          <AppLoader />
-          {children}
-          <Toaster position="top-center" richColors theme="dark" />
-          <ConfirmDialogProvider />
-        </NextIntlClientProvider>
+    <html
+      lang={locale}
+      dir={dir}
+      className={`dark ${cairo.variable} ${bebasNeue.variable}`}
+      suppressHydrationWarning
+    >
+      <body dir={dir} className="bg-background text-foreground antialiased">
+        <ThemeProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <NavProgress />
+            <AppLoader />
+            {children}
+            <ThemedToaster />
+            <ConfirmDialogProvider />
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

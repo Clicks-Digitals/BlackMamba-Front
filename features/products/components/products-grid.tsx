@@ -14,16 +14,16 @@ type Props = {
 
 function ProductCardSkeleton() {
   return (
-    <div className="overflow-hidden rounded-lg border border-white/10 bg-[#17181b]">
-      <div className="aspect-square w-full animate-pulse bg-[#1e1f22]" />
-      <div className="space-y-3 border-t border-white/8 p-3.5">
-        <div className="h-4 w-4/5 rounded bg-white/8" />
+    <div className="overflow-hidden rounded-lg border border-border bg-card">
+      <div className="aspect-square w-full animate-pulse bg-muted/60" />
+      <div className="space-y-3 border-t border-border p-3.5">
+        <div className="h-4 w-4/5 rounded bg-muted" />
         <div className="flex items-end justify-between pt-1">
           <div className="space-y-1.5">
-            <div className="h-2.5 w-10 rounded bg-white/6" />
-            <div className="h-4 w-16 rounded bg-white/10" />
+            <div className="h-2.5 w-10 rounded bg-muted" />
+            <div className="h-4 w-16 rounded bg-muted" />
           </div>
-          <div className="size-10 rounded-[12px] bg-white/8" />
+          <div className="size-10 rounded-[12px] bg-muted" />
         </div>
       </div>
     </div>
@@ -43,7 +43,7 @@ export function ProductsGrid({ filters, locale, onCountChange, initialData }: Pr
       onCountChange={onCountChange}
       loadingUI={null}
       emptyState={
-        <p className="py-16 text-center text-sm text-white/40">{t("noResults")}</p>
+        <p className="py-16 text-center text-sm text-muted-foreground">{t("noResults")}</p>
       }
     >
       {(items, isLoading) => (
