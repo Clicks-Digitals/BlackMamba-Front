@@ -52,6 +52,24 @@
     "imageOf": "{current} / {total}",
     "overviewTab": "نظرة عامة",
     "overviewHeading": "نظرة عامة على المنتج",
+    "featureShowcaseLabel": "أبرز مميزات المنتج",
+    "useCasesHeading": "مصمم لكل إعداد",
+    "featureBanner": {
+      "lighting": {
+        "title": "إضاءة ديناميكية",
+        "body": "أجواء RGB غامرة ولوحة واضحة ترفع كل جلسة — من الألعاب الليلية إلى العمل الإبداعي."
+      },
+      "performance": {
+        "title": "أداء بصري",
+        "body": "معدل تحديث سلس وزوايا رؤية واسعة ودقة ألوان مناسبة للألعاب والمحتوى والإنتاجية اليومية."
+      }
+    },
+    "useCase": {
+      "studio": { "title": "استوديو إبداعي" },
+      "office": { "title": "مكتب إنتاجي" },
+      "gaming": { "title": "محاكي ألعاب" },
+      "setup": { "title": "إعداد متعدد الشاشات" }
+    },
     "reviewsTab": "التقييمات",
     "relatedKicker": "تابع التصفح",
     "home": "الرئيسية",
@@ -59,6 +77,10 @@
     "visitThe": "زيارة متجر",
     "store": "",
     "percentOff": "خصم {pct}٪",
+    "youSave": "توفر {amount}",
+    "vatInclusive": "شامل ضريبة القيمة المضافة",
+    "warrantyTitle": "الضمان",
+    "warrantyBody": "يشمل ضمان الشركة المصنعة المحدود. راجع تفاصيل المنتج لمدة التغطية والشروط.",
     "sku": "رمز المنتج",
     "validation": {
       "fixErrors": "يرجى إصلاح الأخطاء في النموذج.",

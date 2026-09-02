@@ -9,13 +9,13 @@ import { ShoppingCart, Wrench, Loader2, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { customizeReadyMadeAction, addBuildToCartAction } from "@/features/pc-builder/actions/mutations";
 import { useCartStore } from "@/stores/cart-store";
-import { SLOT_ORDER, type PCBuild, type PCSlot } from "@/features/pc-builder/types";
+import { CORE_SLOTS, type PCBuild, type PCSlot } from "@/features/pc-builder/types";
 import { SLOT_ICONS } from "./slot-icons";
 
 function RigStrip({ filledSlots }: { filledSlots: Set<PCSlot> }) {
   return (
     <div className="flex h-full w-full items-center justify-center gap-1.5 px-6">
-      {SLOT_ORDER.map((slot) => {
+      {CORE_SLOTS.map((slot) => {
         const Icon = SLOT_ICONS[slot];
         const filled = filledSlots.has(slot);
         return (

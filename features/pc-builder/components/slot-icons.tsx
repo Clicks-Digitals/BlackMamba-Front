@@ -1,4 +1,20 @@
-import { Cpu, Fan, CircuitBoard, MemoryStick, Gpu, HardDrive, PlugZap, Box, AppWindow, type LucideIcon } from "lucide-react";
+import {
+  Cpu,
+  Fan,
+  CircuitBoard,
+  MemoryStick,
+  Gpu,
+  HardDrive,
+  PlugZap,
+  Box,
+  AppWindow,
+  Monitor,
+  Keyboard,
+  Mouse,
+  Headphones,
+  Square,
+  type LucideIcon,
+} from "lucide-react";
 import type { PCSlot } from "@/features/pc-builder/types";
 
 export const SLOT_ICONS: Record<PCSlot, LucideIcon> = {
@@ -10,5 +26,10 @@ export const SLOT_ICONS: Record<PCSlot, LucideIcon> = {
   STORAGE: HardDrive,
   PSU: PlugZap,
   CASE: Box,
-  OS: AppWindow
+  OS: AppWindow,
+  MONITOR: Monitor,
+  KEYBOARD: Keyboard,
+  MOUSE: Mouse,
+  HEADSET: Headphones,
+  MOUSEPAD: Square,
 };

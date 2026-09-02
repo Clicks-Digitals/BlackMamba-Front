@@ -48,13 +48,88 @@ export async function getSponsors(): Promise<HomeSponsor[]> {
   return extractList<HomeSponsor>(res.data).filter((s) => s.is_active && (s.image_url || s.image));
 }
 
-export async function getBrands(categoryId?: string): Promise<HomeBrand[]> {
+export async function getBrands(categoryId?: string | number): Promise<HomeBrand[]> {
   const url = categoryId
     ? `/categories/brands/?page_size=100&category=${categoryId}`
     : `/categories/brands/?page_size=100`;
   const res = await apiClient<PaginatedResponse<HomeBrand>>(url);
   if (!res.ok) return [];
-  return extractList<HomeBrand>(res.data).filter((b) => b.is_active);
+  return extractList<HomeBrand>(res.data).filter((b) => b.is_active !== false);
+}
+
+/** Brands for the home “Shop by Brand” rail. Falls back to a showcase list if the API is empty. */
+export async function getShopByBrands(): Promise<HomeBrand[]> {
+  const categories = await getFeaturedCategories();
+  const merged = new Map<string, HomeBrand>();
+
+  await Promise.all(
+    categories.slice(0, 8).map(async (cat) => {
+      const list = await getBrands(cat.id);
+      for (const brand of list) {
+        const key = brand.slug || brand.id;
+        if (key && !merged.has(key)) merged.set(key, brand);
+      }
+    })
+  );
+
+  if (merged.size > 0) {
+    return Array.from(merged.values()).map((brand) => withLocalBrandLogo(brand));
+  }
+
+  // API currently requires a category and often returns empty — keep a visible showcase.
+  const showcase: { name: string; slug: string; logo: string }[] = [
+    { name: "AMD", slug: "amd", logo: "/brands/amd.svg" },
+    { name: "Intel", slug: "intel", logo: "/brands/intel.svg" },
+    { name: "NVIDIA", slug: "nvidia", logo: "/brands/nvidia.svg" },
+    { name: "ASUS", slug: "asus", logo: "/brands/asus.svg" },
+    { name: "MSI", slug: "msi", logo: "/brands/msi.svg" },
+    { name: "Corsair", slug: "corsair", logo: "/brands/corsair.svg" },
+    { name: "Logitech", slug: "logitech", logo: "/brands/logitech.svg" },
+    { name: "Samsung", slug: "samsung", logo: "/brands/samsung.svg" },
+    { name: "Kingston", slug: "kingston", logo: "/brands/kingston.svg" },
+    { name: "Razer", slug: "razer", logo: "/brands/razer.svg" },
+    { name: "Cooler Master", slug: "cooler-master", logo: "/brands/coolermaster.svg" },
+  ];
+
+  return showcase.map((entry, index) => ({
+    id: `showcase-${entry.slug}`,
+    name: entry.name,
+    name_ar: entry.name,
+    slug: entry.slug,
+    description: null,
+    description_ar: null,
+    logo: entry.logo,
+    logo_url: entry.logo,
+    website: null,
+    categories: [],
+    is_active: true,
+    display_order: index,
+    created_at: "",
+    updated_at: "",
+  }));
+}
+
+const LOCAL_BRAND_LOGOS: Record<string, string> = {
+  amd: "/brands/amd.svg",
+  intel: "/brands/intel.svg",
+  nvidia: "/brands/nvidia.svg",
+  asus: "/brands/asus.svg",
+  msi: "/brands/msi.svg",
+  corsair: "/brands/corsair.svg",
+  logitech: "/brands/logitech.svg",
+  samsung: "/brands/samsung.svg",
+  kingston: "/brands/kingston.svg",
+  razer: "/brands/razer.svg",
+  "cooler-master": "/brands/coolermaster.svg",
+  coolermaster: "/brands/coolermaster.svg",
+};
+
+function withLocalBrandLogo(brand: HomeBrand): HomeBrand {
+  if (brand.logo_url || brand.logo) return brand;
+  const key = (brand.slug || brand.name || "").toLowerCase().replace(/\s+/g, "-");
+  const local = LOCAL_BRAND_LOGOS[key] || LOCAL_BRAND_LOGOS[key.replace(/-/g, "")];
+  if (!local) return brand;
+  return { ...brand, logo: local, logo_url: local };
 }
 
 export async function getHomeBanners(): Promise<HomeBanner[]> {

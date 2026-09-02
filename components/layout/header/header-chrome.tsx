@@ -24,7 +24,7 @@ export function HeaderChrome({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <div ref={ref} className="fixed inset-x-0 top-0 z-40 bg-[#0b0b0d]">
+      <div ref={ref} className="fixed inset-x-0 top-0 z-40 bg-store-nav">
         {children}
       </div>
       <div

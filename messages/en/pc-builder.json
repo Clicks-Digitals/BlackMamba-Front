@@ -2,16 +2,17 @@
   "PCBuilder": {
     "badge": "Black Mamba",
     "title": "Build Your PC",
-    "subtitle": "Pick one part per slot — we check compatibility live and apply a bundle discount as you go.",
+    "subtitle": "Build like Newegg — pick core components, then add a monitor, keyboard, mouse, headset, and mousepad. We check compatibility live.",
     "browseAllParts": "Browse All Parts",
     "browseReadyMade": "Browse Ready-Made PCs",
     "hud": {
-      "chipSlots": "9 Build Slots",
-      "chipCompat": "Live Compatibility",
-      "chipDiscount": "Bundle Discounts",
-      "slotsFilled": "{filled} / {total}",
-      "slotsLabel": "Slots armed",
-      "powerLabel": "System draw",
+    "chipSlots": "14 Component Slots",
+    "chipCompat": "Live Compatibility",
+    "chipDiscount": "Bundle Discounts",
+    "slotsFilled": "{filled} / {total}",
+    "slotsLabel": "Core parts",
+    "accessoriesLabel": "Peripherals",
+    "powerLabel": "System draw",
       "watts": "{watts}W",
       "chassis": "Live chassis",
       "emptyBay": "Empty bay",
@@ -35,9 +36,30 @@
       "STORAGE": "Storage",
       "PSU": "Power Supply",
       "CASE": "Case",
-      "OS": "Operating System"
+      "OS": "Operating System",
+      "MONITOR": "Monitor",
+      "KEYBOARD": "Keyboard",
+      "MOUSE": "Mouse",
+      "HEADSET": "Headset",
+      "MOUSEPAD": "Mousepad"
+    },
+    "sections": {
+      "core": "Core Components",
+      "coreHint": "Required parts for a complete, compatible build",
+      "peripherals": "Peripherals & Accessories",
+      "peripheralsHint": "Optional — monitors, input devices, and more",
+      "optional": "Optional"
+    },
+    "table": {
+      "component": "Component",
+      "selection": "Selection",
+      "price": "Price",
+      "action": "Action"
     },
     "select": "Select {slot}",
+    "selectBtn": "Select",
+    "changePart": "Change",
+    "removePart": "Remove",
     "preferences": {
       "processor": "Processor",
       "graphics": "Graphics",

@@ -69,7 +69,7 @@ export function ProductGallery({ images, thumbnail, productName }: ProductGaller
 
   if (!allImages.length) {
     return (
-      <div className="flex aspect-square w-full items-center justify-center rounded-lg border border-white/10 bg-[#101112] text-white/25">
+      <div className="flex aspect-square w-full items-center justify-center rounded-md border border-border bg-card text-muted-foreground/40">
         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
           <rect x="3" y="3" width="18" height="18" rx="2" />
           <circle cx="8.5" cy="8.5" r="1.5" />
@@ -80,134 +80,71 @@ export function ProductGallery({ images, thumbnail, productName }: ProductGaller
   }
 
   return (
-    <div className="flex flex-col gap-3 md:flex-row md:gap-3">
-      {hasMultiple && (
-        <div className="no-scrollbar hidden md:flex md:w-[4.5rem] md:shrink-0 md:flex-col md:gap-2">
-          {allImages.map((src, i) => {
-            const isActive = displayedImage === src;
-            return (
-              <button
-                key={src + i}
-                type="button"
-                onClick={() => showImage(src)}
-                className={cn(
-                  "relative aspect-square w-full shrink-0 overflow-hidden rounded-md border bg-[#101112] transition-all duration-200",
-                  isActive
-                    ? "border-[#d12f27] opacity-100 shadow-[0_0_0_1px_rgba(209,47,39,0.35)]"
-                    : "border-white/10 opacity-50 hover:border-white/25 hover:opacity-90"
-                )}
-              >
-                <Image src={src} alt="" fill className="object-contain p-1" unoptimized />
-              </button>
-            );
-          })}
-        </div>
-      )}
+    <div className="flex flex-col gap-3">
+      <div
+        className={cn(
+          "group relative overflow-hidden rounded-md border bg-card transition-[border-color] duration-300",
+          cue ? "bm-pdp-cue border-primary" : "border-border"
+        )}
+        style={{ aspectRatio: "1 / 1" }}
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={displayedImage}
+            initial={reduce ? false : { opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: zoomed ? 1.35 : 1 }}
+            exit={reduce ? undefined : { opacity: 0, scale: 1.02 }}
+            transition={{ duration: reduce ? 0 : 0.28, ease: EASE }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={displayedImage}
+              alt={productName}
+              fill
+              className="pointer-events-none object-contain p-4 sm:p-6"
+              unoptimized
+              priority
+            />
+          </motion.div>
+        </AnimatePresence>
 
-      <div className="relative min-w-0 flex-1">
-        <div
-          className={cn(
-            "group relative overflow-hidden rounded-lg border bg-[#101112] transition-[border-color] duration-300",
-            cue ? "bm-pdp-cue border-[#d12f27]" : "border-white/10"
-          )}
-          style={{ aspectRatio: "1 / 1" }}
-        >
-          <div
-            className="pointer-events-none absolute inset-0 opacity-80"
-            style={{
-              background:
-                "radial-gradient(ellipse 55% 50% at 50% 58%, rgba(158,29,32,0.16), transparent 70%)",
-            }}
-            aria-hidden
-          />
-          <span className="pointer-events-none absolute start-3 top-3 z-10 h-6 w-6 border-s border-t border-[#d12f27]/70" />
-          <span className="pointer-events-none absolute end-3 top-3 z-10 h-6 w-6 border-e border-t border-[#d12f27]/70" />
-          <span className="pointer-events-none absolute start-3 bottom-3 z-10 h-6 w-6 border-s border-b border-[#d12f27]/70" />
-          <span className="pointer-events-none absolute end-3 bottom-3 z-10 h-6 w-6 border-e border-b border-[#d12f27]/70" />
-
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={displayedImage}
-              initial={reduce ? false : { opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: zoomed ? 1.38 : 1 }}
-              exit={reduce ? undefined : { opacity: 0, scale: 1.02 }}
-              transition={{ duration: reduce ? 0 : 0.28, ease: EASE }}
-              className="absolute inset-0"
-            >
-              <Image
-                src={displayedImage}
-                alt={productName}
-                fill
-                className="pointer-events-none object-contain p-5 sm:p-8"
-                unoptimized
-                priority
-              />
-            </motion.div>
-          </AnimatePresence>
-
-          <button
-            type="button"
-            onClick={() => setZoomed((z) => !z)}
-            className={cn("absolute inset-0 z-[1]", zoomed ? "cursor-zoom-out" : "cursor-zoom-in")}
-            aria-label={zoomed ? t("zoomOut") : t("zoomIn")}
-          />
-
-          {hasMultiple && (
-            <>
-              <button
-                type="button"
-                onClick={() => navigate(-1)}
-                className="absolute start-3 top-1/2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-md border border-white/12 bg-black/55 text-white opacity-0 transition-all duration-200 group-hover:opacity-100 hover:bg-primary"
-                aria-label={t("previousImage")}
-              >
-                <ChevronLeft size={18} strokeWidth={2.5} className="rtl:rotate-180" />
-              </button>
-              <button
-                type="button"
-                onClick={() => navigate(1)}
-                className="absolute end-3 top-1/2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-md border border-white/12 bg-black/55 text-white opacity-0 transition-all duration-200 group-hover:opacity-100 hover:bg-primary"
-                aria-label={t("nextImage")}
-              >
-                <ChevronRight size={18} strokeWidth={2.5} className="rtl:rotate-180" />
-              </button>
-            </>
-          )}
-
-          <div className="pointer-events-none absolute bottom-3 start-3 z-10 flex items-center gap-2">
-            <span className="inline-flex size-8 items-center justify-center rounded-md border border-white/12 bg-black/50 text-white/70">
-              {zoomed ? <ZoomOut size={14} /> : <ZoomIn size={14} />}
-            </span>
-            {hasMultiple && (
-              <span className="rounded-md border border-white/12 bg-black/50 px-2.5 py-1.5 font-mono text-[11px] tracking-wide text-white/70">
-                {t("imageOf", {
-                  current: String(displayIndex + 1).padStart(2, "0"),
-                  total: String(allImages.length).padStart(2, "0"),
-                })}
-              </span>
-            )}
-          </div>
-        </div>
+        <button
+          type="button"
+          onClick={() => setZoomed((z) => !z)}
+          className={cn("absolute inset-0 z-[1]", zoomed ? "cursor-zoom-out" : "cursor-zoom-in")}
+          aria-label={zoomed ? t("zoomOut") : t("zoomIn")}
+        />
 
         {hasMultiple && (
-          <div className="mt-3 flex justify-center gap-1.5 md:hidden">
-            {allImages.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => showImage(allImages[i])}
-                className={cn(
-                  "h-1.5 rounded-full transition-all duration-200",
-                  displayIndex === i ? "w-5 bg-[#d12f27]" : "w-1.5 bg-white/25"
-                )}
-                aria-label={t("imageOf", { current: i + 1, total: allImages.length })}
-              />
-            ))}
-          </div>
+          <>
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="absolute start-2 top-1/2 z-10 flex size-8 -translate-y-1/2 items-center justify-center rounded-md border border-border bg-background/85 text-foreground opacity-0 transition-all group-hover:opacity-100 hover:bg-primary hover:text-white"
+              aria-label={t("previousImage")}
+            >
+              <ChevronLeft size={16} strokeWidth={2.5} className="rtl:rotate-180" />
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate(1)}
+              className="absolute end-2 top-1/2 z-10 flex size-8 -translate-y-1/2 items-center justify-center rounded-md border border-border bg-background/85 text-foreground opacity-0 transition-all group-hover:opacity-100 hover:bg-primary hover:text-white"
+              aria-label={t("nextImage")}
+            >
+              <ChevronRight size={16} strokeWidth={2.5} className="rtl:rotate-180" />
+            </button>
+          </>
         )}
+
+        <div className="pointer-events-none absolute bottom-2 end-2 z-10">
+          <span className="inline-flex size-8 items-center justify-center rounded-md border border-border bg-background/85 text-muted-foreground">
+            {zoomed ? <ZoomOut size={14} /> : <ZoomIn size={14} />}
+          </span>
+        </div>
       </div>
 
       {hasMultiple && (
-        <div className="no-scrollbar flex gap-2 overflow-x-auto md:hidden">
+        <div className="no-scrollbar flex gap-2 overflow-x-auto pb-0.5">
           {allImages.map((src, i) => {
             const isActive = displayedImage === src;
             return (
@@ -216,11 +153,13 @@ export function ProductGallery({ images, thumbnail, productName }: ProductGaller
                 type="button"
                 onClick={() => showImage(src)}
                 className={cn(
-                  "relative aspect-square w-[3.75rem] shrink-0 overflow-hidden rounded-md border bg-[#101112] transition-all duration-200",
-                  isActive ? "border-[#d12f27] opacity-100" : "border-white/10 opacity-50"
+                  "relative aspect-square w-[4.25rem] shrink-0 overflow-hidden rounded-md border bg-card transition-all duration-200 sm:w-[4.75rem]",
+                  isActive
+                    ? "border-primary opacity-100"
+                    : "border-border opacity-55 hover:border-muted-foreground/50 hover:opacity-100"
                 )}
               >
-                <Image src={src} alt="" fill className="object-contain p-1" unoptimized />
+                <Image src={src} alt="" fill className="object-contain p-1.5" unoptimized />
               </button>
             );
           })}

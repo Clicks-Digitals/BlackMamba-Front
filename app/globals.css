@@ -122,33 +122,32 @@
 
 :root {
   /*
-   * Black Mamba palette — matched to the Build Your PC page.
-   * Near-black surfaces, crimson for buttons / active / brand marks,
-   * pale paper (#EDEFF0) for type on dark. Ink stays near-black for
-   * text that sits on light product wells and form fields.
+   * Black Mamba palette — graphite greys (not pure black).
+   * Navbar sits darker; page background is a lifted lighter grey
+   * so chrome and content read as separate planes.
    */
 
   /* —— UI kit (shadcn) —— */
-  --background: #0d0e0e;
+  --background: #2a2c2e;
   --foreground: #edeff0;
-  --card: #17181b;
+  --card: #343638;
   --card-foreground: #edeff0;
-  --popover: #17181b;
+  --popover: #343638;
   --popover-foreground: #edeff0;
   --primary: #9e1d20;
   --primary-foreground: #ffffff;
-  --secondary: #241516;
+  --secondary: #3a2a2c;
   --secondary-foreground: #edeff0;
-  --muted: #141516;
-  --muted-foreground: #9aa3a8;
-  --accent: #2a1618;
-  --accent-foreground: #d12f27;
+  --muted: #323436;
+  --muted-foreground: #a8b0b6;
+  --accent: #3a2a2c;
+  --accent-foreground: #ff8a8e;
   --destructive: #d12f27;
-  --border: #26292c;
-  --input: rgba(255, 255, 255, 0.1);
+  --border: #45484b;
+  --input: rgba(255, 255, 255, 0.12);
   --ring: #d12f27;
   --chart-1: #d12f27;
-  --chart-2: #9aa3a8;
+  --chart-2: #a8b0b6;
   --chart-3: #ff7a1a;
   --chart-4: #1e9e5a;
   --chart-5: #b7791f;
@@ -157,20 +156,20 @@
    * sm 5 · md 6 · lg 8 · xl 11 · 2xl 14 · 3xl 18 · 4xl 21.
    */
   --radius: 8px;
-  --sidebar: #161718;
+  --sidebar: #323436;
   --sidebar-foreground: #edeff0;
   --sidebar-primary: #9e1d20;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #241516;
-  --sidebar-accent-foreground: #d12f27;
-  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-accent: #3a2a2c;
+  --sidebar-accent-foreground: #ff8a8e;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
   --sidebar-ring: #d12f27;
 
   /* —— Brand —— */
-  --surface: #17181b;
-  --ink: #0b0b0d;
-  --secondary-text: #9aa3a8;
-  --blue-tint: #241516;
+  --surface: #343638;
+  --ink: #1a1c1e;
+  --secondary-text: #a8b0b6;
+  --blue-tint: #3a2a2c;
   --blue-hover: #7a1618;
   --blue-pressed: #5c1012;
   /* Deal accent: discounts, sale prices and countdowns ONLY — never regular UI. */
@@ -180,16 +179,14 @@
   --header-dark: #edeff0;
 
   /*
-   * Storefront chrome (nav, subnav, footer).
-   * Full dark stack with a slightly lifted subnav so the two bars read
-   * as one piece of Black Mamba chrome, not a light strip under a dark header.
+   * Storefront chrome — dark grey navbar over a lighter grey page.
    */
   --store-primary: #9e1d20;
-  --store-nav-bg: #0b0b0d;
+  --store-nav-bg: #1c1e20;
   --store-nav-fg: #ffffff;
-  --store-subnav-bg: #121314;
+  --store-subnav-bg: #222426;
   --store-subnav-fg: #edeff0;
-  --store-footer-bg: #0b0b0d;
+  --store-footer-bg: #1c1e20;
   --store-footer-link: #ffffff;
   --store-footer-label: rgba(255, 255, 255, 0.6);
 

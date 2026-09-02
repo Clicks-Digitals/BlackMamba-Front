@@ -18,6 +18,7 @@ import { usePCBuilderStore } from "@/stores/pc-builder-store";
 import { getPartsForSlotAction } from "@/features/pc-builder/actions/queries";
 import { upsertBuildItemAction } from "@/features/pc-builder/actions/mutations";
 import { type PCSlot, type PCPart, type PCBuild, type PCPartSpec } from "@/features/pc-builder/types";
+import { getDemoPartsForSlot } from "@/features/pc-builder/demo-build";
 import { SLOT_ICONS } from "./slot-icons";
 
 interface PartPickerSheetProps {
@@ -92,7 +93,16 @@ export function PartPickerSheet({ slot, buildId, onClose }: PartPickerSheetProps
     const timer = setTimeout(async () => {
       const results = await getPartsForSlotAction(slot, buildId, search || undefined);
       if (!cancelled) {
-        setParts(results);
+        const next =
+          results.length > 0
+            ? results
+            : getDemoPartsForSlot(slot).filter((p) =>
+                search
+                  ? p.name.toLowerCase().includes(search.toLowerCase()) ||
+                    (p.name_ar ?? "").includes(search)
+                  : true
+              );
+        setParts(next);
         setIsLoading(false);
       }
     }, 250);
@@ -237,6 +247,54 @@ function PartPickerCard({
 
   function addToBuild(variationId?: string) {
     startSelect(async () => {
+      // Demo catalogue parts (client preview) — apply locally when API has no SKUs yet.
+      if (part.id.startsWith("demo-")) {
+        const store = usePCBuilderStore.getState();
+        const nextItems = { ...store.items };
+        nextItems[slot] = {
+          id: `demo-item-${slot.toLowerCase()}`,
+          slot,
+          product: part.id,
+          variation: variationId ?? null,
+          product_details: part,
+          variation_details: null,
+          unit_price: part.price ?? part.base_price ?? "0",
+        };
+        const itemList = Object.values(nextItems).filter(Boolean) as typeof nextItems[PCSlot][];
+        const subtotal = itemList.reduce((sum, item) => sum + Number(item?.unit_price || 0), 0);
+        const discountPercent =
+          itemList.length >= 12 ? 15 : itemList.length >= 9 ? 12 : itemList.length >= 7 ? 8 : itemList.length >= 5 ? 5 : 0;
+        const build: PCBuild = {
+          id: buildId,
+          build_token: null,
+          is_template: false,
+          tier: null,
+          name: "Black Mamba Build",
+          name_ar: "جهاز بلاك مامبا",
+          target_performance: "",
+          thumbnail: null,
+          display_order: 0,
+          preference_processor_brand: store.preferences.preference_processor_brand,
+          preference_graphics_brand: store.preferences.preference_graphics_brand,
+          preference_color: store.preferences.preference_color,
+          items: itemList as NonNullable<(typeof nextItems)[PCSlot]>[],
+          total_power_draw_watts: store.totalPowerDrawWatts,
+          has_blocking_issues: store.hasBlockingIssues,
+          compatibility: store.compatibility,
+          pricing: {
+            subtotal: subtotal.toFixed(2),
+            discount_percent: String(discountPercent),
+            total_price: (subtotal * (1 - discountPercent / 100)).toFixed(2),
+            part_count: itemList.length,
+            next_tier: null,
+          },
+          is_shareable: false,
+          share_slug: null,
+        };
+        onAdded(build, partName);
+        return;
+      }
+
       const res = await upsertBuildItemAction(buildId, slot, part.id, variationId);
       if (res.status === "success" && res.data) {
         onAdded(res.data, partName);

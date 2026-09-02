@@ -53,7 +53,7 @@ export function ReviewItem({ review, onDeleted, onEdit }: ReviewItemProps) {
 
   return (
     <article
-      className="rounded-md border border-white/8 bg-white/[0.03] p-4"
+      className="rounded-md border border-border bg-muted/30 p-4"
       dir={locale === "ar" ? "rtl" : "ltr"}
     >
       <div className="flex flex-wrap items-start justify-between gap-2">
@@ -63,7 +63,7 @@ export function ReviewItem({ review, onDeleted, onEdit }: ReviewItemProps) {
           </span>
           <div>
             <p className="font-chillax text-[15px] font-semibold text-foreground">{review.user_name}</p>
-            <p className="font-chillax text-xs text-white/40">{formattedDate}</p>
+            <p className="font-chillax text-xs text-muted-foreground">{formattedDate}</p>
           </div>
         </div>
         {isOwner && (
@@ -72,7 +72,7 @@ export function ReviewItem({ review, onDeleted, onEdit }: ReviewItemProps) {
               type="button"
               variant="ghost"
               size="icon"
-              className="h-8 w-8 rounded-md bg-white/8 text-white/50 transition-all duration-200 hover:bg-primary hover:text-white"
+              className="h-8 w-8 rounded-md bg-muted text-muted-foreground transition-all duration-200 hover:bg-primary hover:text-white"
               onClick={() => onEdit(review)}
               aria-label={t("editReview")}
             >
@@ -108,9 +108,9 @@ export function ReviewItem({ review, onDeleted, onEdit }: ReviewItemProps) {
       </div>
 
       {review.title && (
-        <h3 className="font-chillax mt-2 text-sm font-semibold text-[#EDEFF0]">{review.title}</h3>
+        <h3 className="font-chillax mt-2 text-sm font-semibold text-foreground">{review.title}</h3>
       )}
-      <p className="font-chillax mt-1 text-sm leading-relaxed whitespace-pre-wrap text-white/65">
+      <p className="font-chillax mt-1 text-sm leading-relaxed whitespace-pre-wrap text-muted-foreground">
         {review.body}
       </p>
     </article>

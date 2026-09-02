@@ -2,16 +2,17 @@
   "PCBuilder": {
     "badge": "بلاك مامبا",
     "title": "اصنع جهازك",
-    "subtitle": "اختر قطعة واحدة لكل فتحة — نتحقق من التوافق مباشرة ونطبق خصم الباقة كلما أضفت أكثر.",
+    "subtitle": "ابنِ جهازك بأسلوب Newegg — اختر القطع الأساسية ثم أضف شاشة ولوحة مفاتيح وماوس وسماعة وماوس باد. نتحقق من التوافق مباشرة.",
     "browseAllParts": "تصفح جميع القطع",
     "browseReadyMade": "تصفح أجهزة جاهزة",
     "hud": {
-      "chipSlots": "٩ فتحات بناء",
-      "chipCompat": "توافق مباشر",
-      "chipDiscount": "خصومات الباقة",
-      "slotsFilled": "{filled} / {total}",
-      "slotsLabel": "فتحات جاهزة",
-      "powerLabel": "استهلاك الجهاز",
+    "chipSlots": "١٤ فتحة مكوّنات",
+    "chipCompat": "توافق مباشر",
+    "chipDiscount": "خصومات الباقة",
+    "slotsFilled": "{filled} / {total}",
+    "slotsLabel": "القطع الأساسية",
+    "accessoriesLabel": "الملحقات",
+    "powerLabel": "استهلاك الجهاز",
       "watts": "{watts} واط",
       "chassis": "الهيكل المباشر",
       "emptyBay": "فتحة فارغة",
@@ -35,9 +36,30 @@
       "STORAGE": "التخزين",
       "PSU": "مزود الطاقة",
       "CASE": "الكيس",
-      "OS": "نظام التشغيل"
+      "OS": "نظام التشغيل",
+      "MONITOR": "الشاشة",
+      "KEYBOARD": "لوحة المفاتيح",
+      "MOUSE": "الماوس",
+      "HEADSET": "السماعة",
+      "MOUSEPAD": "ماوس باد"
+    },
+    "sections": {
+      "core": "المكوّنات الأساسية",
+      "coreHint": "قطع مطلوبة لجهاز كامل ومتوافق",
+      "peripherals": "الملحقات والأجهزة الطرفية",
+      "peripheralsHint": "اختياري — شاشات وأجهزة إدخال والمزيد",
+      "optional": "اختياري"
+    },
+    "table": {
+      "component": "المكوّن",
+      "selection": "الاختيار",
+      "price": "السعر",
+      "action": "إجراء"
     },
     "select": "اختر {slot}",
+    "selectBtn": "اختر",
+    "changePart": "تغيير",
+    "removePart": "إزالة",
     "preferences": {
       "processor": "المعالج",
       "graphics": "كرت الشاشة",

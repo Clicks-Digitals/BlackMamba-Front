@@ -18,6 +18,18 @@
     "primeOffers": "Prime Offers",
     "addToCart": "Add To Cart",
     "inCart": "In Cart",
-    "outOfStock": "Out of Stock"
+    "outOfStock": "Out of Stock",
+    "more": "More",
+    "deal": "Deal",
+    "seeAll": "See all",
+    "featuredPick": "Featured pick",
+    "viewProduct": "View",
+    "couponDeal": "Exclusive coupon",
+    "off": "OFF",
+    "dealFallback": "Shop today's best prices on PC parts and gear.",
+    "layoutGrid": "Grid layout",
+    "layoutSwiper": "Slider layout",
+    "shopByBrand": "Shop by Brand",
+    "shopByBrandKicker": "Partners"
   }
 }

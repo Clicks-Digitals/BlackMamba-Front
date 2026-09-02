@@ -24,7 +24,7 @@ export async function RelatedProducts({ slug }: RelatedProductsProps) {
         action={
           <ScrollTopLink
             href="/products"
-            className="rounded-md border border-white/12 px-4 py-1.5 font-chillax text-sm font-semibold text-white/70 transition-colors duration-200 hover:border-primary/40 hover:text-white"
+            className="rounded-md border border-border px-4 py-1.5 font-chillax text-sm font-semibold text-muted-foreground transition-colors duration-200 hover:border-primary/40 hover:text-foreground"
           >
             {t("viewMore")}
           </ScrollTopLink>

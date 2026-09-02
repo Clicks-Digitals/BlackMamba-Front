@@ -27,7 +27,7 @@ export function AnnouncementBar({ offers }: { offers: OfferSection[] }) {
   const marqueeItems = Array.from({ length: repeatTimes }, () => active).flat();
 
   return (
-    <div className="relative flex items-center border-b border-white/6 bg-[#0b0b0d] py-1.5 text-white">
+    <div className="relative flex items-center border-b border-white/6 bg-store-nav py-1.5 text-white">
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-primary/50 to-transparent" />
       {single ? (
         // One offer → static, centered.

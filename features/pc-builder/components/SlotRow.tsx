@@ -5,7 +5,7 @@ import { useEffect, useRef, useTransition } from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { useLocale, useTranslations } from "next-intl";
-import { X, ChevronRight, ChevronLeft, Plus } from "lucide-react";
+import { X, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePCBuilderStore } from "@/stores/pc-builder-store";
 import { removeBuildItemAction } from "@/features/pc-builder/actions/mutations";
@@ -17,9 +17,11 @@ interface SlotRowProps {
   slot: PCSlot;
   buildId: string;
   onOpenPicker: (slot: PCSlot) => void;
+  index?: number;
 }
 
-export function SlotRow({ slot, buildId, onOpenPicker }: SlotRowProps) {
+/** Newegg/Microless-style component row: category | selection | price | select */
+export function SlotRow({ slot, buildId, onOpenPicker, index = 0 }: SlotRowProps) {
   const t = useTranslations("PCBuilder");
   const locale = useLocale();
   const rtl = locale === "ar";
@@ -38,6 +40,44 @@ export function SlotRow({ slot, buildId, onOpenPicker }: SlotRowProps) {
   const handleRemove = (e: React.MouseEvent) => {
     e.stopPropagation();
     startRemove(async () => {
+      if (item?.id.startsWith("demo-")) {
+        const store = usePCBuilderStore.getState();
+        const nextItems = { ...store.items };
+        delete nextItems[slot];
+        const itemList = Object.values(nextItems).filter(Boolean) as NonNullable<(typeof nextItems)[PCSlot]>[];
+        const subtotal = itemList.reduce((sum, entry) => sum + Number(entry.unit_price || 0), 0);
+        const discountPercent =
+          itemList.length >= 12 ? 15 : itemList.length >= 9 ? 12 : itemList.length >= 7 ? 8 : itemList.length >= 5 ? 5 : 0;
+        setBuild({
+          id: buildId,
+          build_token: null,
+          is_template: false,
+          tier: null,
+          name: "Black Mamba Build",
+          name_ar: "جهاز بلاك مامبا",
+          target_performance: "",
+          thumbnail: null,
+          display_order: 0,
+          preference_processor_brand: store.preferences.preference_processor_brand,
+          preference_graphics_brand: store.preferences.preference_graphics_brand,
+          preference_color: store.preferences.preference_color,
+          items: itemList,
+          total_power_draw_watts: store.totalPowerDrawWatts,
+          has_blocking_issues: store.hasBlockingIssues,
+          compatibility: store.compatibility,
+          pricing: {
+            subtotal: subtotal.toFixed(2),
+            discount_percent: String(discountPercent),
+            total_price: (subtotal * (1 - discountPercent / 100)).toFixed(2),
+            part_count: itemList.length,
+            next_tier: null,
+          },
+          is_shareable: false,
+          share_slug: null,
+        });
+        return;
+      }
+
       const res = await removeBuildItemAction(buildId, slot);
       if (res.status === "success" && res.data) {
         setBuild(res.data);
@@ -51,12 +91,15 @@ export function SlotRow({ slot, buildId, onOpenPicker }: SlotRowProps) {
   const partName = part ? (rtl && part.name_ar ? part.name_ar : part.name) : null;
   const price = part?.price ?? part?.base_price;
   const SlotIcon = SLOT_ICONS[slot];
-  const ChevronIcon = rtl ? ChevronLeft : ChevronRight;
   const slotLabel = t(`slots.${slot}`);
   const bay = String(SLOT_ORDER.indexOf(slot) + 1).padStart(2, "0");
-  const index = SLOT_ORDER.indexOf(slot);
   const specHint = part?.spec
-    ? [part.spec.socket, part.spec.memory_type, part.spec.wattage ? `${part.spec.wattage}W` : null, part.spec.tdp_watts ? `${part.spec.tdp_watts}W` : null]
+    ? [
+        part.spec.socket,
+        part.spec.memory_type,
+        part.spec.wattage ? `${part.spec.wattage}W` : null,
+        part.spec.tdp_watts ? `${part.spec.tdp_watts}W` : null,
+      ]
         .filter(Boolean)
         .slice(0, 2)
         .join(" · ")
@@ -83,124 +126,128 @@ export function SlotRow({ slot, buildId, onOpenPicker }: SlotRowProps) {
           onOpenPicker(slot);
         }
       }}
-      initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+      initial={reduceMotion ? false : { opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
-        opacity: { duration: 0.32, delay: reduceMotion ? 0 : 0.55 + index * 0.045, ease: [0.22, 1, 0.36, 1] },
-        y: { duration: 0.32, delay: reduceMotion ? 0 : 0.55 + index * 0.045, ease: [0.22, 1, 0.36, 1] },
+        duration: 0.28,
+        delay: reduceMotion ? 0 : 0.4 + index * 0.03,
+        ease: [0.22, 1, 0.36, 1],
       }}
-      whileHover={reduceMotion ? undefined : { y: -2, transition: { duration: 0.18, delay: 0 } }}
       className={cn(
-        "group relative flex min-h-11 w-full cursor-pointer items-center gap-3 overflow-hidden rounded-lg border px-3 py-3 text-start sm:gap-4 sm:px-4 sm:py-3.5",
-        "transition-[border-color,background-color,box-shadow] duration-200",
-        "hover:shadow-[0_8px_24px_-18px_rgba(0,0,0,0.9)]",
-        "before:pointer-events-none before:absolute before:inset-0 before:bg-[linear-gradient(110deg,rgba(255,255,255,0.05),transparent_42%)] before:opacity-0 before:transition-opacity before:duration-200 hover:before:opacity-100",
-        part
-          ? "border-[#9e1d20]/40 bg-[#9e1d20]/8 hover:border-[#d12f27]/55 hover:bg-[#9e1d20]/12"
-          : "border-white/8 bg-white/[0.03] hover:border-white/16 hover:bg-white/[0.05]",
-        isActive && "border-[#d12f27]/70 bg-[#9e1d20]/12 shadow-[inset_3px_0_0_0_#9e1d20]",
-        part && !isActive && "shadow-[inset_3px_0_0_0_#9e1d20]",
-        isBlocking && "bm-warn-pulse border-[#FF6B70]/45",
-        issue && !isBlocking && "border-[#F5C147]/30"
+        "group grid w-full cursor-pointer grid-cols-[minmax(0,7.5rem)_minmax(0,1fr)_auto] items-center gap-3 border-b border-border px-3 py-3 text-start sm:grid-cols-[minmax(0,9rem)_minmax(0,1fr)_6.5rem_auto] sm:gap-4 sm:px-4 sm:py-3.5",
+        "bg-card/40 transition-colors hover:bg-muted/40",
+        isActive && "bg-primary/10",
+        isBlocking && "bg-destructive/5",
+        issue && !isBlocking && "bg-deal/5"
       )}
     >
       <span
         ref={confirmRef}
-        className="pointer-events-none absolute start-8 top-1/2 size-3 -translate-y-1/2 rounded-full bg-[#d12f27] opacity-0"
+        className="pointer-events-none absolute size-0 opacity-0"
         aria-hidden
       />
 
-      <span
-        className={cn(
-          "w-7 shrink-0 font-beckman text-[11px] tracking-widest sm:w-8 sm:text-xs",
-          part ? "text-[#d12f27]" : "text-white/25",
-          rtl && "font-cairo font-bold tracking-normal"
-        )}
-      >
-        {bay}
-      </span>
-
-      <div
-        className={cn(
-          "relative flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-md sm:size-14",
-          part ? "bg-[#0d0e0e] ring-1 ring-[#9e1d20]/35" : "bg-white/4 ring-1 ring-white/8",
-          "transition-[box-shadow] duration-200 group-hover:shadow-[0_0_16px_-6px_rgba(209,47,39,0.7)]"
-        )}
-      >
-        {part?.thumbnail ? (
-          <Image
-            src={part.thumbnail}
-            alt={partName ?? ""}
-            width={56}
-            height={56}
-            className="size-full object-contain p-1 motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95 motion-safe:duration-300"
-            unoptimized
-          />
-        ) : (
-          <SlotIcon
-            className={cn(
-              "size-5 transition-colors duration-200",
-              part ? "text-[#d12f27]" : "text-white/28 group-hover:text-[#d12f27]/80"
-            )}
-          />
-        )}
+      {/* Component category */}
+      <div className="flex min-w-0 items-center gap-2.5">
         <span
           className={cn(
-            "absolute end-1 top-1 size-1.5 rounded-full",
-            part ? "bg-[#d12f27] shadow-[0_0_8px_#d12f27]" : "bg-white/20"
+            "hidden w-6 shrink-0 font-mono text-[10px] tabular-nums sm:inline",
+            part ? "text-primary" : "text-muted-foreground/50"
           )}
-        />
+        >
+          {bay}
+        </span>
+        <div
+          className={cn(
+            "flex size-9 shrink-0 items-center justify-center rounded-md border",
+            part ? "border-primary/35 bg-primary/10 text-primary" : "border-border bg-muted/40 text-muted-foreground"
+          )}
+        >
+          <SlotIcon className="size-4" strokeWidth={1.6} />
+        </div>
+        <p
+          className={cn(
+            "truncate text-[13px] font-semibold",
+            part ? "text-foreground" : "text-muted-foreground",
+            rtl && "font-cairo"
+          )}
+        >
+          {slotLabel}
+        </p>
       </div>
 
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/40">{slotLabel}</p>
-          <span
-            className={cn(
-              "rounded-sm px-1.5 py-px text-[9px] font-bold uppercase tracking-[0.12em]",
-              part ? "bg-[#9e1d20]/20 text-[#d12f27]" : "bg-white/6 text-white/30"
-            )}
-          >
-            {part ? t("hud.selected") : t("hud.empty")}
-          </span>
-        </div>
-        {part ? (
-          <>
-            <p className="truncate text-sm font-semibold text-[#EDEFF0]">
-              {partName}
-              {item?.variation_details?.attribute_names?.length ? (
-                <span className="font-medium text-white/45"> · {item.variation_details.attribute_names.join(", ")}</span>
+      {/* Selection */}
+      <div className="flex min-w-0 items-center gap-3">
+        {part?.thumbnail ? (
+          <div className="relative hidden size-11 shrink-0 overflow-hidden rounded-md border border-border bg-background sm:block">
+            <Image src={part.thumbnail} alt="" fill className="object-contain p-1" unoptimized />
+          </div>
+        ) : null}
+        <div className="min-w-0 flex-1">
+          {part ? (
+            <>
+              <p className={cn("truncate text-sm font-medium text-foreground", rtl && "font-cairo")}>
+                {partName}
+                {item?.variation_details?.attribute_names?.length ? (
+                  <span className="font-normal text-muted-foreground">
+                    {" "}
+                    · {item.variation_details.attribute_names.join(", ")}
+                  </span>
+                ) : null}
+              </p>
+              {specHint ? (
+                <p className="mt-0.5 truncate text-[11px] text-muted-foreground">{specHint}</p>
               ) : null}
-            </p>
-            {specHint ? <p className="mt-0.5 truncate text-[11px] text-white/35">{specHint}</p> : null}
-            {issue ? <p className="mt-0.5 truncate text-[11px] text-[#FF8A8E]">{issue.message}</p> : null}
-          </>
+              {issue ? (
+                <p className="mt-0.5 truncate text-[11px] text-destructive">{issue.message}</p>
+              ) : null}
+            </>
+          ) : (
+            <p className="text-sm text-muted-foreground">{t("select", { slot: slotLabel })}</p>
+          )}
+        </div>
+      </div>
+
+      {/* Price */}
+      <div className="hidden text-end sm:block">
+        {part && price ? (
+          <span className="text-sm font-bold tabular-nums text-primary">
+            {Number(price).toFixed(2)} JOD
+          </span>
         ) : (
-          <p className="flex items-center gap-1.5 text-sm font-medium text-white/48 transition-colors group-hover:text-white/75">
-            <Plus className="size-3.5 opacity-60" />
-            {t("select", { slot: slotLabel })}
-          </p>
+          <span className="text-xs text-muted-foreground/50">—</span>
         )}
       </div>
 
-      {part && price && (
-        <span className="hidden shrink-0 text-sm font-bold tabular-nums text-[#d12f27] sm:inline">
-          {Number(price).toFixed(2)} JOD
-        </span>
-      )}
-
-      {part ? (
-        <span
-          role="button"
-          onClick={handleRemove}
-          className="flex size-11 shrink-0 items-center justify-center rounded-md text-white/40 transition-colors duration-200 hover:bg-white/10 hover:text-white"
-          aria-disabled={isRemoving}
-        >
-          <X className="h-4 w-4" />
-        </span>
-      ) : (
-        <ChevronIcon className="h-4 w-4 shrink-0 text-white/25 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-white/50 rtl:group-hover:-translate-x-0.5" />
-      )}
+      {/* Action */}
+      <div className="flex items-center justify-end gap-1.5">
+        {part ? (
+          <>
+            <span className="hidden rounded-md border border-border px-2.5 py-1.5 text-[11px] font-semibold text-muted-foreground transition-colors group-hover:border-primary/40 group-hover:text-foreground sm:inline">
+              {t("changePart")}
+            </span>
+            <span
+              role="button"
+              onClick={handleRemove}
+              className="flex size-9 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-destructive/40 hover:bg-destructive/10 hover:text-destructive"
+              aria-disabled={isRemoving}
+              aria-label={t("removePart")}
+            >
+              <X className="size-3.5" />
+            </span>
+          </>
+        ) : (
+          <span className="inline-flex h-9 items-center gap-1 rounded-md bg-primary px-3 text-[12px] font-bold tracking-wide text-white uppercase transition-colors group-hover:bg-[#d12f27]">
+            <Plus className="size-3.5" strokeWidth={2.5} />
+            <span className="hidden sm:inline">{t("selectBtn")}</span>
+          </span>
+        )}
+        {part && price ? (
+          <span className="text-xs font-bold tabular-nums text-primary sm:hidden">
+            {Number(price).toFixed(2)}
+          </span>
+        ) : null}
+      </div>
     </motion.div>
   );
 }

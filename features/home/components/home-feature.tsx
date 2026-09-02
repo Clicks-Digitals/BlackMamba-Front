@@ -32,7 +32,6 @@ const DEFAULT_ORDER: HomeSectionKey[] = [
   "black_mamba",
   "promo_banner",
   "top_brands",
-  "shop_by_brand",
 ];
 
 export async function HomeFeature() {
@@ -55,10 +54,30 @@ export async function HomeFeature() {
     .filter((s) => s.is_active && s.products?.length)
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
+  const sectionProducts = orderedSections.flatMap((s) => s.products ?? []);
+  const highlightProducts = (orderedSections[0]?.products ?? sectionProducts).slice(0, 2);
+  const highlightIds = new Set(highlightProducts.map((p) => p.id));
+  const dealProduct =
+    sectionProducts.find(
+      (p) => !highlightIds.has(p.id) && (p.clearance_sale || p.has_discount)
+    ) ??
+    sectionProducts.find((p) => p.clearance_sale || p.has_discount) ??
+    null;
+
+  const shopByBrand = <HomeShopByBrand locale={locale} />;
+
   // Build the slot map — each key maps to the React node to render.
   const slotMap: Record<HomeSectionKey, React.ReactNode> = {
     hero: (
-      <HomeHero slides={swipers} locale={locale} shopLabel={t("shopNow")} />
+      <HomeHero
+        slides={swipers}
+        categories={categories}
+        highlightProducts={highlightProducts}
+        dealProduct={dealProduct}
+        featuredCoupon={featuredCoupon}
+        locale={locale}
+        shopLabel={t("shopNow")}
+      />
     ),
     trust_bar: <HomeTrustBar />,
     campaigns: campaigns.length > 0
@@ -78,26 +97,40 @@ export async function HomeFeature() {
         sections={orderedSections}
         locale={locale}
         startIndex={0}
+        betweenSlot={shopByBrand}
+        betweenAfterIndex={0}
       />
-    ) : null,
+    ) : (
+      shopByBrand
+    ),
     promo_split: featuredCoupon ? <HomePromoSplit coupon={featuredCoupon} /> : null,
     black_mamba: <HomeBlackMamba />,
     promo_banner: <HomePromoBanner banners={banners} locale={locale} />,
     top_brands: <HomeTopBrands locale={locale} />,
-    shop_by_brand: <HomeShopByBrand locale={locale} />,
+    // Rendered inside product_sections (between first and second collection).
+    shop_by_brand: null,
   };
 
-  // Resolve the ordered, visible keys to render.
   const keys: HomeSectionKey[] =
     layout.length > 0
       ? (layout
-          .filter((s) => s.is_visible)
+          .filter((s) => s.is_visible && s.key !== "shop_by_brand")
           .map((s) => s.key) as HomeSectionKey[])
-      : DEFAULT_ORDER;
+      : DEFAULT_ORDER.filter((k) => k !== "shop_by_brand");
+
+  // Ensure product sections (and thus Shop by Brand) still appear if CMS omitted them.
+  const finalKeys = keys.includes("product_sections")
+    ? keys
+    : (() => {
+        const next = [...keys];
+        const after = next.indexOf("categories");
+        next.splice(after >= 0 ? after + 1 : next.length, 0, "product_sections");
+        return next;
+      })();
 
   return (
     <>
-      {keys.map((key) => {
+      {finalKeys.map((key) => {
         const node = slotMap[key];
         return node ? <Fragment key={key}>{node}</Fragment> : null;
       })}

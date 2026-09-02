@@ -7,9 +7,15 @@ export type PCSlot =
   | "STORAGE"
   | "PSU"
   | "CASE"
-  | "OS";
+  | "OS"
+  | "MONITOR"
+  | "KEYBOARD"
+  | "MOUSE"
+  | "HEADSET"
+  | "MOUSEPAD";
 
-export const SLOT_ORDER: PCSlot[] = [
+/** Parts required for a complete PC (compatibility / chassis). */
+export const CORE_SLOTS: PCSlot[] = [
   "CPU",
   "MOTHERBOARD",
   "RAM",
@@ -18,8 +24,19 @@ export const SLOT_ORDER: PCSlot[] = [
   "PSU",
   "CASE",
   "STORAGE",
-  "OS"
+  "OS",
 ];
+
+/** Optional peripherals — Newegg/Microless-style extras. */
+export const ACCESSORY_SLOTS: PCSlot[] = [
+  "MONITOR",
+  "KEYBOARD",
+  "MOUSE",
+  "HEADSET",
+  "MOUSEPAD",
+];
+
+export const SLOT_ORDER: PCSlot[] = [...CORE_SLOTS, ...ACCESSORY_SLOTS];
 
 export const SLOT_LABELS: Record<PCSlot, string> = {
   CPU: "CPU",
@@ -30,8 +47,17 @@ export const SLOT_LABELS: Record<PCSlot, string> = {
   STORAGE: "Storage",
   PSU: "Power Supply",
   CASE: "Case",
-  OS: "Operating System"
+  OS: "Operating System",
+  MONITOR: "Monitor",
+  KEYBOARD: "Keyboard",
+  MOUSE: "Mouse",
+  HEADSET: "Headset",
+  MOUSEPAD: "Mousepad",
 };
+
+export function isAccessorySlot(slot: PCSlot): boolean {
+  return (ACCESSORY_SLOTS as string[]).includes(slot);
+}
 
 export interface PCPartSpec {
   slot: PCSlot;

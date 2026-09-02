@@ -18,6 +18,7 @@ type Props = {
   arrowVariant?: "dark" | "light";
   className?: string;
   itemClassName?: string;
+  contentClassName?: string;
   loop?: boolean;
   autoPlay?: boolean;
   autoPlayDelay?: number;
@@ -30,6 +31,7 @@ export function HomeSlider({
   arrowVariant = "dark",
   className,
   itemClassName,
+  contentClassName,
   loop = true,
   autoPlay = true,
   autoPlayDelay = 3000,
@@ -63,11 +65,14 @@ export function HomeSlider({
         dir={rtl ? "rtl" : "ltr"}
         className="relative w-full"
       >
-        <CarouselContent className="-ml-4 py-2 md:-ml-5">
+        <CarouselContent className={cn("-ml-3 py-1 md:-ml-3.5", contentClassName)}>
           {children.map((child, i) => (
             <CarouselItem
               key={i}
-              className={cn("basis-[72%] pl-4 sm:basis-64 md:basis-72 md:pl-5", itemClassName)}
+              className={cn(
+                "basis-[72%] pl-3 sm:basis-64 md:basis-72 md:pl-3.5",
+                itemClassName
+              )}
             >
               {child}
             </CarouselItem>
@@ -75,7 +80,7 @@ export function HomeSlider({
         </CarouselContent>
 
         {showArrows && children.length > 1 ? (
-          <div className="mt-6 flex items-center justify-end gap-2">
+          <div className="bm-slider-arrows mt-3 flex items-center justify-end gap-2">
             <CarouselPrevious className={cn(arrowBase, arrowStyle)} />
             <CarouselNext className={cn(arrowBase, arrowStyle)} />
           </div>

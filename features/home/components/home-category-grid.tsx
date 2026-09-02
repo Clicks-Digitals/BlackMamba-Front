@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import { CategoryCard } from "@/components/shared";
 import type { Category } from "@/types/category";
 import { cn } from "@/lib/utils";
+import { HomeSlider } from "./home-slider";
 
 type Props = {
   categories: Category[];
@@ -21,14 +24,14 @@ export function HomeCategoryGrid({
   if (!categories.length) return null;
 
   const rtl = locale === "ar";
-  const visible = categories.slice(0, 8);
+  const items = categories.slice(0, 12);
 
   return (
-    <section className="layout-section-y">
+    <section className="pt-6 pb-3 sm:pt-8 sm:pb-4">
       <div className="layout-page layout-gutter-x">
-        <div className="mb-7 flex items-end justify-between gap-4 md:mb-9">
+        <div className="mb-4 flex items-end justify-between gap-4 sm:mb-5">
           <div className="min-w-0">
-            <p className="bm-kicker mb-2">{rtl ? "اكتشف" : "Discover"}</p>
+            <p className="bm-kicker mb-1.5">{rtl ? "اكتشف" : "Discover"}</p>
             <h2
               className={cn(
                 "leading-none text-foreground",
@@ -51,19 +54,25 @@ export function HomeCategoryGrid({
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {visible.map((cat) => (
+        <HomeSlider
+          rtl={rtl}
+          autoPlay={false}
+          loop={items.length > 5}
+          arrowVariant="light"
+          itemClassName="basis-[78%] sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
+        >
+          {items.map((cat) => (
             <CategoryCard
               key={cat.id}
               category={cat}
               locale={locale}
               exploreLabel={exploreLabel}
-              className="w-full aspect-[4/5]"
+              className="aspect-[4/5] w-full max-h-[17.5rem] sm:max-h-[18.5rem]"
             />
           ))}
-        </div>
+        </HomeSlider>
 
-        <div className="mt-6 flex justify-center sm:hidden">
+        <div className="mt-4 flex justify-center sm:hidden">
           <Link
             href="/categories"
             className={cn(

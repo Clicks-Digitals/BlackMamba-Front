@@ -9,7 +9,7 @@ import { CheckCircle2, AlertTriangle, XCircle, Zap, ShoppingCart, Loader2, Share
 import { cn } from "@/lib/utils";
 import { usePCBuilderStore } from "@/stores/pc-builder-store";
 import { applyFixAction, addBuildToCartAction, shareBuildAction } from "@/features/pc-builder/actions/mutations";
-import { SLOT_ORDER, type PCSlot } from "@/features/pc-builder/types";
+import { SLOT_ORDER, CORE_SLOTS, type PCSlot } from "@/features/pc-builder/types";
 import { useCartStore } from "@/stores/cart-store";
 import {
   Sheet,
@@ -193,7 +193,8 @@ function BuildSummaryBody({
 
   const selectedSlots = SLOT_ORDER.filter((slot) => items[slot]);
   const filled = selectedSlots.length;
-  const complete = filled === SLOT_ORDER.length && !hasBlockingIssues;
+  const coreFilled = CORE_SLOTS.filter((slot) => items[slot]).length;
+  const complete = coreFilled === CORE_SLOTS.length && !hasBlockingIssues;
   const discountTiers = [
     { min: 3, pct: 5 },
     { min: 5, pct: 8 },

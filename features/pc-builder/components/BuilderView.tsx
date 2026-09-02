@@ -16,7 +16,7 @@ import { BuilderPageShell, BuilderBadge } from "./BuilderPageShell";
 import { BuilderMotionProvider, fadeUp, useBuilderMotion } from "./builder-motion";
 import { EnergyBeam } from "./EnergyBeam";
 import { useAnimatedNumber } from "./use-animated-number";
-import { SLOT_ORDER, type PCBuild, type PCSlot } from "@/features/pc-builder/types";
+import { SLOT_ORDER, CORE_SLOTS, ACCESSORY_SLOTS, type PCBuild, type PCSlot } from "@/features/pc-builder/types";
 import { withDemoBuild } from "@/features/pc-builder/demo-build";
 
 interface BuilderViewProps {
@@ -96,10 +96,14 @@ function BuilderStage({
     prevItems.current = { ...items };
   }, [items, hydrated, assembling, triggerPulse]);
 
-  const filled = hydrated ? SLOT_ORDER.filter((slot) => items[slot]).length : initialBuild.items.length;
+  const filledCore = hydrated
+    ? CORE_SLOTS.filter((slot) => items[slot]).length
+    : initialBuild.items.filter((i) => (CORE_SLOTS as string[]).includes(i.slot)).length;
+  const filledAccessories = hydrated
+    ? ACCESSORY_SLOTS.filter((slot) => items[slot]).length
+    : initialBuild.items.filter((i) => (ACCESSORY_SLOTS as string[]).includes(i.slot)).length;
   const power = hydrated ? watts : initialBuild.total_power_draw_watts || 0;
-  const totalSlots = SLOT_ORDER.length;
-  const progress = Math.round((filled / totalSlots) * 100);
+  const progress = Math.round((filledCore / CORE_SLOTS.length) * 100);
   const liveWatts = useAnimatedNumber(power);
 
   return (
@@ -139,10 +143,18 @@ function BuilderStage({
           <motion.div {...fadeUp(0.42, reduceMotion)} className="mt-6 flex flex-wrap items-end gap-4">
             <HudMeter
               label={t("hud.slotsLabel")}
-              value={t("hud.slotsFilled", { filled, total: totalSlots })}
+              value={t("hud.slotsFilled", { filled: filledCore, total: CORE_SLOTS.length })}
               progress={progress}
               rtl={rtl}
             />
+            <div className="min-w-[7.5rem] rounded-lg border border-white/8 bg-black/30 px-4 py-3">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/35">
+                {t("hud.accessoriesLabel")}
+              </p>
+              <p className="mt-1 font-letterman text-2xl tabular-nums text-[#EDEFF0]">
+                {t("hud.slotsFilled", { filled: filledAccessories, total: ACCESSORY_SLOTS.length })}
+              </p>
+            </div>
             <div className="min-w-[7.5rem] rounded-lg border border-white/8 bg-black/30 px-4 py-3">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/35">{t("hud.powerLabel")}</p>
               <p className="mt-1 flex items-center gap-1.5 font-beckman text-2xl tabular-nums text-[#EDEFF0]">
@@ -174,14 +186,27 @@ function BuilderStage({
           <div className="order-2 min-w-0 flex-1 space-y-4 lg:order-1">
             <PreferencesRow buildId={initialBuild.id} />
             <AutoBuilderControls buildId={initialBuild.id} />
-            <div className="relative flex gap-3">
-              <StepRail filledMap={items} />
-              <div className="flex min-w-0 flex-1 flex-col gap-2">
-                {SLOT_ORDER.map((slot) => (
-                  <SlotRow key={slot} slot={slot} buildId={initialBuild.id} onOpenPicker={setActiveSlot} />
-                ))}
-              </div>
-            </div>
+
+            <SlotSection
+              title={t("sections.core")}
+              subtitle={t("sections.coreHint")}
+              slots={CORE_SLOTS}
+              filledMap={items}
+              buildId={initialBuild.id}
+              onOpenPicker={setActiveSlot}
+              indexOffset={0}
+            />
+
+            <SlotSection
+              title={t("sections.peripherals")}
+              subtitle={t("sections.peripheralsHint")}
+              slots={ACCESSORY_SLOTS}
+              filledMap={items}
+              buildId={initialBuild.id}
+              onOpenPicker={setActiveSlot}
+              indexOffset={CORE_SLOTS.length}
+              optional
+            />
           </div>
 
           <SummarySidebar buildId={initialBuild.id} onBrowseSlot={setActiveSlot} />
@@ -193,22 +218,68 @@ function BuilderStage({
   );
 }
 
-function StepRail({ filledMap }: { filledMap: Partial<Record<PCSlot, unknown>> }) {
+function SlotSection({
+  title,
+  subtitle,
+  slots,
+  filledMap,
+  buildId,
+  onOpenPicker,
+  indexOffset,
+  optional,
+}: {
+  title: string;
+  subtitle: string;
+  slots: PCSlot[];
+  filledMap: Partial<Record<PCSlot, unknown>>;
+  buildId: string;
+  onOpenPicker: (slot: PCSlot) => void;
+  indexOffset: number;
+  optional?: boolean;
+}) {
+  const t = useTranslations("PCBuilder");
+  const filled = slots.filter((s) => filledMap[s]).length;
+
   return (
-    <div className="relative hidden w-2 shrink-0 pt-4 lg:block" aria-hidden>
-      <div className="absolute inset-y-4 start-1/2 w-px -translate-x-1/2 bg-white/8" />
-      <div className="relative flex h-full flex-col justify-between py-1">
-        {SLOT_ORDER.map((slot) => (
-          <span
+    <section className="overflow-hidden rounded-lg border border-border bg-card/60">
+      <div className="flex flex-wrap items-end justify-between gap-2 border-b border-border bg-muted/30 px-4 py-3">
+        <div>
+          <div className="flex items-center gap-2">
+            <h2 className="font-chillax text-sm font-semibold tracking-wide text-foreground uppercase">
+              {title}
+            </h2>
+            {optional ? (
+              <span className="rounded bg-muted px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-muted-foreground uppercase">
+                {t("sections.optional")}
+              </span>
+            ) : null}
+          </div>
+          <p className="mt-0.5 text-[12px] text-muted-foreground">{subtitle}</p>
+        </div>
+        <p className="font-mono text-[11px] tabular-nums text-muted-foreground">
+          {t("hud.slotsFilled", { filled, total: slots.length })}
+        </p>
+      </div>
+
+      <div className="hidden grid-cols-[minmax(0,9rem)_minmax(0,1fr)_6.5rem_auto] gap-4 border-b border-border bg-muted/20 px-4 py-2 text-[10px] font-bold tracking-[0.14em] text-muted-foreground uppercase sm:grid">
+        <span>{t("table.component")}</span>
+        <span>{t("table.selection")}</span>
+        <span className="text-end">{t("table.price")}</span>
+        <span className="text-end">{t("table.action")}</span>
+      </div>
+
+      <div>
+        {slots.map((slot, i) => (
+          <SlotRow
             key={slot}
-            className={cn(
-              "relative z-[1] mx-auto size-1.5 rounded-full transition-colors duration-300",
-              filledMap[slot] ? "bg-[#d12f27] shadow-[0_0_8px_#d12f27]" : "bg-white/20"
-            )}
+            slot={slot}
+            buildId={buildId}
+            onOpenPicker={onOpenPicker}
+            index={indexOffset + i}
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 

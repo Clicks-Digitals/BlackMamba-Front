@@ -24,7 +24,7 @@ function RatingSummary({ avgRating, reviewCount, t }: { avgRating: number; revie
             <Star key={i} className={`h-4 w-4 ${i < filled ? "fill-current" : "fill-transparent"}`} strokeWidth={1.5} />
           ))}
         </div>
-        <span className="font-chillax text-xs text-white/45">
+        <span className="font-chillax text-xs text-muted-foreground">
           {t("basedOnReviews", { count: reviewCount, reviews: t("reviews") })}
         </span>
       </div>
@@ -64,7 +64,7 @@ export function ProductReviewsSection({ productId, avgRating, reviewCount }: Pro
   }
 
   return (
-    <section className="bg-[#0d0e0e]" aria-labelledby="product-reviews-heading">
+    <section className="bg-background" aria-labelledby="product-reviews-heading">
       <div className="layout-page layout-gutter-x py-10 sm:py-14">
         <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex flex-wrap items-end gap-5">
@@ -79,7 +79,7 @@ export function ProductReviewsSection({ productId, avgRating, reviewCount }: Pro
             </div>
             {avgRating != null && !!reviewCount && (
               <>
-                <div className="hidden h-10 w-px bg-white/10 sm:block" aria-hidden />
+                <div className="hidden h-10 w-px bg-border sm:block" aria-hidden />
                 <RatingSummary avgRating={avgRating} reviewCount={reviewCount} t={t} />
               </>
             )}
@@ -103,7 +103,7 @@ export function ProductReviewsSection({ productId, avgRating, reviewCount }: Pro
         />
 
         <div
-          className="max-h-[min(65vh,42rem)] overflow-y-auto overflow-x-hidden rounded-lg border border-white/8 bg-[#101112] p-3 sm:p-4 scroll-smooth scrollbar-thin [scrollbar-gutter:stable]"
+          className="max-h-[min(65vh,42rem)] overflow-y-auto overflow-x-hidden rounded-lg border border-border bg-card p-3 sm:p-4 scroll-smooth scrollbar-thin [scrollbar-gutter:stable]"
           aria-labelledby="product-reviews-heading"
           role="region"
         >
@@ -112,20 +112,20 @@ export function ProductReviewsSection({ productId, avgRating, reviewCount }: Pro
             fetchAction={fetchReviewsPage}
             endMessage={t("reviewsEnd")}
             emptyState={
-              <div className="flex flex-col items-center gap-3 rounded-md border border-dashed border-white/12 bg-black/20 py-14 text-center">
+              <div className="flex flex-col items-center gap-3 rounded-md border border-dashed border-border bg-muted/30 py-14 text-center">
                 <div className="flex size-12 items-center justify-center rounded-md bg-primary/10 text-foreground">
                   <MessageSquareText className="size-5" strokeWidth={1.5} />
                 </div>
                 <p className="font-chillax text-[15px] font-semibold text-foreground">
                   {t("noReviewsYetTitle")}
                 </p>
-                <p className="max-w-70 font-chillax text-sm text-white/45">
+                <p className="max-w-70 font-chillax text-sm text-muted-foreground">
                   {t("noReviewsYetBody")}
                 </p>
                 <button
                   type="button"
                   onClick={openCreate}
-                  className="mt-1 inline-flex items-center justify-center rounded-md border border-white/12 px-4 py-2 font-chillax text-sm font-medium text-foreground transition hover:border-primary/40 hover:bg-primary/10"
+                  className="mt-1 inline-flex items-center justify-center rounded-md border border-border px-4 py-2 font-chillax text-sm font-medium text-foreground transition hover:border-primary/40 hover:bg-primary/10"
                 >
                   {t("writeReview")}
                 </button>

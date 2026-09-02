@@ -18,6 +18,18 @@
     "primeOffers": "عروض مميزة",
     "addToCart": "أضف إلى السلة",
     "inCart": "في السلة",
-    "outOfStock": "نفد المخزون"
+    "outOfStock": "نفد المخزون",
+    "more": "المزيد",
+    "deal": "عرض",
+    "seeAll": "عرض الكل",
+    "featuredPick": "اختيار مميز",
+    "viewProduct": "عرض",
+    "couponDeal": "كوبون حصري",
+    "off": "خصم",
+    "dealFallback": "تسوق أفضل أسعار قطع الكمبيوتر والإكسسوارات اليوم.",
+    "layoutGrid": "عرض شبكة",
+    "layoutSwiper": "عرض شريط",
+    "shopByBrand": "تسوق حسب العلامة",
+    "shopByBrandKicker": "شركاؤنا"
   }
 }

@@ -1,0 +1,96 @@
+import type { ProductTable } from "@/types/product";
+
+/** Demo Microless-style specs for client preview when CMS table is empty. */
+export const DEMO_PRODUCT_TABLE: ProductTable = {
+  id: "demo-specs",
+  title: "Specifications",
+  title_ar: "المواصفات",
+  columns: ["Value"],
+  columns_ar: ["القيمة"],
+  rows: [
+    {
+      id: "1",
+      feature: "Brand",
+      feature_ar: "العلامة التجارية",
+      values: ["Black Mamba"],
+      order: 1,
+    },
+    {
+      id: "2",
+      feature: "Model",
+      feature_ar: "الموديل",
+      values: ["BM-DEMO-27"],
+      order: 2,
+    },
+    {
+      id: "3",
+      feature: "Display Size",
+      feature_ar: "حجم الشاشة",
+      values: ['27"'],
+      order: 3,
+    },
+    {
+      id: "4",
+      feature: "Panel Type",
+      feature_ar: "نوع اللوحة",
+      values: ["IPS"],
+      order: 4,
+    },
+    {
+      id: "5",
+      feature: "Resolution",
+      feature_ar: "الدقة",
+      values: ["1920 × 1080 (FHD)"],
+      order: 5,
+    },
+    {
+      id: "6",
+      feature: "Refresh Rate",
+      feature_ar: "معدل التحديث",
+      values: ["200Hz"],
+      order: 6,
+    },
+    {
+      id: "7",
+      feature: "Response Time",
+      feature_ar: "زمن الاستجابة",
+      values: ["1ms"],
+      order: 7,
+    },
+    {
+      id: "8",
+      feature: "Viewing Angle",
+      feature_ar: "زاوية الرؤية",
+      values: ["178° / 178°"],
+      order: 8,
+    },
+    {
+      id: "9",
+      feature: "Brightness",
+      feature_ar: "السطوع",
+      values: ["300 nits"],
+      order: 9,
+    },
+    {
+      id: "10",
+      feature: "Connectivity",
+      feature_ar: "المنافذ",
+      values: ["HDMI 2.0 × 2, DisplayPort 1.4, Audio Out"],
+      order: 10,
+    },
+    {
+      id: "11",
+      feature: "Color",
+      feature_ar: "اللون",
+      values: ["Black"],
+      order: 11,
+    },
+    {
+      id: "12",
+      feature: "Warranty",
+      feature_ar: "الضمان",
+      values: ["1 Year Manufacturer Warranty"],
+      order: 12,
+    },
+  ],
+};

@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Check, Minus, Plus, ShoppingCart, Truck, RotateCcw, ShieldCheck } from "lucide-react";
+import { Check, Minus, Plus, ShoppingCart, Truck, RotateCcw, ShieldCheck, BadgeCheck } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import type { Product, VariationGroup, VariationOption, Combination } from "@/types";
@@ -26,20 +26,6 @@ interface VariationSelectorProps {
 
 const HEX_RE = /^#[0-9A-Fa-f]{6}$/;
 
-function StarIcon({ filled }: { filled: boolean }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill={filled ? "var(--warning)" : "none"}
-      stroke={filled ? "var(--warning)" : "var(--border)"}
-      strokeWidth="1.5"
-      className="size-3.5 shrink-0"
-    >
-      <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-    </svg>
-  );
-}
-
 function isOptionAvailable(
   variationId: string,
   groupName: string,
@@ -62,7 +48,7 @@ function VariationSelector({ group, groupLabel, locale, selected, onSelect, comb
   const isAr = locale === "ar";
   return (
     <div>
-      <h3 className="mb-2 font-chillax text-[11px] font-bold tracking-[0.18em] text-white/40 uppercase">
+      <h3 className="mb-2 font-chillax text-[11px] font-bold tracking-[0.18em] text-muted-foreground uppercase">
         {groupLabel}
       </h3>
       <div className="flex flex-wrap gap-2">
@@ -81,8 +67,10 @@ function VariationSelector({ group, groupLabel, locale, selected, onSelect, comb
                 disabled={!available}
                 title={optionLabel}
                 className={cn(
-                  "size-7 rounded-md border transition-all",
-                  isSelected ? "border-[#d12f27] ring-1 ring-[#d12f27]/50 scale-105" : "border-white/15",
+                  "size-8 rounded-md border transition-all",
+                  isSelected
+                    ? "border-primary ring-2 ring-primary/40 ring-offset-2 ring-offset-card scale-105"
+                    : "border-border",
                   !available ? "cursor-not-allowed opacity-40" : "hover:scale-105"
                 )}
                 style={{ backgroundColor: hexColor }}
@@ -100,7 +88,7 @@ function VariationSelector({ group, groupLabel, locale, selected, onSelect, comb
                 "h-9 rounded-md px-3.5 font-chillax text-sm font-medium transition-all duration-200",
                 isSelected
                   ? "bg-primary text-white"
-                  : "border border-white/12 bg-transparent text-foreground hover:border-primary/50",
+                  : "border border-border bg-muted/40 text-foreground hover:border-primary/50",
                 !available ? "cursor-not-allowed line-through opacity-40" : ""
               )}
             >
@@ -113,72 +101,11 @@ function VariationSelector({ group, groupLabel, locale, selected, onSelect, comb
   );
 }
 
-function DescriptionBlock({
-  text,
-  rtl,
-  heading,
-}: {
-  text: string;
-  rtl: boolean;
-  heading: string;
-}) {
-  const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
-  const parsed = lines.map((line) => {
-    const split = line.split(/\s*[:：]\s*/);
-    if (split.length < 2) return null;
-    const k = split[0].trim();
-    const v = split.slice(1).join(": ").trim();
-    if (!k || !v) return null;
-    return { k, v };
-  });
-  const keyed = parsed.filter((p): p is { k: string; v: string } => p != null);
-  const useSheet = keyed.length >= 3 && keyed.length >= Math.ceil(lines.length * 0.6);
-
-  if (!useSheet) {
-    return (
-      <p className={cn("text-sm leading-relaxed text-white/60", rtl ? "font-cairo" : "font-chillax")}>
-        {text}
-      </p>
-    );
-  }
-
-  return (
-    <div>
-      <p className="bm-kicker mb-3">{heading}</p>
-      <dl className="overflow-hidden rounded-md border border-white/10">
-        {keyed.map((row, i) => (
-          <div
-            key={`${row.k}-${i}`}
-            className={cn(
-              "grid grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] gap-3 px-3.5 py-2.5",
-              i > 0 && "border-t border-white/8",
-              i % 2 === 0 ? "bg-white/[0.03]" : "bg-transparent"
-            )}
-          >
-            <dt
-              className={cn(
-                "text-[11px] tracking-wider text-white/40 uppercase",
-                rtl ? "font-cairo" : "font-chillax"
-              )}
-            >
-              {row.k}
-            </dt>
-            <dd className={cn("text-[13px] leading-snug text-white/80", rtl ? "font-cairo" : "font-chillax")}>
-              {row.v}
-            </dd>
-          </div>
-        ))}
-      </dl>
-    </div>
-  );
-}
-
 interface ProductActionsProps {
   product: Product;
-  description?: string | null;
 }
 
-export function ProductActions({ product, description }: ProductActionsProps) {
+export function ProductActions({ product }: ProductActionsProps) {
   const locale = useLocale();
   const t = useTranslations("SingleProduct");
   const rtl = locale === "ar";
@@ -372,10 +299,6 @@ export function ProductActions({ product, description }: ProductActionsProps) {
         )
       : null;
 
-  const avgRating = product.avg_rating ?? null;
-  const reviewCount = product.review_count ?? 0;
-  const roundedStars = avgRating != null ? Math.min(5, Math.max(0, Math.round(avgRating))) : 0;
-
   const stockLevel =
     product.inventory_mode === "TRACK" ? (product.product_stock ?? 0) : null;
   const isLowStock = stockLevel !== null && stockLevel > 0 && stockLevel <= 5;
@@ -398,76 +321,68 @@ export function ProductActions({ product, description }: ProductActionsProps) {
         : t("addToCart");
 
   return (
-    <div className="flex flex-col gap-5">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <div className="flex flex-wrap items-center gap-2">
-            {discountPct !== null && (
-              <span className="inline-flex h-6 items-center rounded-md bg-primary px-2 font-chillax text-[11px] font-bold text-white">
-                {t("percentOff", { pct: discountPct })}
-              </span>
-            )}
-            {inStock && product.inventory_mode !== "TRACK_VARIATIONS" && (
-              <span
-                className={cn(
-                  "inline-flex h-6 items-center gap-1.5 rounded-md border px-2 font-chillax text-[11px] font-semibold",
-                  isLowStock
-                    ? "border-deal/30 bg-deal/10 text-deal"
-                    : "border-white/10 bg-white/4 text-white/80"
-                )}
-              >
-                <span
-                  className={cn(
-                    "size-1.5 rounded-full",
-                    isLowStock ? "bg-deal" : "bg-[#d12f27] shadow-[0_0_6px_#d12f27]"
-                  )}
-                  aria-hidden
-                />
-                {isLowStock ? t("lowStock") : t("inStock")}
-              </span>
-            )}
-          </div>
-
-          <div className="mt-2 flex flex-wrap items-baseline gap-2.5">
-            <span className={cn("leading-none text-foreground", rtl ? "font-cairo text-[2.6rem] font-bold" : "font-beckman text-[2.75rem]")}>
-              {sym} {displayPrice}
+    <div className="flex flex-col gap-4 rounded-md border border-border bg-card p-4 sm:p-5">
+      <div>
+        <div className="flex flex-wrap items-center gap-2">
+          {discountPct !== null && (
+            <span className="inline-flex h-6 items-center rounded bg-deal px-2 font-chillax text-[11px] font-bold text-[#1a1c1e]">
+              {t("percentOff", { pct: discountPct })}
             </span>
-            {strikethroughPrice && (
-              <span className="relative font-chillax text-xl leading-none text-white/30">
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-x-0 top-1/2 block h-px -translate-y-1/2 bg-primary/50"
-                />
-                {sym} {strikethroughPrice}
-              </span>
-            )}
-          </div>
+          )}
+          {inStock && product.inventory_mode !== "TRACK_VARIATIONS" && (
+            <span
+              className={cn(
+                "inline-flex h-6 items-center gap-1.5 rounded border px-2 font-chillax text-[11px] font-semibold",
+                isLowStock
+                  ? "border-deal/30 bg-deal/10 text-deal"
+                  : "border-success/30 bg-success/10 text-success"
+              )}
+            >
+              <span
+                className={cn("size-1.5 rounded-full", isLowStock ? "bg-deal" : "bg-success")}
+                aria-hidden
+              />
+              {isLowStock ? t("lowStock") : t("inStock")}
+            </span>
+          )}
         </div>
 
-        {avgRating !== null && (
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-0.5">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <StarIcon key={i} filled={i <= roundedStars} />
-              ))}
-            </div>
-            <span className="font-chillax text-sm font-medium text-foreground">
-              {avgRating.toFixed(1)}
+        <div className="mt-3 flex flex-wrap items-baseline gap-2">
+          <span
+            className={cn(
+              "leading-none text-foreground",
+              rtl ? "font-cairo text-[2.15rem] font-bold" : "font-letterman text-[2.25rem]"
+            )}
+          >
+            {sym} {displayPrice}
+          </span>
+          {strikethroughPrice && (
+            <span className="relative font-chillax text-lg leading-none text-muted-foreground">
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 top-1/2 block h-px -translate-y-1/2 bg-primary/60"
+              />
+              {sym} {strikethroughPrice}
             </span>
-            <span className="font-chillax text-sm text-white/40">
-              ({reviewCount} {t("reviews")})
-            </span>
-          </div>
+          )}
+        </div>
+        <p className={cn("mt-1.5 text-[12px] text-muted-foreground", rtl && "font-cairo")}>
+          {t("vatInclusive")}
+        </p>
+        {discountPct !== null && strikethroughPrice && displayPrice && (
+          <p className={cn("mt-1 text-[12px] font-medium text-deal", rtl && "font-cairo")}>
+            {t("youSave", {
+              amount: `${sym} ${(Number.parseFloat(strikethroughPrice) - Number.parseFloat(displayPrice)).toFixed(2)}`,
+            })}
+          </p>
         )}
       </div>
 
-      {description && (
-        <DescriptionBlock text={description} rtl={rtl} heading={t("specifications")} />
-      )}
-
       {product.inventory_mode === "TRACK_VARIATIONS" && product.available_variations.length > 0 && (
-        <div className="flex flex-col gap-4 border-t border-white/8 pt-5">
-          <p className="bm-kicker">{t("configure")}</p>
+        <div className="flex flex-col gap-3 border-t border-border pt-4">
+          <p className="font-chillax text-[11px] font-bold tracking-[0.16em] text-muted-foreground uppercase">
+            {t("configure")}
+          </p>
           {product.available_variations.map((group) => (
             <VariationSelector
               key={group.name}
@@ -483,7 +398,7 @@ export function ProductActions({ product, description }: ProductActionsProps) {
       )}
 
       {product.inventory_mode !== "TOGGLE" && !inStock && (
-        <p className="font-chillax text-sm font-medium text-[#ff6b70]">
+        <p className="font-chillax text-sm font-medium text-destructive">
           {product.inventory_mode === "TRACK_VARIATIONS" && !allGroupsSelected
             ? t("selectOptions")
             : t("outOfStock")}
@@ -491,75 +406,83 @@ export function ProductActions({ product, description }: ProductActionsProps) {
       )}
 
       {sku && (
-        <p className="font-mono text-[11px] tracking-wide text-white/30">
+        <p className="font-mono text-[11px] tracking-wide text-muted-foreground">
           {t("sku")} {sku}
         </p>
       )}
 
-      <div className="flex items-stretch gap-2 border-t border-white/8 pt-5">
-        <div className="inline-flex h-12 shrink-0 items-center overflow-hidden rounded-md border border-white/12 bg-black/30">
+      <div className="flex items-stretch gap-2">
+        <div className="inline-flex h-12 shrink-0 items-center overflow-hidden rounded-md border border-border bg-muted/50">
           <button
             type="button"
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
             disabled={!inStock || quantity <= 1}
-            className="flex size-12 items-center justify-center text-foreground transition-colors hover:bg-white/6 disabled:opacity-30"
+            className="flex size-11 items-center justify-center text-foreground transition-colors hover:bg-muted disabled:opacity-30"
             aria-label={t("quantity")}
           >
             <Minus size={14} strokeWidth={2.5} />
           </button>
-          <span className="min-w-10 border-x border-white/10 text-center font-chillax text-base font-semibold text-foreground">
+          <span className="min-w-9 border-x border-border text-center font-chillax text-base font-semibold text-foreground">
             {quantity}
           </span>
           <button
             type="button"
             onClick={() => setQuantity((q) => Math.min(maxStock || 999, q + 1))}
             disabled={!inStock}
-            className="flex size-12 items-center justify-center text-foreground transition-colors hover:bg-white/6 disabled:opacity-30"
+            className="flex size-11 items-center justify-center text-foreground transition-colors hover:bg-muted disabled:opacity-30"
             aria-label={t("quantity")}
           >
             <Plus size={14} strokeWidth={2.5} />
           </button>
         </div>
 
-        <button
-          type="button"
-          onClick={handleAddToCart}
-          disabled={!canAdd || isPending}
-          className={cn(
-            "flex h-12 flex-1 items-center justify-center gap-2.5 rounded-md font-chillax text-[13px] font-bold tracking-[0.12em] uppercase transition-all",
-            canAdd
-              ? "bg-primary text-white hover:bg-[#d12f27] hover:shadow-[0_8px_28px_-10px_rgba(209,47,39,0.8)] active:scale-[0.99]"
-              : "cursor-not-allowed bg-white/8 text-white/40",
-            isPending && "opacity-70",
-            justAdded && "bm-badge-pop"
-          )}
-        >
-          {justAdded ? <Check size={18} strokeWidth={2.2} /> : !isPending && <ShoppingCart size={18} strokeWidth={1.8} />}
-          {ctaLabel}
-        </button>
-
         <WishlistButton
           productId={product.id}
-          className="h-12 w-12 shrink-0 rounded-md border-white/12 bg-black/30 p-0 hover:bg-primary hover:text-white"
+          className="h-12 w-12 shrink-0 rounded-md border-border bg-muted/50 p-0 hover:bg-primary hover:text-primary-foreground"
         />
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
-        {([
-          { icon: Truck, label: t("freeDelivery") },
-          { icon: RotateCcw, label: t("easyReturns") },
-          { icon: ShieldCheck, label: t("securePayment") },
-        ] as const).map(({ icon: Icon, label }) => (
-          <div
-            key={label}
-            className="flex flex-col items-center gap-1.5 rounded-md border border-white/8 bg-white/[0.03] px-2 py-3 text-center"
-          >
-            <Icon size={16} strokeWidth={1.5} className="text-[#d12f27]" />
-            <span className="font-chillax text-[11px] font-medium leading-tight text-white/60">
-              {label}
-            </span>
+      <button
+        type="button"
+        onClick={handleAddToCart}
+        disabled={!canAdd || isPending}
+        className={cn(
+          "flex h-12 w-full items-center justify-center gap-2.5 rounded-md font-chillax text-[13px] font-bold tracking-[0.12em] uppercase transition-all",
+          canAdd
+            ? "bg-primary text-white hover:bg-[#d12f27] hover:shadow-[0_8px_28px_-10px_rgba(209,47,39,0.8)] active:scale-[0.99]"
+            : "cursor-not-allowed bg-muted text-muted-foreground",
+          isPending && "opacity-70",
+          justAdded && "bm-badge-pop"
+        )}
+      >
+        {justAdded ? <Check size={18} strokeWidth={2.2} /> : !isPending && <ShoppingCart size={18} strokeWidth={1.8} />}
+        {ctaLabel}
+      </button>
+
+      <div className="space-y-2 border-t border-border pt-4">
+        <div className="flex items-start gap-2.5">
+          <BadgeCheck size={16} strokeWidth={1.6} className="mt-0.5 shrink-0 text-primary" />
+          <div>
+            <p className={cn("text-[12px] font-semibold text-foreground", rtl && "font-cairo")}>
+              {t("warrantyTitle")}
+            </p>
+            <p className={cn("text-[11px] leading-relaxed text-muted-foreground", rtl && "font-cairo")}>
+              {t("warrantyBody")}
+            </p>
           </div>
-        ))}
+        </div>
+        <div className="flex items-start gap-2.5">
+          <Truck size={16} strokeWidth={1.6} className="mt-0.5 shrink-0 text-primary" />
+          <p className={cn("text-[12px] text-muted-foreground", rtl && "font-cairo")}>{t("freeDelivery")}</p>
+        </div>
+        <div className="flex items-start gap-2.5">
+          <RotateCcw size={16} strokeWidth={1.6} className="mt-0.5 shrink-0 text-primary" />
+          <p className={cn("text-[12px] text-muted-foreground", rtl && "font-cairo")}>{t("easyReturns")}</p>
+        </div>
+        <div className="flex items-start gap-2.5">
+          <ShieldCheck size={16} strokeWidth={1.6} className="mt-0.5 shrink-0 text-primary" />
+          <p className={cn("text-[12px] text-muted-foreground", rtl && "font-cairo")}>{t("securePayment")}</p>
+        </div>
       </div>
     </div>
   );

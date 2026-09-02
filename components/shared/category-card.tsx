@@ -63,7 +63,7 @@ export function CategoryCard({
           src={image}
           alt={name}
           fill
-          sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 25vw"
+          sizes="(max-width:640px) 80vw, (max-width:1024px) 33vw, 20vw"
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
           unoptimized
         />

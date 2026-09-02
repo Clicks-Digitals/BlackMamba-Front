@@ -3,6 +3,7 @@ export * from "./components/product-gallery";
 export * from "./components/product-actions";
 export * from "./components/product-comparison-table";
 export * from "./components/product-overview";
+export * from "./components/product-feature-showcase";
 export * from "./components/product-tabs";
 export * from "./components/related-products";
 export * from "./components/single-product-feature";

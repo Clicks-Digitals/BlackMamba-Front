@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { usePCBuilderStore } from "@/stores/pc-builder-store";
-import { SLOT_ORDER, type PCSlot } from "@/features/pc-builder/types";
+import { CORE_SLOTS, type PCSlot } from "@/features/pc-builder/types";
 import { useBuilderMotion } from "./builder-motion";
 
 /**
@@ -20,9 +20,9 @@ export function RigPreview({ className }: { className?: string }) {
   const hasBlockingIssues = usePCBuilderStore((s) => s.hasBlockingIssues);
   const compatibility = usePCBuilderStore((s) => s.compatibility);
   const { assembling, reduceMotion, motionReady } = useBuilderMotion();
-  const filledCount = SLOT_ORDER.filter((slot) => items[slot]).length;
+  const filledCount = CORE_SLOTS.filter((slot) => items[slot]).length;
   const hasParts = filledCount > 0;
-  const complete = filledCount === SLOT_ORDER.length && !hasBlockingIssues;
+  const complete = filledCount === CORE_SLOTS.length && !hasBlockingIssues;
   const [systemOn, setSystemOn] = useState(true);
   const [bootScan, setBootScan] = useState(true);
   const [clickPulse, setClickPulse] = useState(0);
