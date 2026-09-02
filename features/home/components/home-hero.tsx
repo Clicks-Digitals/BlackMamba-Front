@@ -142,7 +142,7 @@ export function HomeHero({
   const cover = active ? slideCover(active) : null;
 
   return (
-    <section className="relative border-b border-white/6 bg-background pt-3 pb-4 sm:pt-4 sm:pb-5">
+    <section className="relative border-b border-border bg-background pt-3 pb-4 sm:pt-4 sm:pb-5">
       <div className="layout-page layout-gutter-x">
         <div
           className={cn(
@@ -155,11 +155,11 @@ export function HomeHero({
             <>
               <nav
                 aria-label={t("categoriesTitle")}
-                className="relative hidden overflow-hidden rounded-xl border border-white/10 bg-[#16181a] shadow-[0_12px_40px_-24px_rgba(0,0,0,0.8)] lg:flex lg:flex-col"
+                className="relative hidden overflow-hidden rounded-xl border border-border bg-card shadow-[var(--shadow-card)] lg:flex lg:flex-col"
               >
                 <div className="absolute inset-x-0 top-0 h-0.5 bg-linear-to-r from-primary via-[#d12f27] to-transparent" />
-                <div className="border-b border-white/8 px-4 py-3">
-                  <p className="text-[10px] font-bold tracking-[0.2em] text-white/40 uppercase">
+                <div className="border-b border-border px-4 py-3">
+                  <p className="text-[10px] font-bold tracking-[0.2em] text-muted-foreground uppercase">
                     {t("categoriesTitle")}
                   </p>
                 </div>
@@ -169,12 +169,12 @@ export function HomeHero({
                     const Icon = categoryLucideIcon(cat);
                     const thumb = cat.image_url || cat.image;
                     return (
-                      <li key={cat.id} className="border-b border-white/[0.04] last:border-b-0">
+                      <li key={cat.id} className="border-b border-border/60 last:border-b-0">
                         <Link
                           href={`/products?category_slug=${cat.slug}`}
-                          className="group flex min-h-11 items-center gap-3 px-3.5 py-2.5 text-[13px] font-medium text-white/85 transition-colors hover:bg-primary/15 hover:text-white"
+                          className="group flex min-h-11 items-center gap-3 px-3.5 py-2.5 text-[13px] font-medium text-foreground/85 transition-colors hover:bg-primary/10 hover:text-foreground"
                         >
-                          <span className="relative flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-white/10 bg-[#0f1112] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+                          <span className="relative flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-muted">
                             {thumb ? (
                               <Image
                                 src={thumb}
@@ -186,7 +186,7 @@ export function HomeHero({
                               />
                             ) : (
                               <Icon
-                                className="size-4 text-white/55 transition-colors group-hover:text-[#ff8a8e]"
+                                className="size-4 text-muted-foreground transition-colors group-hover:text-primary"
                                 strokeWidth={1.75}
                               />
                             )}
@@ -202,7 +202,7 @@ export function HomeHero({
                           </span>
                           <ChevronRight
                             className={cn(
-                              "size-3.5 shrink-0 text-white/25 transition-all group-hover:translate-x-0.5 group-hover:text-[#ff8a8e]",
+                              "size-3.5 shrink-0 text-muted-foreground/50 transition-all group-hover:translate-x-0.5 group-hover:text-primary",
                               rtl && "rotate-180 group-hover:-translate-x-0.5"
                             )}
                             strokeWidth={2}
@@ -214,14 +214,14 @@ export function HomeHero({
                   <li>
                     <Link
                       href="/categories"
-                      className="group flex min-h-11 items-center gap-3 px-3.5 py-2.5 text-[13px] font-semibold text-white/90 transition-colors hover:bg-primary/20"
+                      className="group flex min-h-11 items-center gap-3 px-3.5 py-2.5 text-[13px] font-semibold text-foreground transition-colors hover:bg-primary/10"
                     >
                       <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-white">
                         <Grid2X2 className="size-4" strokeWidth={2} />
                       </span>
                       <span className={cn("min-w-0 flex-1", rtl && "font-cairo")}>{t("more")}</span>
                       <ChevronRight
-                        className={cn("size-3.5 shrink-0 text-white/40", rtl && "rotate-180")}
+                        className={cn("size-3.5 shrink-0 text-muted-foreground", rtl && "rotate-180")}
                       />
                     </Link>
                   </li>
@@ -237,11 +237,11 @@ export function HomeHero({
                       key={cat.id}
                       href={`/products?category_slug=${cat.slug}`}
                       className={cn(
-                        "inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-white/12 bg-[#16181a] px-3 text-[12px] font-semibold text-white/80 whitespace-nowrap transition-colors hover:border-primary/45 hover:text-white",
+                        "inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-border bg-card px-3 text-[12px] font-semibold text-foreground/80 whitespace-nowrap transition-colors hover:border-primary/45 hover:text-foreground",
                         rtl && "font-cairo"
                       )}
                     >
-                      <Icon className="size-3.5 text-[#ff8a8e]" strokeWidth={1.75} />
+                      <Icon className="size-3.5 text-primary" strokeWidth={1.75} />
                       {name}
                     </Link>
                   );
@@ -249,7 +249,7 @@ export function HomeHero({
                 <Link
                   href="/categories"
                   className={cn(
-                    "inline-flex h-9 shrink-0 items-center rounded-full border border-primary/45 bg-primary/20 px-3.5 text-[12px] font-semibold text-white whitespace-nowrap",
+                    "inline-flex h-9 shrink-0 items-center rounded-full border border-primary/45 bg-primary/15 px-3.5 text-[12px] font-semibold text-primary whitespace-nowrap",
                     rtl && "font-cairo"
                   )}
                 >
@@ -262,7 +262,7 @@ export function HomeHero({
           <div className="flex min-w-0 flex-col gap-3">
             {active && copy && (
               <div
-                className="group/hero relative overflow-hidden rounded-xl border border-white/10 bg-[#0b0b0d] shadow-[0_16px_48px_-28px_rgba(0,0,0,0.85)]"
+                className="group/hero relative overflow-hidden rounded-xl border border-border bg-card shadow-[var(--shadow-card)]"
                 onMouseEnter={() => setPaused(true)}
                 onMouseLeave={() => setPaused(false)}
               >
@@ -387,7 +387,7 @@ export function HomeHero({
 
 function ProductMedia({ src, alt }: { src: string | null; alt: string }) {
   return (
-    <div className="relative aspect-square w-[6.75rem] shrink-0 overflow-hidden rounded-lg border border-white/10 bg-[#1e2023] sm:w-[7.5rem]">
+    <div className="relative aspect-square w-[6.75rem] shrink-0 overflow-hidden rounded-lg border border-border bg-muted sm:w-[7.5rem]">
       <div
         className="pointer-events-none absolute inset-0"
         style={{
@@ -406,7 +406,7 @@ function ProductMedia({ src, alt }: { src: string | null; alt: string }) {
           unoptimized
         />
       ) : (
-        <div className="absolute inset-0 bg-[#1e2023]" />
+        <div className="absolute inset-0 bg-muted" />
       )}
     </div>
   );
@@ -465,17 +465,17 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
   }
 
   return (
-    <article className="group/card flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-[#17191b] shadow-[0_10px_32px_-22px_rgba(0,0,0,0.85)] transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-primary/40">
-      <div className="flex items-center justify-between gap-2 border-b border-white/8 bg-[#1c1e21] px-3.5 py-2.5">
+    <article className="group/card flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-[var(--shadow-card)] transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[var(--shadow-card-hover)]">
+      <div className="flex items-center justify-between gap-2 border-b border-border bg-muted/50 px-3.5 py-2.5">
         <div className="min-w-0">
-          <p className={cn("truncate text-[11px] font-bold tracking-[0.14em] text-[#ff8a8e] uppercase", rtl && "font-cairo tracking-normal")}>
+          <p className={cn("truncate text-[11px] font-bold tracking-[0.14em] text-primary uppercase", rtl && "font-cairo tracking-normal")}>
             {brand || t("featuredPick")}
           </p>
         </div>
         <Link
           href={`/products/${product.slug}`}
           className={cn(
-            "shrink-0 text-[11px] font-semibold text-white/45 transition-colors hover:text-white",
+            "shrink-0 text-[11px] font-semibold text-muted-foreground transition-colors hover:text-foreground",
             rtl && "font-cairo"
           )}
         >
@@ -489,7 +489,7 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
         <div className="flex min-w-0 flex-1 flex-col">
           <p
             className={cn(
-              "line-clamp-3 text-[13px] leading-snug font-medium text-white/90",
+              "line-clamp-3 text-[13px] leading-snug font-medium text-foreground",
               rtl && "font-cairo"
             )}
           >
@@ -497,13 +497,13 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
           </p>
           <div className="mt-auto flex flex-wrap items-baseline gap-1.5 pt-3">
             {finalPrice && (
-              <span className={cn("text-[1.2rem] font-bold tabular-nums text-white", rtl && "font-cairo")}>
+              <span className={cn("text-[1.2rem] font-bold tabular-nums text-foreground", rtl && "font-cairo")}>
                 {sym}
                 {finalPrice}
               </span>
             )}
             {origPrice && (
-              <span className="text-[12px] tabular-nums text-white/35 line-through">
+              <span className="text-[12px] tabular-nums text-muted-foreground line-through">
                 {sym}
                 {origPrice}
               </span>
@@ -512,11 +512,11 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
         </div>
       </Link>
 
-      <div className="mt-auto flex gap-2 border-t border-white/8 p-3">
+      <div className="mt-auto flex gap-2 border-t border-border p-3">
         <Link
           href={`/products/${product.slug}`}
           className={cn(
-            "inline-flex h-9 flex-1 items-center justify-center rounded-full border border-white/14 text-[12px] font-semibold text-white/75 transition-colors hover:border-white/30 hover:bg-white/4 hover:text-white",
+            "inline-flex h-9 flex-1 items-center justify-center rounded-full border border-border text-[12px] font-semibold text-foreground/80 transition-colors hover:border-primary/40 hover:bg-muted hover:text-foreground",
             rtl && "font-cairo"
           )}
         >
@@ -572,20 +572,20 @@ function HeroDealCard({
     const { finalPrice, origPrice, sym } = productPrices(product);
 
     return (
-      <article className="group/card flex h-full flex-col overflow-hidden rounded-xl border border-primary/30 bg-[#17191b] shadow-[0_10px_32px_-22px_rgba(158,29,32,0.45)] transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-primary/55 sm:col-span-2 lg:col-span-1">
-        <div className="flex items-center justify-between gap-2 border-b border-primary/25 bg-linear-to-r from-[#3a1518] to-[#1c1e21] px-3.5 py-2.5">
+      <article className="group/card flex h-full flex-col overflow-hidden rounded-xl border border-primary/30 bg-card shadow-[var(--shadow-card)] transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-primary/55 hover:shadow-[var(--shadow-card-hover)] sm:col-span-2 lg:col-span-1">
+        <div className="flex items-center justify-between gap-2 border-b border-primary/25 bg-linear-to-r from-primary/10 to-muted/60 px-3.5 py-2.5">
           <div className="flex min-w-0 items-center gap-2">
             <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-deal text-[#1a1c1e] shadow-[0_0_12px_rgba(255,122,26,0.45)]">
               <Zap className="size-3.5" fill="currentColor" strokeWidth={0} />
             </span>
-            <p className={cn("truncate text-[13px] font-bold text-white", rtl && "font-cairo")}>
+            <p className={cn("truncate text-[13px] font-bold text-foreground", rtl && "font-cairo")}>
               {t("deal")}
             </p>
           </div>
           <Link
             href="/products?has_discount=true"
             className={cn(
-              "shrink-0 text-[11px] font-semibold text-white/45 transition-colors hover:text-white",
+              "shrink-0 text-[11px] font-semibold text-muted-foreground transition-colors hover:text-foreground",
               rtl && "font-cairo"
             )}
           >
@@ -599,7 +599,7 @@ function HeroDealCard({
           <div className="flex min-w-0 flex-1 flex-col">
             <p
               className={cn(
-                "line-clamp-3 text-[13px] leading-snug font-medium text-white/90",
+                "line-clamp-3 text-[13px] leading-snug font-medium text-foreground",
                 rtl && "font-cairo"
               )}
             >
@@ -613,7 +613,7 @@ function HeroDealCard({
                 </span>
               )}
               {origPrice && (
-                <span className="text-[12px] tabular-nums text-white/35 line-through">
+                <span className="text-[12px] tabular-nums text-muted-foreground line-through">
                   {sym}
                   {origPrice}
                 </span>
@@ -622,7 +622,7 @@ function HeroDealCard({
           </div>
         </Link>
 
-        <div className="border-t border-white/8 p-3">
+        <div className="border-t border-border p-3">
           <Link
             href={`/products/${product.slug}`}
             className={cn(
@@ -645,19 +645,19 @@ function HeroDealCard({
         : coupon.discount_value;
 
     return (
-      <article className="flex h-full flex-col overflow-hidden rounded-xl border border-primary/30 bg-[#17191b] sm:col-span-2 lg:col-span-1">
-        <div className="flex items-center gap-2 border-b border-primary/25 bg-linear-to-r from-[#3a1518] to-[#1c1e21] px-3.5 py-2.5">
+      <article className="flex h-full flex-col overflow-hidden rounded-xl border border-primary/30 bg-card sm:col-span-2 lg:col-span-1">
+        <div className="flex items-center gap-2 border-b border-primary/25 bg-linear-to-r from-primary/10 to-muted/60 px-3.5 py-2.5">
           <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-deal text-[#1a1c1e]">
             <Zap className="size-3.5" fill="currentColor" strokeWidth={0} />
           </span>
-          <p className={cn("text-[13px] font-bold text-white", rtl && "font-cairo")}>{t("deal")}</p>
+          <p className={cn("text-[13px] font-bold text-foreground", rtl && "font-cairo")}>{t("deal")}</p>
         </div>
         <div className="flex flex-1 flex-col justify-center gap-3 p-4">
-          <p className={cn("text-[12px] text-white/55", rtl && "font-cairo")}>{t("couponDeal")}</p>
+          <p className={cn("text-[12px] text-muted-foreground", rtl && "font-cairo")}>{t("couponDeal")}</p>
           <p className={cn("text-[1.75rem] font-bold text-deal", rtl && "font-cairo")}>
             {valueLabel} {t("off")}
           </p>
-          <p className="font-mono text-[13px] tracking-wide text-[#ff8a8e]">{coupon.code}</p>
+          <p className="font-mono text-[13px] tracking-wide text-primary">{coupon.code}</p>
           <Link
             href="/products"
             className={cn(
@@ -673,15 +673,15 @@ function HeroDealCard({
   }
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-xl border border-primary/30 bg-[#17191b] sm:col-span-2 lg:col-span-1">
-      <div className="flex items-center gap-2 border-b border-primary/25 bg-linear-to-r from-[#3a1518] to-[#1c1e21] px-3.5 py-2.5">
+    <article className="flex h-full flex-col overflow-hidden rounded-xl border border-primary/30 bg-card sm:col-span-2 lg:col-span-1">
+      <div className="flex items-center gap-2 border-b border-primary/25 bg-linear-to-r from-primary/10 to-muted/60 px-3.5 py-2.5">
         <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-deal text-[#1a1c1e]">
           <Zap className="size-3.5" fill="currentColor" strokeWidth={0} />
         </span>
-        <p className={cn("text-[13px] font-bold text-white", rtl && "font-cairo")}>{t("deal")}</p>
+        <p className={cn("text-[13px] font-bold text-foreground", rtl && "font-cairo")}>{t("deal")}</p>
       </div>
       <div className="flex flex-1 flex-col items-start justify-center gap-3 p-4">
-        <p className={cn("text-[14px] leading-relaxed text-white/70", rtl && "font-cairo")}>
+        <p className={cn("text-[14px] leading-relaxed text-muted-foreground", rtl && "font-cairo")}>
           {t("dealFallback")}
         </p>
         <Link
