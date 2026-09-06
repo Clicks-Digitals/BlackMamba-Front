@@ -130,4 +130,13 @@ export interface Product {
     discount_type: 'PERCENTAGE' | 'FIXED';
     discount_value: string;
   } | null;
+  meta_title: string | null;
+  meta_title_ar: string | null;
+  meta_description: string | null;
+  meta_description_ar: string | null;
+  meta_keywords: string[] | null;
+  meta_keywords_ar: string[] | null;
+  og_image: string | null;
+  canonical_url: string | null;
+  meta_robots: "index,follow" | "noindex,follow" | "index,nofollow" | "noindex,nofollow";
 }
