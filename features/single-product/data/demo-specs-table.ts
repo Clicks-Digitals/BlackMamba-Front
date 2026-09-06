@@ -13,6 +13,7 @@ export const DEMO_PRODUCT_TABLE: ProductTable = {
       feature: "Brand",
       feature_ar: "العلامة التجارية",
       values: ["Black Mamba"],
+      values_ar: ["Black Mamba"],
       order: 1,
     },
     {
@@ -20,6 +21,7 @@ export const DEMO_PRODUCT_TABLE: ProductTable = {
       feature: "Model",
       feature_ar: "الموديل",
       values: ["BM-DEMO-27"],
+      values_ar: ["BM-DEMO-27"],
       order: 2,
     },
     {
@@ -27,6 +29,7 @@ export const DEMO_PRODUCT_TABLE: ProductTable = {
       feature: "Display Size",
       feature_ar: "حجم الشاشة",
       values: ['27"'],
+      values_ar: ['27"'],
       order: 3,
     },
     {
@@ -34,6 +37,7 @@ export const DEMO_PRODUCT_TABLE: ProductTable = {
       feature: "Panel Type",
       feature_ar: "نوع اللوحة",
       values: ["IPS"],
+      values_ar: ["IPS"],
       order: 4,
     },
     {
@@ -41,6 +45,7 @@ export const DEMO_PRODUCT_TABLE: ProductTable = {
       feature: "Resolution",
       feature_ar: "الدقة",
       values: ["1920 × 1080 (FHD)"],
+      values_ar: ["1920 × 1080 (FHD)"],
       order: 5,
     },
     {
@@ -48,6 +53,7 @@ export const DEMO_PRODUCT_TABLE: ProductTable = {
       feature: "Refresh Rate",
       feature_ar: "معدل التحديث",
       values: ["200Hz"],
+      values_ar: ["200 هرتز"],
       order: 6,
     },
     {
@@ -55,6 +61,7 @@ export const DEMO_PRODUCT_TABLE: ProductTable = {
       feature: "Response Time",
       feature_ar: "زمن الاستجابة",
       values: ["1ms"],
+      values_ar: ["1 ملّي ثانية"],
       order: 7,
     },
     {
@@ -62,6 +69,7 @@ export const DEMO_PRODUCT_TABLE: ProductTable = {
       feature: "Viewing Angle",
       feature_ar: "زاوية الرؤية",
       values: ["178° / 178°"],
+      values_ar: ["178° / 178°"],
       order: 8,
     },
     {
@@ -69,6 +77,7 @@ export const DEMO_PRODUCT_TABLE: ProductTable = {
       feature: "Brightness",
       feature_ar: "السطوع",
       values: ["300 nits"],
+      values_ar: ["300 شمعة"],
       order: 9,
     },
     {
@@ -76,6 +85,7 @@ export const DEMO_PRODUCT_TABLE: ProductTable = {
       feature: "Connectivity",
       feature_ar: "المنافذ",
       values: ["HDMI 2.0 × 2, DisplayPort 1.4, Audio Out"],
+      values_ar: ["منفذا HDMI 2.0، منفذ DisplayPort 1.4، مخرج صوتي"],
       order: 10,
     },
     {
@@ -83,6 +93,7 @@ export const DEMO_PRODUCT_TABLE: ProductTable = {
       feature: "Color",
       feature_ar: "اللون",
       values: ["Black"],
+      values_ar: ["أسود"],
       order: 11,
     },
     {
@@ -90,6 +101,7 @@ export const DEMO_PRODUCT_TABLE: ProductTable = {
       feature: "Warranty",
       feature_ar: "الضمان",
       values: ["1 Year Manufacturer Warranty"],
+      values_ar: ["ضمان الشركة المصنعة لمدة سنة واحدة"],
       order: 12,
     },
   ],

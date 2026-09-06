@@ -3,6 +3,7 @@ export interface ProductTableRow {
   feature: string;
   feature_ar: string | null;
   values: string[];
+  values_ar: string[] | null;
   order: number;
 }
 
