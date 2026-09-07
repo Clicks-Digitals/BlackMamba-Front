@@ -25,7 +25,7 @@ export function AppLoader() {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.85, opacity: 0, y: 24 }}
             transition={{ type: "spring", stiffness: 320, damping: 26 }}
-            className="flex min-w-[200px] flex-col items-center gap-5 rounded-[12px] bg-[#161718] px-10 py-8 shadow-2xl ring-1 ring-white/8"
+            className="flex min-w-[200px] flex-col items-center gap-5 rounded-[12px] bg-[#000000] px-10 py-8 shadow-2xl ring-1 ring-white/8"
           >
             {/* Icon circle */}
             <motion.div
@@ -45,8 +45,8 @@ export function AppLoader() {
               ].join(" ")}
             >
               {isLocale
-                ? <Globe size={28} className="text-[#d12f27]" />
-                : <Coins size={28} className="text-[#d12f27]" />
+                ? <Globe size={28} className="text-[#EB0B1A]" />
+                : <Coins size={28} className="text-[#EB0B1A]" />
               }
             </motion.div>
 
@@ -62,7 +62,7 @@ export function AppLoader() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.1, type: "spring", stiffness: 280 }}
                 className={[
-                  "text-5xl font-bold text-[#d12f27]",
+                  "text-5xl font-bold text-[#EB0B1A]",
                 ].join(" ")}
               >
                 {switchTarget.symbol ?? switchTarget.code}
@@ -89,7 +89,7 @@ export function AppLoader() {
                   animate={{ scale: [1, 1.6, 1], opacity: [0.4, 1, 0.4] }}
                   transition={{ duration: 0.7, repeat: Infinity, delay: i * 0.18 }}
                   className={[
-                    "h-1.5 w-1.5 rounded-full bg-[#d12f27]",
+                    "h-1.5 w-1.5 rounded-full bg-[#EB0B1A]",
                   ].join(" ")}
                 />
               ))}

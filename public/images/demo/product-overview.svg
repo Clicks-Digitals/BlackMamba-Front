@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="3600" viewBox="0 0 800 3600" role="img" aria-label="Black Mamba 27 inch monitor product overview">
+  <rect width="800" height="3600" fill="#ffffff"/>
+  <rect width="800" height="18" fill="#EB0B1A"/>
+
+  <text x="400" y="86" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="4" fill="#EB0B1A" font-weight="700">BLACK MAMBA</text>
+  <text x="400" y="148" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="800" fill="#111111">BM-27FHD 200Hz</text>
+  <text x="400" y="186" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#555555">27" Flat IPS Gaming Monitor · Product Overview</text>
+
+  <rect x="80" y="230" width="640" height="360" rx="8" fill="#111111"/>
+  <rect x="110" y="252" width="580" height="300" rx="4" fill="#1a1a1a"/>
+  <rect x="130" y="270" width="540" height="250" fill="#EB0B1A"/>
+  <text x="400" y="410" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="800" fill="#ffffff">200Hz · 1ms</text>
+  <text x="400" y="452" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#ffffff">FHD IPS · Adaptive Sync</text>
+
+  <text x="80" y="680" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="800" fill="#111111">Display</text>
+  <line x1="80" y1="698" x2="720" y2="698" stroke="#eeeeee"/>
+  <text x="80" y="740" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#333333">Screen Size</text>
+  <text x="720" y="740" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111111">27"</text>
+  <text x="80" y="780" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#333333">Resolution</text>
+  <text x="720" y="780" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111111">1920 × 1080 (FHD)</text>
+  <text x="80" y="820" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#333333">Panel Type</text>
+  <text x="720" y="820" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111111">IPS</text>
+  <text x="80" y="860" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#333333">Aspect Ratio</text>
+  <text x="720" y="860" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111111">16:9</text>
+  <text x="80" y="900" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#333333">Refresh Rate</text>
+  <text x="720" y="900" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111111">200Hz</text>
+  <text x="80" y="940" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#333333">Response Time</text>
+  <text x="720" y="940" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111111">1ms MPRT</text>
+
+  <rect x="80" y="1000" width="640" height="220" fill="#111111"/>
+  <text x="400" y="1088" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="800" fill="#ffffff">Built for speed</text>
+  <text x="400" y="1132" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#cccccc">Smooth motion, low blur, and Adaptive Sync for competitive play.</text>
+
+  <text x="80" y="1320" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="800" fill="#111111">Performance</text>
+  <line x1="80" y1="1338" x2="720" y2="1338" stroke="#eeeeee"/>
+  <text x="80" y="1384" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#111111">1ms MPRT Response Time</text>
+  <text x="80" y="1414" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#555555">Fast pixel transitions to keep motion sharp in fast-paced games.</text>
+  <text x="80" y="1464" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#111111">200Hz Refresh Rate</text>
+  <text x="80" y="1494" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#555555">High refresh for smoother tracking and less motion smear.</text>
+  <text x="80" y="1544" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#111111">FHD IPS Panel</text>
+  <text x="80" y="1574" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#555555">Wide viewing angles and consistent color across the 27" screen.</text>
+  <text x="80" y="1624" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#111111">Adaptive Sync</text>
+  <text x="80" y="1654" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#555555">Reduces tearing and stutter when paired with a compatible GPU.</text>
+
+  <rect x="80" y="1740" width="200" height="140" fill="#EB0B1A"/>
+  <text x="180" y="1810" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="800" fill="#ffffff">27"</text>
+  <text x="180" y="1842" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#ffffff">SCREEN</text>
+  <rect x="300" y="1740" width="200" height="140" fill="#1a1a1a"/>
+  <text x="400" y="1810" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="800" fill="#ffffff">200Hz</text>
+  <text x="400" y="1842" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#ffffff">REFRESH</text>
+  <rect x="520" y="1740" width="200" height="140" fill="#1a1a1a"/>
+  <text x="620" y="1810" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="800" fill="#ffffff">1ms</text>
+  <text x="620" y="1842" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#ffffff">RESPONSE</text>
+
+  <text x="80" y="2000" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="800" fill="#111111">Connectivity</text>
+  <line x1="80" y1="2018" x2="720" y2="2018" stroke="#eeeeee"/>
+  <text x="80" y="2060" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#333333">HDMI 2.0</text>
+  <text x="720" y="2060" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111111">× 2</text>
+  <text x="80" y="2100" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#333333">DisplayPort 1.4</text>
+  <text x="720" y="2100" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111111">× 1</text>
+  <text x="80" y="2140" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#333333">Audio Out</text>
+  <text x="720" y="2140" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111111">× 1</text>
+  <text x="80" y="2180" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#333333">VESA Mount</text>
+  <text x="720" y="2180" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111111">100 × 100 mm</text>
+
+  <text x="80" y="2280" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="800" fill="#111111">In the box</text>
+  <line x1="80" y1="2298" x2="720" y2="2298" stroke="#eeeeee"/>
+  <text x="80" y="2344" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#333333">" Monitor</text>
+  <text x="80" y="2384" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#333333">" Stand &amp; screws</text>
+  <text x="80" y="2424" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#333333">" HDMI cable</text>
+  <text x="80" y="2464" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#333333">" Power adapter</text>
+  <text x="80" y="2504" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#333333">" Quick start guide</text>
+
+  <rect x="80" y="2580" width="640" height="280" fill="#f4f4f4"/>
+  <text x="400" y="2680" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="800" fill="#111111">1-year manufacturer warranty</text>
+  <text x="400" y="2720" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#555555">Coverage length and terms are listed on the product details.</text>
+  <text x="400" y="2788" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="3" fill="#EB0B1A" font-weight="700">DEMO OVERVIEW IMAGE</text>
+
+  <text x="400" y="3000" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#888888">This is a single tall image for the Product Overview section.</text>
+  <text x="400" y="3032" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#888888">CMS field: overview_image / overview_image_url</text>
+  <text x="400" y="3180" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#bbbbbb">Keep scrolling  the image is not cropped.</text>
+  <rect x="0" y="3582" width="800" height="18" fill="#EB0B1A"/>
+</svg>

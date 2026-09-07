@@ -43,7 +43,7 @@ function RouteSweep({ pathname }: { pathname: string }) {
     <AnimatePresence>
       <motion.div
         key={tick}
-        className="pointer-events-none fixed inset-x-0 top-0 z-[99990] h-px origin-left bg-[#d12f27] shadow-[0_0_18px_#9e1d20]"
+        className="pointer-events-none fixed inset-x-0 top-0 z-[99990] h-px origin-left bg-[#EB0B1A]"
         initial={{ scaleX: 0, opacity: 0.9 }}
         animate={{ scaleX: 1, opacity: [0.9, 0.9, 0] }}
         transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}

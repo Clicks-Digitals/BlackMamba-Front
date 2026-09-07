@@ -97,7 +97,7 @@ export function ReviewItem({ review, onDeleted, onEdit }: ReviewItemProps) {
         )}
       </div>
 
-      <div className="mt-3 flex gap-0.5 text-amber-400" aria-hidden>
+      <div className="mt-3 flex gap-0.5 text-primary" aria-hidden>
         {Array.from({ length: 5 }, (_, i) => (
           <Star
             key={i}

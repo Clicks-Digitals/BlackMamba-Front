@@ -212,7 +212,7 @@ export function ProductActions({ product }: ProductActionsProps) {
     // Try to match a combination first — this works for any number of selected groups,
     // including single-variation combinations where only one group needs to be chosen.
     // Sort descending by length so the most-specific combination wins.
-    const sorted = [...product.available_combinations].sort((a, b) => b.variation_ids.length - a.variation_ids.length);
+    const sorted = [...(product.available_combinations ?? [])].sort((a, b) => b.variation_ids.length - a.variation_ids.length);
     const match = sorted.find((c) => c.variation_ids.every((id) => selectedIds.includes(id))) ?? null;
     if (match) {
       setSelection({ type: "combination", combination: match });
@@ -224,7 +224,7 @@ export function ProductActions({ product }: ProductActionsProps) {
     // image can still update, but the cart button stays disabled until a full match.
     if (entries.length === 1) {
       const [[, singleId]] = entries;
-      const option = product.available_variations.flatMap((g) => g.options).find((o) => o.variation_id === singleId) ?? null;
+      const option = (product.available_variations ?? []).flatMap((g) => g.options).find((o) => o.variation_id === singleId) ?? null;
       setSelection(option ? { type: "variation", option } : null);
       setActiveVariationImage(option?.image ?? null);
       return;
@@ -308,7 +308,7 @@ export function ProductActions({ product }: ProductActionsProps) {
       ? selection.combination.sku
       : selection?.type === "variation"
         ? selection.option.sku
-        : null;
+        : product.sku;
 
   const ctaLabel = isPending
     ? t("adding")
@@ -325,7 +325,7 @@ export function ProductActions({ product }: ProductActionsProps) {
       <div>
         <div className="flex flex-wrap items-center gap-2">
           {discountPct !== null && (
-            <span className="inline-flex h-6 items-center rounded bg-deal px-2 font-chillax text-[11px] font-bold text-[#1a1c1e]">
+            <span className="inline-flex h-6 items-center rounded bg-deal px-2 font-chillax text-[11px] font-bold text-white">
               {t("percentOff", { pct: discountPct })}
             </span>
           )}
@@ -351,7 +351,7 @@ export function ProductActions({ product }: ProductActionsProps) {
           <span
             className={cn(
               "leading-none text-foreground",
-              rtl ? "font-cairo text-[2.15rem] font-bold" : "font-letterman text-[2.25rem]"
+              rtl ? "font-cairo text-[1.65rem] font-bold" : "font-letterman text-[1.75rem]"
             )}
           >
             {sym} {displayPrice}
@@ -378,12 +378,12 @@ export function ProductActions({ product }: ProductActionsProps) {
         )}
       </div>
 
-      {product.inventory_mode === "TRACK_VARIATIONS" && product.available_variations.length > 0 && (
+      {product.inventory_mode === "TRACK_VARIATIONS" && (product.available_variations?.length ?? 0) > 0 && (
         <div className="flex flex-col gap-3 border-t border-border pt-4">
           <p className="font-chillax text-[11px] font-bold tracking-[0.16em] text-muted-foreground uppercase">
             {t("configure")}
           </p>
-          {product.available_variations.map((group) => (
+          {(product.available_variations ?? []).map((group) => (
             <VariationSelector
               key={group.name}
               group={group}
@@ -391,7 +391,7 @@ export function ProductActions({ product }: ProductActionsProps) {
               locale={locale}
               selected={selected}
               onSelect={handleSelect}
-              combinations={product.available_combinations}
+              combinations={product.available_combinations ?? []}
             />
           ))}
         </div>
@@ -407,7 +407,7 @@ export function ProductActions({ product }: ProductActionsProps) {
 
       {sku && (
         <p className="font-mono text-[11px] tracking-wide text-muted-foreground">
-          {t("sku")} {sku}
+          {t("sku")}: {sku}
         </p>
       )}
 
@@ -449,7 +449,7 @@ export function ProductActions({ product }: ProductActionsProps) {
         className={cn(
           "flex h-12 w-full items-center justify-center gap-2.5 rounded-md font-chillax text-[13px] font-bold tracking-[0.12em] uppercase transition-all",
           canAdd
-            ? "bg-primary text-white hover:bg-[#d12f27] hover:shadow-[0_8px_28px_-10px_rgba(209,47,39,0.8)] active:scale-[0.99]"
+            ? "bg-primary text-white hover:bg-primary/80 active:scale-[0.99]"
             : "cursor-not-allowed bg-muted text-muted-foreground",
           isPending && "opacity-70",
           justAdded && "bm-badge-pop"

@@ -38,7 +38,7 @@ function SubmitOrderButton() {
     <Button
       type="submit"
       disabled={pending}
-      className="w-full cursor-pointer rounded-lg bg-primary py-6 font-bold tracking-wider text-white uppercase hover:bg-[#d12f27] disabled:opacity-50"
+      className="w-full cursor-pointer rounded-lg bg-primary py-6 font-bold tracking-wider text-white uppercase hover:bg-[#EB0B1A] disabled:opacity-50"
     >
       {pending ? t("processing") : t("completePurchase")}
     </Button>
@@ -65,9 +65,9 @@ export function OrderSummary({
   if (!cart) return null;
 
   return (
-    <div className="sticky top-4 space-y-4 rounded-lg border border-[#9e1d20]/15 bg-white/3 p-4 md:p-6">
+    <div className="sticky top-4 space-y-4 rounded-lg border border-[#EB0B1A]/15 bg-white/3 p-4 md:p-6">
       <div className="border-b border-white/8 pb-3 text-center">
-        <h2 className="text-base font-bold tracking-wider text-[#EDEFF0] uppercase">{t("title")}</h2>
+        <h2 className="text-base font-bold tracking-wider text-[#FFFFFF] uppercase">{t("title")}</h2>
       </div>
 
       <ScrollArea className="scrollbar-thin max-h-52 pe-2">
@@ -84,7 +84,7 @@ export function OrderSummary({
             return (
               <div key={item.id} className="border-b border-white/8 pb-3 last:border-0">
                 <div className="flex gap-3">
-                  <div className="relative aspect-square w-14 shrink-0 overflow-hidden rounded-lg border border-[#26292C] bg-[#0B0F0E]">
+                  <div className="relative aspect-square w-14 shrink-0 overflow-hidden rounded-lg border border-border bg-card">
                     {thumbnail ? (
                       <Image src={thumbnail} fill sizes="56px" className="object-cover" alt={name ?? ""} unoptimized />
                     ) : (
@@ -94,7 +94,7 @@ export function OrderSummary({
                     )}
                   </div>
                   <div className="flex-1 min-w-0 space-y-0.5">
-                    <h4 className="text-xs font-bold text-[#EDEFF0] uppercase leading-snug">{name}</h4>
+                    <h4 className="text-xs font-bold text-[#FFFFFF] uppercase leading-snug">{name}</h4>
                     <p className="text-xs text-white/45">{t("qty", { count: item.quantity })}</p>
                     {isBuild && buildParts.length > 0 ? (
                       <button
@@ -106,7 +106,7 @@ export function OrderSummary({
                             return next;
                           })
                         }
-                        className="flex items-center gap-0.5 text-[11px] font-medium text-white/45 hover:text-[#EDEFF0] transition-colors"
+                        className="flex items-center gap-0.5 text-[11px] font-medium text-white/45 hover:text-[#FFFFFF] transition-colors"
                       >
                         {locale === "ar" ? `${buildParts.length} قطعة` : `${buildParts.length} parts`}
                         <ChevronDown
@@ -119,7 +119,7 @@ export function OrderSummary({
                         <CartVariationBadges item={item} locale={locale} />
                       )
                     )}
-                    <p className="text-sm font-bold text-[#9e1d20] pt-0.5">
+                    <p className="text-sm font-bold text-[#EB0B1A] pt-0.5">
                       {item.total_price} {currencySuffix}
                     </p>
                   </div>
@@ -127,7 +127,7 @@ export function OrderSummary({
 
                 {/* PC Build parts list */}
                 {isBuild && isExpanded && buildParts.length > 0 && (
-                  <div className="mt-2 overflow-hidden rounded-lg border border-[#26292C] bg-[#17181B]">
+                  <div className="mt-2 overflow-hidden rounded-lg border border-border bg-card">
                     {buildParts.map((part, idx) => {
                       const SlotIcon = SLOT_ICONS[part.slot];
                       return (
@@ -136,7 +136,7 @@ export function OrderSummary({
                         className={`flex items-center gap-2.5 px-2.5 py-2${idx < buildParts.length - 1 ? " border-b border-white/8" : ""}`}
                       >
                         {/* Thumbnail */}
-                        <div className="relative size-8 shrink-0 overflow-hidden rounded-md bg-[#0B0F0E] border border-[#26292C] flex items-center justify-center">
+                        <div className="relative size-8 shrink-0 overflow-hidden rounded-md border border-border bg-white flex items-center justify-center">
                           {part.product_details.thumbnail ? (
                             <Image
                               src={part.product_details.thumbnail}
@@ -153,7 +153,7 @@ export function OrderSummary({
 
                         {/* Name + slot label */}
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-[11px] font-medium leading-tight text-[#EDEFF0]">
+                          <p className="truncate text-[11px] font-medium leading-tight text-[#FFFFFF]">
                             {(locale === "ar" && part.product_details.name_ar) || part.product_details.name}
                           </p>
                           <p className="text-[9px] font-semibold uppercase tracking-wide text-white/40 mt-0.5">
@@ -162,7 +162,7 @@ export function OrderSummary({
                         </div>
 
                         {/* Price */}
-                        <span className="shrink-0 text-[11px] font-bold tabular-nums text-[#9e1d20]" dir="ltr">
+                        <span className="shrink-0 text-[11px] font-bold tabular-nums text-[#EB0B1A]" dir="ltr">
                           {part.unit_price} {currencySuffix}
                         </span>
                       </div>
@@ -178,15 +178,15 @@ export function OrderSummary({
 
       <div className="space-y-3 border-t border-b border-white/8 py-3">
         {appliedCoupon ? (
-          <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/10 p-3 space-y-2">
+          <div className="rounded-lg border border-primary/25 bg-primary/10 p-3 space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold tracking-widest text-emerald-300 uppercase">
+              <span className="text-xs font-bold tracking-widest text-primary uppercase">
                 {appliedCoupon.code}
               </span>
               <button
                 type="button"
                 onClick={onRemoveCoupon}
-                className="text-emerald-400 transition-colors hover:text-emerald-300"
+                className="text-primary transition-colors hover:text-primary"
                 aria-label={t("removeCouponAria")}
               >
                 <X size={16} />
@@ -201,11 +201,11 @@ export function OrderSummary({
               if (scopeNames.length === 0) return null;
               return (
                 <div className="flex flex-wrap gap-1 pt-0.5">
-                  <span className="text-[10px] text-emerald-400 font-medium shrink-0">{t("couponAppliesTo")}:</span>
+                  <span className="text-[10px] text-primary font-medium shrink-0">{t("couponAppliesTo")}:</span>
                   {scopeNames.map((name) => (
                     <span
                       key={name}
-                      className="text-[10px] bg-emerald-500/15 text-emerald-300 px-1.5 py-0.5 rounded-full font-semibold"
+                      className="text-[10px] bg-primary/15 text-primary px-1.5 py-0.5 rounded-full font-semibold"
                     >
                       {name}
                     </span>
@@ -230,7 +230,7 @@ export function OrderSummary({
               disabled={!couponInput.trim()}
               onClick={onApplyCoupon}
               type="button"
-              className="h-11 max-h-11 min-h-11 shrink-0 cursor-pointer rounded-md border-0 bg-primary px-4 text-xs font-bold tracking-wider text-white uppercase hover:bg-[#d12f27] disabled:opacity-50 sm:px-6"
+              className="h-11 max-h-11 min-h-11 shrink-0 cursor-pointer rounded-md border-0 bg-primary px-4 text-xs font-bold tracking-wider text-white uppercase hover:bg-[#EB0B1A] disabled:opacity-50 sm:px-6"
             >
               {t("apply")}
             </Button>
@@ -241,13 +241,13 @@ export function OrderSummary({
       <div className="space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-white/50">{t("subtotal")}</span>
-          <span className="font-semibold text-[#EDEFF0]">
+          <span className="font-semibold text-[#FFFFFF]">
             {totalAmount} {currencySuffix}
           </span>
         </div>
 
         {discountAmount > 0 && (
-          <div className="flex justify-between text-sm text-green-600">
+          <div className="flex justify-between text-sm text-primary">
             <span>{t("discount", { code: appliedCoupon?.code ?? "" })}</span>
             <span className="font-semibold">
               -{discountAmount.toFixed(2)} {currencySuffix}
@@ -260,7 +260,7 @@ export function OrderSummary({
             <span className="text-white/50">
               {(locale === "ar" && selectedShipping.name_ar) || selectedShipping.name}
             </span>
-            <span className="font-semibold text-[#EDEFF0]">
+            <span className="font-semibold text-[#FFFFFF]">
               {selectedShipping.price} {currencySuffix}
             </span>
           </div>
@@ -269,8 +269,8 @@ export function OrderSummary({
         <Separator className="my-2" />
 
         <div className="flex items-center justify-between pt-2">
-          <span className="text-sm font-bold text-[#EDEFF0] uppercase">{t("total")}</span>
-          <span className="text-2xl font-light text-[#9e1d20]">
+          <span className="text-sm font-bold text-[#FFFFFF] uppercase">{t("total")}</span>
+          <span className="text-2xl font-light text-[#EB0B1A]">
             {finalTotal} {currencySuffix}
           </span>
         </div>

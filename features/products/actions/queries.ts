@@ -5,6 +5,7 @@ import { buildQueryParams } from "@/lib/utils";
 import type { PaginatedResponse } from "@/types";
 import type { Product } from "@/types/product";
 import type { Filter } from "../types";
+import { DEMO_PRODUCT, demoMatchesQuery, prependDemoProduct } from "@/features/single-product/data/demo-product";
 
 const PAGE_SIZE = 24;
 const SEARCH_RESULTS_LIMIT = 6;
@@ -15,10 +16,14 @@ export async function getProducts(
 ): Promise<PaginatedResponse<Product>> {
   const qs = buildQueryParams({ page, page_size: PAGE_SIZE, ...filters });
   const res = await apiClient<PaginatedResponse<Product>>(`/products/${qs}`, { revalidate: 60 });
-  if (!res.ok) return { count: 0, next: null, previous: null, results: [] };
+  const results = res.ok ? (res.data.results ?? []).map(normalizeProduct) : [];
+  const withDemo = page === 1 ? prependDemoProduct(results, filters) : results.filter((p) => p.id !== DEMO_PRODUCT.id);
+  const added = withDemo.length > results.length ? 1 : 0;
   return {
-    ...res.data,
-    results: (res.data.results ?? []).map(normalizeProduct)
+    count: (res.ok ? res.data.count ?? results.length : 0) + (page === 1 ? added : 0),
+    next: res.ok ? res.data.next : null,
+    previous: res.ok ? res.data.previous : null,
+    results: withDemo,
   };
 }
 
@@ -29,14 +34,18 @@ export async function searchProducts(query: string): Promise<Product[]> {
   // Fast endpoint with fuzzy + category search
   const params = new URLSearchParams({ q: trimmed, page_size: String(SEARCH_RESULTS_LIMIT) });
   const res = await apiClient<Product[]>(`/products/search/?${params}`);
-  if (res.ok) return normalizeProducts(res.data);
+  if (res.ok) {
+    const list = normalizeProducts(res.data);
+    return demoMatchesQuery(trimmed) ? prependDemoProduct(list) : list;
+  }
 
   // Fallback: existing list endpoint — works even before server restart
   // search_fields now includes categories__name so this also finds products by category
   const fallbackQs = buildQueryParams({ search: trimmed, page_size: SEARCH_RESULTS_LIMIT });
   const fallback = await apiClient<PaginatedResponse<Product>>(`/products/${fallbackQs}`);
-  if (!fallback.ok) return [];
-  return (fallback.data.results ?? []).map(normalizeProduct);
+  if (!fallback.ok) return demoMatchesQuery(trimmed) ? [DEMO_PRODUCT] : [];
+  const list = (fallback.data.results ?? []).map(normalizeProduct);
+  return demoMatchesQuery(trimmed) ? prependDemoProduct(list) : list;
 }
 
 export async function searchProductsByTag(categorySlug: string): Promise<Product[]> {

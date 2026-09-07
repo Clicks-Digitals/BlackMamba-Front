@@ -40,28 +40,28 @@ export function ConfirmDialog({
   const variantConfig = {
     destructive: {
       icon: <Trash2 className="h-6 w-6" />,
-      iconBg: "bg-red-500/15 text-red-400",
-      button: "bg-red-600 text-white hover:bg-red-700",
+      iconBg: "bg-primary/15 text-primary",
+      button: "bg-primary text-white hover:bg-primary/80",
     },
     success: {
       icon: <CheckCircle2 className="h-6 w-6" />,
-      iconBg: "bg-emerald-500/15 text-emerald-400",
-      button: "bg-green-600 text-white hover:bg-green-700",
+      iconBg: "bg-primary/15 text-primary",
+      button: "bg-primary text-white hover:bg-primary/80",
     },
     warning: {
       icon: <AlertTriangle className="h-6 w-6" />,
-      iconBg: "bg-amber-500/15 text-amber-400",
-      button: "bg-amber-600 text-white hover:bg-amber-700",
+      iconBg: "bg-primary/15 text-primary",
+      button: "bg-primary text-white hover:bg-primary/80",
     },
     info: {
       icon: <Info className="h-6 w-6" />,
-      iconBg: "bg-primary/15 text-[#d12f27]",
-      button: "bg-primary text-white hover:bg-[#d12f27]",
+      iconBg: "bg-primary/15 text-primary",
+      button: "bg-primary text-white hover:bg-primary/80",
     },
     default: {
       icon: <AlertCircle className="h-6 w-6" />,
       iconBg: "bg-white/8 text-white/70",
-      button: "bg-primary text-white hover:bg-[#d12f27]",
+      button: "bg-primary text-white hover:bg-primary/80",
     },
   };
 

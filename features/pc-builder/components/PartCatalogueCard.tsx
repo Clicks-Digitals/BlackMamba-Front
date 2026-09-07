@@ -56,8 +56,8 @@ export function PartCatalogueCard({ part, buildId }: PartCatalogueCardProps) {
   }
 
   return (
-    <div className="group flex w-full flex-col overflow-hidden rounded-[10px] border border-[#26292C] bg-[#17181B] transition-colors hover:border-[#9e1d20]/30">
-      <Link href={`/pc-builder/parts/${part.slug}`} className="relative block aspect-[1/0.85] w-full bg-[#0B0F0E]">
+    <div className="group flex w-full flex-col overflow-hidden rounded-[10px] border border-[#000000] bg-[#000000] transition-colors hover:border-[#EB0B1A]/30">
+      <Link href={`/pc-builder/parts/${part.slug}`} className="relative block aspect-[1/0.85] w-full bg-[#000000]">
         {part.thumbnail ? (
           <Image src={part.thumbnail} alt={partName} fill className="object-contain p-3" unoptimized />
         ) : (
@@ -66,12 +66,12 @@ export function PartCatalogueCard({ part, buildId }: PartCatalogueCardProps) {
           </div>
         )}
         {part.is_compatible === false && (
-          <span className="absolute inset-e-1.5 top-1.5 flex h-4.5 items-center gap-1 rounded-[5px] bg-[#2A1416] px-1.5 text-[9px] font-bold text-[#FF8A8E]">
+          <span className="absolute inset-e-1.5 top-1.5 flex h-4.5 items-center gap-1 rounded-[5px] bg-[#EB0B1A] px-1.5 text-[9px] font-bold text-[#EB0B1A]">
             <X className="h-2.5 w-2.5" /> {tBadges("incompatible")}
           </span>
         )}
         {part.is_compatible === true && (
-          <span className="absolute inset-e-1.5 top-1.5 flex h-4.5 items-center gap-1 rounded-[5px] bg-white/10 px-1.5 text-[9px] font-bold text-[#EDEDED]">
+          <span className="absolute inset-e-1.5 top-1.5 flex h-4.5 items-center gap-1 rounded-[5px] bg-white/10 px-1.5 text-[9px] font-bold text-[#FFFFFF]">
             <Check className="h-2.5 w-2.5" /> {tBadges("compatible")}
           </span>
         )}
@@ -85,13 +85,13 @@ export function PartCatalogueCard({ part, buildId }: PartCatalogueCardProps) {
         )}
         <Link
           href={`/pc-builder/parts/${part.slug}`}
-          className="line-clamp-2 min-h-8 text-[12.5px] leading-snug font-semibold text-[#EDEFF0] hover:text-[#9e1d20]"
+          className="line-clamp-2 min-h-8 text-[12.5px] leading-snug font-semibold text-[#FFFFFF] hover:text-[#EB0B1A]"
         >
           {partName}
         </Link>
 
         <div className={cn("mt-auto flex items-baseline gap-1.5", rtl && "flex-row-reverse justify-end")}>
-          <span className="text-[15px] font-bold leading-none text-[#9e1d20]">
+          <span className="text-[15px] font-bold leading-none text-[#EB0B1A]">
             {price ? `${Number(price).toFixed(2)} JOD` : "—"}
           </span>
           {origPrice && (
@@ -99,14 +99,14 @@ export function PartCatalogueCard({ part, buildId }: PartCatalogueCardProps) {
               {Number(origPrice).toFixed(2)}
             </span>
           )}
-          {pct != null && <span className="text-[10px] font-bold leading-none text-[#FF6B70]">-{pct}%</span>}
+          {pct != null && <span className="text-[10px] font-bold leading-none text-[#EB0B1A]">-{pct}%</span>}
         </div>
 
         <div className="mt-1.5">
           {hasVariations ? (
             <Link
               href={`/pc-builder/parts/${part.slug}`}
-              className="flex w-full items-center justify-center gap-1.5 rounded-full bg-white/5 px-3 py-1.5 text-[11px] font-semibold text-[#EDEFF0] transition-colors hover:bg-[#9e1d20] hover:text-white"
+              className="flex w-full items-center justify-center gap-1.5 rounded-full bg-white/5 px-3 py-1.5 text-[11px] font-semibold text-[#FFFFFF] transition-colors hover:bg-[#EB0B1A] hover:text-white"
             >
               {tCat("chooseOption")}
             </Link>
@@ -116,7 +116,7 @@ export function PartCatalogueCard({ part, buildId }: PartCatalogueCardProps) {
               disabled={isAdding || !inStock || part.is_compatible === false || !slot}
               onClick={handleAdd}
               title={!inStock ? tBadges("outOfStock") : tBadges("addToBuild")}
-              className="flex w-full items-center justify-center gap-1.5 rounded-full bg-white/5 px-3 py-1.5 text-[11px] font-semibold text-[#EDEFF0] transition-colors hover:bg-[#9e1d20] hover:text-white disabled:opacity-40"
+              className="flex w-full items-center justify-center gap-1.5 rounded-full bg-white/5 px-3 py-1.5 text-[11px] font-semibold text-[#FFFFFF] transition-colors hover:bg-[#EB0B1A] hover:text-white disabled:opacity-40"
             >
               {isAdding ? <Loader2 className="h-3 w-3 animate-spin" /> : <Plus className="h-3 w-3" />}
               {inStock ? tBadges("addToBuild") : tBadges("outOfStock")}

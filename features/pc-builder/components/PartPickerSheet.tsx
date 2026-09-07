@@ -126,14 +126,14 @@ export function PartPickerSheet({ slot, buildId, onClose }: PartPickerSheetProps
     <Sheet open={!!slot} onOpenChange={(open) => !open && onClose()}>
       <SheetContent
         side={rtl ? "left" : "right"}
-        className="flex w-full flex-col overflow-x-hidden border-s border-[#9e1d20]/20 bg-[#0f1110] p-0 text-[#EDEFF0] sm:max-w-xl"
+        className="flex w-full flex-col overflow-x-hidden border-s border-[#EB0B1A]/20 bg-[#000000] p-0 text-[#FFFFFF] sm:max-w-xl"
       >
         {/* Header */}
-        <SheetHeader className="border-b border-white/6 bg-[#0f1110] px-5 pb-4 pt-5">
+        <SheetHeader className="border-b border-white/6 bg-[#000000] px-5 pb-4 pt-5">
           <SheetTitle className="flex items-center gap-2.5 text-base font-bold text-white">
             {SlotIcon && (
-              <span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#9e1d20]/20">
-                <SlotIcon className="h-4 w-4 text-[#d12f27]" />
+              <span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#EB0B1A]/20">
+                <SlotIcon className="h-4 w-4 text-[#EB0B1A]" />
               </span>
             )}
             {slot ? t("select", { slot: t(`slots.${slot}`) }) : ""}
@@ -149,19 +149,19 @@ export function PartPickerSheet({ slot, buildId, onClose }: PartPickerSheetProps
         </SheetHeader>
 
         {/* Filters */}
-        <div className="flex flex-col gap-3 border-b border-white/6 bg-[#0f1110] px-5 py-3">
+        <div className="flex flex-col gap-3 border-b border-white/6 bg-[#000000] px-5 py-3">
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={tPicker("searchPlaceholder")}
             beforeIcon={Search}
-            className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-[#9e1d20]/50"
+            className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-[#EB0B1A]/50"
           />
           <label className="flex cursor-pointer items-center gap-2 text-xs text-white/50 select-none">
             <Checkbox
               checked={compatibleOnly}
               onCheckedChange={(v) => setCompatibleOnly(v === true)}
-              className="border-white/20 data-[state=checked]:bg-[#9e1d20] data-[state=checked]:border-[#9e1d20]"
+              className="border-white/20 data-[state=checked]:bg-[#EB0B1A] data-[state=checked]:border-[#EB0B1A]"
             />
             {tPicker("compatibleOnly")}
             {compatibleOnly && !isLoading && parts.length > 0 && (
@@ -192,7 +192,7 @@ export function PartPickerSheet({ slot, buildId, onClose }: PartPickerSheetProps
                 <button
                   type="button"
                   onClick={() => setCompatibleOnly(false)}
-                  className="text-xs text-[#9e1d20] hover:underline"
+                  className="text-xs text-[#EB0B1A] hover:underline"
                 >
                   Show all {parts.length} parts anyway
                 </button>
@@ -318,10 +318,10 @@ function PartPickerCard({
         className={[
           "group flex h-full min-h-11 w-full cursor-pointer flex-col gap-3 rounded-lg border p-3 text-left transition-all duration-200",
           isIncompatible
-            ? "border-[#FF6B70]/15 bg-white/2 hover:border-[#FF6B70]/25"
+            ? "border-[#EB0B1A]/15 bg-white/2 hover:border-[#EB0B1A]/25"
             : part.is_compatible === true
-              ? "border-white/8 bg-white/3 hover:border-[#9e1d20]/40 hover:bg-[#9e1d20]/6"
-              : "border-white/8 bg-white/3 hover:border-[#9e1d20]/40 hover:bg-[#9e1d20]/6",
+              ? "border-white/8 bg-white/3 hover:border-[#EB0B1A]/40 hover:bg-[#EB0B1A]/6"
+              : "border-white/8 bg-white/3 hover:border-[#EB0B1A]/40 hover:bg-[#EB0B1A]/6",
           !inStock && "cursor-not-allowed",
         ].join(" ")}
         aria-disabled={isSelecting || !inStock}
@@ -349,7 +349,7 @@ function PartPickerCard({
 
         {/* Info */}
         <div className="min-w-0 flex-1">
-          <p className="line-clamp-2 text-sm font-semibold leading-snug text-[#EDEFF0] group-hover:text-white">
+          <p className="line-clamp-2 text-sm font-semibold leading-snug text-[#FFFFFF] group-hover:text-white">
             {partName}
           </p>
 
@@ -374,7 +374,7 @@ function PartPickerCard({
             ) : (
               <>
                 {price && (
-                  <span className="text-sm font-bold text-[#d12f27]">
+                  <span className="text-sm font-bold text-[#EB0B1A]">
                     {Number(price).toFixed(2)} JOD
                   </span>
                 )}
@@ -392,11 +392,11 @@ function PartPickerCard({
             {/* Compat badge pushed right */}
             <span className="ms-auto">
               {isIncompatible ? (
-                <span className="inline-flex items-center gap-1 rounded-full bg-[#FF6B70]/10 px-2 py-0.5 text-[10px] font-bold text-[#FF6B70]">
+                <span className="inline-flex items-center gap-1 rounded-full bg-[#EB0B1A]/10 px-2 py-0.5 text-[10px] font-bold text-[#EB0B1A]">
                   <X className="h-2.5 w-2.5" /> Incompatible
                 </span>
               ) : part.is_compatible === true ? (
-                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-400">
+                <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">
                   <Check className="h-2.5 w-2.5" /> Compatible
                 </span>
               ) : inStock && hasVariations ? (
@@ -414,7 +414,7 @@ function PartPickerCard({
 
       {/* Variation picker */}
       {showVariations && hasVariations && (
-        <div className="mt-1 flex flex-col gap-1.5 rounded-lg border border-[#9e1d20]/15 bg-[#9e1d20]/5 p-3">
+        <div className="mt-1 flex flex-col gap-1.5 rounded-lg border border-[#EB0B1A]/15 bg-[#EB0B1A]/5 p-3">
           {part.available_variations.map((group) =>
             group.options.map((option) => {
               const optionPrice = option.variation_price ?? price;
@@ -425,12 +425,12 @@ function PartPickerCard({
                   type="button"
                   disabled={isSelecting || !optionInStock}
                   onClick={() => addToBuild(option.variation_id)}
-                  className="flex min-h-11 items-center justify-between rounded-md border border-white/8 bg-white/3 px-3.5 py-2.5 text-sm text-white/80 transition-all hover:border-[#9e1d20]/40 hover:bg-[#9e1d20]/8 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+                  className="flex min-h-11 items-center justify-between rounded-md border border-white/8 bg-white/3 px-3.5 py-2.5 text-sm text-white/80 transition-all hover:border-[#EB0B1A]/40 hover:bg-[#EB0B1A]/8 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <span className="font-medium">
                     {(rtl && group.name_ar) || group.name}: {(rtl && option.value_ar) || option.value}
                   </span>
-                  <span className="ms-4 shrink-0 font-bold text-[#d12f27]">
+                  <span className="ms-4 shrink-0 font-bold text-[#EB0B1A]">
                     {optionPrice ? `${Number(optionPrice).toFixed(2)} JOD` : ""}
                     {!optionInStock && (
                       <span className="ms-1.5 font-normal text-white/30">{tPicker("outOfStock")}</span>

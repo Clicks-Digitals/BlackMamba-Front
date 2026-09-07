@@ -112,11 +112,11 @@ export function TicketDetailSheet({ ticket, open, onClose, onRefresh }: Props) {
     <Sheet open={open} onOpenChange={(val) => !val && onClose()}>
       <SheetContent
         side={isRtl ? "left" : "right"}
-        className="flex w-full flex-col px-0 sm:max-w-md bg-[#121314]"
+        className="flex w-full flex-col px-0 sm:max-w-md bg-[#000000]"
         dir={isRtl ? "rtl" : "ltr"}
       >
         {/* Header */}
-        <SheetHeader className="px-6 border-b border-white/8 pb-4 bg-[#17181B]">
+        <SheetHeader className="px-6 border-b border-white/8 pb-4 bg-[#000000]">
           <SheetTitle className="font-chillax text-lg text-foreground line-clamp-1 text-start">
             {ticket?.subject}
           </SheetTitle>
@@ -170,8 +170,8 @@ export function TicketDetailSheet({ ticket, open, onClose, onRefresh }: Props) {
                     "rounded-lg px-4 py-2.5 text-sm font-chillax shadow-sm text-start",
                     isStaff
                       ? isRtl
-                        ? "rounded-tr-lg bg-[#17181B] text-[#EDEFF0] border border-[#26292C]"
-                        : "rounded-tl-lg bg-[#17181B] text-[#EDEFF0] border border-[#26292C]"
+                        ? "rounded-tr-lg bg-[#000000] text-[#FFFFFF] border border-[#000000]"
+                        : "rounded-tl-lg bg-[#000000] text-[#FFFFFF] border border-[#000000]"
                       : isRtl
                         ? "rounded-tl-lg bg-primary text-white"
                         : "rounded-tr-lg bg-primary text-white"
@@ -212,9 +212,9 @@ export function TicketDetailSheet({ ticket, open, onClose, onRefresh }: Props) {
         </div>
 
         {/* Reply Box — WhatsApp style */}
-        <div className="px-3 pb-4 pt-2 bg-[#121314]">
+        <div className="px-3 pb-4 pt-2 bg-[#000000]">
           {details?.status === "CLOSED" || details?.status === "RESOLVED" ? (
-            <div className="text-center font-chillax text-sm text-white/45 py-3 bg-[#17181B] rounded-xl border border-[#26292C]">
+            <div className="text-center font-chillax text-sm text-white/45 py-3 bg-[#000000] rounded-xl border border-[#000000]">
               {t("ticketClosed")}
             </div>
           ) : (
@@ -226,7 +226,7 @@ export function TicketDetailSheet({ ticket, open, onClose, onRefresh }: Props) {
             >
               {/* Selected file badge */}
               {selectedFile && (
-                <div className="flex items-center gap-1.5 self-start rounded-full bg-[#17181B] border border-[#26292C] px-3 py-1 text-xs text-white/60">
+                <div className="flex items-center gap-1.5 self-start rounded-full bg-[#000000] border border-[#000000] px-3 py-1 text-xs text-white/60">
                   <Paperclip className="h-3 w-3 shrink-0 text-foreground" />
                   <span className="max-w-45 truncate">{selectedFile.name}</span>
                   <button
@@ -235,7 +235,7 @@ export function TicketDetailSheet({ ticket, open, onClose, onRefresh }: Props) {
                       setSelectedFile(null);
                       if (fileRef.current) fileRef.current.value = "";
                     }}
-                    className="ms-0.5 text-white/40 hover:text-red-500 transition-colors"
+                    className="ms-0.5 text-white/40 hover:text-primary transition-colors"
                   >
                     <X className="h-3 w-3" />
                   </button>
@@ -243,7 +243,7 @@ export function TicketDetailSheet({ ticket, open, onClose, onRefresh }: Props) {
               )}
 
               {fe.body?.[0] && (
-                <p className="text-xs font-medium text-red-500 px-1">
+                <p className="text-xs font-medium text-primary px-1">
                   {t(fe.body[0] as never)}
                 </p>
               )}
@@ -260,9 +260,9 @@ export function TicketDetailSheet({ ticket, open, onClose, onRefresh }: Props) {
 
                 {/* Input bar */}
                 <div className={cn(
-                  "flex flex-1 items-end gap-1 rounded-xl bg-[#17181B] px-2 py-1.5 border border-[#26292C]",
+                  "flex flex-1 items-end gap-1 rounded-xl bg-[#000000] px-2 py-1.5 border border-[#000000]",
                   "border border-transparent focus-within:border-primary/30 transition-colors",
-                  fe.body?.[0] && "border-red-400"
+                  fe.body?.[0] && "border-primary/40"
                 )}>
                   {/* Paperclip — left inside bar */}
                   <button
@@ -281,7 +281,7 @@ export function TicketDetailSheet({ ticket, open, onClose, onRefresh }: Props) {
                     placeholder={t("typeReply")}
                     disabled={isPending || isLoadingDetails}
                     rows={1}
-                  className="flex-1 max-h-32 resize-none bg-transparent py-1.5 text-sm text-[#EDEFF0] placeholder:text-white/40 focus:outline-none disabled:opacity-50 text-start"
+                  className="flex-1 max-h-32 resize-none bg-transparent py-1.5 text-sm text-[#FFFFFF] placeholder:text-white/40 focus:outline-none disabled:opacity-50 text-start"
                   />
                 </div>
 
@@ -290,7 +290,7 @@ export function TicketDetailSheet({ ticket, open, onClose, onRefresh }: Props) {
                   type="submit"
                   size="icon"
                   disabled={isPending || isLoadingDetails}
-                  className="h-11 w-11 shrink-0 rounded-full bg-primary hover:bg-[#d12f27] text-white shadow-md transition-transform active:scale-95"
+                  className="h-11 w-11 shrink-0 rounded-full bg-primary hover:bg-[#EB0B1A] text-white shadow-md transition-transform active:scale-95"
                 >
                   {isPending ? (
                     <Loader2 className="h-5 w-5 animate-spin" />

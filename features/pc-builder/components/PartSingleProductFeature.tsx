@@ -38,26 +38,26 @@ export async function PartSingleProductFeature({ partSlug }: { partSlug: string 
   const SlotIcon = slot ? SLOT_ICONS[slot] : null;
 
   return (
-    <div className="bg-[#0B0F0E]">
+    <div className="bg-[#000000]">
       {/* ── Breadcrumb — Black Mamba dark chrome ── */}
-      <div className="layout-gutter-x border-b border-[#26292C]">
+      <div className="layout-gutter-x border-b border-[#000000]">
         <nav
           className="layout-page flex h-11 items-center gap-1.5 font-chillax text-xs text-white/40"
           aria-label="Breadcrumb"
         >
-          <Link href="/" className="transition-colors hover:text-[#EDEFF0]">
+          <Link href="/" className="transition-colors hover:text-[#FFFFFF]">
             {isAr ? "الرئيسية" : "Home"}
           </Link>
           <ChevronRight size={12} strokeWidth={2} className="shrink-0" />
-          <Link href="/pc-builder" className="transition-colors hover:text-[#EDEFF0]">
+          <Link href="/pc-builder" className="transition-colors hover:text-[#FFFFFF]">
             {isAr ? "بناء PC" : "Build Your PC"}
           </Link>
           <ChevronRight size={12} strokeWidth={2} className="shrink-0" />
-          <Link href="/pc-builder/parts" className="transition-colors hover:text-[#EDEFF0]">
+          <Link href="/pc-builder/parts" className="transition-colors hover:text-[#FFFFFF]">
             {isAr ? "تصفح القطع" : "Browse Parts"}
           </Link>
           <ChevronRight size={12} strokeWidth={2} className="shrink-0" />
-          <span className="max-w-50 truncate font-medium text-[#EDEFF0]">{partName}</span>
+          <span className="max-w-50 truncate font-medium text-[#FFFFFF]">{partName}</span>
         </nav>
       </div>
 
@@ -66,7 +66,7 @@ export async function PartSingleProductFeature({ partSlug }: { partSlug: string 
         <div className="grid gap-5 lg:grid-cols-[45fr_55fr] lg:items-start lg:gap-10">
           {/* Left: dark image panel — PCPart has no gallery array, only thumbnail */}
           <div className="lg:sticky lg:top-28">
-            <div className="relative aspect-square w-full overflow-hidden rounded-lg border border-[#26292C] bg-[#17181B]">
+            <div className="relative aspect-square w-full overflow-hidden rounded-lg border border-[#000000] bg-[#000000]">
               {part.thumbnail ? (
                 <Image src={part.thumbnail} alt={partName} fill className="object-contain p-10" unoptimized />
               ) : (
@@ -84,11 +84,11 @@ export async function PartSingleProductFeature({ partSlug }: { partSlug: string 
 
       {/* ── Other options ── */}
       {otherOptions.length > 0 && slot && (
-        <div className="border-t border-[#26292C]">
+        <div className="border-t border-[#000000]">
           <div className="layout-page layout-gutter-x py-8">
             <h2
               className={cn(
-                "mb-4 text-[#EDEFF0]",
+                "mb-4 text-[#FFFFFF]",
                 isAr ? "font-cairo text-xl font-bold" : "font-chillax text-2xl uppercase tracking-wide"
               )}
             >
@@ -103,12 +103,12 @@ export async function PartSingleProductFeature({ partSlug }: { partSlug: string 
                     key={opt.id}
                     href={`/pc-builder/parts/${opt.slug}`}
                     className={cn(
-                      "flex items-center gap-3 rounded-xl border border-[#26292C] bg-[#17181B] p-4 transition-colors hover:border-[#9e1d20]/30",
+                      "flex items-center gap-3 rounded-xl border border-[#000000] bg-[#000000] p-4 transition-colors hover:border-[#EB0B1A]/30",
                       opt.is_compatible === false && "opacity-50"
                     )}
                   >
                     {opt.thumbnail && (
-                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-[#0B0F0E]">
+                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-[#000000]">
                         <Image
                           src={opt.thumbnail}
                           alt={optName}
@@ -118,8 +118,8 @@ export async function PartSingleProductFeature({ partSlug }: { partSlug: string 
                         />
                       </div>
                     )}
-                    <span className="flex-1 truncate text-sm font-medium text-[#EDEFF0]">{optName}</span>
-                    <span className="shrink-0 font-bold text-[#9e1d20]">
+                    <span className="flex-1 truncate text-sm font-medium text-[#FFFFFF]">{optName}</span>
+                    <span className="shrink-0 font-bold text-[#EB0B1A]">
                       {optPrice ? `${Number(optPrice).toFixed(2)} JOD` : "—"}
                     </span>
                   </Link>

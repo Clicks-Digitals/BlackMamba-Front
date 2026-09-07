@@ -43,7 +43,6 @@ type HomeHeroProps = {
 };
 
 const AUTOPLAY_MS = 7000;
-const EASE = [0.22, 1, 0.36, 1] as const;
 const SIDEBAR_LIMIT = 11;
 
 function slideCopy(slide: HomeSwiperSlide, locale: string) {
@@ -142,7 +141,7 @@ export function HomeHero({
   const cover = active ? slideCover(active) : null;
 
   return (
-    <section className="relative border-b border-border bg-background pt-3 pb-4 sm:pt-4 sm:pb-5">
+    <section className="relative border-b border-border bg-white pt-3 pb-4 sm:pt-4 sm:pb-5 dark:bg-background">
       <div className="layout-page layout-gutter-x">
         <div
           className={cn(
@@ -152,48 +151,32 @@ export function HomeHero({
           )}
         >
           {sidebarCats.length > 0 && (
-            <>
               <nav
                 aria-label={t("categoriesTitle")}
-                className="relative hidden overflow-hidden rounded-xl border border-border bg-card shadow-[var(--shadow-card)] lg:flex lg:flex-col"
+                className="relative hidden h-full min-h-0 w-full overflow-hidden rounded-none border border-border bg-card lg:flex lg:flex-col"
               >
-                <div className="absolute inset-x-0 top-0 h-0.5 bg-linear-to-r from-primary via-[#d12f27] to-transparent" />
-                <div className="border-b border-border px-4 py-3">
-                  <p className="text-[10px] font-bold tracking-[0.2em] text-muted-foreground uppercase">
+                <div className="shrink-0 border-b border-border px-3 py-2.5">
+                  <p className="text-[13px] font-semibold text-foreground">
                     {t("categoriesTitle")}
                   </p>
                 </div>
-                <ul className="flex flex-1 flex-col py-1">
+                <ul className="flex min-h-0 flex-1 flex-col">
                   {sidebarCats.map((cat) => {
                     const name = rtl ? cat.name_ar || cat.name : cat.name;
                     const Icon = categoryLucideIcon(cat);
-                    const thumb = cat.image_url || cat.image;
                     return (
-                      <li key={cat.id} className="border-b border-border/60 last:border-b-0">
+                      <li key={cat.id} className="flex min-h-0 flex-1 border-b border-border">
                         <Link
                           href={`/products?category_slug=${cat.slug}`}
-                          className="group flex min-h-11 items-center gap-3 px-3.5 py-2.5 text-[13px] font-medium text-foreground/85 transition-colors hover:bg-primary/10 hover:text-foreground"
+                          className="group flex h-full w-full min-w-0 items-center gap-2.5 px-3 text-[13px] text-foreground/90 transition-colors duration-150 hover:bg-muted hover:text-foreground"
                         >
-                          <span className="relative flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-muted">
-                            {thumb ? (
-                              <Image
-                                src={thumb}
-                                alt=""
-                                width={32}
-                                height={32}
-                                className="size-full object-contain p-1 opacity-90 transition-opacity group-hover:opacity-100"
-                                unoptimized
-                              />
-                            ) : (
-                              <Icon
-                                className="size-4 text-muted-foreground transition-colors group-hover:text-primary"
-                                strokeWidth={1.75}
-                              />
-                            )}
-                          </span>
+                          <Icon
+                            className="size-4 shrink-0 text-muted-foreground group-hover:text-primary"
+                            strokeWidth={1.75}
+                          />
                           <span
                             className={cn(
-                              "min-w-0 flex-1 text-[13px] leading-snug line-clamp-2",
+                              "min-w-0 flex-1 text-[13px] leading-snug line-clamp-1",
                               rtl && "font-cairo"
                             )}
                             title={name}
@@ -202,8 +185,8 @@ export function HomeHero({
                           </span>
                           <ChevronRight
                             className={cn(
-                              "size-3.5 shrink-0 text-muted-foreground/50 transition-all group-hover:translate-x-0.5 group-hover:text-primary",
-                              rtl && "rotate-180 group-hover:-translate-x-0.5"
+                              "size-3.5 shrink-0 text-muted-foreground/50 group-hover:text-primary",
+                              rtl && "rotate-180"
                             )}
                             strokeWidth={2}
                           />
@@ -211,14 +194,12 @@ export function HomeHero({
                       </li>
                     );
                   })}
-                  <li>
+                  <li className="flex min-h-0 flex-1">
                     <Link
                       href="/categories"
-                      className="group flex min-h-11 items-center gap-3 px-3.5 py-2.5 text-[13px] font-semibold text-foreground transition-colors hover:bg-primary/10"
+                      className="group flex h-full w-full min-w-0 items-center gap-2.5 px-3 text-[13px] font-medium text-foreground transition-colors duration-150 hover:bg-muted"
                     >
-                      <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-white">
-                        <Grid2X2 className="size-4" strokeWidth={2} />
-                      </span>
+                      <Grid2X2 className="size-4 shrink-0 text-primary" strokeWidth={1.75} />
                       <span className={cn("min-w-0 flex-1", rtl && "font-cairo")}>{t("more")}</span>
                       <ChevronRight
                         className={cn("size-3.5 shrink-0 text-muted-foreground", rtl && "rotate-180")}
@@ -227,42 +208,12 @@ export function HomeHero({
                   </li>
                 </ul>
               </nav>
-
-              <div className="no-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1 pb-0.5 lg:hidden">
-                {sidebarCats.slice(0, 8).map((cat) => {
-                  const name = rtl ? cat.name_ar || cat.name : cat.name;
-                  const Icon = categoryLucideIcon(cat);
-                  return (
-                    <Link
-                      key={cat.id}
-                      href={`/products?category_slug=${cat.slug}`}
-                      className={cn(
-                        "inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-border bg-card px-3 text-[12px] font-semibold text-foreground/80 whitespace-nowrap transition-colors hover:border-primary/45 hover:text-foreground",
-                        rtl && "font-cairo"
-                      )}
-                    >
-                      <Icon className="size-3.5 text-primary" strokeWidth={1.75} />
-                      {name}
-                    </Link>
-                  );
-                })}
-                <Link
-                  href="/categories"
-                  className={cn(
-                    "inline-flex h-9 shrink-0 items-center rounded-full border border-primary/45 bg-primary/15 px-3.5 text-[12px] font-semibold text-primary whitespace-nowrap",
-                    rtl && "font-cairo"
-                  )}
-                >
-                  {t("more")}
-                </Link>
-              </div>
-            </>
           )}
 
           <div className="flex min-w-0 flex-col gap-3">
             {active && copy && (
               <div
-                className="group/hero relative overflow-hidden rounded-xl border border-border bg-card shadow-[var(--shadow-card)]"
+                className="group/hero relative overflow-hidden rounded-[8px] border border-border bg-card"
                 onMouseEnter={() => setPaused(true)}
                 onMouseLeave={() => setPaused(false)}
               >
@@ -270,10 +221,10 @@ export function HomeHero({
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.div
                       key={active.id}
-                      initial={reduce ? false : { opacity: 0.6, scale: 1.02 }}
-                      animate={{ opacity: 1, scale: 1 }}
+                      initial={reduce ? false : { opacity: 0.65 }}
+                      animate={{ opacity: 1 }}
                       exit={reduce ? undefined : { opacity: 0 }}
-                      transition={{ duration: reduce ? 0 : 0.45, ease: EASE }}
+                      transition={{ duration: reduce ? 0 : 0.2, ease: "easeOut" }}
                       className="absolute inset-0"
                     >
                       {cover ? (
@@ -287,30 +238,29 @@ export function HomeHero({
                           unoptimized
                         />
                       ) : (
-                        <div className="absolute inset-0 bg-[#141516]" />
+                        <div className="absolute inset-0 bg-white dark:bg-background" />
                       )}
                     </motion.div>
                   </AnimatePresence>
 
-                  <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-black/75 via-black/25 to-black/10 rtl:bg-linear-to-l" />
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-black/50 to-transparent" />
+                  <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-black/70 via-black/20 to-transparent rtl:bg-linear-to-l" />
 
-                  <div className="relative z-10 flex h-full min-h-[13rem] flex-col justify-end p-5 sm:min-h-[17rem] sm:p-7 lg:min-h-[18.5rem] xl:min-h-[20.5rem]">
+                  <div className="relative z-10 flex h-full min-h-[13rem] flex-col justify-end p-4 sm:min-h-[17rem] sm:p-6 lg:min-h-[18.5rem] xl:min-h-[20.5rem]">
                     <AnimatePresence mode="wait" initial={false}>
                       <motion.div
                         key={active.id + "-copy"}
-                        initial={reduce ? false : { opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={reduce ? undefined : { opacity: 0, y: -6 }}
-                        transition={{ duration: reduce ? 0 : 0.35, ease: EASE }}
+                        initial={reduce ? false : { opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={reduce ? undefined : { opacity: 0 }}
+                        transition={{ duration: reduce ? 0 : 0.18, ease: "easeOut" }}
                         className="max-w-lg"
                       >
                         {copy.title && (
                           <h1
                             className={cn(
-                              "line-clamp-2 text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)]",
-                              "text-[clamp(1.75rem,4vw,3.1rem)] leading-[0.94]",
-                              !rtl && "font-letterman uppercase tracking-wide",
+                              "line-clamp-2 text-white",
+                              "text-[clamp(1.35rem,2.6vw,2rem)] leading-[1.15] font-semibold",
+                              !rtl && "font-chillax",
                               rtl && "font-cairo font-bold"
                             )}
                           >
@@ -330,7 +280,7 @@ export function HomeHero({
                         <Link
                           href={copy.href}
                           className={cn(
-                            "mt-4 inline-flex h-10 items-center gap-1.5 rounded-full bg-primary px-5 text-[13px] font-bold text-white shadow-[0_8px_24px_-10px_rgba(209,47,39,0.9)] transition-colors hover:bg-[#d12f27]",
+                            "mt-3 inline-flex h-9 items-center gap-1 rounded-[4px] bg-primary px-4 text-[13px] font-semibold text-white transition-colors duration-150 hover:bg-[var(--blue-hover)]",
                             rtl && "font-cairo"
                           )}
                         >
@@ -387,22 +337,14 @@ export function HomeHero({
 
 function ProductMedia({ src, alt }: { src: string | null; alt: string }) {
   return (
-    <div className="relative aspect-square w-[6.75rem] shrink-0 overflow-hidden rounded-lg border border-border bg-muted sm:w-[7.5rem]">
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(circle at 50% 42%, rgba(255,255,255,0.08), transparent 62%)",
-        }}
-        aria-hidden
-      />
+    <div className="relative aspect-square w-[6.75rem] shrink-0 overflow-hidden rounded-none border border-border bg-white sm:w-[7.5rem]">
       {src ? (
         <Image
           src={src}
           alt={alt}
           fill
           sizes="120px"
-          className="object-contain p-2.5 transition-transform duration-300 group-hover/card:scale-[1.04]"
+          className="object-contain p-2"
           unoptimized
         />
       ) : (
@@ -465,10 +407,10 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
   }
 
   return (
-    <article className="group/card flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-[var(--shadow-card)] transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[var(--shadow-card-hover)]">
-      <div className="flex items-center justify-between gap-2 border-b border-border bg-muted/50 px-3.5 py-2.5">
+    <article className="group/card flex h-full flex-col overflow-hidden rounded-[6px] border border-border bg-card transition-colors duration-150 hover:border-primary/50">
+      <div className="flex items-center justify-between gap-2 border-b border-border px-3 py-2">
         <div className="min-w-0">
-          <p className={cn("truncate text-[11px] font-bold tracking-[0.14em] text-primary uppercase", rtl && "font-cairo tracking-normal")}>
+          <p className={cn("truncate text-[11px] font-medium text-muted-foreground", rtl && "font-cairo")}>
             {brand || t("featuredPick")}
           </p>
         </div>
@@ -516,7 +458,7 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
         <Link
           href={`/products/${product.slug}`}
           className={cn(
-            "inline-flex h-9 flex-1 items-center justify-center rounded-full border border-border text-[12px] font-semibold text-foreground/80 transition-colors hover:border-primary/40 hover:bg-muted hover:text-foreground",
+            "inline-flex h-8 flex-1 items-center justify-center rounded-[4px] border border-border text-[12px] font-medium text-foreground transition-colors duration-150 hover:border-primary/50 hover:bg-muted",
             rtl && "font-cairo"
           )}
         >
@@ -526,7 +468,7 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
           <Link
             href={`/products/${product.slug}`}
             className={cn(
-              "inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-full bg-primary text-[12px] font-bold text-white transition-colors hover:bg-[#d12f27]",
+              "inline-flex h-8 flex-1 items-center justify-center gap-1.5 rounded-[4px] bg-primary text-[12px] font-semibold text-white transition-colors duration-150 hover:bg-[var(--blue-hover)]",
               rtl && "font-cairo"
             )}
           >
@@ -539,7 +481,7 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
             disabled={outOfStock || isPending}
             onClick={handleAddToCart}
             className={cn(
-              "inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-full bg-primary text-[12px] font-bold text-white transition-colors hover:bg-[#d12f27] disabled:cursor-not-allowed disabled:opacity-45",
+              "inline-flex h-8 flex-1 items-center justify-center gap-1.5 rounded-[4px] bg-primary text-[12px] font-semibold text-white transition-colors duration-150 hover:bg-[var(--blue-hover)] disabled:cursor-not-allowed disabled:opacity-45",
               rtl && "font-cairo"
             )}
           >
@@ -572,13 +514,11 @@ function HeroDealCard({
     const { finalPrice, origPrice, sym } = productPrices(product);
 
     return (
-      <article className="group/card flex h-full flex-col overflow-hidden rounded-xl border border-primary/30 bg-card shadow-[var(--shadow-card)] transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-primary/55 hover:shadow-[var(--shadow-card-hover)] sm:col-span-2 lg:col-span-1">
-        <div className="flex items-center justify-between gap-2 border-b border-primary/25 bg-linear-to-r from-primary/10 to-muted/60 px-3.5 py-2.5">
-          <div className="flex min-w-0 items-center gap-2">
-            <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-deal text-[#1a1c1e] shadow-[0_0_12px_rgba(255,122,26,0.45)]">
-              <Zap className="size-3.5" fill="currentColor" strokeWidth={0} />
-            </span>
-            <p className={cn("truncate text-[13px] font-bold text-foreground", rtl && "font-cairo")}>
+      <article className="group/card flex h-full flex-col overflow-hidden rounded-[6px] border border-border bg-card transition-colors duration-150 hover:border-primary/50 sm:col-span-2 lg:col-span-1">
+        <div className="flex items-center justify-between gap-2 border-b border-border px-3 py-2">
+          <div className="flex min-w-0 items-center gap-1.5">
+            <Zap className="size-3.5 shrink-0 text-deal" strokeWidth={2} />
+            <p className={cn("truncate text-[13px] font-semibold text-foreground", rtl && "font-cairo")}>
               {t("deal")}
             </p>
           </div>
@@ -626,7 +566,7 @@ function HeroDealCard({
           <Link
             href={`/products/${product.slug}`}
             className={cn(
-              "inline-flex h-9 w-full items-center justify-center gap-1.5 rounded-full bg-primary text-[12px] font-bold text-white transition-colors hover:bg-[#d12f27]",
+              "inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-[4px] bg-primary text-[12px] font-semibold text-white transition-colors duration-150 hover:bg-[var(--blue-hover)]",
               rtl && "font-cairo"
             )}
           >
@@ -645,12 +585,10 @@ function HeroDealCard({
         : coupon.discount_value;
 
     return (
-      <article className="flex h-full flex-col overflow-hidden rounded-xl border border-primary/30 bg-card sm:col-span-2 lg:col-span-1">
-        <div className="flex items-center gap-2 border-b border-primary/25 bg-linear-to-r from-primary/10 to-muted/60 px-3.5 py-2.5">
-          <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-deal text-[#1a1c1e]">
-            <Zap className="size-3.5" fill="currentColor" strokeWidth={0} />
-          </span>
-          <p className={cn("text-[13px] font-bold text-foreground", rtl && "font-cairo")}>{t("deal")}</p>
+      <article className="flex h-full flex-col overflow-hidden rounded-[6px] border border-border bg-card sm:col-span-2 lg:col-span-1">
+        <div className="flex items-center gap-1.5 border-b border-border px-3 py-2">
+          <Zap className="size-3.5 shrink-0 text-deal" strokeWidth={2} />
+          <p className={cn("text-[13px] font-semibold text-foreground", rtl && "font-cairo")}>{t("deal")}</p>
         </div>
         <div className="flex flex-1 flex-col justify-center gap-3 p-4">
           <p className={cn("text-[12px] text-muted-foreground", rtl && "font-cairo")}>{t("couponDeal")}</p>
@@ -661,7 +599,7 @@ function HeroDealCard({
           <Link
             href="/products"
             className={cn(
-              "mt-1 inline-flex h-10 items-center justify-center rounded-full bg-primary text-[13px] font-bold text-white hover:bg-[#d12f27]",
+              "mt-1 inline-flex h-9 items-center justify-center rounded-[4px] bg-primary text-[13px] font-semibold text-white hover:bg-[var(--blue-hover)]",
               rtl && "font-cairo"
             )}
           >
@@ -673,12 +611,10 @@ function HeroDealCard({
   }
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-xl border border-primary/30 bg-card sm:col-span-2 lg:col-span-1">
-      <div className="flex items-center gap-2 border-b border-primary/25 bg-linear-to-r from-primary/10 to-muted/60 px-3.5 py-2.5">
-        <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-deal text-[#1a1c1e]">
-          <Zap className="size-3.5" fill="currentColor" strokeWidth={0} />
-        </span>
-        <p className={cn("text-[13px] font-bold text-foreground", rtl && "font-cairo")}>{t("deal")}</p>
+    <article className="flex h-full flex-col overflow-hidden rounded-[6px] border border-border bg-card sm:col-span-2 lg:col-span-1">
+      <div className="flex items-center gap-1.5 border-b border-border px-3 py-2">
+        <Zap className="size-3.5 shrink-0 text-deal" strokeWidth={2} />
+        <p className={cn("text-[13px] font-semibold text-foreground", rtl && "font-cairo")}>{t("deal")}</p>
       </div>
       <div className="flex flex-1 flex-col items-start justify-center gap-3 p-4">
         <p className={cn("text-[14px] leading-relaxed text-muted-foreground", rtl && "font-cairo")}>
@@ -687,7 +623,7 @@ function HeroDealCard({
         <Link
           href="/products"
           className={cn(
-            "inline-flex h-10 items-center gap-1.5 rounded-full bg-primary px-5 text-[13px] font-bold text-white hover:bg-[#d12f27]",
+            "inline-flex h-9 items-center gap-1.5 rounded-[4px] bg-primary px-4 text-[13px] font-semibold text-white hover:bg-[var(--blue-hover)]",
             rtl && "font-cairo"
           )}
         >

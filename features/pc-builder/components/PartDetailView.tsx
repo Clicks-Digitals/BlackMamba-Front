@@ -57,7 +57,7 @@ export function PartDetailView({ part, buildId }: PartDetailViewProps) {
       {/* Slot chip */}
       {slot && (
         <div className="flex flex-wrap gap-1.5">
-          <span className="inline-flex h-6 items-center gap-1.5 rounded-full bg-[#9e1d20]/15 px-3 font-chillax text-[11px] font-semibold uppercase tracking-widest text-[#9e1d20]">
+          <span className="inline-flex h-6 items-center gap-1.5 rounded-full bg-[#EB0B1A]/15 px-3 font-chillax text-[11px] font-semibold uppercase tracking-widest text-[#EB0B1A]">
             {SlotIcon && <SlotIcon className="h-3 w-3" />}
             {t(`slots.${slot}`)}
           </span>
@@ -67,7 +67,7 @@ export function PartDetailView({ part, buildId }: PartDetailViewProps) {
       {/* Part name — Oswald-style caps (font-chillax); Beckman reserved for big headlines only */}
       <h1
         className={cn(
-          "leading-none text-[#EDEFF0]",
+          "leading-none text-[#FFFFFF]",
           rtl
             ? "font-cairo font-bold text-[clamp(1.3rem,3vw,2.2rem)]"
             : "font-chillax uppercase text-[clamp(1.5rem,3.5vw,2.5rem)]"
@@ -76,24 +76,24 @@ export function PartDetailView({ part, buildId }: PartDetailViewProps) {
         {partName}
       </h1>
 
-      <div className="h-px bg-[#26292C]" />
+      <div className="h-px bg-[#000000]" />
 
       {/* Compatibility badge — Black Mamba: white = ok, red = incompatible (no green) */}
       {part.is_compatible === false && (
-        <div className="flex items-center gap-2 rounded-lg border border-[#3a1c1e] bg-[#2A1416] px-3 py-2 text-sm text-[#F08A8A]">
+        <div className="flex items-center gap-2 rounded-lg border border-[#EB0B1A] bg-[#EB0B1A] px-3 py-2 text-sm text-[#EB0B1A]">
           <X className="h-4 w-4 shrink-0" />
           {tDetail("incompatible")}
         </div>
       )}
       {part.is_compatible === true && (
-        <div className="flex items-center gap-2 rounded-lg border border-white/15 bg-white/8 px-3 py-2 text-sm text-[#EDEDED]">
+        <div className="flex items-center gap-2 rounded-lg border border-white/15 bg-white/8 px-3 py-2 text-sm text-[#FFFFFF]">
           <Check className="h-4 w-4 shrink-0" />
           {tDetail("compatible")}
         </div>
       )}
 
       {/* Price */}
-      <p className="font-chillax text-5xl leading-none text-[#EDEFF0]">
+      <p className="font-chillax text-5xl leading-none text-[#FFFFFF]">
         {price ? `${Number(price).toFixed(2)} JOD` : "—"}
       </p>
 
@@ -105,9 +105,9 @@ export function PartDetailView({ part, buildId }: PartDetailViewProps) {
       {/* Variation selector */}
       {variationOptions.length > 0 && (
         <>
-          <div className="h-px bg-[#26292C]" />
+          <div className="h-px bg-[#000000]" />
           <div className="flex flex-col gap-1.5">
-            <h3 className="font-chillax text-xl tracking-wide text-[#EDEFF0]">{variationOptions[0].group}</h3>
+            <h3 className="font-chillax text-xl tracking-wide text-[#FFFFFF]">{variationOptions[0].group}</h3>
             <div className="flex flex-wrap gap-2.5">
               {variationOptions.map((option) => (
                 <button
@@ -118,8 +118,8 @@ export function PartDetailView({ part, buildId }: PartDetailViewProps) {
                   className={cn(
                     "h-9 rounded-md px-4 font-chillax text-sm font-medium transition-all disabled:cursor-not-allowed disabled:opacity-40",
                     selectedVariationId === option.variation_id
-                      ? "bg-[#9e1d20] text-white shadow-sm"
-                      : "border border-white/15 bg-transparent text-[#EDEFF0] hover:border-[#9e1d20]/50 hover:bg-[#9e1d20]/5"
+                      ? "bg-[#EB0B1A] text-white shadow-sm"
+                      : "border border-white/15 bg-transparent text-[#FFFFFF] hover:border-[#EB0B1A]/50 hover:bg-[#EB0B1A]/5"
                   )}
                 >
                   {(rtl && option.value_ar) || option.value}
@@ -132,18 +132,18 @@ export function PartDetailView({ part, buildId }: PartDetailViewProps) {
 
       {/* Spec rows */}
       {specRows.length > 0 && (
-        <div className="grid grid-cols-2 gap-3 rounded-xl border border-[#26292C] bg-[#17181B] p-4">
+        <div className="grid grid-cols-2 gap-3 rounded-xl border border-[#000000] bg-[#000000] p-4">
           {specRows.map((row) => (
             <div key={row.label} className="flex flex-col gap-0.5">
               <span className="text-[10px] uppercase tracking-wide text-white/40">{row.label}</span>
-              <span className="text-sm font-medium text-[#EDEFF0]">{row.value}</span>
+              <span className="text-sm font-medium text-[#FFFFFF]">{row.value}</span>
             </div>
           ))}
         </div>
       )}
 
       {/* Add to Build */}
-      <div className="h-px bg-[#26292C]" />
+      <div className="h-px bg-[#000000]" />
       <button
         type="button"
         disabled={isAdding || !inStock || part.is_compatible === false || !slot}
@@ -151,8 +151,8 @@ export function PartDetailView({ part, buildId }: PartDetailViewProps) {
         className={cn(
           "flex h-12 w-full items-center justify-center gap-2.5 rounded-lg font-chillax text-base font-bold tracking-wide transition-all",
           !isAdding && inStock && part.is_compatible !== false && slot
-            ? "bg-[#9e1d20] text-white hover:bg-[#7a1618] hover:shadow-lg active:scale-[0.99]"
-            : "cursor-not-allowed bg-[#9e1d20]/25 text-white/50"
+            ? "bg-[#EB0B1A] text-white hover:bg-[#EB0B1A] hover:shadow-lg active:scale-[0.99]"
+            : "cursor-not-allowed bg-[#EB0B1A]/25 text-white/50"
         )}
       >
         {isAdding ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus size={18} strokeWidth={1.8} />}

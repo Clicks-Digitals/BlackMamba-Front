@@ -10,7 +10,7 @@ export async function EmptyCart() {
   return (
     <div className="min-h-[70vh] bg-background bm-stage">
       <div className="layout-page layout-gutter-x flex flex-col items-center justify-center px-6 py-24 text-center">
-        <div className="mb-8 flex size-20 items-center justify-center rounded-lg border border-white/8 bg-[#141516] text-white/35">
+        <div className="mb-8 flex size-20 items-center justify-center rounded-lg border border-white/8 bg-[#000000] text-white/35">
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
             <line x1="3" y1="6" x2="21" y2="6" />
@@ -36,7 +36,7 @@ export async function EmptyCart() {
         <Link
           href="/products"
           className={cn(
-            "inline-flex h-11 items-center justify-center rounded-md bg-primary px-7 text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-[#d12f27]",
+            "inline-flex h-11 items-center justify-center rounded-md bg-primary px-7 text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-[#EB0B1A]",
             ar ? "font-cairo" : "font-chillax"
           )}
         >

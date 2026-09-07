@@ -80,13 +80,13 @@ export function HomeProductSections({
                 />
 
                 {layout === "grid" ? (
-                  <div className="mt-6 grid grid-cols-1 gap-3 min-[380px]:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                  <div className="mt-4 grid grid-cols-1 gap-2.5 min-[380px]:grid-cols-2 sm:gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                     {section.products.map((product) => (
                       <ProductCard key={product.id} product={product} locale={locale} />
                     ))}
                   </div>
                 ) : (
-                  <div className="mt-6">
+                  <div className="mt-4">
                     <HomeSlider
                       rtl={rtl}
                       autoPlay={false}
@@ -134,15 +134,13 @@ function RowHeader({
   layoutSwiperLabel: string;
 }) {
   return (
-    <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3">
+    <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
       <div className="min-w-0">
-        <p className="bm-kicker mb-2">{rtl ? "مجموعة" : "Collection"}</p>
         <h2
           className={cn(
-            "leading-none font-semibold text-foreground",
-            "text-[clamp(1.35rem,2.6vw,2.1rem)]",
-            !rtl && "font-chillax tracking-wide uppercase",
-            rtl && "font-cairo font-semibold"
+            "store-heading",
+            !rtl && "font-chillax",
+            rtl && "font-cairo"
           )}
         >
           {title}
@@ -191,7 +189,7 @@ function RowHeader({
           href="/products"
           onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
           className={cn(
-            "inline-flex shrink-0 items-center rounded-md border border-border bg-card px-4 py-1.5 text-sm font-semibold text-foreground/80 transition-colors duration-200 hover:border-primary/40 hover:text-foreground",
+            "store-view-all inline-flex shrink-0 items-center gap-0.5",
             rtl && "font-cairo"
           )}
         >

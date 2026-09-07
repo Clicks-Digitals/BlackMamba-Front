@@ -6,6 +6,8 @@ import { normalizeCategories } from "@/lib/api/normalize-category";
 import { normalizeBanners, normalizeHomeSections, normalizeSwipers } from "@/lib/api/normalize-home";
 import type { Category } from "@/types/category";
 import type { PaginatedResponse } from "@/types/api";
+import { SHOWCASE_BRANDS } from "@/features/brand/data/showcase";
+import { DEMO_PRODUCT } from "@/features/single-product/data/demo-product";
 import type { HomeBanner, HomeBrand, HomeLayoutSection, HomeSection, HomeSponsor, HomeSwiperSlide, HomeTestimonial } from "../types";
 import type { Campaign } from "@/types/campaign";
 
@@ -38,8 +40,26 @@ export async function getHomeSwipers(): Promise<HomeSwiperSlide[]> {
 
 export async function getHomeSections(): Promise<HomeSection[]> {
   const res = await apiClient<unknown>("/sections/");
-  if (!res.ok) return [];
-  return normalizeHomeSections(res.data);
+  const sections = res.ok ? normalizeHomeSections(res.data) : [];
+  if (!sections.length) {
+    return [
+      {
+        id: "demo-featured",
+        title: "Featured",
+        title_ar: "مميز",
+        order: 0,
+        is_active: true,
+        products: [DEMO_PRODUCT],
+        created_at: "",
+        updated_at: "",
+      },
+    ];
+  }
+  return sections.map((section, index) =>
+    index === 0
+      ? { ...section, products: [DEMO_PRODUCT, ...section.products.filter((p) => p.id !== DEMO_PRODUCT.id)] }
+      : section
+  );
 }
 
 export async function getSponsors(): Promise<HomeSponsor[]> {
@@ -76,22 +96,7 @@ export async function getShopByBrands(): Promise<HomeBrand[]> {
     return Array.from(merged.values()).map((brand) => withLocalBrandLogo(brand));
   }
 
-  // API currently requires a category and often returns empty — keep a visible showcase.
-  const showcase: { name: string; slug: string; logo: string }[] = [
-    { name: "AMD", slug: "amd", logo: "/brands/amd.svg" },
-    { name: "Intel", slug: "intel", logo: "/brands/intel.svg" },
-    { name: "NVIDIA", slug: "nvidia", logo: "/brands/nvidia.svg" },
-    { name: "ASUS", slug: "asus", logo: "/brands/asus.svg" },
-    { name: "MSI", slug: "msi", logo: "/brands/msi.svg" },
-    { name: "Corsair", slug: "corsair", logo: "/brands/corsair.svg" },
-    { name: "Logitech", slug: "logitech", logo: "/brands/logitech.svg" },
-    { name: "Samsung", slug: "samsung", logo: "/brands/samsung.svg" },
-    { name: "Kingston", slug: "kingston", logo: "/brands/kingston.svg" },
-    { name: "Razer", slug: "razer", logo: "/brands/razer.svg" },
-    { name: "Cooler Master", slug: "cooler-master", logo: "/brands/coolermaster.svg" },
-  ];
-
-  return showcase.map((entry, index) => ({
+  return SHOWCASE_BRANDS.map((entry, index) => ({
     id: `showcase-${entry.slug}`,
     name: entry.name,
     name_ar: entry.name,

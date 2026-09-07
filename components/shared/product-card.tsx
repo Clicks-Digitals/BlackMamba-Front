@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { ShoppingCart, Check, Loader2 } from "lucide-react";
+import { ShoppingCart, Check, Loader2, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/types/product";
 import { WishlistButton } from "./wishlist-button";
@@ -19,19 +19,6 @@ function discountPercent(p: Product): number | null {
   const d = Number.parseFloat(p.discount_price);
   if (!Number.isFinite(b) || b <= 0 || !Number.isFinite(d) || d >= b) return null;
   return Math.round(((b - d) / b) * 100);
-}
-
-function badgeLabel(
-  product: Product,
-  hasCampaign: boolean,
-  pct: number | null,
-  t: ReturnType<typeof useTranslations<"Home">>
-): string | null {
-  if (hasCampaign) return pct != null ? `-${pct}%` : t("sale");
-  if (product.has_discount) return t("sale");
-  if (product.clearance_sale) return t("sale");
-  if (product.best_seller) return t("featured");
-  return null;
 }
 
 export type ProductCardProps = {
@@ -49,6 +36,11 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
     product.gallery?.find((g) => g.is_primary)?.file ||
     product.gallery?.[0]?.file;
   const sym = product.currency_info?.symbol ?? "";
+  const brand = product.brand
+    ? rtl
+      ? product.brand.name_ar || product.brand.name
+      : product.brand.name
+    : null;
 
   const hasCampaign = !!product.campaign_price;
   const hasDiscount = product.has_discount && !!product.discount_price;
@@ -68,7 +60,8 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
       })()
     : discountPercent(product);
 
-  const badge = badgeLabel(product, hasCampaign, pct, t);
+  const rating = product.avg_rating;
+  const reviews = product.review_count ?? 0;
 
   const { setCount, getItemRef, upsertItemRef } = useCartStore();
   const [isPending, startTransition] = useTransition();
@@ -76,7 +69,9 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
   const isInCart = !!getItemRef(itemKey);
 
   const needsVariations = product.inventory_mode === "TRACK_VARIATIONS";
-  const outOfStock = product.inventory_mode === "TRACK" && (product.product_stock ?? 0) <= 0;
+  const outOfStock =
+    product.in_stock === false ||
+    (product.inventory_mode === "TRACK" && (product.product_stock ?? 0) <= 0);
 
   function handleAddToCart(e: React.MouseEvent) {
     if (needsVariations) return;
@@ -119,39 +114,37 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
     : t("addToCart");
 
   const cartButtonClass = cn(
-    "inline-flex size-9 shrink-0 items-center justify-center rounded-md transition-all duration-200",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-card",
+    "inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-none transition-colors duration-150",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
     outOfStock
       ? "cursor-not-allowed bg-muted text-muted-foreground/50"
       : isInCart
-      ? "bg-primary text-white hover:bg-[#d12f27]"
-      : "bg-primary text-white hover:bg-[#d12f27] active:scale-95",
+        ? "bg-primary text-white hover:bg-[var(--blue-hover)]"
+        : "border border-border bg-transparent text-foreground hover:border-primary hover:bg-primary hover:text-white",
     isPending && "cursor-not-allowed opacity-70"
   );
 
   const cartIcon = isPending ? (
-    <Loader2 size={16} className="animate-spin" />
+    <Loader2 size={14} className="animate-spin" strokeWidth={2} />
   ) : isInCart && !outOfStock ? (
-    <Check size={16} strokeWidth={2.5} />
+    <Check size={14} strokeWidth={2.25} />
   ) : (
-    <ShoppingCart size={16} strokeWidth={2} />
+    <ShoppingCart size={14} strokeWidth={1.75} />
   );
 
   return (
     <article
       className={cn(
-        "group relative flex h-full w-full flex-col overflow-hidden rounded-lg bg-card",
-        "border border-border transition-[border-color,box-shadow,transform] duration-200",
-        "hover:-translate-y-0.5 hover:border-primary hover:shadow-[var(--shadow-card-hover)]",
-        "motion-reduce:transform-none motion-reduce:hover:translate-y-0",
-        outOfStock && "opacity-85",
+        "group relative flex h-full w-full flex-col rounded-none bg-card",
+        "border border-border transition-colors duration-150 hover:border-primary",
+        outOfStock && "opacity-80",
         className
       )}
     >
       <Link href={`/products/${product.slug}`} className="block">
         <div
           data-card-media
-          className="relative aspect-square w-full overflow-hidden border-b border-border bg-muted/40"
+          className="relative aspect-square w-full overflow-hidden rounded-none bg-white"
         >
           {img ? (
             <Image
@@ -159,27 +152,25 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
               alt={name}
               fill
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
-              className="object-contain p-4 transition-transform duration-200 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+              className="object-contain p-4"
               unoptimized
             />
           ) : (
-            <div className="absolute inset-0 bg-muted/40" />
+            <div className="absolute inset-0 bg-[#FFFFFF]" />
           )}
 
           {outOfStock && (
-            <div className="absolute inset-0 bg-background/40" />
+            <div className="absolute inset-0 flex items-center justify-center bg-white/70">
+              <span className="bg-foreground px-2 py-0.5 text-[11px] font-semibold text-background uppercase">
+                {t("outOfStock")}
+              </span>
+            </div>
           )}
 
-          {badge && (
-            <span className="absolute top-2.5 start-2.5 z-20 inline-flex h-[22px] items-center rounded-md bg-primary/15 px-2 text-[10px] font-bold uppercase tracking-wide text-primary">
-              {badge}
-            </span>
-          )}
-
-          <div className="absolute top-2 end-2 z-20">
+          <div className="absolute top-0 end-0 z-20">
             <WishlistButton
               productId={product.id}
-              className="size-8 rounded-full border-transparent bg-background/70 p-0 text-foreground/70 shadow-none hover:border-transparent hover:bg-background hover:text-foreground"
+              className="size-7 rounded-none border-border bg-white/90 p-0 text-muted-foreground shadow-none hover:border-primary hover:bg-white hover:text-primary"
             />
           </div>
 
@@ -191,11 +182,23 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
         </div>
       </Link>
 
-      <div className="flex flex-1 flex-col px-3.5 pb-3.5 pt-3">
+      <div className="flex flex-1 flex-col px-2.5 pt-2.5 pb-2.5">
+        {pct != null ? (
+          <span className="mb-1.5 inline-flex w-fit bg-[#b8e0b8] px-1.5 py-0.5 text-[11px] font-semibold leading-none text-[#1a5c2a]">
+            {pct}% OFF
+          </span>
+        ) : null}
+
+        {brand ? (
+          <p className={cn("mb-0.5 truncate text-[11px] text-muted-foreground", rtl && "font-cairo")}>
+            {brand}
+          </p>
+        ) : null}
+
         <Link href={`/products/${product.slug}`}>
           <p
             className={cn(
-              "line-clamp-2 min-h-[2.5rem] text-[13px] font-medium leading-snug text-foreground sm:text-[14px]",
+              "line-clamp-3 min-h-[3.9em] text-[13px] leading-[1.3] font-semibold text-foreground hover:text-primary",
               rtl && "font-cairo"
             )}
           >
@@ -203,44 +206,65 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
           </p>
         </Link>
 
-        <div className="mt-auto flex items-end justify-between gap-3 pt-3">
-          <div className="min-w-0">
-            <p className={cn("text-[11px] font-normal text-muted-foreground", rtl && "font-cairo")}>
-              {t("price")}
-            </p>
-            <div className="mt-0.5 flex flex-wrap items-baseline gap-1.5">
-              {finalPrice && (
-                <span className={cn("text-[16px] font-bold leading-none text-foreground sm:text-[17px]", hasCampaign && "text-deal")}>
-                  {sym}{finalPrice}
-                </span>
-              )}
-              {origPrice && (
-                <span className="text-[11px] leading-none text-muted-foreground line-through">
-                  {sym}{origPrice}
-                </span>
-              )}
-            </div>
-          </div>
+        {product.sku ? (
+          <p className="mt-1 truncate text-[11px] tabular-nums text-muted-foreground">
+            {rtl ? "رمز المنتج" : "SKU"}: {product.sku}
+          </p>
+        ) : null}
 
-          {needsVariations ? (
-            <Link
-              href={`/products/${product.slug}`}
-              aria-label={t("addToCart")}
-              className={cartButtonClass}
+        {rating != null && rating > 0 ? (
+          <p className="mt-1.5 flex items-center gap-1 text-[11px] text-muted-foreground">
+            <Star size={12} strokeWidth={0} className="fill-amber-400 text-amber-400" />
+            <span className="tabular-nums text-foreground">{rating.toFixed(1)}</span>
+            {reviews > 0 ? <span>({reviews})</span> : null}
+          </p>
+        ) : null}
+
+        <div className="mt-auto pt-3">
+          {finalPrice && (
+            <p
+              className={cn(
+                "text-[18px] leading-none font-bold tabular-nums text-foreground",
+                hasCampaign && "text-deal",
+                rtl && "font-cairo"
+              )}
             >
-              <ShoppingCart size={16} strokeWidth={2} />
-            </Link>
-          ) : (
-            <button
-              type="button"
-              onClick={handleAddToCart}
-              disabled={isPending || outOfStock}
-              aria-label={cartLabel}
-              className={cartButtonClass}
-            >
-              {cartIcon}
-            </button>
+              {sym}
+              {finalPrice}
+            </p>
           )}
+          {origPrice && (
+            <p className="mt-1 text-[12px] leading-none text-muted-foreground line-through tabular-nums">
+              {sym}
+              {origPrice}
+            </p>
+          )}
+
+          {outOfStock ? (
+            <p className="mt-2 text-[12px] font-medium text-destructive">{t("outOfStock")}</p>
+          ) : product.in_stock ? (
+            <p className="mt-2 text-[12px] font-medium text-emerald-500">
+              {rtl ? "متوفر" : "In stock"}
+            </p>
+          ) : null}
+
+          <div className="mt-3 flex justify-end">
+            {needsVariations ? (
+              <Link href={`/products/${product.slug}`} aria-label={t("addToCart")} className={cartButtonClass}>
+                <ShoppingCart size={14} strokeWidth={1.75} />
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                disabled={isPending || outOfStock}
+                aria-label={cartLabel}
+                className={cartButtonClass}
+              >
+                {cartIcon}
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </article>

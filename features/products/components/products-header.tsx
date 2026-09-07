@@ -42,19 +42,19 @@ export function ProductsHeader({
 
   return (
     <div className="mx-auto flex w-full max-w-200 flex-col gap-3">
-      <p className="font-chillax font-bold text-[20px] md:text-[25px]  uppercase tracking-wide text-foreground">
+      <p className="font-chillax text-[20px] font-semibold text-foreground md:text-[22px]">
         {t("count", { count })}
       </p>
 
       <div className="flex w-full items-center gap-2 sm:gap-3">
-        <label className="relative flex h-10 min-w-0 flex-1 items-center">
+        <label className="relative flex h-9 min-w-0 flex-1 items-center">
           <Search className="absolute start-3 size-4 text-muted-foreground" />
           <input
             type="search"
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
             placeholder={t("searchPlaceholder")}
-            className="h-10 w-full rounded-full border border-border bg-card ps-10 pe-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+            className="h-9 w-full rounded-[4px] border border-border bg-card ps-10 pe-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
           />
         </label>
 
@@ -69,7 +69,7 @@ export function ProductsHeader({
             type="button"
             onClick={onOpenFilters}
             aria-label={t("filter")}
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-primary hover:bg-primary hover:text-white md:hidden"
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[4px] border border-border bg-card text-foreground transition-colors duration-150 hover:border-primary hover:bg-primary hover:text-white md:hidden"
           >
             <SlidersHorizontal className="size-4" />
           </button>

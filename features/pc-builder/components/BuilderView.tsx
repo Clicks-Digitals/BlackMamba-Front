@@ -115,13 +115,13 @@ function BuilderStage({
             <BuilderBadge>{t("badge")}</BuilderBadge>
             <h1
               className={cn(
-                "mt-2 text-[clamp(2.6rem,6vw,4.4rem)] uppercase leading-[0.88] tracking-wide text-[#EDEFF0]",
+                "mt-2 text-[clamp(2.6rem,6vw,4.4rem)] uppercase leading-[0.88] tracking-wide text-[#FFFFFF]",
                 rtl ? "font-cairo font-bold" : "font-beckman"
               )}
             >
               {t("title")}
             </h1>
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#9AA3A8] sm:text-[15px]">{t("subtitle")}</p>
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#FFFFFF] sm:text-[15px]">{t("subtitle")}</p>
           </motion.div>
 
           <motion.div {...fadeUp(0.32, reduceMotion)} className="mt-5 flex flex-wrap gap-2">
@@ -134,7 +134,7 @@ function BuilderStage({
                 key={label}
                 className="inline-flex min-h-11 items-center gap-1.5 rounded-md border border-white/8 bg-black/25 px-3 py-1.5 text-[11px] font-semibold tracking-wide text-white/55 sm:min-h-0"
               >
-                <Icon className="h-3.5 w-3.5 text-[#d12f27]" />
+                <Icon className="h-3.5 w-3.5 text-[#EB0B1A]" />
                 {label}
               </span>
             ))}
@@ -151,14 +151,14 @@ function BuilderStage({
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/35">
                 {t("hud.accessoriesLabel")}
               </p>
-              <p className="mt-1 font-letterman text-2xl tabular-nums text-[#EDEFF0]">
+              <p className="mt-1 font-letterman text-2xl tabular-nums text-[#FFFFFF]">
                 {t("hud.slotsFilled", { filled: filledAccessories, total: ACCESSORY_SLOTS.length })}
               </p>
             </div>
             <div className="min-w-[7.5rem] rounded-lg border border-white/8 bg-black/30 px-4 py-3">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/35">{t("hud.powerLabel")}</p>
-              <p className="mt-1 flex items-center gap-1.5 font-beckman text-2xl tabular-nums text-[#EDEFF0]">
-                <Zap className="size-4 text-[#d12f27]" />
+              <p className="mt-1 flex items-center gap-1.5 font-beckman text-2xl tabular-nums text-[#FFFFFF]">
+                <Zap className="size-4 text-[#EB0B1A]" />
                 {t("hud.watts", { watts: Math.round(liveWatts) })}
               </p>
             </div>
@@ -167,14 +167,14 @@ function BuilderStage({
           <motion.div {...fadeUp(0.5, reduceMotion)} className="mt-6 flex flex-wrap items-center gap-3">
             <Link
               href="/pc-builder/parts"
-              className="group inline-flex h-11 items-center gap-1.5 rounded-md border border-white/12 bg-white/4 px-4 text-sm font-semibold text-[#EDEFF0] transition-colors duration-200 hover:border-white/25"
+              className="group inline-flex h-11 items-center gap-1.5 rounded-md border border-white/12 bg-white/4 px-4 text-sm font-semibold text-[#FFFFFF] transition-colors duration-200 hover:border-white/25"
             >
               {t("browseAllParts")}
               <ArrowIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
             </Link>
             <Link
               href="/pc-builder/ready-made"
-              className="group inline-flex h-11 items-center gap-1.5 rounded-md bg-[#9e1d20] px-4 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#7a1618]"
+              className="group inline-flex h-11 items-center gap-1.5 rounded-md bg-[#EB0B1A] px-4 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#EB0B1A]"
             >
               {t("browseReadyMade")}
               <ArrowIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
@@ -307,7 +307,7 @@ function HudMeter({
           cy="32"
           r={r}
           fill="none"
-          stroke="#d12f27"
+          stroke="#EB0B1A"
           strokeWidth="5"
           strokeLinecap="round"
           strokeDasharray={c}
@@ -317,7 +317,7 @@ function HudMeter({
       </svg>
       <div>
         <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/35">{label}</p>
-        <p className={cn("mt-0.5 text-xl tabular-nums text-[#EDEFF0]", rtl ? "font-cairo font-bold" : "font-beckman")}>
+        <p className={cn("mt-0.5 text-xl tabular-nums text-[#FFFFFF]", rtl ? "font-cairo font-bold" : "font-beckman")}>
           {value}
         </p>
       </div>

@@ -1,7 +1,7 @@
 export default function StorefrontLoading() {
   return (
     <div className="min-h-[60vh]">
-      <div className="relative h-72 w-full overflow-hidden bg-[#121314] sm:h-105">
+      <div className="relative h-72 w-full overflow-hidden bg-background sm:h-105">
         <div className="absolute inset-0 animate-pulse bg-linear-to-r from-transparent via-white/4 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-primary/50 to-transparent" />
       </div>

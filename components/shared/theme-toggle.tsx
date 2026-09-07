@@ -21,10 +21,7 @@ export function ThemeToggle({ className }: { className?: string }) {
     <div
       role="group"
       aria-label={t("themeToLight")}
-      className={cn(
-        "inline-flex h-9 shrink-0 items-center rounded-md border border-white/12 bg-white/4 p-0.5 sm:h-10",
-        className
-      )}
+      className={cn("inline-flex h-8 shrink-0 items-center px-1", className)}
     >
       <button
         type="button"
@@ -33,13 +30,11 @@ export function ThemeToggle({ className }: { className?: string }) {
         title={t("themeToLight")}
         aria-pressed={!isDark}
         className={cn(
-          "inline-flex size-8 items-center justify-center rounded-[6px] transition-colors duration-200 sm:size-9",
-          !isDark
-            ? "bg-white/15 text-white"
-            : "text-white/45 hover:text-white"
+          "inline-flex size-8 items-center justify-center transition-colors duration-150",
+          !isDark ? "text-white" : "text-white/40 hover:text-white"
         )}
       >
-        <Sun className="size-3.5 sm:size-4" strokeWidth={1.75} />
+        <Sun className="size-4" strokeWidth={1.75} />
       </button>
       <button
         type="button"
@@ -48,13 +43,11 @@ export function ThemeToggle({ className }: { className?: string }) {
         title={t("themeToDark")}
         aria-pressed={isDark}
         className={cn(
-          "inline-flex size-8 items-center justify-center rounded-[6px] transition-colors duration-200 sm:size-9",
-          isDark
-            ? "bg-white/15 text-white"
-            : "text-white/45 hover:text-white"
+          "inline-flex size-8 items-center justify-center transition-colors duration-150",
+          isDark ? "text-white" : "text-white/40 hover:text-white"
         )}
       >
-        <Moon className="size-3.5 sm:size-4" strokeWidth={1.75} />
+        <Moon className="size-4" strokeWidth={1.75} />
       </button>
     </div>
   );

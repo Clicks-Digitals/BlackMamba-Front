@@ -368,7 +368,7 @@ function ProductsList({ products, query, locale, onSelect, t, viewAllHref }: Pro
                 <span className="absolute inset-s-0 top-1/2 h-6 w-0.5 -translate-y-1/2 rounded-full bg-primary opacity-0 transition-opacity group-hover:opacity-100" />
 
                 {/* Thumbnail */}
-                <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-[#26292C] bg-[#0B0F0E]">
+                <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-[#000000] bg-[#000000]">
                   {product.thumbnail ? (
                     <Image
                       src={product.thumbnail}
@@ -599,29 +599,36 @@ function DesktopHeaderSearch({ search }: DesktopSearchProps) {
     return () => document.removeEventListener("pointerdown", onPointer);
   }, [isOpen, search]);
 
+  const goSearch = () => {
+    const q = search.query.trim();
+    if (!q) return;
+    if (q.startsWith("#")) {
+      router.push(`/categories`);
+    } else {
+      search.addRecent(q);
+      router.push(`/products?search=${encodeURIComponent(q)}`);
+    }
+    search.reset();
+    setIsOpen(false);
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      const q = search.query.trim();
-      if (!q) return;
-      if (q.startsWith("#")) {
-        const tagQ = q.slice(1).trim();
-        if (tagQ) router.push(`/categories`);
-      } else {
-        search.addRecent(q);
-        router.push(`/products?search=${encodeURIComponent(q)}`);
-      }
-      search.reset();
-      setIsOpen(false);
+      e.preventDefault();
+      goSearch();
     }
   };
 
   return (
     <div ref={containerRef} className="relative w-full">
-      <div
-        className="flex h-10 items-center gap-2.5 rounded-md border border-white/10 bg-white/5 px-3.5 transition-colors duration-200 focus-within:border-primary/50 focus-within:bg-white/8"
+      <form
+        className="flex h-10 w-full items-stretch overflow-hidden bg-white"
         onClick={() => setIsOpen(true)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          goSearch();
+        }}
       >
-        <Search size={16} className="shrink-0 text-white/40" />
         <input
           ref={inputRef}
           type="search"
@@ -634,23 +641,30 @@ function DesktopHeaderSearch({ search }: DesktopSearchProps) {
           dir={locale === "ar" ? "rtl" : "ltr"}
           aria-busy={search.isLoading}
           aria-label={t("search")}
-          className="min-w-0 flex-1 bg-transparent font-chillax text-sm text-white placeholder:text-white/35 focus:outline-none"
+          className="min-w-0 flex-1 bg-transparent px-3 font-chillax text-[13px] text-[#000000] placeholder:text-[#000000]/40 focus:outline-none"
         />
-        {search.isLoading && <Loader2 size={14} className="shrink-0 animate-spin text-white/40" />}
+        {search.isLoading && <Loader2 size={14} className="my-auto shrink-0 animate-spin text-[#000000]/40" />}
         {(search.query || isOpen) && (
           <button
             type="button"
             onClick={() => { search.reset(); setIsOpen(false); }}
             aria-label={tUi("close")}
-            className="shrink-0 rounded-full p-1 text-white/40 transition-colors hover:bg-white/10 hover:text-white"
+            className="shrink-0 px-2 text-[#000000]/40 transition-colors hover:text-[#000000]"
           >
             <X size={14} />
           </button>
         )}
-      </div>
+        <button
+          type="submit"
+          aria-label={t("search")}
+          className="flex h-full w-11 shrink-0 items-center justify-center bg-primary text-white transition-colors duration-150 hover:bg-[var(--blue-hover)]"
+        >
+          <Search size={18} strokeWidth={2.25} />
+        </button>
+      </form>
 
       {showPanel && (
-        <div className="dark scrollbar-thin absolute start-0 top-[calc(100%+8px)] z-50 max-h-[26rem] w-full overflow-y-auto rounded-lg border border-white/10 bg-[#161718] shadow-[0_16px_40px_-16px_rgba(0,0,0,0.7)] animate-in fade-in slide-in-from-top-1 duration-150">
+        <div className="dark scrollbar-thin absolute start-0 top-[calc(100%+8px)] z-50 max-h-[26rem] w-full overflow-y-auto rounded-lg border border-white/10 bg-[#000000] shadow-[0_16px_40px_-16px_rgba(0,0,0,0.7)] animate-in fade-in slide-in-from-top-1 duration-150">
           <ResultsPanel
             search={search}
             onSelect={() => { search.reset(); setIsOpen(false); }}
@@ -720,8 +734,18 @@ function MobileHeaderSearchOverlay({ search, isOpen, onClose }: MobileOverlayPro
       >
         {/* Input */}
         <div className="mx-auto flex max-w-xl items-center gap-2">
-          <div className="flex flex-1 items-center gap-2 rounded-md border border-white/20 bg-white/10 px-3 py-2">
-            <Search size={15} className="shrink-0 text-white/40" />
+          <form
+            className="flex h-10 min-w-0 flex-1 items-stretch overflow-hidden bg-white"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const q = search.query.trim();
+              if (!q) return;
+              if (!q.startsWith("#")) search.addRecent(q);
+              router.push(q.startsWith("#") ? `/categories` : `/products?search=${encodeURIComponent(q)}`);
+              search.reset();
+              onClose();
+            }}
+          >
             <input
               ref={inputRef}
               type="search"
@@ -731,14 +755,21 @@ function MobileHeaderSearchOverlay({ search, isOpen, onClose }: MobileOverlayPro
               placeholder={tUi("placeholder")}
               autoComplete="off"
               dir={locale === "ar" ? "rtl" : "ltr"}
-              className="min-w-0 flex-1 bg-transparent font-chillax text-sm text-white placeholder:text-white/35 focus:outline-none"
+              className="min-w-0 flex-1 bg-transparent px-3 font-chillax text-sm text-[#000000] placeholder:text-[#000000]/40 focus:outline-none"
             />
-            {search.isLoading && <Loader2 size={13} className="shrink-0 animate-spin text-white/40" />}
-          </div>
+            {search.isLoading && <Loader2 size={13} className="my-auto me-2 shrink-0 animate-spin text-[#000000]/40" />}
+            <button
+              type="submit"
+              aria-label={tUi("close")}
+              className="flex h-full w-11 shrink-0 items-center justify-center bg-primary text-white"
+            >
+              <Search size={18} strokeWidth={2.25} />
+            </button>
+          </form>
           <button
             type="button"
             onClick={() => { search.reset(); onClose(); }}
-            className="shrink-0 rounded-md p-2 text-white/70 transition-colors duration-200 hover:bg-white/10 hover:text-white"
+            className="shrink-0 p-2 text-white/70 transition-colors duration-150 hover:bg-white/10 hover:text-white"
             aria-label={tUi("close")}
           >
             <X size={20} />
@@ -747,7 +778,7 @@ function MobileHeaderSearchOverlay({ search, isOpen, onClose }: MobileOverlayPro
 
         {/* Panel */}
         {showPanel && (
-          <div className="dark scrollbar-thin mx-auto mt-2 max-h-[min(26rem,calc(100svh-9rem))] max-w-xl overflow-y-auto rounded-lg border border-white/10 bg-[#161718] shadow-xl">
+          <div className="dark scrollbar-thin mx-auto mt-2 max-h-[min(26rem,calc(100svh-9rem))] max-w-xl overflow-y-auto rounded-lg border border-white/10 bg-[#000000] shadow-xl">
             <ResultsPanel
               search={search}
               onSelect={() => { search.reset(); onClose(); }}
@@ -771,7 +802,7 @@ export function HeaderSearch({
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const desktop = (
-    <div className="hidden min-w-0 flex-1 xl:ms-auto xl:block xl:max-w-sm 2xl:max-w-md">
+    <div className="hidden min-w-0 flex-1 xl:block xl:max-w-2xl 2xl:max-w-3xl">
       <DesktopHeaderSearch search={search} />
     </div>
   );
@@ -782,7 +813,7 @@ export function HeaderSearch({
         type="button"
         onClick={() => setMobileOpen(true)}
         aria-label={t("search")}
-        className="inline-flex size-10 shrink-0 items-center justify-center rounded-md text-white/70 transition-colors duration-200 hover:bg-white/10 hover:text-white"
+        className="inline-flex size-9 shrink-0 items-center justify-center text-white/80 transition-colors duration-150 hover:bg-white/10 hover:text-white"
       >
         <Search className="size-5 shrink-0" strokeWidth={1.75} />
       </button>

@@ -53,10 +53,10 @@ function ReviewFormFields({
 
       <RatingStars value={rating} onChange={setRating} label={t("ratingLabel")} />
       {fe.rating?.[0] && (
-        <p className="font-chillax text-xs text-red-600">{t(fe.rating[0] as never)}</p>
+        <p className="font-chillax text-xs text-primary">{t(fe.rating[0] as never)}</p>
       )}
       {fe.product?.[0] && (
-        <p className="font-chillax text-xs text-red-600">{t(fe.product[0] as never)}</p>
+        <p className="font-chillax text-xs text-primary">{t(fe.product[0] as never)}</p>
       )}
 
       <Input
@@ -114,7 +114,7 @@ function RatingStars({
             key={n}
             type="button"
             onClick={() => onChange(n)}
-            className="flex size-11 items-center justify-center rounded text-amber-400 transition hover:scale-110 focus:ring-2 focus:ring-primary/30 focus:outline-none"
+            className="flex size-11 items-center justify-center rounded text-primary transition hover:scale-110 focus:ring-2 focus:ring-primary/30 focus:outline-none"
             aria-label={`${n}`}
           >
             <Star

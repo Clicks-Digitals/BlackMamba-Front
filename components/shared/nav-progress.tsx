@@ -82,7 +82,7 @@ export function NavProgress() {
       {active && (
         <motion.div
           key="nav-progress"
-          className="pointer-events-none fixed top-0 left-0 z-[99999] h-[2px] bg-primary shadow-[0_0_8px_var(--primary)]"
+          className="pointer-events-none fixed top-0 left-0 z-[99999] h-[2px] bg-primary"
           style={{ width: `${width}%`, transformOrigin: "left center" }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

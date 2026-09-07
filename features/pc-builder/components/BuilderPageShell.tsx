@@ -6,17 +6,17 @@ import { BrandLogo, BrandMark } from "@/components/shared/brand-logo";
 
 export function BuilderPageShell({ children }: { children: ReactNode }) {
   return (
-    <div className="bm-builder-stage relative min-h-screen overflow-x-hidden bg-[#0d0e0e] text-[#EDEFF0]">
+    <div className="bm-builder-stage relative min-h-screen overflow-x-hidden bg-[#000000] text-[#FFFFFF]">
       <div className="bm-builder-grid pointer-events-none absolute inset-0" aria-hidden />
       <BuilderSpotlight />
       <div
         className="pointer-events-none absolute -top-40 start-[-10%] h-[32rem] w-[32rem] rounded-full opacity-35"
-        style={{ background: "radial-gradient(circle, #9e1d20 0%, transparent 68%)", filter: "blur(90px)" }}
+        style={{ background: "radial-gradient(circle, #EB0B1A 0%, transparent 68%)", filter: "blur(90px)" }}
         aria-hidden
       />
       <div
         className="pointer-events-none absolute top-1/3 end-[-12%] h-[28rem] w-[28rem] rounded-full opacity-20"
-        style={{ background: "radial-gradient(circle, #d12f27 0%, transparent 70%)", filter: "blur(110px)" }}
+        style={{ background: "radial-gradient(circle, #EB0B1A 0%, transparent 70%)", filter: "blur(110px)" }}
         aria-hidden
       />
       <CircuitHeader />
@@ -78,7 +78,7 @@ function BuilderSpotlight() {
       ref={node}
       className="pointer-events-none fixed top-0 left-0 z-[1] hidden size-80 rounded-full opacity-40 mix-blend-screen lg:block"
       style={{
-        background: "radial-gradient(circle, rgba(158,29,32,0.22) 0%, transparent 70%)",
+        background: "radial-gradient(circle, rgba(235, 11, 26,0.22) 0%, transparent 70%)",
         willChange: "transform",
       }}
       aria-hidden
@@ -96,9 +96,9 @@ export function BlackMambaMark({ size = 32, className }: { size?: number; classN
 
 export function BuilderBadge({ children }: { children: ReactNode }) {
   return (
-    <div className="mb-3 inline-flex items-center gap-2 rounded-md border border-[#9e1d20]/45 bg-[#9e1d20]/12 px-3 py-1.5">
+    <div className="mb-3 inline-flex items-center gap-2 rounded-md border border-[#EB0B1A]/45 bg-[#EB0B1A]/12 px-3 py-1.5">
       <BlackMambaMark size={14} />
-      <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#d12f27] sm:text-[11px]">
+      <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#EB0B1A] sm:text-[11px]">
         {children}
       </span>
     </div>

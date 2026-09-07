@@ -19,15 +19,15 @@ interface OrderDetailSheetProps {
 function getStatusColor(status: string): { bg: string; text: string } {
   switch (status) {
     case "PENDING":
-      return { bg: "bg-amber-500/15", text: "text-amber-300" };
+      return { bg: "bg-primary/15", text: "text-primary" };
     case "CONFIRMED":
-      return { bg: "bg-primary/15", text: "text-[#d12f27]" };
+      return { bg: "bg-primary/15", text: "text-[#EB0B1A]" };
     case "SHIPPED":
-      return { bg: "bg-violet-500/15", text: "text-violet-300" };
+      return { bg: "bg-primary/15", text: "text-primary" };
     case "DELIVERED":
-      return { bg: "bg-emerald-500/15", text: "text-emerald-400" };
+      return { bg: "bg-primary/15", text: "text-primary" };
     case "CANCELLED":
-      return { bg: "bg-red-500/15", text: "text-red-400" };
+      return { bg: "bg-primary/15", text: "text-primary" };
     default:
       return { bg: "bg-white/8", text: "text-white/70" };
   }
@@ -74,17 +74,17 @@ export function OrderDetailSheet({
         <div className="space-y-6">
           {/* Order Items */}
           <div>
-            <h3 className="mb-3 font-chillax text-[14px] font-semibold text-[#EDEFF0]">
+            <h3 className="mb-3 font-chillax text-[14px] font-semibold text-[#FFFFFF]">
               {t("itemsCount", { count: order.items.length })}
             </h3>
             <div className="space-y-3">
               {order.items.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-xl border border-[#26292C] bg-[#17181B] p-3"
+                  className="rounded-xl border border-[#000000] bg-[#000000] p-3"
                 >
                   <div className="mb-2 flex items-start justify-between">
-                    <p className="flex-1 font-chillax text-[13px] font-medium text-[#EDEFF0]">
+                    <p className="flex-1 font-chillax text-[13px] font-medium text-[#FFFFFF]">
                       {rtl && item.product_name_ar ? item.product_name_ar : item.product_name}
                     </p>
                     <span className="font-chillax text-[12px] text-white/45">
@@ -97,7 +97,7 @@ export function OrderDetailSheet({
                     </p>
                   )}
                   {item.build_snapshot && item.build_snapshot.length > 0 && (
-                    <div className="mb-2 space-y-1 rounded-lg bg-[#0B0F0E] p-2">
+                    <div className="mb-2 space-y-1 rounded-lg bg-[#000000] p-2">
                       {item.build_snapshot.map((part, idx) => (
                         <div key={idx} className="flex items-center justify-between font-chillax text-[10px] text-white/55">
                           <span className="truncate">
@@ -112,7 +112,7 @@ export function OrderDetailSheet({
                     <span className="font-chillax text-[12px] text-white/55">
                       {item.unit_price}
                     </span>
-                    <span className="font-chillax text-[12px] font-semibold text-[#EDEFF0]">
+                    <span className="font-chillax text-[12px] font-semibold text-[#FFFFFF]">
                       {item.total_price}
                     </span>
                   </div>
@@ -122,8 +122,8 @@ export function OrderDetailSheet({
           </div>
 
           {/* Order Summary */}
-          <div className="rounded-xl border border-[#26292C] bg-[#17181B] p-4">
-            <h3 className="mb-3 font-chillax text-[14px] font-semibold text-[#EDEFF0]">
+          <div className="rounded-xl border border-[#000000] bg-[#000000] p-4">
+            <h3 className="mb-3 font-chillax text-[14px] font-semibold text-[#FFFFFF]">
               {t("orderSummary")}
             </h3>
             <div className="space-y-2">
@@ -138,7 +138,7 @@ export function OrderDetailSheet({
                       <span className="font-chillax text-[13px] text-white/55">
                         {t("subtotal")}
                       </span>
-                      <span className="font-chillax text-[13px] text-[#EDEFF0]">
+                      <span className="font-chillax text-[13px] text-[#FFFFFF]">
                         {order.subtotal} {currencySymbol}
                       </span>
                     </div>
@@ -146,7 +146,7 @@ export function OrderDetailSheet({
                       <span className="font-chillax text-[13px] text-white/55">
                         {t("shippingCost")}
                       </span>
-                      <span className="font-chillax text-[13px] text-[#EDEFF0]">
+                      <span className="font-chillax text-[13px] text-[#FFFFFF]">
                         {order.shipping_cost} {currencySymbol}
                       </span>
                     </div>
@@ -155,17 +155,17 @@ export function OrderDetailSheet({
                         <span className="font-chillax text-[13px] text-white/55">
                           {t("discount")} ({order.coupon_code})
                         </span>
-                        <span className="font-chillax text-[13px] text-emerald-400">
+                        <span className="font-chillax text-[13px] text-primary">
                           -{order.discount_amount} {currencySymbol}
                         </span>
                       </div>
                     )}
                     <div className="border-t border-[var(--border)] pt-2">
                       <div className="flex items-center justify-between">
-                        <span className="font-chillax text-[14px] font-semibold text-[#EDEFF0]">
+                        <span className="font-chillax text-[14px] font-semibold text-[#FFFFFF]">
                           {t("total")}
                         </span>
-                        <span className="font-chillax text-[14px] font-bold text-[#EDEFF0]">
+                        <span className="font-chillax text-[14px] font-bold text-[#FFFFFF]">
                           {order.total_amount} {currencySymbol}
                         </span>
                       </div>
@@ -178,11 +178,11 @@ export function OrderDetailSheet({
 
           {/* Shipping Address */}
           <div>
-            <h3 className="mb-3 font-chillax text-[14px] font-semibold text-[#EDEFF0]">
+            <h3 className="mb-3 font-chillax text-[14px] font-semibold text-[#FFFFFF]">
               {t("shippingAddress")}
             </h3>
-            <div className="rounded-xl border border-[#26292C] bg-[#17181B] p-4">
-              <p className="font-chillax text-[13px] font-medium text-[#EDEFF0]">
+            <div className="rounded-xl border border-[#000000] bg-[#000000] p-4">
+              <p className="font-chillax text-[13px] font-medium text-[#FFFFFF]">
                 {order.shipping_address.full_name}
               </p>
               <p className="font-chillax text-[12px] text-white/55">
@@ -202,11 +202,11 @@ export function OrderDetailSheet({
           {/* Shipping Option */}
           {order.shipping_option_details && (
             <div>
-              <h3 className="mb-3 font-chillax text-[14px] font-semibold text-[#EDEFF0]">
+              <h3 className="mb-3 font-chillax text-[14px] font-semibold text-[#FFFFFF]">
                 {t("shippingMethod")}
               </h3>
-              <div className="rounded-xl border border-[#26292C] bg-[#17181B] p-4">
-                <p className="font-chillax text-[13px] font-medium text-[#EDEFF0]">
+              <div className="rounded-xl border border-[#000000] bg-[#000000] p-4">
+                <p className="font-chillax text-[13px] font-medium text-[#FFFFFF]">
                   {order.shipping_option_details.name}
                 </p>
                 <p className="font-chillax text-[12px] text-white/55">
@@ -220,13 +220,13 @@ export function OrderDetailSheet({
           )}
 
           {/* Order Dates */}
-          <div className="rounded-xl border border-[#26292C] bg-[#17181B] p-4">
+          <div className="rounded-xl border border-[#000000] bg-[#000000] p-4">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="font-chillax text-[12px] text-white/55">
                   {t("orderDate")}
                 </span>
-                <span className="font-chillax text-[12px] text-[#EDEFF0]">
+                <span className="font-chillax text-[12px] text-[#FFFFFF]">
                   {formatDate(order.created_at, locale)}
                 </span>
               </div>
@@ -234,7 +234,7 @@ export function OrderDetailSheet({
                 <span className="font-chillax text-[12px] text-white/55">
                   {t("lastUpdated")}
                 </span>
-                <span className="font-chillax text-[12px] text-[#EDEFF0]">
+                <span className="font-chillax text-[12px] text-[#FFFFFF]">
                   {formatDate(order.updated_at, locale)}
                 </span>
               </div>

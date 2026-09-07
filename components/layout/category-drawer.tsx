@@ -133,7 +133,7 @@ export function CategoryDrawer({ categories, locale }: Props) {
 
   return (
     <Drawer direction={rtl ? "right" : "left"} open={open} onOpenChange={setOpen}>
-      <DrawerContent className="flex max-h-svh w-[min(340px,92vw)] flex-col overflow-hidden bg-[#161718] p-0">
+      <DrawerContent className="flex max-h-svh w-[min(340px,92vw)] flex-col overflow-hidden bg-[#000000] p-0">
 
         <div className="relative flex items-center justify-center bg-primary px-4 py-3.5">
           <DrawerTitle
@@ -213,8 +213,7 @@ export function CategoryDrawerOpenButton({
   const setOpen = useCategoryDrawer((s) => s.setOpen);
   return (
     <button type="button" onClick={() => setOpen(true)} aria-label={label} className={className}>
-      <LayoutGrid className="size-3.5 shrink-0" strokeWidth={2} />
-      {children}
+      {children ?? <LayoutGrid className="size-3.5 shrink-0" strokeWidth={2} />}
     </button>
   );
 }

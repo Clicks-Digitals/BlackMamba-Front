@@ -29,10 +29,10 @@ export function SortDropdown({ value, onChange, className, variant = "dark" }: P
         <button
           type="button"
           className={cn(
-            "inline-flex h-10 items-center gap-2 rounded-full px-4 text-[13px] font-medium transition-colors",
+            "inline-flex h-9 items-center gap-2 rounded-[4px] px-3 text-[13px] font-medium transition-colors duration-150",
             variant === "dark"
-              ? "bg-primary text-white hover:bg-[#d12f27]"
-              : "border border-white/25 bg-white/10 text-white hover:bg-white/20",
+              ? "bg-primary text-white hover:bg-[var(--blue-hover)]"
+              : "border border-border bg-card text-foreground hover:bg-muted",
             className
           )}
         >

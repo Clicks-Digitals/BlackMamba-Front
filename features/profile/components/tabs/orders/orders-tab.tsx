@@ -30,10 +30,10 @@ export function OrdersTab() {
         fetchAction={getOrders}
         filters={filters}
         emptyState={
-          <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-[#26292C] bg-[#17181B] py-16 text-center">
+          <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-[#000000] bg-[#000000] py-16 text-center">
             <ShoppingBag size={48} className="text-white/25" />
             <div>
-              <p className="text-[16px] font-medium text-[#EDEFF0]">
+              <p className="text-[16px] font-medium text-[#FFFFFF]">
                 {t("noRecentOrders")}
               </p>
               <p className="text-[13px] text-white/45">

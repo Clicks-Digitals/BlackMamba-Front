@@ -50,7 +50,7 @@ export function AddressSection({
         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
           {stepNumber}
         </span>
-        <h3 className="text-sm font-bold uppercase tracking-wider text-[#EDEFF0]">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-[#FFFFFF]">
           {t("section.shippingAddress")}
         </h3>
         <Separator className="flex-1 bg-white/10" />
@@ -60,7 +60,7 @@ export function AddressSection({
         <>
           {addresses.length > 0 ? (
             <RadioGroup value={selectedAddressId ?? ""} onValueChange={onAddressChange}>
-              <ScrollArea className="scrollbar-thin max-h-56 rounded-lg border border-[#26292C] bg-[#17181B] pe-4">
+              <ScrollArea className="scrollbar-thin max-h-56 rounded-lg border border-border bg-card pe-4">
                 <div className="space-y-2 p-3">
                   {addresses.map((addr, idx) => (
                     <div key={addr.id}>
@@ -71,9 +71,9 @@ export function AddressSection({
                         <RadioGroupItem value={addr.id} id={`addr-${addr.id}`} />
                         <div className="flex-1 space-y-2">
                           <div className="flex items-start justify-between">
-                            <p className="text-sm font-bold text-[#EDEFF0]">{addr.title}</p>
+                            <p className="text-sm font-bold text-[#FFFFFF]">{addr.title}</p>
                             {addr.is_default && (
-                              <span className="inline-block rounded-lg bg-emerald-500/15 px-2 py-1 text-xs font-semibold text-emerald-400">
+                              <span className="inline-block rounded-lg bg-primary/15 px-2 py-1 text-xs font-semibold text-primary">
                                 {t("address.default")}
                               </span>
                             )}
@@ -99,7 +99,7 @@ export function AddressSection({
               <p className="mb-3 text-sm text-white/50">{t("address.noSaved")}</p>
               <Link
                 href="/profile?tab=addresses"
-                className="inline-flex items-center gap-2 rounded-lg border border-[#26292C] bg-white/4 px-3 py-2 text-sm font-medium text-[#EDEFF0] hover:border-[#9e1d20]/40 hover:bg-[#9e1d20]/15"
+                className="inline-flex items-center gap-2 rounded-lg border border-[#000000] bg-white/4 px-3 py-2 text-sm font-medium text-[#FFFFFF] hover:border-[#EB0B1A]/40 hover:bg-[#EB0B1A]/15"
               >
                 {t("address.addFromProfile")}
                 <ChevronRight size={16} className="rtl:rotate-180" />
@@ -110,13 +110,13 @@ export function AddressSection({
       ) : (
         <div className="space-y-4">
           {/* Sign-in nudge for guests */}
-          <div className="flex items-center justify-between rounded-lg border border-[#26292C] bg-[#17181B] px-4 py-3">
+          <div className="flex items-center justify-between rounded-lg border border-border bg-card px-4 py-3">
             <p className="text-sm text-white/50">
               {locale === "ar" ? "هل لديك حساب؟" : "Have an account?"}
             </p>
             <Link
               href={`/login?callback=${encodeURIComponent("/checkout")}`}
-              className="text-sm font-semibold text-[#d12f27] hover:underline"
+              className="text-sm font-semibold text-[#EB0B1A] hover:underline"
             >
               {locale === "ar" ? "تسجيل الدخول" : "Sign in"}
               <ChevronRight size={14} className="ms-1 inline-block rtl:rotate-180" />

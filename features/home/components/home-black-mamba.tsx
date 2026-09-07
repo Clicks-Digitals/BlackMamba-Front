@@ -8,37 +8,17 @@ export async function HomeBlackMamba() {
   const rtl = locale === "ar";
 
   return (
-    <section className="relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2 overflow-hidden bg-[#0a0a0b] py-16 sm:py-20 md:py-24">
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.035]"
-        style={{
-          backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
-        }}
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute -top-32 start-0 h-[28rem] w-[28rem] rounded-full bg-[#9e1d20]/20 blur-[120px]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute -bottom-24 end-0 h-80 w-80 rounded-full bg-[#9e1d20]/12 blur-[100px]"
-        aria-hidden
-      />
-
+    <section className="relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2 overflow-hidden bg-background py-12 sm:py-16 md:py-20">
       <div className="layout-page layout-gutter-x relative z-10 grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
         <div className={cn(rtl && "lg:order-2")}>
-          <div className="mb-5 inline-flex items-center gap-2.5 rounded-full border border-primary/35 bg-primary/10 px-4 py-1.5">
-            <Image src="/brand/bm-mark.svg" alt="" width={16} height={16} className="h-4 w-4" aria-hidden />
-            <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#d12f27]">
-              Black Mamba
-            </span>
-          </div>
+          <p className="mb-3 text-[13px] font-medium text-muted-foreground">
+            Black Mamba
+          </p>
 
           <h2
             className={cn(
-              "max-w-[12ch] leading-[0.92] text-white",
-              "text-[clamp(2.6rem,6.5vw,5.5rem)]",
+              "max-w-[12ch] leading-[0.92] text-foreground",
+              "text-[clamp(1.75rem,4vw,2.75rem)]",
               !rtl && "font-beckman uppercase tracking-wide",
               rtl && "font-cairo font-bold"
             )}
@@ -48,7 +28,7 @@ export async function HomeBlackMamba() {
 
           <p
             className={cn(
-              "mt-5 max-w-md text-white/50",
+              "mt-5 max-w-md text-muted-foreground",
               "text-[clamp(0.95rem,1.5vw,1.15rem)] leading-relaxed",
               rtl && "font-cairo"
             )}
@@ -66,8 +46,8 @@ export async function HomeBlackMamba() {
               <span
                 key={chip}
                 className={cn(
-                  "rounded-full border border-white/10 bg-white/4 px-3.5 py-1.5",
-                  "text-[11px] font-medium text-white/65",
+                  "rounded-[4px] border border-border px-2.5 py-1",
+                  "text-[11px] font-medium text-muted-foreground",
                   rtl && "font-cairo"
                 )}
               >
@@ -80,7 +60,7 @@ export async function HomeBlackMamba() {
             <Link
               href="/pc-builder"
               className={cn(
-                "inline-flex h-11 items-center justify-center rounded-md bg-primary px-7 text-sm font-bold text-white transition-colors duration-200 hover:bg-[#d12f27] sm:h-12 sm:px-8",
+                "inline-flex h-9 items-center justify-center rounded-[4px] bg-primary px-5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-[var(--blue-hover)]",
                 rtl && "font-cairo"
               )}
             >
@@ -89,7 +69,7 @@ export async function HomeBlackMamba() {
             <Link
               href="/pc-builder/parts"
               className={cn(
-                "inline-flex h-11 items-center justify-center rounded-md border border-white/15 px-7 text-sm font-semibold text-white/70 transition-colors duration-200 hover:border-white/30 hover:text-white sm:h-12 sm:px-8",
+                "inline-flex h-9 items-center justify-center rounded-[4px] border border-border px-5 text-sm font-medium text-foreground/80 transition-colors duration-150 hover:border-primary/50 hover:text-foreground",
                 rtl && "font-cairo"
               )}
             >
@@ -99,24 +79,16 @@ export async function HomeBlackMamba() {
         </div>
 
         <div className={cn("relative", rtl && "lg:order-1")}>
-          <div className="relative aspect-square overflow-hidden rounded-xl border border-white/8 bg-[#111214] sm:aspect-[5/4] lg:aspect-square">
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(ellipse at 70% 20%, rgba(158,29,32,0.35), transparent 55%), radial-gradient(ellipse at 20% 90%, rgba(158,29,32,0.18), transparent 50%)",
-              }}
-            />
+          <div className="relative aspect-square overflow-hidden rounded-[8px] border border-border bg-card sm:aspect-[5/4] lg:aspect-square">
             <Image
-              src="/images/Black-mamba-Logo.png"
+              src="/images/brand/mark-main.png"
               alt=""
               fill
               className="object-contain p-10 opacity-90 sm:p-14"
-              style={{ mixBlendMode: "screen" }}
               unoptimized
             />
             <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-              <p className={cn("text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40", rtl && "font-cairo tracking-normal")}>
+              <p className={cn("text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground", rtl && "font-cairo tracking-normal")}>
                 {rtl ? "منصة البناء الرسمية" : "Official builder"}
               </p>
             </div>

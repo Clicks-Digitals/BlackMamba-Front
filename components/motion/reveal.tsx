@@ -4,8 +4,6 @@ import { type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-const EASE = [0.22, 1, 0.36, 1] as const;
-
 type RevealProps = {
   children: ReactNode;
   className?: string;
@@ -27,7 +25,7 @@ export function Reveal({ children, className, delay = 0, y = 14, once = true }: 
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once, margin: "-8% 0px" }}
-      transition={{ duration: 0.42, delay, ease: EASE }}
+      transition={{ duration: 0.18, delay, ease: "easeOut" }}
     >
       {children}
     </motion.div>
@@ -82,8 +80,8 @@ export function StaggerItem({
     <motion.div
       className={className}
       variants={{
-        hidden: { opacity: 0, y: 16 },
-        show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE } },
+        hidden: { opacity: 0, y: 8 },
+        show: { opacity: 1, y: 0, transition: { duration: 0.18, ease: "easeOut" } },
       }}
     >
       {children}
@@ -105,15 +103,14 @@ export function SectionHeading({
   className?: string;
 }) {
   return (
-    <div className={cn("mb-7 flex items-end justify-between gap-4 md:mb-9", className)}>
+    <div className={cn("mb-4 flex items-center justify-between gap-4", className)}>
       <div className="min-w-0">
-        {kicker ? <p className="bm-kicker mb-2">{kicker}</p> : null}
+        {kicker ? <p className="mb-1 text-[12px] text-muted-foreground">{kicker}</p> : null}
         <h2
           className={cn(
-            "leading-none font-semibold text-foreground",
-            "text-[clamp(1.45rem,2.8vw,2.25rem)]",
-            !rtl && "font-chillax tracking-wide",
-            rtl && "font-cairo font-semibold"
+            "store-heading",
+            !rtl && "font-chillax",
+            rtl && "font-cairo"
           )}
         >
           {title}

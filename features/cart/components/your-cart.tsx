@@ -119,7 +119,7 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
           <p className="bm-kicker mb-2">{ar ? "طلبك" : "Your bag"}</p>
           <h1
             className={cn(
-              "text-[clamp(1.8rem,3.6vw,2.75rem)] leading-none text-white",
+              "text-[clamp(1.8rem,3.6vw,2.75rem)] leading-none text-foreground",
               ar ? "font-cairo font-semibold" : "font-beckman uppercase tracking-wide"
             )}
           >
@@ -131,9 +131,9 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
       <div className="layout-page layout-gutter-x pb-16">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
           <div className="flex-1">
-            <div className="rounded-lg border border-[#9e1d20]/15 bg-white/3 px-3 py-5 sm:px-6">
+            <div className="rounded-lg border border-[#EB0B1A]/15 bg-white/3 px-3 py-5 sm:px-6">
               <div className="mb-4 grid grid-cols-[1fr_auto_auto] gap-2 border-b border-white/8 pb-3 sm:gap-4">
-                <span className="text-sm font-medium text-[#EDEFF0] sm:text-xl">{t("tableOrder")}</span>
+                <span className="text-sm font-medium text-[#FFFFFF] sm:text-xl">{t("tableOrder")}</span>
                 <span className="w-14 text-center text-xs font-medium text-white/50 sm:w-20 sm:text-sm">
                   {t("tablePrice")}
                 </span>
@@ -156,7 +156,7 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                     <React.Fragment key={item.id}>
                       <div className="grid grid-cols-[1fr_auto_auto] items-center gap-2 sm:gap-4">
                         <div className="flex items-center gap-2 sm:gap-3">
-                          <div className="relative size-16 shrink-0 overflow-hidden rounded-lg border border-[#26292C] bg-[#0B0F0E] sm:size-22.5">
+                          <div className="relative size-16 shrink-0 overflow-hidden rounded-lg border border-[#000000] bg-[#000000] sm:size-22.5">
                             {thumbnail ? (
                               <Image
                                 src={thumbnail}
@@ -176,7 +176,7 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                             {categoryLine && !isBuild ? (
                               <p className="text-[11px] text-white/45">{categoryLine}</p>
                             ) : null}
-                            <p className="text-[15px] font-bold text-[#EDEFF0]">{name}</p>
+                            <p className="text-[15px] font-bold text-[#FFFFFF]">{name}</p>
                             {isBuild && buildParts.length > 0 && (
                               <button
                                 type="button"
@@ -203,7 +203,7 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                         </div>
 
                         <div className="w-20 text-center" dir="ltr">
-                          <span className="text-base font-medium text-[#EDEFF0] tabular-nums">
+                          <span className="text-base font-medium text-[#FFFFFF] tabular-nums">
                             {currencySymbol}
                             {item.price_at_time}
                           </span>
@@ -211,25 +211,25 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
 
                         <div className="flex w-24 items-center justify-between gap-1">
                           <div
-                            className="flex items-center rounded-lg border border-[#9e1d20]/40 bg-white/4 px-1"
+                            className="flex items-center rounded-lg border border-[#EB0B1A]/40 bg-white/4 px-1"
                             dir="ltr"
                           >
                             <button
                               type="button"
                               onClick={() => handleQuantity(item, -1)}
                               disabled={item.quantity <= 1 || isPending}
-                              className="flex size-5 items-center justify-center text-[19px] text-[#EDEFF0] disabled:opacity-40"
+                              className="flex size-5 items-center justify-center text-[19px] text-[#FFFFFF] disabled:opacity-40"
                             >
                               <Minus size={12} />
                             </button>
-                            <span className="min-w-5 text-center text-[19px] text-[#EDEFF0]">
+                            <span className="min-w-5 text-center text-[19px] text-[#FFFFFF]">
                               {item.quantity}
                             </span>
                             <button
                               type="button"
                               onClick={() => handleQuantity(item, 1)}
                               disabled={isPending}
-                              className="flex size-5 items-center justify-center text-[19px] text-[#EDEFF0] disabled:opacity-40"
+                              className="flex size-5 items-center justify-center text-[19px] text-[#FFFFFF] disabled:opacity-40"
                             >
                               <Plus size={12} />
                             </button>
@@ -238,7 +238,7 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                             type="button"
                             onClick={() => handleRemove(item)}
                             disabled={isPending}
-                            className="text-white/40 transition-colors hover:text-[#d12f27]"
+                            className="text-white/40 transition-colors hover:text-[#EB0B1A]"
                             aria-label={t("removeAria")}
                           >
                             <Trash2 size={16} />
@@ -248,7 +248,7 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
 
                       {/* ── PC Build parts breakdown ── */}
                       {isBuild && isExpanded && buildParts.length > 0 && (
-                        <div className="ms-18 sm:ms-25.5 overflow-hidden rounded-lg border border-primary/10 bg-[#121314]">
+                        <div className="ms-18 sm:ms-25.5 overflow-hidden rounded-lg border border-primary/10 bg-[#000000]">
                           {buildParts.map((part, idx) => {
                             const SlotIcon = SLOT_ICONS[part.slot];
                             return (
@@ -262,7 +262,7 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                               <span className="w-22 shrink-0 text-[10px] font-semibold uppercase tracking-wide text-foreground/40">
                                 {SLOT_LABELS[part.slot]}
                               </span>
-                              <div className="relative size-7 shrink-0 overflow-hidden rounded-md bg-[#0B0F0E] border border-[#26292C] flex items-center justify-center">
+                              <div className="relative size-7 shrink-0 overflow-hidden rounded-md bg-[#000000] border border-[#000000] flex items-center justify-center">
                                 {part.product_details.thumbnail ? (
                                   <Image
                                     src={part.product_details.thumbnail}
@@ -299,36 +299,36 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
           <div className="w-full lg:w-89.5 lg:shrink-0">
             <h2
               className={cn(
-                "mb-3 text-3xl text-[#EDEFF0]",
+                "mb-3 text-3xl text-[#FFFFFF]",
                 ar ? "font-cairo font-semibold" : "font-chillax"
               )}
             >
               {t("paymentSummary")}
             </h2>
-            <div className="rounded-lg border border-[#9e1d20]/15 bg-white/3 px-6 py-5">
+            <div className="rounded-lg border border-[#EB0B1A]/15 bg-white/3 px-6 py-5">
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-[15px] font-medium text-[#EDEFF0]">{t("summaryOrder")}</span>
-                  <span className="text-[15px] font-medium text-[#EDEFF0] tabular-nums" dir="ltr">
+                  <span className="text-[15px] font-medium text-[#FFFFFF]">{t("summaryOrder")}</span>
+                  <span className="text-[15px] font-medium text-[#FFFFFF] tabular-nums" dir="ltr">
                     {currencySymbol}
                     {displayedTotal}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[15px] font-medium text-[#EDEFF0]">{t("shippingFees")}</span>
-                  <span className="text-[15px] font-medium text-[#EDEFF0] tabular-nums" dir="ltr">
+                  <span className="text-[15px] font-medium text-[#FFFFFF]">{t("shippingFees")}</span>
+                  <span className="text-[15px] font-medium text-[#FFFFFF] tabular-nums" dir="ltr">
                     {currencySymbol}
                     {shippingFee}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[15px] font-medium text-[#EDEFF0]">{t("paymentMethod")}</span>
-                  <span className="text-[15px] font-medium text-[#EDEFF0]">{t("cashOnDelivery")}</span>
+                  <span className="text-[15px] font-medium text-[#FFFFFF]">{t("paymentMethod")}</span>
+                  <span className="text-[15px] font-medium text-[#FFFFFF]">{t("cashOnDelivery")}</span>
                 </div>
                 <div className="my-1 h-px bg-white/8" />
                 <div className="flex items-center justify-between">
-                  <span className="text-[15px] font-bold text-[#EDEFF0]">{t("totalAmount")}</span>
-                  <span className="text-[15px] font-bold text-[#9e1d20] tabular-nums" dir="ltr">
+                  <span className="text-[15px] font-bold text-[#FFFFFF]">{t("totalAmount")}</span>
+                  <span className="text-[15px] font-bold text-[#EB0B1A] tabular-nums" dir="ltr">
                     {currencySymbol}
                     {grandTotal.toFixed(2)}
                   </span>
@@ -337,7 +337,7 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
 
               <Link
                 href="/checkout"
-                className="mt-5 flex h-11.75 w-full items-center justify-center rounded-lg bg-primary text-[15px] font-medium text-white transition-colors hover:bg-[#d12f27]"
+                className="mt-5 flex h-11.75 w-full items-center justify-center rounded-lg bg-primary text-[15px] font-medium text-white transition-colors hover:bg-[#EB0B1A]"
               >
                 {t("orderNow")}
               </Link>
@@ -360,7 +360,7 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                 {t("viewMore")}
               </Link>
             </div>
-            <div className="grid grid-cols-1 gap-3 min-[380px]:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            <div className="grid grid-cols-1 gap-2.5 min-[380px]:grid-cols-2 sm:gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {relatedProducts.slice(0, 4).map((product) => (
                 <ProductCard key={product.id} product={product} locale={locale} />
               ))}

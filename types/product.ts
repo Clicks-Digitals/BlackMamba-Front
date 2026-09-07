@@ -90,6 +90,7 @@ export interface Product {
   name: string;
   name_ar: string | null;
   slug: string;
+  sku: string | null;
   /** Mean rating from approved reviews (product list/card serializers). */
   avg_rating?: number | null;
   /** Approved review count (product list/card serializers). */
@@ -99,6 +100,10 @@ export interface Product {
   description_ar: string | null;
   overview: string | null;
   overview_ar: string | null;
+  /** Single tall marketing / spec infographic for the Product Overview section. */
+  overview_image: string | null;
+  overview_image_url: string | null;
+  overview_image_ar: string | null;
   features: unknown;
   features_ar: unknown;
   base_price: string | null;

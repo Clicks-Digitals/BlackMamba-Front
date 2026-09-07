@@ -55,16 +55,16 @@ export function WishlistButton({ productId, className }: WishlistButtonProps) {
       disabled={isPending}
       aria-pressed={isActive}
       className={cn(
-        "inline-flex items-center justify-center rounded-lg border border-white/10 bg-black/50 p-2 text-[#EDEFF0] shadow-none transition-colors hover:border-[#9e1d20]/50 hover:bg-[#9e1d20] hover:text-white disabled:opacity-50",
+        "inline-flex items-center justify-center rounded-none border border-border bg-card p-1.5 text-muted-foreground shadow-none transition-colors duration-150 hover:border-primary hover:text-primary disabled:opacity-50",
         className
       )}
     >
       <Heart
-        size={18}
-        strokeWidth={1.5}
+        size={14}
+        strokeWidth={1.75}
         className={cn(
           "pointer-events-none transition-colors",
-          isActive ? "fill-[#d12f27] text-[#d12f27]" : ""
+          isActive ? "fill-[#EB0B1A] text-[#EB0B1A]" : ""
         )}
       />
     </button>

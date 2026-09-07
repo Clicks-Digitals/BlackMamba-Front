@@ -36,18 +36,18 @@ export function SharedBuildView({ build, shareSlug }: { build: PCBuild; shareSlu
       <div className="mx-auto max-w-3xl" dir={rtl ? "rtl" : "ltr"}>
         <header className="mb-8">
           <BlackMambaLogo size="sm" />
-          <div className="mt-5 border-t border-[#9e1d20]/20 pt-5">
+          <div className="mt-5 border-t border-[#EB0B1A]/20 pt-5">
             <h1
               className={
                 rtl
-                  ? "font-cairo text-[clamp(1.5rem,3.5vw,2.25rem)] font-bold leading-none text-[#EDEFF0]"
-                  : "font-beckman text-[clamp(1.75rem,4vw,2.75rem)] uppercase leading-none tracking-wide text-[#EDEFF0]"
+                  ? "font-cairo text-[clamp(1.5rem,3.5vw,2.25rem)] font-bold leading-none text-[#FFFFFF]"
+                  : "font-beckman text-[clamp(1.75rem,4vw,2.75rem)] uppercase leading-none tracking-wide text-[#FFFFFF]"
               }
             >
               {name}
             </h1>
             <p className="mt-2 flex items-center gap-1.5 text-white/50">
-              <Zap className="h-4 w-4 text-[#d12f27]" />
+              <Zap className="h-4 w-4 text-[#EB0B1A]" />
               {build.total_power_draw_watts}W · {tShared("partsCount", { count: build.items.length })}
             </p>
           </div>
@@ -55,45 +55,45 @@ export function SharedBuildView({ build, shareSlug }: { build: PCBuild; shareSlu
             type="button"
             onClick={handleCustomize}
             disabled={isCloning}
-            className="mt-5 flex items-center gap-2 rounded-xl bg-[#9e1d20] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#7a1618] disabled:opacity-50"
+            className="mt-5 flex items-center gap-2 rounded-xl bg-[#EB0B1A] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#EB0B1A] disabled:opacity-50"
           >
             {isCloning ? <Loader2 className="h-4 w-4 animate-spin" /> : <Wrench className="h-4 w-4" />}
             {tShared("customizeThisBuild")}
           </button>
         </header>
 
-        <div className="rounded-lg border border-[#9e1d20]/15 bg-[#17181B] p-6">
+        <div className="rounded-lg border border-[#EB0B1A]/15 bg-[#000000] p-6">
           <ul className="flex flex-col gap-3">
             {build.items.map((item) => {
               const SlotIcon = SLOT_ICONS[item.slot];
               const partName = (rtl && item.product_details.name_ar) || item.product_details.name;
               return (
-                <li key={item.id} className="flex items-center gap-3 border-b border-[#26292C] pb-3 last:border-0 last:pb-0">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#9e1d20]/10">
-                    <SlotIcon className="h-4 w-4 text-[#9e1d20]" />
+                <li key={item.id} className="flex items-center gap-3 border-b border-[#000000] pb-3 last:border-0 last:pb-0">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#EB0B1A]/10">
+                    <SlotIcon className="h-4 w-4 text-[#EB0B1A]" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="text-xs uppercase tracking-wide text-white/40">{t(`slots.${item.slot}`)}</p>
-                    <p className="truncate text-sm font-medium text-[#EDEFF0]">{partName}</p>
+                    <p className="truncate text-sm font-medium text-[#FFFFFF]">{partName}</p>
                   </div>
-                  <span className="text-sm font-semibold text-[#EDEFF0]">{Number(item.unit_price).toFixed(2)} JOD</span>
+                  <span className="text-sm font-semibold text-[#FFFFFF]">{Number(item.unit_price).toFixed(2)} JOD</span>
                 </li>
               );
             })}
           </ul>
 
-          <div className="mt-6 flex flex-col gap-1 border-t border-[#26292C] pt-4 text-sm">
+          <div className="mt-6 flex flex-col gap-1 border-t border-[#000000] pt-4 text-sm">
             <div className="flex justify-between text-white/60">
               <span>{tSummary("subtotal")}</span>
               <span>{Number(build.pricing.subtotal).toFixed(2)} JOD</span>
             </div>
             <div className="flex justify-between text-white/60">
               <span>{tSummary("bundleDiscount")}</span>
-              <span className="text-[#d12f27]">-{build.pricing.discount_percent}%</span>
+              <span className="text-[#EB0B1A]">-{build.pricing.discount_percent}%</span>
             </div>
-            <div className="flex justify-between text-base font-semibold text-[#EDEFF0]">
+            <div className="flex justify-between text-base font-semibold text-[#FFFFFF]">
               <span>{tSummary("total")}</span>
-              <span className="text-lg font-bold text-[#d12f27]">{Number(build.pricing.total_price).toFixed(2)} JOD</span>
+              <span className="text-lg font-bold text-[#EB0B1A]">{Number(build.pricing.total_price).toFixed(2)} JOD</span>
             </div>
           </div>
         </div>

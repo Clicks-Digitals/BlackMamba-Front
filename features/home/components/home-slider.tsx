@@ -45,7 +45,7 @@ export function HomeSlider({
   if (!children.length) return null;
 
   const arrowBase =
-    "static size-11 translate-x-0 translate-y-0 rounded-full border border-border shadow-none transition-colors disabled:opacity-30";
+    "static size-8 translate-x-0 translate-y-0 rounded-none border border-border shadow-none transition-colors duration-150 disabled:opacity-30";
   const arrowStyle =
     arrowVariant === "light"
       ? "bg-card text-foreground hover:border-primary/40 hover:bg-primary hover:text-white"

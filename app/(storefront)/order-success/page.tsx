@@ -29,10 +29,10 @@ export default function OrderSuccessPage() {
         <div className="mx-auto max-w-3xl space-y-10">
           <div className="mb-8 flex justify-center">
             <div className="relative h-28 w-28">
-              <div className="absolute inset-0 animate-pulse rounded-full bg-green-400 opacity-15" />
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-green-400/5 to-[var(--ink)]/5" />
-              <div className="absolute inset-3 flex items-center justify-center rounded-full bg-[#17181B] shadow-lg border border-[#26292C]">
-                <CheckCircle2 className="h-20 w-20 text-emerald-400" strokeWidth={1.5} />
+              <div className="absolute inset-0 animate-pulse rounded-full bg-primary opacity-15" />
+              <div className="absolute inset-0 rounded-full bg-primary/5" />
+              <div className="absolute inset-3 flex items-center justify-center rounded-full bg-[#000000] shadow-lg border border-[#000000]">
+                <CheckCircle2 className="h-20 w-20 text-primary" strokeWidth={1.5} />
               </div>
             </div>
           </div>
@@ -42,19 +42,19 @@ export default function OrderSuccessPage() {
             <p className="text-lg font-light text-muted-foreground">{t("subtitle")}</p>
           </div>
 
-          <div className="space-y-6 rounded-lg border border-emerald-500/25 bg-white/3 p-8">
+          <div className="space-y-6 rounded-lg border border-primary/25 bg-white/3 p-8">
             <div className="space-y-4">
               <p className="text-xs font-semibold tracking-widest text-white/50 uppercase">
                 {t("orderNumberLabel")}
               </p>
-              <div className="flex items-center justify-between rounded-lg border-b-2 border-emerald-500/50 bg-emerald-500/8 p-5">
-                <p className="font-mono text-3xl font-bold tracking-widest text-[#EDEFF0] md:text-4xl">
+              <div className="flex items-center justify-between rounded-lg border-b-2 border-primary/50 bg-primary/8 p-5">
+                <p className="font-mono text-3xl font-bold tracking-widest text-[#FFFFFF] md:text-4xl">
                   {orderId.substring(0, 16).toUpperCase()}
                 </p>
                 <button
                   type="button"
                   onClick={handleCopyOrderId}
-                  className="rounded-lg p-3 text-emerald-400 transition-colors hover:bg-emerald-500/15"
+                  className="rounded-lg p-3 text-primary transition-colors hover:bg-primary/15"
                   aria-label={t("copyAria")}
                   title={t("copyAria")}
                 >
@@ -65,8 +65,8 @@ export default function OrderSuccessPage() {
             </div>
 
             <div className="border-t border-white/8 pt-6">
-              <p className="text-center text-sm font-medium text-[#EDEFF0]">
-                <span className="me-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-xs text-white">
+              <p className="text-center text-sm font-medium text-[#FFFFFF]">
+                <span className="me-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white">
                   ✓
                 </span>
                 {t("emailNote")}
@@ -74,8 +74,8 @@ export default function OrderSuccessPage() {
             </div>
           </div>
 
-          <div className="space-y-4 rounded-lg border border-[#9e1d20]/15 bg-white/3 p-8">
-            <h2 className="text-lg font-bold tracking-wide text-[#EDEFF0] uppercase">{t("whatsNext")}</h2>
+          <div className="space-y-4 rounded-lg border border-[#EB0B1A]/15 bg-white/3 p-8">
+            <h2 className="text-lg font-bold tracking-wide text-[#FFFFFF] uppercase">{t("whatsNext")}</h2>
             <ul className="space-y-3 text-sm text-white/60">
               <li className="flex items-start gap-3">
                 <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
@@ -99,7 +99,7 @@ export default function OrderSuccessPage() {
               <Button
                 asChild
                 size="lg"
-                className="gap-2 rounded-lg bg-primary font-semibold tracking-wide text-white shadow-md transition-all hover:bg-[#d12f27]"
+                className="gap-2 rounded-lg bg-primary font-semibold tracking-wide text-white shadow-md transition-all hover:bg-[#EB0B1A]"
               >
                 <Link href="/profile">
                   <User size={20} />
@@ -110,7 +110,7 @@ export default function OrderSuccessPage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="gap-2 rounded-lg border-[#9e1d20]/40 font-semibold tracking-wide text-[#EDEFF0] hover:bg-[#9e1d20]/15"
+                className="gap-2 rounded-lg border-[#EB0B1A]/40 font-semibold tracking-wide text-[#FFFFFF] hover:bg-[#EB0B1A]/15"
               >
                 <Link href="/products">{t("continueShopping")}</Link>
               </Button>
@@ -120,7 +120,7 @@ export default function OrderSuccessPage() {
               <Button
                 asChild
                 size="lg"
-                className="rounded-lg bg-primary font-semibold tracking-wide text-white shadow-md transition-all hover:bg-[#d12f27]"
+                className="rounded-lg bg-primary font-semibold tracking-wide text-white shadow-md transition-all hover:bg-[#EB0B1A]"
               >
                 <Link href="/products">{t("continueShopping")}</Link>
               </Button>
@@ -132,7 +132,7 @@ export default function OrderSuccessPage() {
               {t("support")}{" "}
               <Link
                 href="/service-center"
-                className="font-semibold text-[#d12f27] transition-colors hover:text-[#EDEFF0]"
+                className="font-semibold text-[#EB0B1A] transition-colors hover:text-[#FFFFFF]"
               >
                 {t("supportLink")}
               </Link>

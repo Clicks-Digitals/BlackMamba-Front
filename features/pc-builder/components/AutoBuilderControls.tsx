@@ -118,7 +118,7 @@ export function AutoBuilderControls({ buildId }: AutoBuilderControlsProps) {
               type="button"
               disabled={isQuickStarting}
               onClick={() => handleQuickStart(tier)}
-              className="group inline-flex min-h-11 items-center rounded-md border border-white/15 px-3 text-sm font-medium text-white/80 transition-all duration-200 hover:border-[#9e1d20]/40 hover:bg-[#9e1d20]/10 hover:text-[#d12f27] active:scale-[0.98] disabled:opacity-50"
+              className="group inline-flex min-h-11 items-center rounded-md border border-white/15 px-3 text-sm font-medium text-white/80 transition-all duration-200 hover:border-[#EB0B1A]/40 hover:bg-[#EB0B1A]/10 hover:text-[#EB0B1A] active:scale-[0.98] disabled:opacity-50"
             >
               {isQuickStarting && pendingTier === tier ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -134,7 +134,7 @@ export function AutoBuilderControls({ buildId }: AutoBuilderControlsProps) {
             type="button"
             disabled={isSurprising}
             onClick={handleSurpriseMe}
-            className="group flex min-h-11 items-center gap-1.5 rounded-md border border-white/15 px-3 text-sm font-medium text-white/80 transition-all duration-200 hover:border-[#9e1d20]/40 hover:bg-[#9e1d20]/10 hover:text-[#d12f27] active:scale-[0.98] disabled:opacity-50"
+            className="group flex min-h-11 items-center gap-1.5 rounded-md border border-white/15 px-3 text-sm font-medium text-white/80 transition-all duration-200 hover:border-[#EB0B1A]/40 hover:bg-[#EB0B1A]/10 hover:text-[#EB0B1A] active:scale-[0.98] disabled:opacity-50"
           >
             {isSurprising ? (
               <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -154,12 +154,12 @@ export function AutoBuilderControls({ buildId }: AutoBuilderControlsProps) {
             value={budget}
             onChange={(e) => setBudget(e.target.value)}
             placeholder={t("budgetPlaceholder")}
-            className="h-11 w-36 rounded-md border border-white/15 bg-transparent px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-[#9e1d20]/50"
+            className="h-11 w-36 rounded-md border border-white/15 bg-transparent px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-[#EB0B1A]/50"
           />
           <button
             type="submit"
             disabled={isBudgeting}
-            className="group flex min-h-11 items-center gap-1.5 rounded-md bg-[#9e1d20] px-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#7a1618] disabled:opacity-50"
+            className="group flex min-h-11 items-center gap-1.5 rounded-md bg-[#EB0B1A] px-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#EB0B1A] disabled:opacity-50"
           >
             {isBudgeting ? (
               <Loader2 className="h-3.5 w-3.5 animate-spin" />

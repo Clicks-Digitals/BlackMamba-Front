@@ -23,8 +23,8 @@ function CopyButton({ code, rtl }: { code: string; rtl: boolean }) {
       type="button"
       onClick={handleCopy}
       className={cn(
-        "inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-bold text-white transition-colors duration-200",
-        "hover:bg-[#d12f27] active:scale-[0.98]",
+        "inline-flex items-center gap-2 rounded-[4px] bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors duration-150",
+        "hover:bg-[var(--blue-hover)]",
         rtl && "font-cairo"
       )}
     >
@@ -61,25 +61,21 @@ export function HomePromoSplit({ coupon }: { coupon: FeaturedCoupon }) {
   return (
     <section className="layout-section-y">
       <div className="layout-page layout-gutter-x">
-        <div className="grid overflow-hidden rounded-xl border border-white/8 md:grid-cols-5">
-          <div className="relative flex flex-col items-center justify-center gap-4 overflow-hidden bg-[#161718] px-6 py-12 text-center sm:px-10 md:col-span-3 md:px-14 md:py-16">
-            <div
-              className="pointer-events-none absolute -top-24 -end-16 h-56 w-56 rounded-full bg-primary/20 blur-3xl"
-              aria-hidden
-            />
+        <div className="grid overflow-hidden rounded-[8px] border border-border md:grid-cols-5">
+          <div className="relative flex flex-col items-center justify-center gap-4 bg-card px-6 py-10 text-center sm:px-10 md:col-span-3 md:px-12 md:py-12">
             <p
               className={cn(
-                "relative text-[11px] font-bold uppercase tracking-[0.2em] text-[#d12f27]",
-                rtl && "font-cairo tracking-normal"
+                "relative text-[13px] font-semibold text-muted-foreground",
+                rtl && "font-cairo"
               )}
             >
               {rtl ? "كود الخصم الحصري" : "Exclusive Discount Code"}
             </p>
 
-            <div className="relative rounded-lg border border-dashed border-primary/35 bg-black/25 px-6 py-4 sm:px-10 sm:py-5">
+            <div className="relative rounded-[4px] border border-dashed border-border bg-background px-5 py-3 sm:px-8 sm:py-4">
               <span
-                className="font-beckman leading-none tracking-[0.08em] text-white uppercase"
-                style={{ fontSize: "clamp(2rem,7vw,3.75rem)" }}
+                className="font-beckman leading-none tracking-wide text-foreground uppercase"
+                style={{ fontSize: "clamp(1.5rem,4vw,2.5rem)" }}
               >
                 {coupon.code}
               </span>
@@ -87,7 +83,7 @@ export function HomePromoSplit({ coupon }: { coupon: FeaturedCoupon }) {
 
             <p
               className={cn(
-                "relative max-w-[24ch] text-[15px] font-medium text-white/65",
+                "relative max-w-[24ch] text-[15px] font-medium text-muted-foreground",
                 rtl && "font-cairo"
               )}
             >
@@ -99,16 +95,13 @@ export function HomePromoSplit({ coupon }: { coupon: FeaturedCoupon }) {
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center gap-4 border-t border-white/8 bg-[#101112] px-6 py-12 text-center sm:px-10 md:col-span-2 md:border-t-0 md:border-s md:border-white/8 md:px-12 md:py-16">
-            <div className="flex size-14 items-center justify-center rounded-lg bg-[#25d366]/12">
-              <MessageCircle className="h-6 w-6 text-[#25d366]" strokeWidth={1.8} />
-            </div>
+          <div className="flex flex-col items-center justify-center gap-3 border-t border-border bg-card px-6 py-10 text-center sm:px-10 md:col-span-2 md:border-t-0 md:border-s md:px-10 md:py-12">
+            <MessageCircle className="h-6 w-6 text-[#EB0B1A]" strokeWidth={1.8} />
 
             <div>
               <p
                 className={cn(
-                  "leading-tight text-white",
-                  "text-[clamp(1.35rem,3vw,1.85rem)]",
+                  "text-[18px] font-semibold leading-tight text-foreground md:text-[20px]",
                   !rtl && "font-chillax tracking-wide",
                   rtl && "font-cairo font-bold"
                 )}
@@ -117,7 +110,7 @@ export function HomePromoSplit({ coupon }: { coupon: FeaturedCoupon }) {
               </p>
               <p
                 className={cn(
-                  "mt-2 text-[13px] text-white/45 sm:text-[14px]",
+                  "mt-2 text-[13px] text-muted-foreground sm:text-[14px]",
                   rtl && "font-cairo"
                 )}
               >
@@ -132,7 +125,7 @@ export function HomePromoSplit({ coupon }: { coupon: FeaturedCoupon }) {
               target="_blank"
               rel="noopener noreferrer"
               className={cn(
-                "inline-flex items-center gap-2.5 rounded-md bg-[#25d366] px-6 py-2.5 text-sm font-bold text-white transition-colors duration-200 hover:bg-[#1db954]",
+                "inline-flex items-center gap-2 rounded-[4px] bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors duration-150 hover:bg-primary/80",
                 rtl && "font-cairo"
               )}
             >
@@ -140,7 +133,7 @@ export function HomePromoSplit({ coupon }: { coupon: FeaturedCoupon }) {
               {rtl ? "تواصل الآن" : "Chat Now"}
             </a>
 
-            <p className={cn("text-[11px] text-white/30", rtl && "font-cairo")}>
+            <p className={cn("text-[11px] text-muted-foreground", rtl && "font-cairo")}>
               {rtl ? "متاح طوال أيام الأسبوع" : "Available 7 days a week"}
             </p>
           </div>

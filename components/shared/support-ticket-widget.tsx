@@ -29,7 +29,7 @@ export function SupportTicketWidget({ isGuest }: Props) {
       <button
         onClick={handleOpen}
         title={t("newTicket")}
-        className="fixed end-6 bottom-[max(1.5rem,env(safe-area-inset-bottom))] z-50 flex h-12 w-12 items-center justify-center rounded-md bg-primary text-white shadow-lg transition-colors duration-200 hover:bg-[#d12f27] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="fixed end-6 bottom-[max(1.5rem,env(safe-area-inset-bottom))] z-50 flex h-12 w-12 items-center justify-center rounded-md bg-primary text-white shadow-lg transition-colors duration-200 hover:bg-[#EB0B1A] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         aria-label={t("newTicket")}
       >
         <Headset className="h-6 w-6" />
