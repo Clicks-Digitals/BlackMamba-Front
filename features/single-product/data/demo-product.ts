@@ -84,6 +84,17 @@ export const DEMO_PRODUCT: Product = {
   variants: [],
   campaign_price: null,
   active_campaign: null,
+  meta_title: 'Black Mamba BM-27FHD 200Hz 27" IPS Gaming Monitor',
+  meta_title_ar: "شاشة بلاك مامبا BM-27FHD 200Hz مقاس 27 إنش IPS للألعاب",
+  meta_description:
+    "A 27-inch IPS gaming monitor with 200Hz refresh, 1ms MPRT response, and Adaptive Sync.",
+  meta_description_ar:
+    "شاشة ألعاب IPS مقاس 27 إنش بمعدل تحديث 200Hz وزمن استجابة 1ms وتقنية Adaptive Sync.",
+  meta_keywords: ["monitor", "gaming", "IPS", "200Hz", "Black Mamba"],
+  meta_keywords_ar: ["شاشة", "ألعاب", "IPS", "بلاك مامبا"],
+  og_image: GALLERY[0],
+  canonical_url: `/products/${DEMO_PRODUCT_SLUG}`,
+  meta_robots: "noindex,follow",
 };
 
 export function demoMatchesQuery(query: string): boolean {
