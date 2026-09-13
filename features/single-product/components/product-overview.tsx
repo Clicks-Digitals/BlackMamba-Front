@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { cn } from "@/lib/utils";
+import { OverviewHtml } from "./overview-html";
 
 export async function ProductOverview({ html, locale }: { html: string | null; locale: string }) {
   if (!html) return null;
@@ -19,7 +20,8 @@ export async function ProductOverview({ html, locale }: { html: string | null; l
         </h2>
 
         {/* Sanitized server-side before storage — safe to render as-is. */}
-        <div
+        <OverviewHtml
+          html={html}
           dir={rtl ? "rtl" : "ltr"}
           className={cn(
             "prose prose-neutral max-w-none dark:prose-invert",
@@ -35,7 +37,6 @@ export async function ProductOverview({ html, locale }: { html: string | null; l
             "prose-code:font-chillax prose-code:text-foreground",
             "[&_img]:mx-auto"
           )}
-          dangerouslySetInnerHTML={{ __html: html }}
         />
       </div>
     </section>

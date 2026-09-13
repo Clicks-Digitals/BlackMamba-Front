@@ -6,7 +6,7 @@ import { BrandLogo, BrandMark } from "@/components/shared/brand-logo";
 
 export function BuilderPageShell({ children }: { children: ReactNode }) {
   return (
-    <div className="bm-builder-stage relative min-h-screen overflow-x-hidden bg-[#0d0e0e] text-[#EDEFF0]">
+    <div className="bm-builder-stage dark relative min-h-screen overflow-x-hidden bg-[#0d0e0e] text-[#EDEFF0]">
       <div className="bm-builder-grid pointer-events-none absolute inset-0" aria-hidden />
       <BuilderSpotlight />
       <div

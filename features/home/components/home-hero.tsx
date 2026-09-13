@@ -267,13 +267,13 @@ export function HomeHero({
                 onMouseLeave={() => setPaused(false)}
               >
                 <div className="relative min-h-[13rem] sm:min-h-[17rem] lg:min-h-[18.5rem] xl:min-h-[20.5rem]">
-                  <AnimatePresence mode="wait" initial={false}>
+                  <AnimatePresence initial={false}>
                     <motion.div
                       key={active.id}
                       initial={reduce ? false : { opacity: 0.6, scale: 1.02 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={reduce ? undefined : { opacity: 0 }}
-                      transition={{ duration: reduce ? 0 : 0.45, ease: EASE }}
+                      transition={{ duration: reduce ? 0 : 0.6, ease: EASE }}
                       className="absolute inset-0"
                     >
                       {cover ? (

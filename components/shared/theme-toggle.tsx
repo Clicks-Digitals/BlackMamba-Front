@@ -20,7 +20,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   return (
     <div
       role="group"
-      aria-label={t("themeToLight")}
+      aria-label={t("themeToggleLabel")}
       className={cn(
         "inline-flex h-9 shrink-0 items-center rounded-md border border-white/12 bg-white/4 p-0.5 sm:h-10",
         className

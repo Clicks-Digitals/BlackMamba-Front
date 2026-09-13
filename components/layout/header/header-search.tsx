@@ -771,7 +771,7 @@ export function HeaderSearch({
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const desktop = (
-    <div className="hidden min-w-0 flex-1 xl:ms-auto xl:block xl:max-w-sm 2xl:max-w-md">
+    <div className="hidden min-w-[320px] flex-1 xl:ms-auto xl:block xl:max-w-sm 2xl:max-w-md">
       <DesktopHeaderSearch search={search} />
     </div>
   );

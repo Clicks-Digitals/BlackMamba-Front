@@ -67,7 +67,7 @@ export function HeaderUserMenu() {
         align="end"
         sideOffset={10}
         collisionPadding={16}
-        className="w-auto min-w-[min(100vw-1.5rem,17.5rem)] max-w-[calc(100vw-1.5rem)] overflow-hidden rounded-[3px] border border-white/10 bg-[#161718]/98 p-0 text-foreground shadow-[0_12px_48px_-8px_rgba(0,0,0,0.45),0_4px_16px_-4px_rgba(158,29,32,0.18)] ring-1 ring-white/6 backdrop-blur-xl rounded-[8px]"
+        className="dark w-auto min-w-[min(100vw-1.5rem,17.5rem)] max-w-[calc(100vw-1.5rem)] overflow-hidden rounded-[3px] border border-white/10 bg-[#161718]/98 p-0 text-foreground shadow-[0_12px_48px_-8px_rgba(0,0,0,0.45),0_4px_16px_-4px_rgba(158,29,32,0.18)] ring-1 ring-white/6 backdrop-blur-xl rounded-[8px]"
       >
         <DropdownMenuLabel className="border-b border-border/50 bg-secondary/35 px-3 py-3 font-normal sm:px-4">
           <div className="flex items-center gap-3">

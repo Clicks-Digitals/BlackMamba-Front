@@ -133,7 +133,7 @@ export function CategoryDrawer({ categories, locale }: Props) {
 
   return (
     <Drawer direction={rtl ? "right" : "left"} open={open} onOpenChange={setOpen}>
-      <DrawerContent className="flex max-h-svh w-[min(340px,92vw)] flex-col overflow-hidden bg-[#161718] p-0">
+      <DrawerContent className="dark flex max-h-svh w-[min(340px,92vw)] flex-col overflow-hidden bg-[#161718] p-0">
 
         <div className="relative flex items-center justify-center bg-primary px-4 py-3.5">
           <DrawerTitle
