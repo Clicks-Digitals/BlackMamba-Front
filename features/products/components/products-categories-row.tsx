@@ -111,12 +111,12 @@ export function ProductsCategoriesRow({
                 onClick={onBack}
                 className="group flex shrink-0 flex-col items-center gap-1.5"
               >
-                <span className="relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white/10 ring-2 ring-white/40 transition-all group-hover:ring-white/70 md:size-20">
+                <span className="relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted ring-2 ring-border transition-all group-hover:ring-primary/40 md:size-20">
                   <ArrowLeft
-                    className={cn("size-5 text-white/80 md:size-6", rtl && "rotate-180")}
+                    className={cn("size-5 text-foreground/80 md:size-6", rtl && "rotate-180")}
                   />
                 </span>
-                <span className="max-w-20 truncate text-[11px] font-medium text-white/60 transition-colors group-hover:text-white/85 md:max-w-24 md:text-[12px]">
+                <span className="max-w-20 truncate text-[11px] font-medium text-muted-foreground transition-colors group-hover:text-foreground md:max-w-24 md:text-[12px]">
                   {rtl ? "رجوع" : "Back"}
                 </span>
               </button>
@@ -139,8 +139,8 @@ export function ProductsCategoriesRow({
                   >
                     <span
                       className={cn(
-                        "relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white/10 ring-2 transition-all md:size-20",
-                        isActive ? "ring-primary" : "ring-transparent group-hover:ring-white/30"
+                        "relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted ring-2 transition-all md:size-20",
+                        isActive ? "ring-primary" : "ring-transparent group-hover:ring-border"
                       )}
                     >
                       {cat.image_url || cat.image ? (
@@ -153,7 +153,7 @@ export function ProductsCategoriesRow({
                           unoptimized
                         />
                       ) : (
-                        <span className="font-chillax text-xl text-white/70 md:text-2xl">
+                        <span className="font-chillax text-xl text-foreground/70 md:text-2xl">
                           {name.charAt(0)}
                         </span>
                       )}
@@ -161,7 +161,7 @@ export function ProductsCategoriesRow({
                     <span
                       className={cn(
                         "max-w-20 truncate text-[11px] font-medium transition-colors md:max-w-24 md:text-[12px]",
-                        isActive ? "text-white" : "text-white/60 hover:text-white/85"
+                        isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                       )}
                     >
                       {name}
