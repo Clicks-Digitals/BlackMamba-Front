@@ -15,7 +15,6 @@ import {
   ProductReviewsSection,
   RelatedProducts,
 } from "@/features/single-product";
-import { DEMO_PRODUCT_TABLE } from "@/features/single-product/data/demo-specs-table";
 import { resolveOverviewImage } from "./product-overview";
 import { ProductBulletLists, bulletsFromProduct } from "./product-bullet-lists";
 
@@ -95,7 +94,7 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
 
   const featureRaw = isAr && product.features_ar ? product.features_ar : product.features;
   const { specs: specBullets, features: featureBullets } = bulletsFromProduct({
-    table: product.table ?? DEMO_PRODUCT_TABLE,
+    table: product.table,
     features: featureRaw,
     isAr,
   });
@@ -320,9 +319,8 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
       {/* Demo marketing photos (Microless-style). Real content comes from overview HTML in CMS. */}
       <ProductFeatureShowcase locale={locale} />
 
-      {/* Specs: real CMS table when present, otherwise demo for client preview */}
       <ProductComparisonTable
-        table={product.table ?? DEMO_PRODUCT_TABLE}
+        table={product.table}
         features={null}
         featuresAr={null}
       />

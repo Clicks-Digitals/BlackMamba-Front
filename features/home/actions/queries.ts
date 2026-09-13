@@ -7,7 +7,6 @@ import { normalizeBanners, normalizeHomeSections, normalizeSwipers } from "@/lib
 import type { Category } from "@/types/category";
 import type { PaginatedResponse } from "@/types/api";
 import { SHOWCASE_BRANDS } from "@/features/brand/data/showcase";
-import { DEMO_PRODUCT } from "@/features/single-product/data/demo-product";
 import type { HomeBanner, HomeBrand, HomeLayoutSection, HomeSection, HomeSponsor, HomeSwiperSlide, HomeTestimonial } from "../types";
 import type { Campaign } from "@/types/campaign";
 
@@ -40,26 +39,8 @@ export async function getHomeSwipers(): Promise<HomeSwiperSlide[]> {
 
 export async function getHomeSections(): Promise<HomeSection[]> {
   const res = await apiClient<unknown>("/sections/");
-  const sections = res.ok ? normalizeHomeSections(res.data) : [];
-  if (!sections.length) {
-    return [
-      {
-        id: "demo-featured",
-        title: "Featured",
-        title_ar: "مميز",
-        order: 0,
-        is_active: true,
-        products: [DEMO_PRODUCT],
-        created_at: "",
-        updated_at: "",
-      },
-    ];
-  }
-  return sections.map((section, index) =>
-    index === 0
-      ? { ...section, products: [DEMO_PRODUCT, ...section.products.filter((p) => p.id !== DEMO_PRODUCT.id)] }
-      : section
-  );
+  if (!res.ok) return [];
+  return normalizeHomeSections(res.data);
 }
 
 export async function getSponsors(): Promise<HomeSponsor[]> {
