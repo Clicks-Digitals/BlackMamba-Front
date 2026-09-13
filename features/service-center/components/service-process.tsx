@@ -20,7 +20,7 @@ export async function ServiceProcess() {
   }));
 
   return (
-    <section className="relative overflow-hidden bg-[#000000] py-16 md:py-24">
+    <section className="dark relative overflow-hidden bg-[#000000] py-16 md:py-24">
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/40 to-transparent"
         aria-hidden

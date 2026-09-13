@@ -76,7 +76,7 @@ export function GetInTouch() {
 
               <div className="mt-8 flex flex-col gap-4">
                 {CONTACT_INFO.map(({ icon: Icon, labelKey, value }) => (
-                  <div key={labelKey} className="flex items-center gap-3.5 rounded-md border border-white/8 bg-white/3 px-3.5 py-3">
+                  <div key={labelKey} className="flex items-center gap-3.5 rounded-md border border-border bg-muted/40 px-3.5 py-3">
                     <div className="flex size-10 shrink-0 items-center justify-center rounded-md border border-primary/25 bg-primary/10">
                       <Icon className="size-4 text-[#EB0B1A]" strokeWidth={1.7} />
                     </div>
@@ -93,7 +93,7 @@ export function GetInTouch() {
               </div>
             </div>
 
-            <div className="relative rounded-md border border-white/10 bg-black/25 p-5">
+            <div className="relative rounded-md border border-border bg-black/25 p-5">
               <div className="mb-3 flex items-center gap-2.5">
                 <Clock className="size-4 text-[#EB0B1A]" />
                 <span className={cn("text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground", rtl && "font-cairo tracking-normal")}>
