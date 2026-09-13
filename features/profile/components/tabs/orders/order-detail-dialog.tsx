@@ -22,15 +22,15 @@ interface OrderDetailDialogProps {
 function getStatusColor(status: string): { bg: string; text: string; lightBg: string } {
   switch (status) {
     case "PENDING":
-      return { bg: "bg-amber-500", text: "text-amber-300", lightBg: "bg-amber-500/15" };
+      return { bg: "bg-primary", text: "text-primary", lightBg: "bg-primary/15" };
     case "CONFIRMED":
-      return { bg: "bg-primary", text: "text-[#d12f27]", lightBg: "bg-primary/15" };
+      return { bg: "bg-primary", text: "text-[#EB0B1A]", lightBg: "bg-primary/15" };
     case "SHIPPED":
-      return { bg: "bg-violet-500", text: "text-violet-300", lightBg: "bg-violet-500/15" };
+      return { bg: "bg-primary", text: "text-primary", lightBg: "bg-primary/15" };
     case "DELIVERED":
-      return { bg: "bg-emerald-500", text: "text-emerald-400", lightBg: "bg-emerald-500/15" };
+      return { bg: "bg-primary", text: "text-primary", lightBg: "bg-primary/15" };
     case "CANCELLED":
-      return { bg: "bg-red-500", text: "text-red-400", lightBg: "bg-red-500/15" };
+      return { bg: "bg-primary", text: "text-primary", lightBg: "bg-primary/15" };
     default:
       return { bg: "bg-white/30", text: "text-white/55", lightBg: "bg-white/4" };
   }
@@ -76,11 +76,11 @@ export function OrderDetailDialog({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="w-[95vw] max-w-[95vw] sm:max-w-4xl max-h-[90vh] overflow-y-auto overflow-x-hidden rounded-[10px] scrollbar-thin backdrop-blur-md bg-[#17181B] shadow-2xl border border-[#26292C]">
+      <DialogContent className="w-[95vw] max-w-[95vw] sm:max-w-4xl max-h-[90vh] overflow-y-auto overflow-x-hidden rounded-[10px] scrollbar-thin backdrop-blur-md bg-[#000000] shadow-2xl border border-[#000000]">
         <DialogHeader className="border-b border-white/8 pt-8 ">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
-              <DialogTitle className="font-chillax text-[20px] sm:text-[24px] font-bold text-[#EDEFF0] truncate">
+              <DialogTitle className="font-chillax text-[20px] sm:text-[24px] font-bold text-[#FFFFFF] truncate">
                 {order.order_number}
               </DialogTitle>
               <p className="font-chillax text-[13px] text-white/45 mt-2">
@@ -97,7 +97,7 @@ export function OrderDetailDialog({
                   className="shrink-0 text-white/35 transition hover:text-white/55"
                   title="Copy order ID"
                 >
-                  {copied ? <Check size={13} className="text-green-500" /> : <Copy size={13} />}
+                  {copied ? <Check size={13} className="text-primary" /> : <Copy size={13} />}
                 </button>
               </div>
             </div>
@@ -113,7 +113,7 @@ export function OrderDetailDialog({
         <div className="space-y-8 py-6">
           {/* Order Items */}
           <div>
-            <h3 className="font-chillax text-[18px] font-bold text-[#EDEFF0] mb-5 flex items-center gap-2">
+            <h3 className="font-chillax text-[18px] font-bold text-[#FFFFFF] mb-5 flex items-center gap-2">
               <span className="w-1 h-6 bg-primary rounded-full"></span>
               {t("orderItems", { count: order.items.length })}
             </h3>
@@ -121,7 +121,7 @@ export function OrderDetailDialog({
               {order.items.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-[5px] border border-[#26292C] overflow-hidden hover:border-[#9e1d20]/30 transition-all duration-300 bg-[#17181B]"
+                  className="rounded-[5px] border border-[#000000] overflow-hidden hover:border-[#EB0B1A]/30 transition-all duration-300 bg-[#000000]"
                 >
                   <div className="flex flex-col sm:flex-row gap-4 p-4 sm:p-5">
                     {/* Product Image */}
@@ -138,7 +138,7 @@ export function OrderDetailDialog({
                           <div className="absolute inset-0 bg-linear-to-t from-black/10 to-transparent"></div>
                         </div>
                       ) : (
-                        <div className="h-24 w-24 sm:h-28 sm:w-28 rounded-[5px] bg-[#0B0F0E] flex items-center justify-center shadow-md">
+                        <div className="h-24 w-24 sm:h-28 sm:w-28 rounded-[5px] bg-[#000000] flex items-center justify-center shadow-md">
                           <span className="text-xs text-white/45 font-medium">{t("noImage")}</span>
                         </div>
                       )}
@@ -148,7 +148,7 @@ export function OrderDetailDialog({
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between mb-3">
                         <div>
-                          <p className="font-chillax text-[15px] font-bold text-[#EDEFF0] mb-1">
+                          <p className="font-chillax text-[15px] font-bold text-[#FFFFFF] mb-1">
                             {rtl && item.product_name_ar ? item.product_name_ar : item.product_name}
                           </p>
                           {item.sku && (
@@ -157,7 +157,7 @@ export function OrderDetailDialog({
                             </p>
                           )}
                         </div>
-                        <span className="bg-primary/15 text-[#d12f27] px-3 py-1 rounded-full font-chillax text-[12px] font-semibold">
+                        <span className="bg-primary/15 text-[#EB0B1A] px-3 py-1 rounded-full font-chillax text-[12px] font-semibold">
                           ×{item.quantity}
                         </span>
                       </div>
@@ -173,20 +173,20 @@ export function OrderDetailDialog({
                       {/* Variation Info */}
                       {(item.variation_details ||
                         item.combination_details) && (
-                        <div className="mb-4 p-3 bg-[#0B0F0E] rounded-lg border border-[#26292C]">
+                        <div className="mb-4 p-3 bg-[#000000] rounded-lg border border-[#000000]">
                           <p className="font-chillax text-[10px] text-white/45 mb-2 uppercase tracking-wide font-semibold">
                             {t("variantDetails")}:
                           </p>
                           <div className="flex flex-wrap gap-2">
                             {item.variation_details && (
-                              <span className="inline-flex items-center rounded-[5px] bg-violet-500/15 px-3 py-1.5 font-chillax text-[11px] font-semibold text-violet-300">
+                              <span className="inline-flex items-center rounded-[5px] bg-primary/15 px-3 py-1.5 font-chillax text-[11px] font-semibold text-primary">
                                 {item.variation_details.attribute_names || `SKU: ${item.variation_details.sku}`}
                               </span>
                             )}
                             {item.combination_details?.variations?.map((variation) => (
                               <span
                                 key={variation.id}
-                                className="inline-flex items-center rounded-[5px] bg-primary/15 px-3 py-1.5 font-chillax text-[11px] font-semibold text-[#d12f27]"
+                                className="inline-flex items-center rounded-[5px] bg-primary/15 px-3 py-1.5 font-chillax text-[11px] font-semibold text-[#EB0B1A]"
                               >
                                 {variation.attribute_name}: {variation.value}
                               </span>
@@ -197,7 +197,7 @@ export function OrderDetailDialog({
 
                       {/* PC Build bundle contents */}
                       {item.build_snapshot && item.build_snapshot.length > 0 && (
-                        <div className="mb-4 p-3 bg-[#0B0F0E] rounded-lg border border-[#26292C]">
+                        <div className="mb-4 p-3 bg-[#000000] rounded-lg border border-[#000000]">
                           <p className="font-chillax text-[10px] text-white/45 mb-2 uppercase tracking-wide font-semibold">
                             {t("bundleContents")}:
                           </p>
@@ -220,7 +220,7 @@ export function OrderDetailDialog({
                           {item.unit_price}
                           {currencySymbol} {t("each")}
                         </span>
-                        <span className="font-chillax text-[14px] font-bold text-[#9e1d20]">
+                        <span className="font-chillax text-[14px] font-bold text-[#EB0B1A]">
                           {item.total_price}
                           {currencySymbol}
                         </span>
@@ -233,8 +233,8 @@ export function OrderDetailDialog({
           </div>
 
           {/* Order Summary */}
-          <div className="rounded-[5px] border border-[#9e1d20]/20 bg-[#9e1d20]/8 p-6">
-            <h3 className="font-chillax text-[16px] font-bold text-[#EDEFF0] mb-5 flex items-center gap-2">
+          <div className="rounded-[5px] border border-[#EB0B1A]/20 bg-[#EB0B1A]/8 p-6">
+            <h3 className="font-chillax text-[16px] font-bold text-[#FFFFFF] mb-5 flex items-center gap-2">
               <span className="w-1 h-6 bg-primary rounded-full"></span>
               {t("orderSummary")}
             </h3>
@@ -243,7 +243,7 @@ export function OrderDetailDialog({
                 <span className="font-chillax text-[13px] text-white/55">
                   {t("subtotal")}
                 </span>
-                <span className="font-chillax text-[13px] font-semibold text-[#EDEFF0]">
+                <span className="font-chillax text-[13px] font-semibold text-[#FFFFFF]">
                   {order.subtotal}
                   {currencySymbol}
                 </span>
@@ -252,7 +252,7 @@ export function OrderDetailDialog({
                 <span className="font-chillax text-[13px] text-white/55">
                   {t("shippingCost")}
                 </span>
-                <span className="font-chillax text-[13px] font-semibold text-[#EDEFF0]">
+                <span className="font-chillax text-[13px] font-semibold text-[#FFFFFF]">
                   {order.shipping_cost}
                   {currencySymbol}
                 </span>
@@ -262,12 +262,12 @@ export function OrderDetailDialog({
                   <span className="font-chillax text-[13px] text-white/55">
                     {t("discount")}
                     {order.coupon_code && (
-                      <span className="ms-1 font-semibold text-emerald-400">
+                      <span className="ms-1 font-semibold text-primary">
                         ({order.coupon_code})
                       </span>
                     )}
                   </span>
-                  <span className="font-chillax text-[13px] font-bold text-emerald-400">
+                  <span className="font-chillax text-[13px] font-bold text-primary">
                     -{order.discount_amount}
                     {currencySymbol}
                   </span>
@@ -275,10 +275,10 @@ export function OrderDetailDialog({
               )}
               <div className="border-t border-white/10 pt-4 mt-4">
                 <div className="flex items-center justify-between">
-                  <span className="font-chillax text-[15px] font-bold text-[#EDEFF0]">
+                  <span className="font-chillax text-[15px] font-bold text-[#FFFFFF]">
                     {t("totalAmount")}
                   </span>
-                  <span className="font-chillax text-[18px] font-bold text-[#9e1d20]">
+                  <span className="font-chillax text-[18px] font-bold text-[#EB0B1A]">
                     {order.total_amount}
                     {currencySymbol}
                   </span>
@@ -288,9 +288,9 @@ export function OrderDetailDialog({
           </div>
 
           {/* Payment Status */}
-          <div className="rounded-[5px] border border-emerald-500/20 bg-emerald-500/8 p-6">
-            <h3 className="font-chillax text-[16px] font-bold text-[#EDEFF0] mb-4 flex items-center gap-2">
-              <span className="w-1 h-6 bg-emerald-500 rounded-full"></span>
+          <div className="rounded-[5px] border border-primary/20 bg-primary/8 p-6">
+            <h3 className="font-chillax text-[16px] font-bold text-[#FFFFFF] mb-4 flex items-center gap-2">
+              <span className="w-1 h-6 bg-primary rounded-full"></span>
               {t("paymentInformation")}
             </h3>
             <div className="space-y-3">
@@ -298,7 +298,7 @@ export function OrderDetailDialog({
                 <span className="font-chillax text-[13px] text-white/55">
                   {t("paymentMethod")}
                 </span>
-                <span className="font-chillax text-[13px] font-semibold text-[#EDEFF0]">
+                <span className="font-chillax text-[13px] font-semibold text-[#FFFFFF]">
                   {order.payment_method.replace(/_/g, " ")}
                 </span>
               </div>
@@ -309,18 +309,18 @@ export function OrderDetailDialog({
                 <span
                   className={`inline-flex items-center rounded-full px-3 py-1.5 font-chillax text-[12px] font-bold ${
                     order.payment_status === "PAID"
-                      ? "bg-emerald-500/20 text-emerald-400"
+                      ? "bg-primary/20 text-primary"
                       : order.payment_status === "UNPAID"
-                        ? "bg-amber-500/20 text-amber-300"
-                        : "bg-red-500/20 text-red-400"
+                        ? "bg-primary/20 text-primary"
+                        : "bg-primary/20 text-primary"
                   }`}
                 >
                   <span className={`w-2 h-2 rounded-full me-2 ${
                     order.payment_status === "PAID"
-                      ? "bg-emerald-500"
+                      ? "bg-primary"
                       : order.payment_status === "UNPAID"
-                        ? "bg-amber-500"
-                        : "bg-red-500"
+                        ? "bg-primary"
+                        : "bg-primary"
                   }`}></span>
                   {paymentLabel}
                 </span>
@@ -329,13 +329,13 @@ export function OrderDetailDialog({
           </div>
 
           {/* Shipping Address */}
-          <div className="rounded-[5px] border border-amber-500/20 bg-amber-500/8 p-6">
-            <h3 className="font-chillax text-[16px] font-bold text-[#EDEFF0] mb-4 flex items-center gap-2">
-              <span className="w-1 h-6 bg-amber-500 rounded-full"></span>
+          <div className="rounded-[5px] border border-primary/20 bg-primary/8 p-6">
+            <h3 className="font-chillax text-[16px] font-bold text-[#FFFFFF] mb-4 flex items-center gap-2">
+              <span className="w-1 h-6 bg-primary rounded-full"></span>
               {t("shippingAddress")}
             </h3>
             <div className="space-y-2">
-              <p className="font-chillax text-[14px] font-bold text-[#EDEFF0]">
+              <p className="font-chillax text-[14px] font-bold text-[#FFFFFF]">
                 {order.shipping_address.full_name}
               </p>
               <p className="font-chillax text-[13px] text-white/70 leading-relaxed">
@@ -354,13 +354,13 @@ export function OrderDetailDialog({
 
           {/* Shipping Method */}
           {order.shipping_option_details && (
-            <div className="rounded-[5px] border border-[#26292C] bg-[#17181B] p-6">
-              <h3 className="font-chillax text-[16px] font-bold text-[#EDEFF0] mb-4 flex items-center gap-2">
+            <div className="rounded-[5px] border border-[#000000] bg-[#000000] p-6">
+              <h3 className="font-chillax text-[16px] font-bold text-[#FFFFFF] mb-4 flex items-center gap-2">
                 <span className="w-1 h-6 bg-primary rounded-full"></span>
                 {t("shippingMethod")}
               </h3>
               <div className="space-y-2">
-                <p className="font-chillax text-[14px] font-bold text-[#EDEFF0]">
+                <p className="font-chillax text-[14px] font-bold text-[#FFFFFF]">
                   {order.shipping_option_details.name}
                 </p>
                 <p className="font-chillax text-[13px] text-white/70">

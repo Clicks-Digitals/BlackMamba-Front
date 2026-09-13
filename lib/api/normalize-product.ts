@@ -13,10 +13,32 @@ type ApiImage = {
 
 type RawProduct = Partial<Product> & {
   id: string;
+  sku?: string | null;
+  product_sku?: string | null;
+  item_sku?: string | null;
   image?: string | null;
   images?: ApiImage[];
   gallery?: ApiImage[];
+  overview_image?: string | null;
+  overview_image_url?: string | null;
+  overview_image_ar?: string | null;
+  long_image?: string | null;
+  detail_image?: string | null;
 };
+
+function firstUrl(...values: unknown[]): string | null {
+  for (const value of values) {
+    if (typeof value === "string" && value.trim()) return value.trim();
+  }
+  return null;
+}
+
+function resolveSku(raw: RawProduct): string | null {
+  const fromApi = firstUrl(raw.sku, raw.product_sku, raw.item_sku);
+  if (fromApi) return fromApi;
+  if (raw.id == null || raw.id === "") return null;
+  return `BM-${String(raw.id)}`;
+}
 
 function toGalleryItem(item: ApiImage, index: number, productId: string): gallaryItem {
   return {
@@ -49,11 +71,23 @@ export function normalizeProduct(raw: RawProduct): Product {
     .map((item, index) => toGalleryItem(item, index, String(raw.id)))
     .filter((item) => item.file);
 
+  const overviewImage =
+    firstUrl(
+      raw.overview_image_url,
+      raw.overview_image,
+      raw.long_image,
+      raw.detail_image
+    );
+
   return {
     ...(raw as Product),
     thumbnail,
     gallery,
-    has_discount: deriveHasDiscount(raw)
+    has_discount: deriveHasDiscount(raw),
+    sku: resolveSku(raw),
+    overview_image: overviewImage,
+    overview_image_url: overviewImage,
+    overview_image_ar: firstUrl(raw.overview_image_ar) ?? null,
   };
 }
 

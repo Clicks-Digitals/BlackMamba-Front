@@ -330,36 +330,33 @@ export function ProductsView({
     <>
       {/* ── Hero: title + search + categories ── */}
       <div className="bm-page-hero">
-        <div className="layout-page layout-gutter-x pt-6 pb-0 md:pt-8">
+        <div className="layout-page layout-gutter-x pt-5 pb-0 md:pt-6">
           <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="bm-kicker mb-2">
-                {rtl ? "تسوق" : "Shop"}
-              </p>
               <h1
                 className={cn(
-                  "leading-none text-white",
-                  !rtl && "font-beckman uppercase tracking-wide text-[clamp(1.8rem,3.4vw,2.8rem)]",
-                  rtl && "font-cairo font-bold text-[clamp(1.4rem,2.8vw,2.2rem)]"
+                  "text-[28px] leading-tight font-semibold text-foreground md:text-[32px]",
+                  !rtl && "font-chillax",
+                  rtl && "font-cairo"
                 )}
               >
                 {t("title")}
               </h1>
             </div>
-            <p className="mb-0.5 text-[13px] text-white/40">
+            <p className="mb-0.5 text-[13px] text-muted-foreground">
               {t("count", { count })}
             </p>
           </div>
 
           <div className="mt-5 flex items-center gap-2 sm:gap-3">
-            <label className="relative flex h-11 min-w-0 flex-1 items-center">
-              <svg className="absolute inset-s-3.5 size-4 text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <label className="relative flex h-9 min-w-0 flex-1 items-center">
+              <svg className="absolute inset-s-3 size-4 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
               <input
                 type="search"
                 value={searchDraft}
                 onChange={(e) => setSearchDraft(e.target.value)}
                 placeholder={t("searchPlaceholder")}
-                className="h-11 w-full rounded-md border border-white/12 bg-white/6 ps-11 pe-4 text-[13px] text-white placeholder:text-white/35 transition-colors duration-200 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                className="h-9 w-full rounded-[4px] border border-border bg-card ps-10 pe-3 text-[13px] text-foreground placeholder:text-muted-foreground transition-colors duration-150 focus:border-primary/50 focus:outline-none"
               />
             </label>
             <SortDropdown
@@ -372,7 +369,7 @@ export function ProductsView({
               type="button"
               onClick={() => setFiltersOpen(true)}
               aria-label={t("filter")}
-              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md border border-white/12 bg-white/6 text-white transition duration-200 hover:bg-white/12 md:hidden"
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[4px] border border-border bg-card text-foreground transition duration-150 hover:bg-muted md:hidden"
             >
               <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
             </button>

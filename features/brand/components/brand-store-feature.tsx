@@ -4,8 +4,10 @@ import { notFound } from "next/navigation";
 import { getLocale } from "next-intl/server";
 import { ChevronRight, Globe, BadgeCheck, ShoppingBag, LayoutGrid } from "lucide-react";
 import { ProductCard } from "@/components/shared";
+import { cn } from "@/lib/utils";
 import { getProducts } from "@/features/products";
 import { getBrandBySlugAction } from "../actions/queries";
+import { findShowcaseBrand } from "../data/showcase";
 
 export async function BrandStoreFeature({ slug }: { slug: string }) {
   const [brand, locale] = await Promise.all([getBrandBySlugAction(slug), getLocale()]);
@@ -15,15 +17,38 @@ export async function BrandStoreFeature({ slug }: { slug: string }) {
   const name = isAr && brand.name_ar ? brand.name_ar : brand.name;
   const tagline = isAr && brand.tagline_ar ? brand.tagline_ar : brand.tagline;
   const description = isAr && brand.description_ar ? brand.description_ar : brand.description;
+  const logo = brand.logo_url || brand.logo;
+  const banner = brand.banner_image_url || brand.banner_image;
+  const website = brand.website || findShowcaseBrand(brand.slug)?.website || null;
+  const productsHref = `/products?search=${encodeURIComponent(brand.name)}`;
 
-  const products = await getProducts(1, { brand_slug: brand.slug });
+  const products = await getProducts(1, { search: brand.name });
+  const preview = products.results.slice(0, 10);
+  const categories =
+    brand.categories.length > 0
+      ? brand.categories
+      : Array.from(
+          new Map(
+            products.results.flatMap((product) =>
+              (product.categories ?? []).map((cat) => [
+                cat.slug,
+                {
+                  id: String(cat.id),
+                  name: cat.name,
+                  name_ar: cat.name_ar,
+                  slug: cat.slug,
+                  image_url: null,
+                },
+              ])
+            )
+          ).values()
+        );
 
   return (
     <div className="bg-background">
-      {/* ── Breadcrumb ── */}
-      <div className="layout-gutter-x border-b border-primary/10">
+      <div className="layout-gutter-x border-b border-border">
         <nav
-          className="layout-page flex h-11 items-center gap-1.5 font-chillax text-xs text-foreground/50"
+          className="layout-page flex h-11 items-center gap-1.5 text-xs text-muted-foreground"
           aria-label="Breadcrumb"
         >
           <Link href="/" className="transition-colors hover:text-foreground">
@@ -34,160 +59,177 @@ export async function BrandStoreFeature({ slug }: { slug: string }) {
             {isAr ? "المنتجات" : "Products"}
           </Link>
           <ChevronRight size={12} strokeWidth={2} className="shrink-0 rtl:rotate-180" />
-          <span className="truncate font-medium text-foreground">{name}</span>
+          <span className={cn("truncate font-medium text-foreground", isAr && "font-cairo")}>{name}</span>
         </nav>
       </div>
 
-      {/* ── Hero banner — Amazon brand-store style ── */}
-      <div className="relative h-[clamp(180px,28vw,360px)] w-full overflow-hidden bg-[#121314]">
-        {brand.banner_image_url && (
+      <section className="relative h-[clamp(200px,32vw,380px)] w-full overflow-hidden bg-[#1a1a1a]">
+        {banner ? (
           <Image
-            src={brand.banner_image_url}
-            alt={name}
+            src={banner}
+            alt=""
             fill
             sizes="100vw"
             className="object-cover"
             unoptimized
             priority
           />
-        )}
-        <div className="absolute inset-0 bg-black/35" />
+        ) : null}
+        <div className="absolute inset-0 bg-black/40" />
         <div className="layout-page layout-gutter-x relative z-10 flex h-full items-center">
-          <div className="flex items-center gap-4">
-            {brand.logo_url && (
-              <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-[#26292C] bg-[#0B0F0E] shadow-lg sm:h-20 sm:w-20">
-                <Image src={brand.logo_url} alt={name} fill className="object-contain p-2" unoptimized />
+          <div className="flex min-w-0 items-center gap-4 sm:gap-5">
+            {logo ? (
+              <div className="relative size-[72px] shrink-0 overflow-hidden rounded-[10px] border border-white/20 bg-white shadow-lg sm:size-[96px] md:size-[108px]">
+                <Image src={logo} alt={name} fill className="object-contain p-2.5" unoptimized />
               </div>
-            )}
-            <div>
-              <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white">
-                <BadgeCheck size={13} /> {isAr ? "متجر رسمي" : "Official Store"}
+            ) : null}
+            <div className="min-w-0">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-semibold tracking-wide text-white uppercase backdrop-blur-sm sm:text-[11px]">
+                <BadgeCheck size={13} />
+                {isAr ? "متجر رسمي" : "Official Store"}
               </span>
-              <h1 className="mt-2 font-chillax text-[clamp(1.8rem,5vw,3.5rem)] uppercase leading-none text-white">
+              <h1
+                className={cn(
+                  "mt-2 truncate text-[clamp(1.75rem,5vw,3.25rem)] leading-none font-semibold tracking-wide text-white uppercase",
+                  isAr && "font-cairo tracking-normal"
+                )}
+              >
                 {name}
               </h1>
-              {tagline && (
-                <p className="mt-1 max-w-lg font-chillax text-sm text-white/80 sm:text-base">{tagline}</p>
-              )}
+              {tagline ? (
+                <p className={cn("mt-2 max-w-xl text-sm text-white/80 sm:text-[15px]", isAr && "font-cairo")}>
+                  {tagline}
+                </p>
+              ) : null}
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="layout-page layout-gutter-x py-6 md:py-8">
-        {/* ── About this brand ── */}
-        <div className="mb-8 flex flex-col gap-5 border-b border-primary/10 pb-7 md:flex-row md:items-start md:justify-between">
+      <div className="layout-page layout-gutter-x py-8 md:py-10">
+        <section className="mb-10 flex flex-col gap-6 border-b border-border pb-8 md:mb-12 md:flex-row md:items-start md:justify-between md:gap-10">
           <div className="max-w-2xl">
-            <h2 className="mb-2 font-chillax text-xl uppercase tracking-wide text-foreground">
+            <h2 className={cn("store-heading uppercase", isAr && "font-cairo")}>
               {isAr ? `عن ${name}` : `About ${name}`}
             </h2>
-            <p className="font-chillax text-sm leading-relaxed text-foreground/70">
-              {description || (isAr
-                ? "لا يوجد وصف متاح لهذه الماركة حالياً."
-                : "No description available for this brand yet.")}
+            <p className={cn("mt-3 text-[14px] leading-relaxed text-muted-foreground sm:text-[15px]", isAr && "font-cairo")}>
+              {description ||
+                (isAr ? "لا يوجد وصف متاح لهذه الماركة حالياً." : "No description available for this brand yet.")}
             </p>
-
-            {/* Quick stats */}
-            <div className="mt-4 flex flex-wrap items-center gap-4">
-              <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground/70">
-                <ShoppingBag size={15} className="text-foreground/40" />
+            <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-muted-foreground">
+              <span className="inline-flex items-center gap-1.5">
+                <ShoppingBag size={15} />
                 {isAr ? `${products.count} منتج` : `${products.count} Products`}
               </span>
-              {brand.categories.length > 0 && (
-                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground/70">
-                  <LayoutGrid size={15} className="text-foreground/40" />
-                  {isAr ? `${brand.categories.length} فئة` : `${brand.categories.length} Categories`}
+              {categories.length > 0 ? (
+                <span className="inline-flex items-center gap-1.5">
+                  <LayoutGrid size={15} />
+                  {isAr ? `${categories.length} فئة` : `${categories.length} Categories`}
                 </span>
-              )}
+              ) : null}
             </div>
           </div>
 
-          <div className="flex shrink-0 items-center gap-3">
-            {brand.website && (
+          <div className="flex shrink-0 flex-wrap items-center gap-2.5">
+            {website ? (
               <Link
-                href={brand.website}
+                href={website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-md border border-primary/20 px-4 py-2 text-sm font-medium text-foreground transition-colors duration-200 hover:bg-primary/5"
+                className={cn(
+                  "inline-flex h-10 items-center gap-2 rounded-[4px] border border-border bg-card px-4 text-[13px] font-medium text-foreground transition-colors hover:border-primary/50",
+                  isAr && "font-cairo"
+                )}
               >
-                <Globe size={14} /> {isAr ? "زيارة الموقع" : "Visit Website"}
+                <Globe size={15} />
+                {isAr ? "زيارة الموقع الرسمي" : "Visit live site"}
               </Link>
-            )}
+            ) : null}
             <Link
-              href={`/products?brand_slug=${brand.slug}`}
-              className="inline-flex items-center gap-1.5 rounded-md bg-primary px-5 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#d12f27]"
+              href={productsHref}
+              className={cn(
+                "inline-flex h-10 items-center gap-1.5 rounded-[4px] bg-primary px-5 text-[13px] font-semibold text-white transition-colors hover:bg-[var(--blue-hover)]",
+                isAr && "font-cairo"
+              )}
             >
               {isAr ? "عرض جميع المنتجات" : "See All Products"}
-              <ChevronRight size={14} className="rtl:rotate-180" />
+              <ChevronRight size={15} className="rtl:rotate-180" />
             </Link>
           </div>
-        </div>
+        </section>
 
-        {/* ── Shop by category — image cards ── */}
-        {brand.categories.length > 0 && (
-          <div className="mb-8">
-            <h2 className="mb-3 font-chillax text-xl uppercase tracking-wide text-foreground">
-              {isAr ? "تصفح حسب الفئة" : "Shop by Category"}
+        {categories.length > 0 ? (
+          <section className="mb-10 md:mb-12">
+            <h2 className={cn("store-heading mb-4 uppercase", isAr && "font-cairo")}>
+              {isAr ? "تسوق حسب الفئة" : "Shop by Category"}
             </h2>
-            <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
-              {brand.categories.map((cat) => {
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5">
+              {categories.map((cat) => {
                 const catName = isAr && cat.name_ar ? cat.name_ar : cat.name;
                 return (
                   <Link
                     key={cat.id}
-                    href={`/products?brand_slug=${brand.slug}&category_slug=${cat.slug}`}
-                    className="group flex flex-col items-center gap-2"
+                    href={`/products?search=${encodeURIComponent(brand.name)}&category_slug=${cat.slug}`}
+                    className="group flex flex-col overflow-hidden rounded-[8px] border border-border bg-card transition-colors hover:border-primary/50"
                   >
-                    <span className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border border-primary/10 bg-[var(--muted)] transition-colors group-hover:border-primary/30">
+                    <span className="relative aspect-square w-full overflow-hidden bg-white">
                       {cat.image_url ? (
                         <Image
                           src={cat.image_url}
                           alt={catName}
                           fill
-                          sizes="120px"
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          sizes="(max-width: 640px) 50vw, 220px"
+                          className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                           unoptimized
                         />
                       ) : (
-                        <LayoutGrid size={22} className="text-foreground/25" />
+                        <span className="absolute inset-0 flex items-center justify-center bg-muted">
+                          <LayoutGrid size={28} className="text-muted-foreground/50" />
+                        </span>
                       )}
                     </span>
-                    <span className="line-clamp-1 text-center text-[12.5px] font-medium text-foreground transition-colors group-hover:text-[var(--blue-hover)]">
+                    <span
+                      className={cn(
+                        "line-clamp-1 px-2 py-2.5 text-center text-[13px] font-medium text-foreground",
+                        isAr && "font-cairo"
+                      )}
+                    >
                       {catName}
                     </span>
                   </Link>
                 );
               })}
             </div>
-          </div>
-        )}
+          </section>
+        ) : null}
 
-        {/* ── Products grid ── */}
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="font-chillax text-xl uppercase tracking-wide text-foreground">
-            {isAr ? "منتجات الماركة" : `Products from ${name}`}
-          </h2>
-          {products.count > 0 && (
-            <Link
-              href={`/products?brand_slug=${brand.slug}`}
-              className="text-sm font-semibold text-foreground hover:underline"
-            >
-              {isAr ? "عرض الكل" : "See all"} ({products.count})
-            </Link>
+        <section>
+          <div className="mb-4 flex items-end justify-between gap-3">
+            <h2 className={cn("store-heading uppercase", isAr && "font-cairo")}>
+              {isAr ? `منتجات ${name}` : `Products from ${name}`}
+            </h2>
+            {products.count > 0 ? (
+              <Link
+                href={productsHref}
+                className={cn("store-view-all shrink-0", isAr && "font-cairo")}
+              >
+                {isAr ? "عرض الكل" : "See all"} ({products.count})
+              </Link>
+            ) : null}
+          </div>
+
+          {preview.length === 0 ? (
+            <p className={cn("py-16 text-center text-sm text-muted-foreground", isAr && "font-cairo")}>
+              {isAr ? "لا توجد منتجات حاليًا" : "No products available yet."}
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 gap-2.5 min-[380px]:grid-cols-2 sm:gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {preview.map((product) => (
+                <ProductCard key={product.id} product={product} locale={locale} />
+              ))}
+            </div>
           )}
-        </div>
-
-        {products.results.length === 0 ? (
-          <p className="py-12 text-center text-sm text-foreground/40">
-            {isAr ? "لا توجد منتجات حاليًا" : "No products available yet."}
-          </p>
-        ) : (
-          <div className="grid grid-cols-1 gap-3 min-[380px]:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {products.results.slice(0, 12).map((product) => (
-              <ProductCard key={product.id} product={product} locale={locale} />
-            ))}
-          </div>
-        )}
+        </section>
       </div>
     </div>
   );

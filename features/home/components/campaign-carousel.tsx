@@ -108,8 +108,8 @@ function CampaignSlide({ c, isAr }: { c: Campaign; isAr: boolean }) {
         className="absolute inset-0"
         style={{
           background: isAr
-            ? "linear-gradient(to left, #0b0b0d 0%, #0b0b0d 30%, rgba(16,30,32,0.82) 52%, rgba(16,30,32,0.25) 75%, transparent 100%)"
-            : "linear-gradient(to right, #0b0b0d 0%, #0b0b0d 30%, rgba(16,30,32,0.82) 52%, rgba(16,30,32,0.25) 75%, transparent 100%)",
+            ? "linear-gradient(to left, #000000 0%, #000000 30%, rgba(0, 0, 0,0.82) 52%, rgba(0, 0, 0,0.25) 75%, transparent 100%)"
+            : "linear-gradient(to right, #000000 0%, #000000 30%, rgba(0, 0, 0,0.82) 52%, rgba(0, 0, 0,0.25) 75%, transparent 100%)",
         }}
       />
 
@@ -125,17 +125,16 @@ function CampaignSlide({ c, isAr }: { c: Campaign; isAr: boolean }) {
 
           {/* Badge */}
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="flex items-center gap-1 rounded-full border border-primary/40 bg-primary/10 px-3 py-1">
-              <Zap className="h-3 w-3 text-primary" fill="currentColor" />
-              <span className="font-chillax text-[10px] font-black uppercase tracking-widest text-primary">
+            <span className="flex items-center gap-1 rounded-[4px] border border-white/20 bg-black/30 px-2 py-0.5">
+              <Zap className="h-3 w-3 text-primary" strokeWidth={2} />
+              <span className="text-[11px] font-semibold text-white">
                 {isAr ? "عرض محدود" : "Limited Offer"}
               </span>
             </span>
 
-            {/* Discount label */}
             {c.discount_value && Number(c.discount_value) > 0 && (
-              <span className="rounded-full bg-primary px-3 py-1">
-                <span className="font-chillax text-[14px] leading-none text-[var(--ink)]">
+              <span className="rounded-[4px] bg-primary px-2 py-0.5">
+                <span className="text-[12px] font-semibold leading-none text-white">
                   {c.discount_type === 'PERCENTAGE'
                     ? `${Number(c.discount_value).toFixed(0)}% OFF`
                     : isAr
@@ -152,14 +151,13 @@ function CampaignSlide({ c, isAr }: { c: Campaign; isAr: boolean }) {
               "leading-none text-white",
               isAr ? "font-cairo font-black" : "font-chillax",
             )}
-            style={{ fontSize: "clamp(2rem, 5.5vw, 4rem)" }}
+            style={{ fontSize: "clamp(1.35rem, 3vw, 2rem)" }}
           >
             {name}
           </h2>
 
           {/* Gold rule */}
           <div className="flex items-center gap-3">
-            <div className="h-0.5 w-8 rounded-full bg-primary" />
             {sub && (
               <p
                 className={cn(
@@ -181,17 +179,17 @@ function CampaignSlide({ c, isAr }: { c: Campaign; isAr: boolean }) {
             <Link
               href={c.cta_url}
               className={cn(
-                "group mt-1 inline-flex w-fit items-center gap-2 rounded-full",
-                "bg-primary px-5 py-2.5 transition-all active:scale-95",
-                "hover:bg-[#d12f27] hover:shadow-[0_0_20px_rgba(158,29,32,0.35)]",
+                "group mt-1 inline-flex w-fit items-center gap-2 rounded-[4px]",
+                "bg-primary px-4 py-2 transition-colors duration-150",
+                "hover:bg-[var(--blue-hover)]",
                 isAr ? "font-cairo flex-row-reverse" : "font-chillax",
               )}
               style={{ fontSize: "clamp(0.75rem, 1.5vw, 0.875rem)", fontWeight: 700 }}
             >
               <span className="text-white">{cta}</span>
               {isAr
-                ? <ArrowLeft className="h-4 w-4 text-white transition-transform group-hover:-translate-x-0.5" />
-                : <ArrowRight className="h-4 w-4 text-white transition-transform group-hover:translate-x-0.5" />}
+                ? <ArrowLeft className="h-4 w-4 text-white" />
+                : <ArrowRight className="h-4 w-4 text-white" />}
             </Link>
           )}
         </div>

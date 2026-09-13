@@ -45,7 +45,7 @@ export function ShippingMethodSection({
         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
           {stepNumber}
         </span>
-        <h3 className="text-sm font-bold uppercase tracking-wider text-[#EDEFF0]">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-[#FFFFFF]">
           {t("section.shippingMethod")}
         </h3>
         <Separator className="flex-1 bg-white/10" />
@@ -53,7 +53,7 @@ export function ShippingMethodSection({
 
       {shippingOptions.length > 0 ? (
         <RadioGroup value={selectedShippingId} onValueChange={onShippingChange}>
-          <ScrollArea className="scrollbar-thin max-h-56 rounded-lg border border-[#26292C] bg-[#17181B] pe-4">
+          <ScrollArea className="scrollbar-thin max-h-56 rounded-lg border border-border bg-card pe-4">
             <div className="space-y-2 p-3">
               {shippingOptions.map((option, idx) => (
                 <div key={option.id}>
@@ -65,17 +65,17 @@ export function ShippingMethodSection({
                     <div className="flex-1 space-y-2">
                       <div className="flex items-start justify-between">
                         <div>
-                          <p className="text-sm font-bold text-[#EDEFF0]">{labelFor(option)}</p>
+                          <p className="text-sm font-bold text-[#FFFFFF]">{labelFor(option)}</p>
                           <p className="text-xs text-white/50">{descFor(option)}</p>
                         </div>
-                        <span className="text-sm font-bold text-[#9e1d20]">
+                        <span className="text-sm font-bold text-[#EB0B1A]">
                           {option.price} {currencySuffix}
                         </span>
                       </div>
 
                       <div className="mt-2 flex items-center gap-2">
                         <Calendar size={14} className="text-[var(--secondary-text)]" />
-                        <span className="text-xs font-semibold text-[#EDEFF0]">{etaLabel(option)}</span>
+                        <span className="text-xs font-semibold text-[#FFFFFF]">{etaLabel(option)}</span>
                       </div>
                     </div>
                   </label>

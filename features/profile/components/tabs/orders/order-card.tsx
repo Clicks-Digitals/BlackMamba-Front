@@ -26,17 +26,17 @@ interface OrderCardProps {
 }
 
 const STATUS_MAP: Record<string, { bg: string; text: string; dot: string }> = {
-  PENDING:   { bg: "bg-amber-500/15",   text: "text-amber-300",  dot: "bg-amber-400"  },
-  CONFIRMED: { bg: "bg-primary/15",     text: "text-[#d12f27]",  dot: "bg-primary"   },
-  SHIPPED:   { bg: "bg-violet-500/15",  text: "text-violet-300", dot: "bg-violet-400" },
-  DELIVERED: { bg: "bg-emerald-500/15", text: "text-emerald-400", dot: "bg-emerald-400" },
-  CANCELLED: { bg: "bg-red-500/15",     text: "text-red-400",     dot: "bg-red-400"    },
+  PENDING:   { bg: "bg-primary/15",   text: "text-primary",  dot: "bg-primary"  },
+  CONFIRMED: { bg: "bg-primary/15",     text: "text-[#EB0B1A]",  dot: "bg-primary"   },
+  SHIPPED:   { bg: "bg-primary/15",  text: "text-primary", dot: "bg-primary" },
+  DELIVERED: { bg: "bg-primary/15", text: "text-primary", dot: "bg-primary" },
+  CANCELLED: { bg: "bg-primary/15",     text: "text-primary",     dot: "bg-primary"    },
 };
 
 const PAYMENT_MAP: Record<string, { bg: string; text: string }> = {
-  PAID:   { bg: "bg-emerald-500/15", text: "text-emerald-400" },
-  UNPAID: { bg: "bg-amber-500/15",  text: "text-amber-300"  },
-  FAILED: { bg: "bg-red-500/15",    text: "text-red-400"    },
+  PAID:   { bg: "bg-primary/15", text: "text-primary" },
+  UNPAID: { bg: "bg-primary/15",  text: "text-primary"  },
+  FAILED: { bg: "bg-primary/15",    text: "text-primary"    },
 };
 
 export function OrderCard({ order, onViewDetails, onRefresh }: OrderCardProps) {
@@ -80,7 +80,7 @@ export function OrderCard({ order, onViewDetails, onRefresh }: OrderCardProps) {
         "";
 
   return (
-    <div className="overflow-hidden rounded-xl border border-[#26292C] bg-[#17181B] transition hover:border-[#9e1d20]/30">
+    <div className="overflow-hidden rounded-xl border border-[#000000] bg-[#000000] transition hover:border-[#EB0B1A]/30">
       {/* ── Header stripe ── */}
       <div className="flex items-center justify-between gap-3 border-b border-white/8 bg-white/3 px-5 py-3.5">
         <span className="text-[14px] font-semibold text-foreground">{order.order_number}</span>
@@ -104,7 +104,7 @@ export function OrderCard({ order, onViewDetails, onRefresh }: OrderCardProps) {
             type="button"
             onClick={copyId}
             title="Copy order ID"
-            className="shrink-0 text-white/35 transition hover:text-[#EDEFF0]"
+            className="shrink-0 text-white/35 transition hover:text-[#FFFFFF]"
           >
             {copied ? <Check size={13} className="text-foreground" /> : <Copy size={13} />}
           </button>
@@ -159,13 +159,13 @@ export function OrderCard({ order, onViewDetails, onRefresh }: OrderCardProps) {
               type="button"
               disabled={isCancelling}
               onClick={handleCancel}
-              className="flex items-center gap-1.5 text-[12px] font-medium text-red-500 transition hover:text-red-700 disabled:opacity-40"
+              className="flex items-center gap-1.5 text-[12px] font-medium text-primary transition hover:text-primary disabled:opacity-40"
             >
               {isCancelling ? <Loader2 size={13} className="animate-spin" /> : <Trash2 size={13} />}
               {t("cancelOrder")}
             </button>
           )}
-          <span className="text-[14px] font-semibold text-[#9e1d20]">
+          <span className="text-[14px] font-semibold text-[#EB0B1A]">
             {order.total_amount} {currencySymbol}
           </span>
         </div>

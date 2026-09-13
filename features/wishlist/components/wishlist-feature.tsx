@@ -18,7 +18,7 @@ export async function WishlistFeature() {
           <p className="bm-kicker mb-3">Black Mamba</p>
           <h1
             className={cn(
-              "text-[clamp(1.8rem,3.4vw,2.8rem)] leading-none text-white",
+              "text-[clamp(1.8rem,3.4vw,2.8rem)] leading-none text-foreground",
               rtl ? "font-cairo font-semibold" : "font-beckman uppercase tracking-wide"
             )}
           >

@@ -45,21 +45,22 @@ export function HeaderIcons() {
   const cartActive = pathname === "/cart" || pathname.startsWith("/cart/");
 
   return (
-    <div className="flex items-center gap-0.5 sm:gap-1">
+    <div className="flex items-center">
       <Link
         href="/favourites"
         aria-label={t("wishlist")}
         aria-current={favActive ? "page" : undefined}
         className={cn(
-          "relative inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-md transition-colors duration-200 hover:bg-store-nav-fg/8 hover:text-store-nav-fg",
-          favActive ? "bg-store-nav-fg/8 text-store-nav-fg" : "text-store-nav-fg/80"
+          "relative inline-flex h-10 shrink-0 items-center gap-1.5 px-2 text-store-nav-fg/90 transition-colors duration-150 hover:bg-white/8 hover:text-white",
+          favActive && "bg-white/8 text-white"
         )}
       >
         <Heart
-          className="pointer-events-none size-5"
+          className="pointer-events-none size-[22px]"
           strokeWidth={1.75}
           fill={favActive || wishlistCount > 0 ? "currentColor" : "none"}
         />
+        <span className="hidden text-[13px] font-semibold leading-none 2xl:inline">{t("wishlist")}</span>
         <CountBadge count={wishlistCount} />
       </Link>
       <Link
@@ -67,11 +68,12 @@ export function HeaderIcons() {
         aria-label={t("cart")}
         aria-current={cartActive ? "page" : undefined}
         className={cn(
-          "relative inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-md transition-colors duration-200 hover:bg-store-nav-fg/8 hover:text-store-nav-fg",
-          cartActive ? "bg-store-nav-fg/8 text-store-nav-fg" : "text-store-nav-fg/80"
+          "relative inline-flex h-10 shrink-0 items-center gap-1.5 px-2 text-store-nav-fg/90 transition-colors duration-150 hover:bg-white/8 hover:text-white",
+          cartActive && "bg-white/8 text-white"
         )}
       >
-        <ShoppingCart className="pointer-events-none size-5" strokeWidth={1.75} />
+        <ShoppingCart className="pointer-events-none size-[22px]" strokeWidth={1.75} />
+        <span className="hidden text-[13px] font-semibold leading-none sm:inline">{t("cart")}</span>
         <CountBadge count={cartCount} />
       </Link>
     </div>

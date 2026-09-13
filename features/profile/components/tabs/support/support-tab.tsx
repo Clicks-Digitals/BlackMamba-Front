@@ -22,7 +22,7 @@ export function SupportTab() {
 
   return (
     <div className="flex w-full flex-col gap-6">
-      <div className="flex flex-col items-start justify-between rounded-xl border border-[#26292C] bg-[#17181B] p-4 sm:flex-row sm:items-center">
+      <div className="flex flex-col items-start justify-between rounded-xl border border-[#000000] bg-[#000000] p-4 sm:flex-row sm:items-center">
         <div>
           <h3 className="font-chillax text-[18px] font-semibold text-foreground">
             {t("supportTickets")}
@@ -37,10 +37,10 @@ export function SupportTab() {
         key={`list-${refreshCount}`}
         fetchAction={getSupportTickets}
         emptyState={
-          <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-[#26292C] bg-[#17181B] py-16 text-center">
+          <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-[#000000] bg-[#000000] py-16 text-center">
             <Headset size={48} className="text-white/25" />
             <div>
-              <p className="font-chillax text-[16px] font-medium text-[#EDEFF0]">{t("noTickets")}</p>
+              <p className="font-chillax text-[16px] font-medium text-[#FFFFFF]">{t("noTickets")}</p>
             </div>
           </div>
         }

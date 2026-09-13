@@ -43,16 +43,20 @@ export function LocaleSwitcher({ currentLocale, variant = "header" }: LocaleSwit
   const isStoreNav = variant === "storeNav";
 
   const shell = isDrawer
-    ? "border border-white/15 bg-white/5"
+    ? "border border-white/15"
     : isStoreNav
-      ? "border border-store-nav-fg/35 bg-store-nav/80"
-      : "border border-white/30 bg-white/10 backdrop-blur-sm";
+      ? ""
+      : "border border-white/20";
 
   return (
     <div
       role="group"
       aria-label="Language switcher"
-      className={["flex h-8 items-center rounded-full p-0.5 text-xs font-medium", shell].join(" ")}
+      className={[
+        "flex h-8 items-center text-[12px] font-medium",
+        isStoreNav ? "px-1.5" : "",
+        shell,
+      ].join(" ")}
     >
       {(["en", "ar"] as const).map((locale) => {
         const isActive = currentLocale === locale;
@@ -63,18 +67,10 @@ export function LocaleSwitcher({ currentLocale, variant = "header" }: LocaleSwit
             disabled={isPending}
             aria-pressed={isActive}
             className={[
-              "h-full rounded-full px-3 transition-all duration-200 focus-visible:ring-2 focus-visible:outline-none disabled:opacity-60",
+              "h-8 px-2 transition-colors duration-150 focus-visible:outline-none disabled:opacity-60",
               isActive
-                ? isDrawer
-                  ? "bg-primary text-white shadow-sm focus-visible:ring-primary/40"
-                  : isStoreNav
-                    ? "bg-primary text-white shadow-sm focus-visible:ring-primary/40"
-                    : "bg-white text-primary shadow-sm focus-visible:ring-white/60"
-                : isDrawer
-                  ? "text-white/70 hover:bg-white/10 hover:text-white focus-visible:ring-white/30"
-                  : isStoreNav
-                    ? "text-store-nav-fg/85 hover:bg-store-nav-fg/10 hover:text-store-nav-fg focus-visible:ring-store-nav-fg/40"
-                    : "text-white/80 hover:bg-white/15 hover:text-white focus-visible:ring-white/60"
+                ? "font-semibold text-primary"
+                : "text-white/55 hover:text-white",
             ].join(" ")}
           >
             {locale === "en" ? "EN" : "AR"}

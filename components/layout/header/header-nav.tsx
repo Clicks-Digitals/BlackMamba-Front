@@ -22,10 +22,10 @@ export function HeaderNav({ navLinks, pcBuilderLabel, rtl }: HeaderNavProps) {
   return (
     <nav
       className={cn(
-        "hidden items-center gap-0.5 xl:flex",
-        "text-[13px] leading-none tracking-wide",
+        "hidden shrink-0 items-center xl:flex",
+        "text-[13px] leading-none",
         !rtl && "font-chillax",
-        rtl && "gap-1 text-[13px] font-medium font-cairo"
+        rtl && "font-cairo"
       )}
     >
       {navLinks.map((link) => {
@@ -36,10 +36,10 @@ export function HeaderNav({ navLinks, pcBuilderLabel, rtl }: HeaderNavProps) {
             href={link.href}
             aria-current={active ? "page" : undefined}
             className={cn(
-              "relative rounded-md px-2.5 py-1.5 whitespace-nowrap transition-colors duration-200",
+              "inline-flex h-10 items-center px-3 whitespace-nowrap transition-colors duration-150",
               active
-                ? "bg-store-nav-fg/8 text-store-nav-fg bm-nav-active"
-                : "text-store-nav-fg/60 hover:bg-store-nav-fg/6 hover:text-store-nav-fg"
+                ? "font-semibold text-white shadow-[inset_0_-2px_0_0_var(--primary)]"
+                : "font-medium text-white/75 hover:text-white"
             )}
           >
             {link.label}
@@ -51,14 +51,10 @@ export function HeaderNav({ navLinks, pcBuilderLabel, rtl }: HeaderNavProps) {
         href="/pc-builder"
         aria-current={pcBuilderActive ? "page" : undefined}
         className={cn(
-          "ms-1 inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5 transition-colors duration-200",
-          pcBuilderActive
-            ? "border-primary bg-primary text-white"
-            : "border-primary/40 bg-primary/10 text-store-nav-fg hover:border-primary hover:bg-primary/20",
-          rtl ? "font-cairo font-bold" : "text-[12px] font-semibold uppercase tracking-wider"
+          "ms-1 inline-flex h-8 items-center bg-primary px-3 text-[12px] font-semibold text-white transition-colors duration-150 hover:bg-[var(--blue-hover)]",
+          rtl && "font-cairo"
         )}
       >
-        <span className="size-1.5 rounded-full bg-[#d12f27]" aria-hidden />
         {pcBuilderLabel}
       </Link>
     </nav>

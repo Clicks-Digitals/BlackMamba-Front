@@ -56,8 +56,8 @@ export async function ServiceOurStory() {
 
         <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-3">
           {tags.map((tag) => (
-            <div key={tag.label} className="bg-[#121314] px-5 py-5 sm:px-6">
-              <p className="font-mono text-[11px] tracking-[0.18em] text-[#d12f27]">{tag.n}</p>
+            <div key={tag.label} className="bg-[#000000] px-5 py-5 sm:px-6">
+              <p className="font-mono text-[11px] tracking-[0.18em] text-[#EB0B1A]">{tag.n}</p>
               <p
                 className={cn(
                   "mt-2 text-[15px] font-semibold uppercase tracking-[0.12em] text-white",

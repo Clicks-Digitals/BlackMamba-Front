@@ -24,17 +24,15 @@ export function HomeCategorySlider({ categories, locale, title, exploreLabel, vi
         {/* Left-aligned heading with amber rule */}
         <h2
           className={cn(
-            "flex items-center gap-3 text-[clamp(2.25rem,4.2vw,3rem)] leading-none font-semibold text-foreground uppercase",
+            "store-heading",
             !rtl && "font-chillax",
-            rtl && "font-cairo font-semibold normal-case"
+            rtl && "font-cairo"
           )}
         >
-          <span className="h-1 w-9 shrink-0 rounded-full bg-primary" aria-hidden />
           {title}
         </h2>
 
-        {/* Slider of category cards */}
-        <div className="mt-10 lg:mt-12">
+        <div className="mt-4">
           <HomeSlider rtl={rtl}>
             {categories.map((cat) => (
               <CategoryCard
@@ -48,10 +46,10 @@ export function HomeCategorySlider({ categories, locale, title, exploreLabel, vi
         </div>
 
         {/* View All button */}
-        <div className="mt-10 flex justify-center md:mt-12">
+        <div className="mt-6 flex justify-center">
           <Link
             href="/categories"
-            className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-8 text-sm font-bold text-white transition-colors duration-200 hover:bg-[#d12f27]"
+            className="store-view-all inline-flex h-9 items-center justify-center text-[13px]"
           >
             {viewAllLabel}
           </Link>

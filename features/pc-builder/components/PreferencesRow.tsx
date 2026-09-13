@@ -15,8 +15,8 @@ interface PreferencesRowProps {
 }
 
 const SWATCHES: Record<string, string> = {
-  BLACK: "#1a1a1a",
-  WHITE: "#f4f4f4",
+  BLACK: "#000000",
+  WHITE: "#FFFFFF",
 };
 
 function SegmentedControl<T extends string>({
@@ -56,7 +56,7 @@ function SegmentedControl<T extends string>({
               {active && (
                 <motion.span
                   layoutId={reduceMotion ? undefined : groupId}
-                  className="absolute inset-0 -z-10 rounded-md bg-[#9e1d20]"
+                  className="absolute inset-0 -z-10 rounded-md bg-[#EB0B1A]"
                   transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                 />
               )}

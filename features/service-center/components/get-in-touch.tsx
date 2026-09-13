@@ -19,7 +19,7 @@ const CONTACT_INFO: { icon: LucideIcon; labelKey: string; value: string }[] = [
 const initialState: ActionState<ContactRequestInput> = { status: "idle", message: "" };
 
 const fieldClass =
-  "h-11 rounded-md border-white/10 bg-white/4 px-3.5 font-chillax text-sm text-[#EDEFF0] placeholder:text-white/35 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors duration-200";
+  "h-11 rounded-md border-border bg-background px-3.5 font-chillax text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors duration-200";
 
 export function GetInTouch() {
   const t = useTranslations("ServiceCenter.getInTouch");
@@ -44,9 +44,9 @@ export function GetInTouch() {
 
   return (
     <section id="service-contact" className="layout-page layout-gutter-x scroll-mt-[calc(var(--layout-chrome-top)+1rem)] py-16 md:py-24">
-      <div className="dark overflow-hidden rounded-lg border border-white/10">
+      <div className="overflow-hidden rounded-lg border border-border">
         <div className="grid grid-cols-1 lg:grid-cols-5">
-          <div className="relative flex flex-col justify-between gap-8 overflow-hidden bg-[#121314] px-6 py-10 sm:px-8 lg:col-span-2 lg:px-10 lg:py-12">
+          <div className="relative flex flex-col justify-between gap-8 overflow-hidden bg-card px-6 py-10 sm:px-8 lg:col-span-2 lg:px-10 lg:py-12">
             <div
               className="pointer-events-none absolute inset-0 opacity-30"
               style={{
@@ -62,7 +62,7 @@ export function GetInTouch() {
               <p className="bm-kicker">{t("kicker")}</p>
               <h2
                 className={cn(
-                  "mt-3 leading-none text-white",
+                  "mt-3 leading-none text-foreground",
                   "text-[clamp(2rem,4vw,3.25rem)]",
                   !rtl && "font-beckman uppercase tracking-wide",
                   rtl && "font-cairo font-bold"
@@ -70,7 +70,7 @@ export function GetInTouch() {
               >
                 {t("heading")}
               </h2>
-              <p className={cn("mt-4 text-[14px] leading-relaxed text-white/50", rtl && "font-cairo")}>
+              <p className={cn("mt-4 text-[14px] leading-relaxed text-muted-foreground", rtl && "font-cairo")}>
                 {t("intro")}
               </p>
 
@@ -78,13 +78,13 @@ export function GetInTouch() {
                 {CONTACT_INFO.map(({ icon: Icon, labelKey, value }) => (
                   <div key={labelKey} className="flex items-center gap-3.5 rounded-md border border-white/8 bg-white/3 px-3.5 py-3">
                     <div className="flex size-10 shrink-0 items-center justify-center rounded-md border border-primary/25 bg-primary/10">
-                      <Icon className="size-4 text-[#d12f27]" strokeWidth={1.7} />
+                      <Icon className="size-4 text-[#EB0B1A]" strokeWidth={1.7} />
                     </div>
                     <div>
-                      <p className={cn("text-[10px] font-semibold uppercase tracking-[0.16em] text-white/35", rtl && "font-cairo tracking-normal")}>
+                      <p className={cn("text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground", rtl && "font-cairo tracking-normal")}>
                         {t(labelKey as never)}
                       </p>
-                      <p className="mt-0.5 text-[14px] font-medium text-white/90" dir="ltr">
+                      <p className="mt-0.5 text-[14px] font-medium text-foreground" dir="ltr">
                         {value}
                       </p>
                     </div>
@@ -95,39 +95,39 @@ export function GetInTouch() {
 
             <div className="relative rounded-md border border-white/10 bg-black/25 p-5">
               <div className="mb-3 flex items-center gap-2.5">
-                <Clock className="size-4 text-[#d12f27]" />
-                <span className={cn("text-[11px] font-semibold uppercase tracking-[0.16em] text-white/40", rtl && "font-cairo tracking-normal")}>
+                <Clock className="size-4 text-[#EB0B1A]" />
+                <span className={cn("text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground", rtl && "font-cairo tracking-normal")}>
                   {t("hoursLabel")}
                 </span>
               </div>
-              <p className={cn("text-[14px] font-semibold text-white/85", rtl && "font-cairo")}>{t("hoursDays")}</p>
-              <p className={cn("mt-0.5 text-[13px] text-white/45", rtl && "font-cairo")}>{t("hoursTime")}</p>
+              <p className={cn("text-[14px] font-semibold text-foreground", rtl && "font-cairo")}>{t("hoursDays")}</p>
+              <p className={cn("mt-0.5 text-[13px] text-muted-foreground", rtl && "font-cairo")}>{t("hoursTime")}</p>
               <div className="mt-4 flex items-center gap-2">
-                <span className="size-1.5 rounded-full bg-emerald-400 motion-safe:animate-pulse" />
-                <span className={cn("text-[12px] font-medium text-emerald-300/80", rtl && "font-cairo")}>
+                <span className="size-1.5 rounded-full bg-primary motion-safe:animate-pulse" />
+                <span className={cn("text-[12px] font-medium text-primary", rtl && "font-cairo")}>
                   {t("replyNote")}
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-white/8 bg-[#17181b] px-6 py-10 sm:px-10 lg:col-span-3 lg:border-t-0 lg:border-s lg:px-12 lg:py-12">
+          <div className="border-t border-border bg-card px-6 py-10 sm:px-10 lg:col-span-3 lg:border-t-0 lg:border-s lg:px-12 lg:py-12">
             {sent ? (
               <div className="flex h-full flex-col items-center justify-center gap-5 py-16 text-center">
-                <div className="flex size-16 items-center justify-center rounded-md border border-emerald-400/25 bg-emerald-500/10">
-                  <CheckCircle2 className="size-8 text-emerald-400" />
+                <div className="flex size-16 items-center justify-center rounded-md border border-primary/40 bg-primary/10">
+                  <CheckCircle2 className="size-8 text-primary" />
                 </div>
                 <div>
                   <h3
                     className={cn(
-                      "text-[28px] leading-none text-[#EDEFF0]",
+                      "text-[28px] leading-none text-foreground",
                       !rtl && "font-chillax",
                       rtl && "font-cairo font-bold"
                     )}
                   >
                     {t("receivedTitle")}
                   </h3>
-                  <p className={cn("mt-3 max-w-sm text-[14px] text-white/50", rtl && "font-cairo")}>
+                  <p className={cn("mt-3 max-w-sm text-[14px] text-muted-foreground", rtl && "font-cairo")}>
                     {t("receivedBody")}
                   </p>
                 </div>
@@ -135,7 +135,7 @@ export function GetInTouch() {
                   type="button"
                   onClick={() => setSent(false)}
                   className={cn(
-                    "mt-1 rounded-md border border-white/15 px-5 py-2.5 text-[13px] font-medium text-[#EDEFF0] transition-colors hover:border-primary/40 hover:bg-primary/10",
+                    "mt-1 rounded-md border border-border px-5 py-2.5 text-[13px] font-medium text-foreground transition-colors hover:border-primary/40 hover:bg-primary/10",
                     rtl && "font-cairo"
                   )}
                 >
@@ -147,14 +147,14 @@ export function GetInTouch() {
                 <div className="mb-1">
                   <h3
                     className={cn(
-                      "text-[26px] leading-none text-[#EDEFF0] sm:text-[30px]",
+                      "text-[26px] leading-none text-foreground sm:text-[30px]",
                       !rtl && "font-chillax",
                       rtl && "font-cairo font-bold"
                     )}
                   >
                     {t("formTitle")}
                   </h3>
-                  <p className={cn("mt-2 text-[13px] text-white/40", rtl && "font-cairo")}>
+                  <p className={cn("mt-2 text-[13px] text-muted-foreground", rtl && "font-cairo")}>
                     {t("formHint")}
                   </p>
                 </div>
@@ -220,7 +220,7 @@ export function GetInTouch() {
                 <SubmitButton
                   pendingText={t("submittingBtn")}
                   className={cn(
-                    "flex h-12 w-full items-center justify-center gap-2 rounded-md bg-primary text-[15px] font-semibold text-white transition-colors hover:bg-[#d12f27] active:scale-[0.99]",
+                    "flex h-12 w-full items-center justify-center gap-2 rounded-md bg-primary text-[15px] font-semibold text-white transition-colors hover:bg-[#EB0B1A] active:scale-[0.99]",
                     rtl && "font-cairo"
                   )}
                 >
@@ -228,7 +228,7 @@ export function GetInTouch() {
                   {t("submitBtn")}
                 </SubmitButton>
 
-                <p className={cn("text-center text-[12px] text-white/40", rtl && "font-cairo")}>
+                <p className={cn("text-center text-[12px] text-muted-foreground", rtl && "font-cairo")}>
                   {t("privacy")}
                 </p>
               </form>

@@ -47,18 +47,18 @@ export async function HomeTrustBar() {
   return (
     <section className="py-4 sm:py-5">
       <div className="layout-page layout-gutter-x">
-        <div className="grid grid-cols-2 overflow-hidden rounded-lg border border-border bg-card lg:grid-cols-4">
+        <div className="grid grid-cols-2 overflow-hidden rounded-[6px] border border-border bg-card lg:grid-cols-4">
           {TRUST_ITEMS.map(({ Icon, enTitle, arTitle, enSub, arSub }, i) => (
             <div
               key={enTitle}
               className={cn(
-                "flex items-center gap-3 px-4 py-4 sm:gap-4 sm:px-6 sm:py-5",
+                "flex items-center gap-3 px-3 py-3 sm:gap-3 sm:px-4 sm:py-3.5",
                 i !== TRUST_ITEMS.length - 1 && "lg:border-e lg:border-border",
                 i % 2 === 0 && "max-lg:border-e max-lg:border-border",
                 i < 2 && "max-lg:border-b max-lg:border-border"
               )}
             >
-              <div className="flex size-11 shrink-0 items-center justify-center rounded-md border border-primary/25 bg-primary/10 text-primary sm:size-12">
+              <div className="flex size-9 shrink-0 items-center justify-center text-primary">
                 <Icon className="h-5 w-5" strokeWidth={1.7} />
               </div>
               <div className="min-w-0">

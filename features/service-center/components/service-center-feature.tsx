@@ -22,14 +22,14 @@ export async function ServiceCenterFeature() {
 
   return (
     <div className="bg-background">
-      <section className="relative overflow-hidden border-b border-white/8 bg-[#080809]">
+      <section className="relative overflow-hidden border-b border-border bg-background">
         <div
           className="pointer-events-none absolute inset-0 opacity-40"
           style={{
             backgroundImage:
               "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
             backgroundSize: "48px 48px",
-            maskImage: "radial-gradient(ellipse 70% 80% at 70% 40%, #000 18%, transparent 72%)",
+            maskImage: "radial-gradient(ellipse 70% 80% at 70% 40%, #000000 18%, transparent 72%)",
           }}
           aria-hidden
         />
@@ -47,7 +47,7 @@ export async function ServiceCenterFeature() {
             <p className="bm-kicker">{t("hero.kicker")}</p>
             <h1
               className={cn(
-                "mt-4 max-w-[12ch] leading-[0.9] text-white",
+                "mt-4 max-w-[12ch] leading-[0.9] text-foreground",
                 "text-[clamp(2.6rem,7vw,5.4rem)]",
                 !rtl && "font-beckman uppercase tracking-wide",
                 rtl && "font-cairo font-bold"
@@ -57,7 +57,7 @@ export async function ServiceCenterFeature() {
             </h1>
             <p
               className={cn(
-                "mt-5 max-w-md text-[15px] leading-relaxed text-white/55 sm:text-[16px]",
+                "mt-5 max-w-md text-[15px] leading-relaxed text-muted-foreground sm:text-[16px]",
                 rtl && "font-cairo"
               )}
             >
@@ -67,7 +67,7 @@ export async function ServiceCenterFeature() {
             <a
               href="#service-contact"
               className={cn(
-                "group mt-7 inline-flex h-11 items-center gap-2 rounded-md bg-primary px-5 text-[13px] font-semibold text-white transition-colors hover:bg-[#d12f27]",
+                "group mt-7 inline-flex h-11 items-center gap-2 rounded-md bg-primary px-5 text-[13px] font-semibold text-white transition-colors hover:bg-[#EB0B1A]",
                 rtl && "font-cairo"
               )}
             >
@@ -79,10 +79,10 @@ export async function ServiceCenterFeature() {
               {CHIPS.map(({ icon: Icon, key }) => (
                 <div
                   key={key}
-                  className="flex items-center gap-2.5 rounded-md border border-white/10 bg-white/4 px-3 py-2.5"
+                  className="flex items-center gap-2.5 rounded-md border border-border bg-card px-3 py-2.5"
                 >
-                  <Icon className="size-4 shrink-0 text-[#d12f27]" strokeWidth={1.75} />
-                  <span className={cn("text-[12px] font-medium text-white/80", rtl && "font-cairo")}>
+                  <Icon className="size-4 shrink-0 text-[#EB0B1A]" strokeWidth={1.75} />
+                  <span className={cn("text-[12px] font-medium text-foreground/80", rtl && "font-cairo")}>
                     {t(`hero.chips.${key}`)}
                   </span>
                 </div>
@@ -91,11 +91,11 @@ export async function ServiceCenterFeature() {
           </div>
 
           <div className="relative">
-            <div className="relative overflow-hidden rounded-lg border border-white/10 bg-[#101112]">
-              <span className="pointer-events-none absolute start-3 top-3 z-10 h-7 w-7 border-s border-t border-[#d12f27]" />
-              <span className="pointer-events-none absolute end-3 top-3 z-10 h-7 w-7 border-e border-t border-[#d12f27]" />
-              <span className="pointer-events-none absolute start-3 bottom-3 z-10 h-7 w-7 border-s border-b border-[#d12f27]" />
-              <span className="pointer-events-none absolute end-3 bottom-3 z-10 h-7 w-7 border-e border-b border-[#d12f27]" />
+            <div className="relative overflow-hidden rounded-lg border border-border bg-card">
+              <span className="pointer-events-none absolute start-3 top-3 z-10 h-7 w-7 border-s border-t border-[#EB0B1A]" />
+              <span className="pointer-events-none absolute end-3 top-3 z-10 h-7 w-7 border-e border-t border-[#EB0B1A]" />
+              <span className="pointer-events-none absolute start-3 bottom-3 z-10 h-7 w-7 border-s border-b border-[#EB0B1A]" />
+              <span className="pointer-events-none absolute end-3 bottom-3 z-10 h-7 w-7 border-e border-b border-[#EB0B1A]" />
               <Image
                 src="/Service-Center.svg"
                 alt=""

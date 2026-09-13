@@ -53,7 +53,7 @@ export async function ProductComparisonTable({
           <dl className="overflow-hidden rounded-md border border-border">
             {table.rows.map((row, rowIdx) => {
               const featureLabel = isAr && row.feature_ar ? row.feature_ar : row.feature;
-              const value = row.values[0] ?? "";
+              const value = (isAr && row.values_ar?.[0]) || row.values[0] || "";
               return (
                 <div
                   key={row.id}
@@ -124,14 +124,17 @@ export async function ProductComparisonTable({
                     <div className="px-4 py-3.5 font-chillax text-sm font-semibold text-foreground">
                       {featureLabel}
                     </div>
-                    {row.values.map((val, i) => (
-                      <div
-                        key={i}
-                        className="border-s border-border px-4 py-3.5 font-chillax text-sm text-muted-foreground"
-                      >
-                        {val || "—"}
-                      </div>
-                    ))}
+                    {row.values.map((val, i) => {
+                      const cellValue = (isAr && row.values_ar?.[i]) || val;
+                      return (
+                        <div
+                          key={i}
+                          className="border-s border-border px-4 py-3.5 font-chillax text-sm text-muted-foreground"
+                        >
+                          {cellValue || "—"}
+                        </div>
+                      );
+                    })}
                   </div>
                 );
               })}

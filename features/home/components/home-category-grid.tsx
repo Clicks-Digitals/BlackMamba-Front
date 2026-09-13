@@ -29,15 +29,13 @@ export function HomeCategoryGrid({
   return (
     <section className="pt-6 pb-3 sm:pt-8 sm:pb-4">
       <div className="layout-page layout-gutter-x">
-        <div className="mb-4 flex items-end justify-between gap-4 sm:mb-5">
+        <div className="mb-4 flex items-center justify-between gap-4">
           <div className="min-w-0">
-            <p className="bm-kicker mb-1.5">{rtl ? "اكتشف" : "Discover"}</p>
             <h2
               className={cn(
-                "leading-none font-semibold text-foreground",
-                "text-[clamp(1.65rem,3.2vw,2.5rem)]",
-                !rtl && "font-chillax tracking-wide",
-                rtl && "font-cairo font-semibold"
+                "store-heading",
+                !rtl && "font-chillax",
+                rtl && "font-cairo"
               )}
             >
               {title}
@@ -46,7 +44,7 @@ export function HomeCategoryGrid({
           <Link
             href="/categories"
             className={cn(
-              "hidden shrink-0 rounded-md border border-border bg-card px-4 py-2 text-sm font-semibold text-foreground/80 transition-colors duration-200 hover:border-primary/40 hover:text-foreground sm:inline-flex",
+              "store-view-all hidden shrink-0 sm:inline-flex",
               rtl && "font-cairo"
             )}
           >
@@ -76,7 +74,7 @@ export function HomeCategoryGrid({
           <Link
             href="/categories"
             className={cn(
-              "inline-flex h-11 items-center justify-center rounded-md border border-border bg-card px-6 text-sm font-semibold text-foreground/80 transition-colors duration-200 hover:border-primary/40 hover:text-foreground",
+              "inline-flex h-9 items-center justify-center rounded-[4px] border border-border bg-card px-4 text-[13px] font-medium text-foreground transition-colors duration-150 hover:border-primary/50",
               rtl && "font-cairo"
             )}
           >

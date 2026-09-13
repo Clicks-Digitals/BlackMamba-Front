@@ -20,7 +20,7 @@ export async function ServiceProcess() {
   }));
 
   return (
-    <section className="relative overflow-hidden bg-[#101112] py-16 md:py-24">
+    <section className="relative overflow-hidden bg-[#000000] py-16 md:py-24">
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/40 to-transparent"
         aria-hidden
@@ -57,12 +57,12 @@ export async function ServiceProcess() {
             <li
               key={step.index}
               className={cn(
-                "group relative rounded-lg border border-white/8 bg-[#17181b] p-5 transition-colors duration-200",
-                "hover:border-primary/40 hover:bg-[#1b1416]"
+                "group relative rounded-lg border border-white/8 bg-[#000000] p-5 transition-colors duration-200",
+                "hover:border-primary/40 hover:bg-[#000000]"
               )}
             >
               <div className="mb-6 flex items-start justify-between gap-3">
-                <span className="flex size-10 items-center justify-center rounded-md border border-primary/30 bg-primary/10 text-[#d12f27]">
+                <span className="flex size-10 items-center justify-center rounded-md border border-primary/30 bg-primary/10 text-[#EB0B1A]">
                   <step.Icon className="size-5" strokeWidth={1.7} />
                 </span>
                 <span className="font-mono text-[11px] tracking-[0.2em] text-white/30">{step.index}</span>

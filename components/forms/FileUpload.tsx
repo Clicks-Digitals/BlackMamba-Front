@@ -73,14 +73,14 @@ export function FileUpload({
 
   return (
     <div className={cn("flex flex-col gap-1.5", className)}>
-      {label && <label className="text-sm font-medium text-[#EDEFF0]">{label}</label>}
+      {label && <label className="text-sm font-medium text-[#FFFFFF]">{label}</label>}
 
       <div
         className={cn(
           "group relative flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed transition-all",
-          "overflow-hidden border-[#26292C] bg-[#17181B]",
-          "hover:border-[#9e1d20]/50 hover:bg-white/4",
-          error && "border-red-500",
+          "overflow-hidden border-[#000000] bg-[#000000]",
+          "hover:border-[#EB0B1A]/50 hover:bg-white/4",
+          error && "border-primary/40",
           preview ? "aspect-video h-48" : "h-32"
         )}
         onClick={handleClick}
@@ -96,19 +96,19 @@ export function FileUpload({
           </>
         ) : fileName ? (
           <div className="flex flex-col items-center gap-2 p-4">
-            <div className="rounded-full bg-[#9e1d20]/15 p-3 text-[#d12f27]">
+            <div className="rounded-full bg-[#EB0B1A]/15 p-3 text-[#EB0B1A]">
               <FileText className="h-6 w-6" />
             </div>
-            <p className="max-w-[200px] truncate text-sm font-medium text-[#EDEFF0]">{fileName}</p>
+            <p className="max-w-[200px] truncate text-sm font-medium text-[#FFFFFF]">{fileName}</p>
             <span className="text-xs text-white/40">Click to change</span>
           </div>
         ) : (
           <>
-            <div className="rounded-full bg-white/8 p-3 text-white/40 transition-colors group-hover:text-[#d12f27]">
+            <div className="rounded-full bg-white/8 p-3 text-white/40 transition-colors group-hover:text-[#EB0B1A]">
               <Upload className="h-5 w-5" />
             </div>
             <div className="text-center">
-              <p className="text-sm font-medium text-[#EDEFF0]">Click to upload</p>
+              <p className="text-sm font-medium text-[#FFFFFF]">Click to upload</p>
               <p className="mt-1 text-xs text-white/40">Images or Documents</p>
             </div>
           </>
@@ -132,14 +132,14 @@ export function FileUpload({
             e.stopPropagation();
             handleRemove();
           }}
-          className="mt-1 flex w-fit items-center gap-1.5 text-xs font-medium text-red-500 transition-colors hover:text-red-600"
+          className="mt-1 flex w-fit items-center gap-1.5 text-xs font-medium text-primary transition-colors hover:text-primary"
         >
           <X className="h-3.5 w-3.5" />
           Remove File
         </button>
       )}
 
-      {error && <p className="mt-1 text-xs font-medium text-red-500">{error}</p>}
+      {error && <p className="mt-1 text-xs font-medium text-primary">{error}</p>}
     </div>
   );
 }

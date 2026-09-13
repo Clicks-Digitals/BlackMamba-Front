@@ -89,9 +89,9 @@ export function PartsCatalogueView({ buildId, initialParts, initialCount, initia
   };
 
   return (
-    <div className="bg-[#171818]" dir={rtl ? "rtl" : "ltr"}>
+    <div className="bg-[#000000]" dir={rtl ? "rtl" : "ltr"}>
       {/* ── Hero ── */}
-      <div className="bg-[#171818]">
+      <div className="bg-[#000000]">
         <div className="layout-page layout-gutter-x pt-8 pb-0 md:pt-10">
           <Link
             href="/pc-builder"
@@ -105,9 +105,9 @@ export function PartsCatalogueView({ buildId, initialParts, initialCount, initia
             <BlackMambaLogo size="sm" />
           </div>
 
-          <div className="border-t border-[#9e1d20]/20 pt-5 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+          <div className="border-t border-[#EB0B1A]/20 pt-5 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
             <h1 className={cn(
-              "leading-none text-[#EDEFF0]",
+              "leading-none text-[#FFFFFF]",
               !rtl && "font-beckman uppercase tracking-wide text-[clamp(2.4rem,5vw,4.2rem)]",
               rtl && "font-cairo font-bold text-[clamp(1.8rem,4vw,3.2rem)]"
             )}>
@@ -127,14 +127,14 @@ export function PartsCatalogueView({ buildId, initialParts, initialCount, initia
                 value={search}
                 onChange={(e) => { setSearch(e.target.value); setPage(1); }}
                 placeholder={tPicker("searchPlaceholder")}
-                className="h-10 w-full rounded-full border border-white/15 bg-white/5 ps-10 pe-4 text-[13px] text-[#EDEFF0] placeholder:text-white/35 focus:border-[#9e1d20]/50 focus:outline-none"
+                className="h-10 w-full rounded-full border border-white/15 bg-white/5 ps-10 pe-4 text-[13px] text-[#FFFFFF] placeholder:text-white/35 focus:border-[#EB0B1A]/50 focus:outline-none"
               />
             </label>
             <button
               type="button"
               onClick={() => setMobileFiltersOpen(true)}
               aria-label={tCat("filters")}
-              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 text-[#EDEFF0] transition hover:bg-white/10 md:hidden"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 text-[#FFFFFF] transition hover:bg-white/10 md:hidden"
             >
               <SlidersHorizontal className="h-4 w-4" />
             </button>
@@ -145,16 +145,16 @@ export function PartsCatalogueView({ buildId, initialParts, initialCount, initia
       </div>
 
       {/* ── Body ── */}
-      <section className="layout-gutter-x bg-[#171818] py-6 lg:py-8">
+      <section className="layout-gutter-x bg-[#000000] py-6 lg:py-8">
         <div className="layout-page">
           <div className="flex flex-col gap-6 md:flex-row md:items-start">
 
             {/* Desktop filter sidebar */}
             <aside className="hidden w-full shrink-0 md:block md:w-56 lg:w-60">
-              <div className="sticky top-24 overflow-hidden rounded-[10px] border border-[#26292C] bg-[#17181B]">
-                <div className="border-b-2 border-[#9e1d20] px-5 py-3.5">
+              <div className="sticky top-24 overflow-hidden rounded-[10px] border border-[#000000] bg-[#000000]">
+                <div className="border-b-2 border-[#EB0B1A] px-5 py-3.5">
                   <span className={cn(
-                    "text-[#EDEFF0]",
+                    "text-[#FFFFFF]",
                     !rtl && "font-chillax text-[17px] uppercase tracking-widest",
                     rtl && "font-cairo font-semibold text-sm"
                   )}>
@@ -189,7 +189,7 @@ export function PartsCatalogueView({ buildId, initialParts, initialCount, initia
                     type="button"
                     disabled={page <= 1}
                     onClick={() => setPage((p) => p - 1)}
-                    className="flex items-center justify-center rounded-lg border border-[#26292C] bg-[#17181B] p-2 text-white/50 transition hover:border-[#9e1d20]/30 disabled:opacity-30"
+                    className="flex items-center justify-center rounded-lg border border-[#000000] bg-[#000000] p-2 text-white/50 transition hover:border-[#EB0B1A]/30 disabled:opacity-30"
                   >
                     <ChevronPrev className="h-4 w-4" />
                   </button>
@@ -198,7 +198,7 @@ export function PartsCatalogueView({ buildId, initialParts, initialCount, initia
                     type="button"
                     disabled={page >= totalPages}
                     onClick={() => setPage((p) => p + 1)}
-                    className="flex items-center justify-center rounded-lg border border-[#26292C] bg-[#17181B] p-2 text-white/50 transition hover:border-[#9e1d20]/30 disabled:opacity-30"
+                    className="flex items-center justify-center rounded-lg border border-[#000000] bg-[#000000] p-2 text-white/50 transition hover:border-[#EB0B1A]/30 disabled:opacity-30"
                   >
                     <ChevronNext className="h-4 w-4" />
                   </button>
@@ -210,10 +210,10 @@ export function PartsCatalogueView({ buildId, initialParts, initialCount, initia
 
         {/* Mobile filter sheet */}
         <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
-          <SheetContent side={rtl ? "left" : "right"} className="border-[#26292C] bg-[#171818] text-[#EDEFF0]">
+          <SheetContent side={rtl ? "left" : "right"} className="border-[#000000] bg-[#000000] text-[#FFFFFF]">
             <SheetHeader>
               <SheetTitle className={cn(
-                "text-[#EDEFF0]",
+                "text-[#FFFFFF]",
                 !rtl && "font-chillax text-[17px] uppercase tracking-widest",
                 rtl && "font-cairo font-semibold text-base"
               )}>
@@ -268,7 +268,7 @@ function PartFilterPanel({
           <button
             type="button"
             onClick={clearAll}
-            className="text-[10.5px] font-semibold uppercase tracking-wide text-[#FF6B70] hover:opacity-75"
+            className="text-[10.5px] font-semibold uppercase tracking-wide text-[#EB0B1A] hover:opacity-75"
           >
             {rtl ? "مسح الكل" : "Clear All"}
           </button>
@@ -295,8 +295,8 @@ function PartFilterPanel({
                 <label
                   htmlFor={id}
                   className={cn(
-                    "flex cursor-pointer items-center gap-1.5 text-[13px] hover:text-[#EDEFF0]",
-                    checked ? "font-semibold text-[#d12f27]" : "text-white/70"
+                    "flex cursor-pointer items-center gap-1.5 text-[13px] hover:text-[#FFFFFF]",
+                    checked ? "font-semibold text-[#EB0B1A]" : "text-white/70"
                   )}
                 >
                   {Icon && <Icon className="h-3.5 w-3.5 shrink-0 text-white/40" />}
@@ -316,14 +316,14 @@ function PartFilterPanel({
             placeholder={tFilters("min")}
             value={filters.price_min ?? ""}
             onChange={(e) => set("price_min", e.target.value ? Number(e.target.value) : undefined)}
-            className="w-full rounded-lg border border-[#26292C] bg-white/5 px-2.5 py-1.5 text-sm text-[#EDEFF0] placeholder:text-white/30 focus:border-[#9e1d20]/50 focus:outline-none"
+            className="w-full rounded-lg border border-[#000000] bg-white/5 px-2.5 py-1.5 text-sm text-[#FFFFFF] placeholder:text-white/30 focus:border-[#EB0B1A]/50 focus:outline-none"
           />
           <input
             type="number"
             placeholder={tFilters("max")}
             value={filters.price_max ?? ""}
             onChange={(e) => set("price_max", e.target.value ? Number(e.target.value) : undefined)}
-            className="w-full rounded-lg border border-[#26292C] bg-white/5 px-2.5 py-1.5 text-sm text-[#EDEFF0] placeholder:text-white/30 focus:border-[#9e1d20]/50 focus:outline-none"
+            className="w-full rounded-lg border border-[#000000] bg-white/5 px-2.5 py-1.5 text-sm text-[#FFFFFF] placeholder:text-white/30 focus:border-[#EB0B1A]/50 focus:outline-none"
           />
         </div>
       </FilterSection>
@@ -357,7 +357,7 @@ function PartFilterPanel({
             value={filters.socket ?? ""}
             onChange={(e) => set("socket", e.target.value || undefined)}
             placeholder="e.g. AM5"
-            className="w-full rounded-lg border border-[#26292C] bg-white/5 px-2.5 py-1.5 text-sm text-[#EDEFF0] placeholder:text-white/30 focus:outline-none"
+            className="w-full rounded-lg border border-[#000000] bg-white/5 px-2.5 py-1.5 text-sm text-[#FFFFFF] placeholder:text-white/30 focus:outline-none"
           />
         </FilterSection>
       )}
@@ -369,7 +369,7 @@ function PartFilterPanel({
             value={filters.memory_type ?? ""}
             onChange={(e) => set("memory_type", e.target.value || undefined)}
             placeholder="e.g. DDR5"
-            className="w-full rounded-lg border border-[#26292C] bg-white/5 px-2.5 py-1.5 text-sm text-[#EDEFF0] placeholder:text-white/30 focus:outline-none"
+            className="w-full rounded-lg border border-[#000000] bg-white/5 px-2.5 py-1.5 text-sm text-[#FFFFFF] placeholder:text-white/30 focus:outline-none"
           />
         </FilterSection>
       )}
@@ -416,14 +416,14 @@ function PartFilterPanel({
               placeholder={tFilters("min")}
               value={filters.wattage_min ?? ""}
               onChange={(e) => set("wattage_min", e.target.value ? Number(e.target.value) : undefined)}
-              className="w-full rounded-lg border border-[#26292C] bg-white/5 px-2.5 py-1.5 text-sm text-[#EDEFF0] placeholder:text-white/30 focus:outline-none"
+              className="w-full rounded-lg border border-[#000000] bg-white/5 px-2.5 py-1.5 text-sm text-[#FFFFFF] placeholder:text-white/30 focus:outline-none"
             />
             <input
               type="number"
               placeholder={tFilters("max")}
               value={filters.wattage_max ?? ""}
               onChange={(e) => set("wattage_max", e.target.value ? Number(e.target.value) : undefined)}
-              className="w-full rounded-lg border border-[#26292C] bg-white/5 px-2.5 py-1.5 text-sm text-[#EDEFF0] placeholder:text-white/30 focus:outline-none"
+              className="w-full rounded-lg border border-[#000000] bg-white/5 px-2.5 py-1.5 text-sm text-[#FFFFFF] placeholder:text-white/30 focus:outline-none"
             />
           </div>
         </FilterSection>
@@ -441,14 +441,14 @@ function FilterSection({
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="mb-3 border-t border-[#26292C] pt-3 first:border-t-0 first:pt-0 last:mb-0">
+    <div className="mb-3 border-t border-[#000000] pt-3 first:border-t-0 first:pt-0 last:mb-0">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         className="flex w-full items-center justify-between py-1 text-start"
         aria-expanded={open}
       >
-        <span className="text-[13px] font-semibold text-[#EDEFF0]">{title}</span>
+        <span className="text-[13px] font-semibold text-[#FFFFFF]">{title}</span>
         <ChevronDown className={cn("size-4 text-white/40 transition-transform", !open && "-rotate-90 rtl:rotate-90")} />
       </button>
       {open && <div className="pt-2">{children}</div>}
@@ -472,8 +472,8 @@ function RadioGroup({
             <label
               htmlFor={id}
               className={cn(
-                "cursor-pointer text-[13px] hover:text-[#EDEFF0]",
-                checked ? "font-semibold text-[#d12f27]" : "text-white/70"
+                "cursor-pointer text-[13px] hover:text-[#FFFFFF]",
+                checked ? "font-semibold text-[#EB0B1A]" : "text-white/70"
               )}
             >
               {opt}

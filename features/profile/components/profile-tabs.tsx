@@ -66,13 +66,13 @@ export function ProfileTabs({ user: initialUser }: ProfileTabsProps) {
 
           <div className="relative layout-page layout-gutter-x pb-6 pt-8">
             <div className="mb-4 flex items-center justify-between">
-              <p className="text-[10px] uppercase tracking-[0.22em] text-white/40">
+              <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
                 {rtl ? "حسابي" : "My Account"}
               </p>
               <button
                 type="button"
                 onClick={openTicket}
-                className="flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-3.5 py-2 text-[12px] font-medium text-white/80 backdrop-blur-sm transition-all hover:bg-white/20 hover:text-white"
+                className="flex items-center gap-2 rounded-lg border border-border bg-card px-3.5 py-2 text-[12px] font-medium text-foreground/80 transition-all hover:bg-muted hover:text-foreground"
               >
                 <Headset className="h-3.5 w-3.5" />
                 {tSupport("newTicket")}
@@ -99,7 +99,7 @@ export function ProfileTabs({ user: initialUser }: ProfileTabsProps) {
                   )}
                 </div>
                 {user.is_active && (
-                  <div className="absolute -bottom-1 -end-1 flex h-6 w-6 items-center justify-center rounded-full bg-emerald-400 ring-2 ring-primary">
+                  <div className="absolute -bottom-1 -end-1 flex h-6 w-6 items-center justify-center rounded-full bg-primary ring-2 ring-primary">
                     <ShieldCheck className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
                   </div>
                 )}
@@ -109,7 +109,7 @@ export function ProfileTabs({ user: initialUser }: ProfileTabsProps) {
               <div className="min-w-0 flex-1 pb-0.5">
                 <h1
                   className={cn(
-                    "leading-none text-white",
+                    "leading-none text-foreground",
                     !rtl && "font-beckman uppercase tracking-wide text-[clamp(1.9rem,4.5vw,3.75rem)]",
                     rtl  && "font-cairo font-bold normal-case text-[clamp(1.6rem,4vw,3rem)]"
                   )}
@@ -119,16 +119,16 @@ export function ProfileTabs({ user: initialUser }: ProfileTabsProps) {
 
                 <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
                   {user.email && (
-                    <span className="text-[13px] text-white/50">{user.email}</span>
+                    <span className="text-[13px] text-muted-foreground">{user.email}</span>
                   )}
                   {user.is_active && (
-                    <span className="flex items-center gap-1 text-[12px] font-medium text-emerald-300/80">
+                    <span className="flex items-center gap-1 text-[12px] font-medium text-primary">
                       <ShieldCheck className="h-3 w-3" />
                       {rtl ? "تم التحقق" : "Verified"}
                     </span>
                   )}
                   {user.created_at && (
-                    <span className="flex items-center gap-1 text-[12px] text-white/35">
+                    <span className="flex items-center gap-1 text-[12px] text-muted-foreground">
                       <CalendarDays className="h-3 w-3" />
                       {rtl ? "عضو منذ" : "Member since"} {formatDateShort(user.created_at, locale)}
                     </span>
@@ -141,7 +141,7 @@ export function ProfileTabs({ user: initialUser }: ProfileTabsProps) {
 
         {/* ── Tab navigation ── */}
         <Tabs defaultValue={defaultTab} dir={rtl ? "rtl" : "ltr"} className="w-full">
-          <div className="layout-page layout-gutter-x border-t border-white/10">
+          <div className="layout-page layout-gutter-x border-t border-border">
             <TabsList className="h-auto w-full justify-start gap-0 rounded-none bg-transparent p-0">
               {tabs.map(({ value, icon: Icon, label }) => (
                 <TabsTrigger
@@ -149,10 +149,10 @@ export function ProfileTabs({ user: initialUser }: ProfileTabsProps) {
                   value={value}
                   className={cn(
                     "flex items-center gap-2 rounded-none border-b-2 border-transparent px-4 py-3.5",
-                    "text-[13px] font-medium text-white/50 transition-colors",
-                    "hover:bg-white/5 hover:text-white/90",
-                    "data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-[inset_0_-2px_0_0_#9e1d20]",
-                    "data-[state=active]:text-white data-[state=active]:shadow-none"
+                    "text-[13px] font-medium text-muted-foreground transition-colors",
+                    "hover:bg-muted hover:text-foreground",
+                    "data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-[inset_0_-2px_0_0_#EB0B1A]",
+                    "data-[state=active]:text-foreground data-[state=active]:shadow-none"
                   )}
                 >
                   <Icon size={15} />
@@ -163,7 +163,7 @@ export function ProfileTabs({ user: initialUser }: ProfileTabsProps) {
           </div>
 
           {/* ── Tab content ── */}
-          <div className="bg-[#121314]">
+          <div className="bg-background">
             <div className="layout-page layout-gutter-x py-8">
               <TabsContent value="profile-info" className="mt-0 animate-in fade-in-50 duration-300">
                 <ProfileInfoTab user={user} />

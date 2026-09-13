@@ -17,8 +17,8 @@ function Checkbox({ label, error, name, className, ...props }: CheckboxProps) {
           id={name}
           name={name}
           className={cn(
-            "transition-all duration-200 hover:border-[#9e1d20]",
-            error && "border-red-500 data-checked:bg-red-500",
+            "transition-all duration-200 hover:border-[#EB0B1A]",
+            error && "border-primary/40 data-checked:bg-primary",
             className
           )}
           {...props}
@@ -32,7 +32,7 @@ function Checkbox({ label, error, name, className, ...props }: CheckboxProps) {
           </label>
         )}
       </div>
-      {error && <p className="mt-1 text-xs font-medium text-red-500">{error}</p>}
+      {error && <p className="mt-1 text-xs font-medium text-primary">{error}</p>}
     </div>
   );
 }

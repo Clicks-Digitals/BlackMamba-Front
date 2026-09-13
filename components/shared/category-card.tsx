@@ -11,23 +11,6 @@ export type CategoryCardProps = {
   featured?: boolean;
 };
 
-function ArrowIcon() {
-  return (
-    <svg
-      viewBox="0 0 14 14"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.8}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="size-[12px] shrink-0"
-      aria-hidden
-    >
-      <path d="M2.5 11.5 11.5 2.5M5 2.5h6.5V9" />
-    </svg>
-  );
-}
-
 export function CategoryCard({
   category,
   locale,
@@ -49,11 +32,10 @@ export function CategoryCard({
     <Link
       href={href}
       className={cn(
-        "group relative block overflow-hidden rounded-lg border border-border bg-card bm-red-edge",
-        "transition-[border-color,transform,box-shadow] duration-200",
-        "hover:-translate-y-0.5 hover:border-primary/45 hover:shadow-[var(--shadow-card-hover)]",
+        "group relative block overflow-hidden rounded-[6px] border border-border bg-card",
+        "transition-colors duration-150",
+        "hover:border-primary/50",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-        "motion-reduce:transform-none motion-reduce:hover:translate-y-0",
         !className?.includes("w-full") && !className?.includes("aspect") && "w-94.75 shrink-0 aspect-379/364",
         className
       )}
@@ -64,31 +46,31 @@ export function CategoryCard({
           alt={name}
           fill
           sizes="(max-width:640px) 80vw, (max-width:1024px) 33vw, 20vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+          className="object-cover"
           unoptimized
         />
       ) : (
-        <div className="absolute inset-0 bg-linear-to-br from-[#17181B] to-[#9e1d20]/20" />
+        <div className="absolute inset-0 bg-muted" />
       )}
 
-      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/15 to-transparent" />
 
       <div
         className={cn(
           "absolute inset-x-0 bottom-0 flex flex-col",
-          featured ? "px-5 pb-5 sm:px-6 sm:pb-6" : "px-4 pb-4 sm:px-5 sm:pb-5"
+          featured ? "px-4 pb-4" : "px-3 pb-3"
         )}
       >
         <p
           className={cn(
             "leading-tight text-white",
-            !rtl && featured
-              ? "font-chillax text-[clamp(1.2rem,2vw,1.65rem)] tracking-wide"
-              : !rtl
-              ? "font-chillax text-[1.05rem] tracking-wide sm:text-[1.15rem]"
-              : featured
-              ? "font-cairo font-bold text-[20px] sm:text-[24px]"
-              : "font-cairo font-bold text-[17px] sm:text-[19px]"
+            featured
+              ? rtl
+                ? "font-cairo font-semibold text-[18px]"
+                : "font-chillax text-[18px] font-semibold"
+              : rtl
+                ? "font-cairo font-semibold text-[15px]"
+                : "font-chillax text-[15px] font-semibold"
           )}
         >
           {name}
@@ -97,11 +79,7 @@ export function CategoryCard({
         {description ? (
           <p
             className={cn(
-              "mt-1.5 text-[12px] leading-snug text-white/55",
-              "line-clamp-1 md:line-clamp-2",
-              "md:mt-0 md:max-h-0 md:overflow-hidden md:opacity-0 md:transition-[max-height,opacity,margin] md:duration-300",
-              "md:group-hover:mt-1.5 md:group-hover:max-h-12 md:group-hover:opacity-100",
-              "md:group-focus-visible:mt-1.5 md:group-focus-visible:max-h-12 md:group-focus-visible:opacity-100",
+              "mt-1 line-clamp-2 text-[12px] leading-snug text-white/70",
               rtl && "font-cairo"
             )}
           >
@@ -111,14 +89,11 @@ export function CategoryCard({
 
         <span
           className={cn(
-            "mt-2.5 inline-flex items-center gap-1.5 text-[12px] font-medium text-white/70 transition-colors group-hover:text-[#d12f27]",
+            "mt-1.5 text-[12px] font-medium text-white/80 group-hover:text-white",
             rtl && "font-cairo"
           )}
         >
           {exploreText}
-          <span className="inline-flex transition-transform duration-200 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5">
-            <ArrowIcon />
-          </span>
         </span>
       </div>
     </Link>

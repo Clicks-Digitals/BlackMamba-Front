@@ -29,26 +29,23 @@ export function CategoriesFeature({
   return (
     <div className="min-h-screen bg-background">
       <div className="bm-page-hero">
-        <div className="layout-page layout-gutter-x py-10 md:py-14">
-          <p className="bm-kicker mb-3">
-            {rtl ? "تصفح" : "Browse"}
-          </p>
+        <div className="layout-page layout-gutter-x py-6 md:py-8">
           <h1
             className={cn(
-              "leading-none text-white",
-              !rtl && "font-beckman uppercase tracking-wide text-[clamp(2.4rem,5vw,4rem)]",
-              rtl && "font-cairo font-bold text-[clamp(1.8rem,4.2vw,3.2rem)]"
+              "text-[28px] leading-tight font-semibold text-foreground md:text-[32px]",
+              !rtl && "font-chillax",
+              rtl && "font-cairo"
             )}
           >
             {pageTitle}
           </h1>
-          <p className={cn("mt-3 max-w-md text-[15px] text-white/45", rtl && "font-cairo")}>
+          <p className={cn("mt-2 max-w-md text-[14px] text-muted-foreground", rtl && "font-cairo")}>
             {rtl ? "اختر الفئة التي تناسبك" : "Find exactly what you're looking for"}
           </p>
         </div>
       </div>
 
-      <div className="layout-page layout-gutter-x py-10 md:py-14">
+      <div className="layout-page layout-gutter-x py-6 md:py-8">
         <InfiniteScroll<Category>
           fetchAction={getAllCategories}
           filters={filters}

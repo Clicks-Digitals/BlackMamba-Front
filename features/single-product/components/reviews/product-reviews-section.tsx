@@ -19,7 +19,7 @@ function RatingSummary({ avgRating, reviewCount, t }: { avgRating: number; revie
     <div className="flex items-center gap-3">
       <span className="font-chillax text-[44px] leading-none text-foreground">{avgRating.toFixed(1)}</span>
       <div className="flex flex-col gap-0.5">
-        <div className="flex gap-0.5 text-amber-400" aria-hidden>
+        <div className="flex gap-0.5 text-primary" aria-hidden>
           {Array.from({ length: 5 }, (_, i) => (
             <Star key={i} className={`h-4 w-4 ${i < filled ? "fill-current" : "fill-transparent"}`} strokeWidth={1.5} />
           ))}
@@ -87,7 +87,7 @@ export function ProductReviewsSection({ productId, avgRating, reviewCount }: Pro
           <button
             type="button"
             onClick={openCreate}
-            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-5 font-chillax text-sm font-medium text-white transition hover:bg-[#d12f27]"
+            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-5 font-chillax text-sm font-medium text-white transition hover:bg-[#EB0B1A]"
           >
             {t("writeReview")}
           </button>

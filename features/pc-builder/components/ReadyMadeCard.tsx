@@ -24,7 +24,7 @@ function RigStrip({ filledSlots }: { filledSlots: Set<PCSlot> }) {
             className={cn(
               "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-colors",
               filled
-                ? "border-[#9e1d20]/40 bg-[#9e1d20]/10 text-[#9e1d20]"
+                ? "border-[#EB0B1A]/40 bg-[#EB0B1A]/10 text-[#EB0B1A]"
                 : "border-white/8 bg-white/3 text-white/15"
             )}
           >
@@ -72,21 +72,21 @@ export function ReadyMadeCard({ build }: { build: PCBuild }) {
   const filledSlots = new Set(build.items.map((item) => item.slot));
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-lg border border-[#26292C] bg-[#17181B] transition-colors hover:border-[#9e1d20]/30">
-      <div className="relative h-28 w-full overflow-hidden bg-[#0B0F0E]">
+    <article className="group flex flex-col overflow-hidden rounded-lg border border-[#000000] bg-[#000000] transition-colors hover:border-[#EB0B1A]/30">
+      <div className="relative h-28 w-full overflow-hidden bg-[#000000]">
         {build.thumbnail ? (
           <Image src={build.thumbnail} alt={name} fill className="object-cover" unoptimized />
         ) : (
           <RigStrip filledSlots={filledSlots} />
         )}
         {build.tier && (
-          <span className="absolute left-3 top-3 rounded-full border border-[#9e1d20]/30 bg-[#0D0D0D]/80 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#9e1d20] rtl:left-auto rtl:right-3">
+          <span className="absolute left-3 top-3 rounded-full border border-[#EB0B1A]/30 bg-[#000000]/80 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#EB0B1A] rtl:left-auto rtl:right-3">
             {build.tier}
           </span>
         )}
         {build.total_power_draw_watts > 0 && (
-          <span className="absolute bottom-2 right-3 flex items-center gap-1 rounded-full bg-[#0D0D0D]/80 px-2 py-0.5 text-[11px] font-medium text-white/60 rtl:right-auto rtl:left-3">
-            <Zap className="h-3 w-3 text-[#9e1d20]" />
+          <span className="absolute bottom-2 right-3 flex items-center gap-1 rounded-full bg-[#000000]/80 px-2 py-0.5 text-[11px] font-medium text-white/60 rtl:right-auto rtl:left-3">
+            <Zap className="h-3 w-3 text-[#EB0B1A]" />
             {build.total_power_draw_watts}W
           </span>
         )}
@@ -94,7 +94,7 @@ export function ReadyMadeCard({ build }: { build: PCBuild }) {
 
       <div className="flex flex-1 flex-col gap-2.5 p-4">
         <div className="min-w-0">
-          <h3 className={cn("truncate", rtl ? "font-cairo text-lg font-bold text-[#EDEFF0]" : "font-chillax text-xl uppercase tracking-wide text-[#EDEFF0]")}>{name}</h3>
+          <h3 className={cn("truncate", rtl ? "font-cairo text-lg font-bold text-[#FFFFFF]" : "font-chillax text-xl uppercase tracking-wide text-[#FFFFFF]")}>{name}</h3>
           {build.target_performance && <p className="truncate text-sm text-white/50">{build.target_performance}</p>}
         </div>
 
@@ -114,17 +114,17 @@ export function ReadyMadeCard({ build }: { build: PCBuild }) {
           )}
         </ul>
 
-        <div className="flex flex-col gap-3 border-t border-[#26292C] pt-3">
+        <div className="flex flex-col gap-3 border-t border-[#000000] pt-3">
           <div>
             <p className="text-xs text-white/40">{t("bundlePrice")}</p>
-            <p className="text-lg font-bold text-[#9e1d20]">{Number(build.pricing.total_price).toFixed(2)} JOD</p>
+            <p className="text-lg font-bold text-[#EB0B1A]">{Number(build.pricing.total_price).toFixed(2)} JOD</p>
           </div>
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
               onClick={handleCustomize}
               disabled={isCustomizing}
-              className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border border-white/20 px-3 py-2 text-sm font-medium text-[#EDEFF0] transition-colors hover:border-[#9e1d20]/40 hover:bg-[#9e1d20]/10 hover:text-[#9e1d20] disabled:opacity-50"
+              className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border border-white/20 px-3 py-2 text-sm font-medium text-[#FFFFFF] transition-colors hover:border-[#EB0B1A]/40 hover:bg-[#EB0B1A]/10 hover:text-[#EB0B1A] disabled:opacity-50"
             >
               {isCustomizing ? <Loader2 className="h-4 w-4 shrink-0 animate-spin" /> : <Wrench className="h-4 w-4 shrink-0" />}
               {t("customize")}
@@ -133,7 +133,7 @@ export function ReadyMadeCard({ build }: { build: PCBuild }) {
               type="button"
               onClick={handleAddToCart}
               disabled={isAdding || build.has_blocking_issues}
-              className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg bg-[#9e1d20] px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#7a1618] disabled:opacity-50"
+              className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg bg-[#EB0B1A] px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#EB0B1A] disabled:opacity-50"
             >
               {isAdding ? <Loader2 className="h-4 w-4 shrink-0 animate-spin" /> : <ShoppingCart className="h-4 w-4 shrink-0" />}
               {t("addToCart")}

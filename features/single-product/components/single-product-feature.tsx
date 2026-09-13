@@ -10,11 +10,14 @@ import {
   ProductActions,
   ProductComparisonTable,
   ProductOverview,
+  ProductOverviewImage,
   ProductFeatureShowcase,
   ProductReviewsSection,
   RelatedProducts,
 } from "@/features/single-product";
 import { DEMO_PRODUCT_TABLE } from "@/features/single-product/data/demo-specs-table";
+import { resolveOverviewImage } from "./product-overview";
+import { ProductBulletLists, bulletsFromProduct } from "./product-bullet-lists";
 
 const HEX_RE = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/;
 const isHexColor = (s: string) => HEX_RE.test(s.trim());
@@ -77,17 +80,25 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
     .filter((c) => c.name);
   const description = isAr && product.description_ar ? product.description_ar : product.description;
   const overviewHtml = isAr && product.overview_ar ? product.overview_ar : product.overview;
+  const overviewImage = resolveOverviewImage({
+    overviewImage: product.overview_image,
+    overviewImageUrl: product.overview_image_url,
+    overviewImageAr: product.overview_image_ar,
+    overviewHtml,
+    isAr,
+  });
   const brandName = product.brand
     ? isAr && product.brand.name_ar
       ? product.brand.name_ar
       : product.brand.name
     : null;
 
-  const featureBullets: string[] = (() => {
-    const raw = isAr && product.features_ar ? product.features_ar : product.features;
-    if (Array.isArray(raw)) return (raw as string[]).filter(Boolean).slice(0, 8);
-    return [];
-  })();
+  const featureRaw = isAr && product.features_ar ? product.features_ar : product.features;
+  const { specs: specBullets, features: featureBullets } = bulletsFromProduct({
+    table: product.table ?? DEMO_PRODUCT_TABLE,
+    features: featureRaw,
+    isAr,
+  });
 
   const avgRating = product.avg_rating ?? null;
   const reviewCount = product.review_count ?? 0;
@@ -144,12 +155,18 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
           <div className="min-w-0">
             <h1
               className={cn(
-                "text-[clamp(1.25rem,2.4vw,1.75rem)] leading-snug text-foreground",
-                isAr ? "font-cairo font-bold" : "font-chillax font-semibold"
+                "text-[clamp(1.05rem,1.5vw,1.25rem)] leading-snug font-semibold text-foreground",
+                isAr && "font-cairo font-bold"
               )}
             >
               {name}
             </h1>
+
+            {product.sku ? (
+              <p className={cn("mt-2 text-[13px] text-muted-foreground", isAr && "font-cairo")}>
+                {t("sku")}: {product.sku}
+              </p>
+            ) : null}
 
             <div className="mt-3 flex flex-wrap items-center gap-3">
               {inStockBadge && (
@@ -163,7 +180,7 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
                   href="#reviews"
                   className="inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  <span className="flex gap-0.5 text-amber-400" aria-hidden>
+                  <span className="flex gap-0.5 text-primary" aria-hidden>
                     {Array.from({ length: 5 }, (_, i) => (
                       <Star
                         key={i}
@@ -179,23 +196,7 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
               )}
             </div>
 
-            {featureBullets.length > 0 && (
-              <ul className="mt-5 space-y-2">
-                {featureBullets.map((item) => (
-                  <li key={item} className="flex items-start gap-2.5">
-                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
-                    <span
-                      className={cn(
-                        "text-[14px] leading-snug text-foreground/90",
-                        isAr ? "font-cairo" : "font-chillax"
-                      )}
-                    >
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            )}
+            <ProductBulletLists specs={specBullets} features={featureBullets} isAr={isAr} />
 
             {description && (
               <p
@@ -303,14 +304,18 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
             )}
           </div>
 
-          {/* Right — sticky buy box */}
-          <div className="lg:sticky lg:top-[calc(var(--layout-chrome-top)+0.75rem)]">
+          {/* Right — buy box */}
+          <div>
             <ProductActions product={product} />
           </div>
         </div>
       </div>
 
-      {overviewHtml && <ProductOverview html={overviewHtml} locale={locale} />}
+      {overviewImage ? (
+        <ProductOverviewImage src={overviewImage} alt={name} locale={locale} />
+      ) : overviewHtml ? (
+        <ProductOverview html={overviewHtml} locale={locale} />
+      ) : null}
 
       {/* Demo marketing photos (Microless-style). Real content comes from overview HTML in CMS. */}
       <ProductFeatureShowcase locale={locale} />

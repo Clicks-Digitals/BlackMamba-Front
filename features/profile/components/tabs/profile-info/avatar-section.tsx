@@ -61,7 +61,7 @@ export function AvatarSection({ avatarUrl }: AvatarSectionProps) {
   return (
     <div className="flex flex-col items-center gap-4">
       <div className="relative inline-flex">
-        <div className="relative h-32 w-32 overflow-hidden rounded-full border-2 border-[#26292C] bg-[#0B0F0E]">
+        <div className="relative h-32 w-32 overflow-hidden rounded-full border-2 border-[#000000] bg-[#000000]">
           {displayUrl ? (
             <Image
               src={displayUrl}

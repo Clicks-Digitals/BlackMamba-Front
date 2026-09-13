@@ -39,7 +39,7 @@ export async function EmptyWishlist() {
         <Link
           href="/products"
           className={cn(
-            "inline-flex h-11 items-center justify-center rounded-md bg-primary px-7 text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-[#d12f27]",
+            "inline-flex h-11 items-center justify-center rounded-md bg-primary px-7 text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-[#EB0B1A]",
             rtl ? "font-cairo" : "font-chillax"
           )}
         >

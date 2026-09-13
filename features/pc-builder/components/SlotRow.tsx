@@ -237,7 +237,7 @@ export function SlotRow({ slot, buildId, onOpenPicker, index = 0 }: SlotRowProps
             </span>
           </>
         ) : (
-          <span className="inline-flex h-9 items-center gap-1 rounded-md bg-primary px-3 text-[12px] font-bold tracking-wide text-white uppercase transition-colors group-hover:bg-[#d12f27]">
+          <span className="inline-flex h-9 items-center gap-1 rounded-md bg-primary px-3 text-[12px] font-bold tracking-wide text-white uppercase transition-colors group-hover:bg-[#EB0B1A]">
             <Plus className="size-3.5" strokeWidth={2.5} />
             <span className="hidden sm:inline">{t("selectBtn")}</span>
           </span>

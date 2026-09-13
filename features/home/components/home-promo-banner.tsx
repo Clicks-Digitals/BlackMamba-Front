@@ -33,9 +33,9 @@ const SIZE_HEIGHTS: Record<HomeBanner["size"], string> = {
 
 /** Title scales down with the banner height so it never overflows a short slide. */
 const TITLE_SIZES: Record<HomeBanner["size"], string> = {
-  compact: "clamp(1.4rem,2.6vw,2.75rem)",
-  standard: "clamp(1.5rem,3.2vw,3.8rem)",
-  tall: "clamp(1.6rem,4vw,5.37rem)",
+  compact: "clamp(1.2rem,2vw,1.75rem)",
+  standard: "clamp(1.35rem,2.4vw,2rem)",
+  tall: "clamp(1.5rem,2.8vw,2.25rem)",
 };
 
 function BannerSlide({
@@ -76,16 +76,15 @@ function BannerSlide({
             unoptimized
           />
         ) : (
-          <div className="absolute inset-0 bg-linear-to-r from-[var(--blue-hover)] via-primary to-[var(--secondary-text)]" />
+          <div className="absolute inset-0 bg-black" />
         )}
-        <div className="absolute inset-0 bg-black/45" />
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/70 to-transparent" />
+        <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-x-0 bottom-12 top-0 flex flex-col items-start justify-center gap-3 ps-[clamp(20px,6vw,80px)] md:gap-5 max-w-[min(640px,90vw)]">
           {title && (
             <h2
               className={cn(
-                "uppercase leading-[0.95] text-white",
-                rtl ? "font-cairo font-bold" : "font-beckman tracking-wide"
+                "leading-[1.15] font-semibold text-white",
+                rtl ? "font-cairo font-bold" : "font-chillax"
               )}
               style={{ fontSize: titleSize }}
             >
@@ -106,13 +105,13 @@ function BannerSlide({
             banner.link ? (
               <Link
                 href={banner.link}
-                className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-7 text-[14px] font-bold text-white transition-colors duration-200 hover:bg-[#d12f27] md:h-12 md:px-9 md:text-[15px]"
+                className="inline-flex h-9 items-center justify-center rounded-[4px] bg-primary px-4 text-[13px] font-semibold text-white transition-colors duration-150 hover:bg-[var(--blue-hover)]"
               >
                 {btnText}
               </Link>
             ) : (
               <span
-                className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-7 text-[14px] font-bold text-white md:h-12 md:px-9 md:text-[15px]"
+                className="inline-flex h-9 items-center justify-center rounded-[4px] bg-primary px-4 text-[13px] font-semibold text-white"
               >
                 {btnText}
               </span>
@@ -157,7 +156,7 @@ export function HomePromoBanner({ banners, locale }: Props) {
   const bannerHeight = SIZE_HEIGHTS[valid[0].size] ?? SIZE_HEIGHTS.compact;
 
   const arrowCls =
-    "hidden md:flex z-20 size-10 border-0 bg-white/20 text-white shadow-none backdrop-blur-sm hover:bg-white/35";
+    "hidden md:flex z-20 size-8 rounded-[4px] border-0 bg-black/40 text-white shadow-none hover:bg-black/60";
 
   return (
     <section className="layout-section-y pt-4 sm:pt-6">

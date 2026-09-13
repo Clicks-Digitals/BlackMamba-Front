@@ -68,12 +68,12 @@ function InfoCard({
     );
   }
   return (
-    <div className="flex flex-col gap-2 rounded-lg border border-[#26292C] bg-[#17181B] px-4 py-3.5 transition-colors hover:border-[#9e1d20]/30">
+    <div className="flex flex-col gap-2 rounded-lg border border-[#000000] bg-[#000000] px-4 py-3.5 transition-colors hover:border-[#EB0B1A]/30">
       <div className="flex items-center gap-1.5">
         <Icon className="h-3.5 w-3.5 text-white/45" />
         <span className="text-[10.5px] uppercase tracking-[0.14em] text-white/40">{label}</span>
       </div>
-      <span className="text-[14px] font-medium text-[#EDEFF0]">{value}</span>
+      <span className="text-[14px] font-medium text-[#FFFFFF]">{value}</span>
     </div>
   );
 }
@@ -122,7 +122,7 @@ export function ProfileInfoTab({ user: initialUser }: ProfileInfoTabProps) {
   return (
     <div className="space-y-6">
       {/* ── Avatar + completeness row ── */}
-      <div className="flex flex-col gap-5 rounded-lg border border-[#9e1d20]/15 bg-white/3 p-6 sm:flex-row sm:items-start sm:gap-8">
+      <div className="flex flex-col gap-5 rounded-lg border border-[#EB0B1A]/15 bg-white/3 p-6 sm:flex-row sm:items-start sm:gap-8">
         {/* Avatar */}
         <div className="flex shrink-0 flex-col items-center gap-3">
           <AvatarSection avatarUrl={user.avatar} />
@@ -143,7 +143,7 @@ export function ProfileInfoTab({ user: initialUser }: ProfileInfoTabProps) {
         <div className="flex-1">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h2 className="text-[18px] font-semibold text-[#EDEFF0]">
+              <h2 className="text-[18px] font-semibold text-[#FFFFFF]">
                 {user.first_name} {user.last_name}
               </h2>
               <p className="mt-0.5 text-[13px] text-white/40">@{user.username}</p>
@@ -153,7 +153,7 @@ export function ProfileInfoTab({ user: initialUser }: ProfileInfoTabProps) {
               <button
                 type="button"
                 onClick={() => setIsEditing(true)}
-                className="flex shrink-0 items-center gap-1.5 rounded-lg border border-[#9e1d20]/30 bg-[#9e1d20]/10 px-3.5 py-2 text-[12px] font-medium text-[#EDEFF0] transition hover:bg-[#9e1d20]/20"
+                className="flex shrink-0 items-center gap-1.5 rounded-lg border border-[#EB0B1A]/30 bg-[#EB0B1A]/10 px-3.5 py-2 text-[12px] font-medium text-[#FFFFFF] transition hover:bg-[#EB0B1A]/20"
               >
                 <Pencil className="h-3 w-3" />
                 {t("editProfile")}
@@ -167,14 +167,14 @@ export function ProfileInfoTab({ user: initialUser }: ProfileInfoTabProps) {
               <span className="text-[12px] font-medium text-white/50">
                 {t("profileCompleteness")}
               </span>
-              <span className={cn("text-[12px] font-bold", isComplete ? "text-emerald-600" : "text-foreground")}>
+              <span className={cn("text-[12px] font-bold", isComplete ? "text-primary" : "text-foreground")}>
                 {t("fieldsFilled", { filled: filledCount, total: totalCount })}
                 {isComplete && <CheckCircle2 className="ms-1 inline h-3.5 w-3.5" />}
               </span>
             </div>
             <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
               <div
-                className={cn("h-full rounded-full transition-all duration-500", isComplete ? "bg-emerald-400" : "bg-primary")}
+                className={cn("h-full rounded-full transition-all duration-500", isComplete ? "bg-primary" : "bg-primary")}
                 style={{ width: `${completenessPercent}%` }}
               />
             </div>
@@ -216,35 +216,35 @@ export function ProfileInfoTab({ user: initialUser }: ProfileInfoTabProps) {
           <div className="space-y-3">
             <SectionHeading>{t("account")}</SectionHeading>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-              <div className="flex flex-col gap-2 rounded-lg border border-[#26292C] bg-[#17181B] px-4 py-3.5">
+              <div className="flex flex-col gap-2 rounded-lg border border-[#000000] bg-[#000000] px-4 py-3.5">
                 <div className="flex items-center gap-1.5">
                   <ShieldCheck className="h-3.5 w-3.5 text-white/45" />
                   <span className="text-[10.5px] uppercase tracking-[0.14em] text-white/40">{t("status")}</span>
                 </div>
                 <span className={cn("inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 text-[12px] font-semibold",
-                  user.is_active ? "bg-emerald-500/15 text-emerald-400" : "bg-white/8 text-white/45"
+                  user.is_active ? "bg-primary/15 text-primary" : "bg-white/8 text-white/45"
                 )}>
-                  <span className={cn("h-1.5 w-1.5 rounded-full", user.is_active ? "bg-emerald-400" : "bg-white/40")} />
+                  <span className={cn("h-1.5 w-1.5 rounded-full", user.is_active ? "bg-primary" : "bg-white/40")} />
                   {user.is_active ? t("activeVerified") : t("inactive")}
                 </span>
               </div>
 
-              <div className="flex flex-col gap-2 rounded-lg border border-[#26292C] bg-[#17181B] px-4 py-3.5">
+              <div className="flex flex-col gap-2 rounded-lg border border-[#000000] bg-[#000000] px-4 py-3.5">
                 <div className="flex items-center gap-1.5">
                   <CalendarDays className="h-3.5 w-3.5 text-white/45" />
                   <span className="text-[10.5px] uppercase tracking-[0.14em] text-white/40">{t("memberSince")}</span>
                 </div>
-                <span className="text-[14px] font-medium text-[#EDEFF0]">
+                <span className="text-[14px] font-medium text-[#FFFFFF]">
                   {user.created_at ? formatDateShort(user.created_at, locale) : "—"}
                 </span>
               </div>
 
-              <div className="flex flex-col gap-2 rounded-lg border border-[#26292C] bg-[#17181B] px-4 py-3.5">
+              <div className="flex flex-col gap-2 rounded-lg border border-[#000000] bg-[#000000] px-4 py-3.5">
                 <div className="flex items-center gap-1.5">
                   <Clock className="h-3.5 w-3.5 text-white/45" />
                   <span className="text-[10.5px] uppercase tracking-[0.14em] text-white/40">{t("lastUpdated")}</span>
                 </div>
-                <span className="text-[14px] font-medium text-[#EDEFF0]">
+                <span className="text-[14px] font-medium text-[#FFFFFF]">
                   {user.updated_at ? formatDateShort(user.updated_at, locale) : "—"}
                 </span>
               </div>
@@ -253,13 +253,13 @@ export function ProfileInfoTab({ user: initialUser }: ProfileInfoTabProps) {
         </div>
       ) : (
         /* ── Edit mode ── */
-        <div className="rounded-lg border border-[#9e1d20]/15 bg-white/3 p-6">
+        <div className="rounded-lg border border-[#EB0B1A]/15 bg-white/3 p-6">
           <div className="mb-5 flex items-center justify-between">
             <SectionHeading>{t("editProfile")}</SectionHeading>
             <button
               type="button"
               onClick={() => setIsEditing(false)}
-              className="rounded-lg p-1.5 text-white/40 transition hover:bg-white/8 hover:text-[#EDEFF0]"
+              className="rounded-lg p-1.5 text-white/40 transition hover:bg-white/8 hover:text-[#FFFFFF]"
             >
               <X className="h-4 w-4" />
             </button>
@@ -319,14 +319,14 @@ export function ProfileInfoTab({ user: initialUser }: ProfileInfoTabProps) {
             <div className="flex items-center gap-3 border-t border-white/8 pt-4">
               <SubmitButton
                 pendingText={t("saving")}
-                className="h-10 rounded-lg bg-primary px-8 text-[12.5px] font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#d12f27]"
+                className="h-10 rounded-lg bg-primary px-8 text-[12.5px] font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#EB0B1A]"
               >
                 {t("saveChanges")}
               </SubmitButton>
               <button
                 type="button"
                 onClick={() => setIsEditing(false)}
-                className="h-10 rounded-lg border border-[#26292C] px-6 text-[12.5px] font-medium text-white/60 transition hover:bg-white/5 hover:text-[#EDEFF0]"
+                className="h-10 rounded-lg border border-[#000000] px-6 text-[12.5px] font-medium text-white/60 transition hover:bg-white/5 hover:text-[#FFFFFF]"
               >
                 {t("cancel")}
               </button>

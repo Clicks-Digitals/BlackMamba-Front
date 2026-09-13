@@ -53,7 +53,7 @@ export function AddressCard({ address, onEdit, onRefresh }: AddressCardProps) {
   }
 
   return (
-    <div className={`relative overflow-hidden rounded-xl border bg-[#17181B] transition hover:border-[#9e1d20]/30 ${address.is_default ? "border-[#9e1d20]/40" : "border-[#26292C]"}`}>
+    <div className={`relative overflow-hidden rounded-xl border bg-[#000000] transition hover:border-[#EB0B1A]/30 ${address.is_default ? "border-[#EB0B1A]/40" : "border-[#000000]"}`}>
       {/* Default badge */}
       {address.is_default && (
         <span className="absolute top-3.5 end-3.5 inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[10.5px] font-medium text-white">
@@ -94,7 +94,7 @@ export function AddressCard({ address, onEdit, onRefresh }: AddressCardProps) {
             type="button"
             disabled={isSettingDefault || isDeleting}
             onClick={handleSetDefault}
-            className="flex items-center gap-1.5 text-[12px] font-medium text-white/45 transition hover:text-[#EDEFF0] disabled:opacity-40"
+            className="flex items-center gap-1.5 text-[12px] font-medium text-white/45 transition hover:text-[#FFFFFF] disabled:opacity-40"
           >
             {isSettingDefault ? <Loader2 size={13} className="animate-spin" /> : <Star size={13} />}
             {t("setDefault")}
@@ -104,7 +104,7 @@ export function AddressCard({ address, onEdit, onRefresh }: AddressCardProps) {
           type="button"
           disabled={isDeleting || isSettingDefault}
           onClick={() => onEdit(address)}
-            className="flex items-center gap-1.5 text-[12px] font-medium text-white/45 transition hover:text-[#EDEFF0] disabled:opacity-40"
+            className="flex items-center gap-1.5 text-[12px] font-medium text-white/45 transition hover:text-[#FFFFFF] disabled:opacity-40"
         >
           <Pencil size={13} />
           {t("edit")}
@@ -113,7 +113,7 @@ export function AddressCard({ address, onEdit, onRefresh }: AddressCardProps) {
           type="button"
           disabled={isDeleting || isSettingDefault}
           onClick={handleDelete}
-          className="ms-auto flex items-center gap-1.5 text-[12px] font-medium text-red-500 transition hover:text-red-700 disabled:opacity-40"
+          className="ms-auto flex items-center gap-1.5 text-[12px] font-medium text-primary transition hover:text-primary disabled:opacity-40"
         >
           {isDeleting ? <Loader2 size={13} className="animate-spin" /> : <Trash2 size={13} />}
           {t("delete")}

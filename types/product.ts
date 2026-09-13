@@ -3,6 +3,7 @@ export interface ProductTableRow {
   feature: string;
   feature_ar: string | null;
   values: string[];
+  values_ar: string[] | null;
   order: number;
 }
 
@@ -89,6 +90,7 @@ export interface Product {
   name: string;
   name_ar: string | null;
   slug: string;
+  sku: string | null;
   /** Mean rating from approved reviews (product list/card serializers). */
   avg_rating?: number | null;
   /** Approved review count (product list/card serializers). */
@@ -98,6 +100,10 @@ export interface Product {
   description_ar: string | null;
   overview: string | null;
   overview_ar: string | null;
+  /** Single tall marketing / spec infographic for the Product Overview section. */
+  overview_image: string | null;
+  overview_image_url: string | null;
+  overview_image_ar: string | null;
   features: unknown;
   features_ar: unknown;
   base_price: string | null;
@@ -130,4 +136,13 @@ export interface Product {
     discount_type: 'PERCENTAGE' | 'FIXED';
     discount_value: string;
   } | null;
+  meta_title: string | null;
+  meta_title_ar: string | null;
+  meta_description: string | null;
+  meta_description_ar: string | null;
+  meta_keywords: string[] | null;
+  meta_keywords_ar: string[] | null;
+  og_image: string | null;
+  canonical_url: string | null;
+  meta_robots: "index,follow" | "noindex,follow" | "index,nofollow" | "noindex,nofollow";
 }

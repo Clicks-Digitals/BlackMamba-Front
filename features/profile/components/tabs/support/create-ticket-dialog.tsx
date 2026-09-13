@@ -29,11 +29,11 @@ import { formatDateShort } from "@/lib/utils/date";
 
 // Matches STATUS_MAP in order-card.tsx
 const STATUS_BADGE: Record<string, { bg: string; text: string; dot: string }> = {
-  PENDING:   { bg: "bg-amber-500/15",  text: "text-amber-300",  dot: "bg-amber-500"  },
-  CONFIRMED: { bg: "bg-primary/15",   text: "text-[#d12f27]",   dot: "bg-primary"   },
-  SHIPPED:   { bg: "bg-violet-500/15", text: "text-violet-300", dot: "bg-violet-500" },
-  DELIVERED: { bg: "bg-emerald-500/15",  text: "text-foreground",  dot: "bg-primary" },
-  CANCELLED: { bg: "bg-red-500/15",    text: "text-red-400",    dot: "bg-red-500"    },
+  PENDING:   { bg: "bg-primary/15",  text: "text-primary",  dot: "bg-primary"  },
+  CONFIRMED: { bg: "bg-primary/15",   text: "text-[#EB0B1A]",   dot: "bg-primary"   },
+  SHIPPED:   { bg: "bg-primary/15", text: "text-primary", dot: "bg-primary" },
+  DELIVERED: { bg: "bg-primary/15",  text: "text-foreground",  dot: "bg-primary" },
+  CANCELLED: { bg: "bg-primary/15",    text: "text-primary",    dot: "bg-primary"    },
 };
 
 const STATUS_LABEL_KEY: Record<string, string> = {
@@ -82,7 +82,7 @@ function ThumbStack({ order, size = 40 }: { order: Order; size?: number }) {
       {visible.map((src, idx) => (
         <div
           key={idx}
-          className="absolute overflow-hidden rounded-xl border-2 border-[#17181B] shadow-sm"
+          className="absolute overflow-hidden rounded-xl border-2 border-[#000000] shadow-sm"
           style={{ width: px, height: px, insetInlineStart: idx * (px - overlap), zIndex: visible.length - idx }}
         >
           <Image src={src} alt="" fill className="object-cover" unoptimized />
@@ -90,7 +90,7 @@ function ThumbStack({ order, size = 40 }: { order: Order; size?: number }) {
       ))}
       {extra > 0 && (
         <div
-          className="absolute flex items-center justify-center rounded-xl border-2 border-[#17181B] bg-white/8 font-bold text-white/50 shadow-sm"
+          className="absolute flex items-center justify-center rounded-xl border-2 border-[#000000] bg-white/8 font-bold text-white/50 shadow-sm"
           style={{
             width: px,
             height: px,
@@ -115,7 +115,7 @@ function MiniThumbs({ order }: { order: Order }) {
       {visible.map((src, idx) => (
         <div
           key={idx}
-          className="absolute overflow-hidden rounded border-2 border-[#17181B] shadow-sm"
+          className="absolute overflow-hidden rounded border-2 border-[#000000] shadow-sm"
           style={{ width: 24, height: 24, insetInlineStart: idx * 18 }}
         >
           <Image src={src} alt="" fill className="object-cover" unoptimized />
@@ -203,9 +203,9 @@ function OrderPicker({ defaultValue, error, label, locale }: OrderPickerProps) {
           }
         }}
         className={cn(
-          "flex w-full cursor-pointer items-center gap-3 rounded-xl border bg-[#17181B] px-4 py-3 text-sm transition-all select-none",
-          open ? "border-primary shadow-sm ring-2 ring-primary/15" : "border-[#26292C] hover:border-primary/40",
-          error && "border-red-400 hover:border-red-400"
+          "flex w-full cursor-pointer items-center gap-3 rounded-xl border bg-[#000000] px-4 py-3 text-sm transition-all select-none",
+          open ? "border-primary shadow-sm ring-2 ring-primary/15" : "border-[#000000] hover:border-primary/40",
+          error && "border-primary/40 hover:border-primary/40"
         )}
       >
         {loading ? (
@@ -217,7 +217,7 @@ function OrderPicker({ defaultValue, error, label, locale }: OrderPickerProps) {
           <>
             <MiniThumbs order={selected} />
             <span className="flex flex-1 flex-col gap-0.5 min-w-0 text-start">
-              <span className="font-semibold text-[#EDEFF0] leading-none">{selected.order_number}</span>
+              <span className="font-semibold text-[#FFFFFF] leading-none">{selected.order_number}</span>
               <span className="text-xs text-white/40">{formatDateShort(selected.created_at, locale)}</span>
             </span>
             <StatusBadge status={selected.status} />
@@ -243,14 +243,14 @@ function OrderPicker({ defaultValue, error, label, locale }: OrderPickerProps) {
         )}
       </div>
 
-      {error && <p className="mt-1.5 text-xs text-red-500">{error}</p>}
+      {error && <p className="mt-1.5 text-xs text-primary">{error}</p>}
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute z-50 mt-2 w-full rounded-xl border border-[#26292C] bg-[#17181B] shadow-2xl shadow-black/40">
+        <div className="absolute z-50 mt-2 w-full rounded-xl border border-[#000000] bg-[#000000] shadow-2xl shadow-black/40">
           {/* Search */}
           <div className="border-b border-white/8 p-3">
-            <div className="flex items-center gap-2.5 rounded-lg border border-[#26292C] bg-white/4 px-3 py-2.5 transition-all focus-within:border-primary/50 focus-within:bg-[#0B0F0E] focus-within:shadow-sm">
+            <div className="flex items-center gap-2.5 rounded-lg border border-[#000000] bg-white/4 px-3 py-2.5 transition-all focus-within:border-primary/50 focus-within:bg-[#000000] focus-within:shadow-sm">
               <Search className="h-4 w-4 shrink-0 text-white/40" />
               <input
                 ref={searchRef}
@@ -258,10 +258,10 @@ function OrderPicker({ defaultValue, error, label, locale }: OrderPickerProps) {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={t("searchOrders")}
-                className="flex-1 bg-transparent text-sm text-[#EDEFF0] outline-none placeholder:text-white/40"
+                className="flex-1 bg-transparent text-sm text-[#FFFFFF] outline-none placeholder:text-white/40"
               />
               {query && (
-                <button type="button" onClick={() => setQuery("")} className="rounded text-white/40 hover:text-[#EDEFF0]">
+                <button type="button" onClick={() => setQuery("")} className="rounded text-white/40 hover:text-[#FFFFFF]">
                   <X className="h-3.5 w-3.5" />
                 </button>
               )}
@@ -306,7 +306,7 @@ function OrderPicker({ defaultValue, error, label, locale }: OrderPickerProps) {
 
                       <div className="flex min-w-0 flex-1 flex-col gap-0.5">
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className={cn("font-semibold", isSel ? "text-foreground" : "text-[#EDEFF0]")}>
+                          <span className={cn("font-semibold", isSel ? "text-foreground" : "text-[#FFFFFF]")}>
                             {order.order_number}
                           </span>
                           <StatusBadge status={order.status} />
@@ -381,7 +381,7 @@ export function CreateTicketDialog({ open, onClose, onSuccess, isGuest = false }
         showCloseButton={false}
       >
         {/* ── Brand header ───────────────────────────────── */}
-        <div className="relative overflow-hidden bg-linear-to-br from-primary to-[var(--blue-hover)] px-6 pb-5 pt-5">
+        <div className="relative overflow-hidden bg-primary px-6 pb-5 pt-5">
           {/* Decorative rings */}
           <div className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/5" />
           <div className="pointer-events-none absolute -right-2 -top-2 h-20 w-20 rounded-full bg-white/5" />
@@ -505,14 +505,14 @@ export function CreateTicketDialog({ open, onClose, onSuccess, isGuest = false }
                 variant="outline"
                 onClick={onClose}
                 disabled={isPending}
-                className="h-12 w-full rounded-xl border-[#26292C] font-chillax text-sm sm:w-auto sm:px-8"
+                className="h-12 w-full rounded-xl border-[#000000] font-chillax text-sm sm:w-auto sm:px-8"
               >
                 {t("cancel")}
               </Button>
               <Button
                 type="submit"
                 disabled={isPending}
-                className="h-12 flex-1 rounded-xl bg-primary font-chillax text-sm font-semibold hover:bg-[#d12f27] sm:flex-none sm:px-10"
+                className="h-12 flex-1 rounded-xl bg-primary font-chillax text-sm font-semibold hover:bg-[#EB0B1A] sm:flex-none sm:px-10"
               >
                 {isPending ? <Loader2 className="h-5 w-5 animate-spin" /> : t("submit")}
               </Button>

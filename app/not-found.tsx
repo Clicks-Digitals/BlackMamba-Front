@@ -31,11 +31,11 @@ export default function NotFound() {
         }
       `}</style>
 
-      <div className="relative min-h-screen flex flex-col items-center justify-center bg-[#0d0e0e] overflow-hidden px-6 text-center bm-stage">
+      <div className="relative min-h-screen flex flex-col items-center justify-center bg-[#000000] overflow-hidden px-6 text-center bm-stage">
 
         <div
           className="not-found-bg pointer-events-none absolute -top-40 h-96 w-96 rounded-full opacity-30"
-          style={{ background: "radial-gradient(circle, #9e1d20 0%, transparent 65%)", filter: "blur(80px)" }}
+          style={{ background: "radial-gradient(circle, #EB0B1A 0%, transparent 65%)", filter: "blur(80px)" }}
         />
 
         {/* Background decorative rings */}
@@ -45,7 +45,7 @@ export default function NotFound() {
         {/* Giant faded 404 behind everything */}
         <span
           className="not-found-bg absolute font-beckman text-[260px] sm:text-[340px] leading-none select-none pointer-events-none"
-          style={{ color: "rgba(230,240,241,0.04)" }}
+          style={{ color: "rgba(255,255,255,0.04)" }}
           aria-hidden="true"
         >
           404
@@ -57,24 +57,24 @@ export default function NotFound() {
         </div>
 
         {/* 404 code */}
-        <h1 className="not-found-code relative z-10 font-beckman text-[96px] sm:text-[120px] leading-none text-[#EDEFF0]">
+        <h1 className="not-found-code relative z-10 font-beckman text-[96px] sm:text-[120px] leading-none text-[#FFFFFF]">
           {t("code")}
         </h1>
 
         {/* Title */}
-        <h2 className="not-found-title relative z-10 font-chillax text-[28px] sm:text-[36px] leading-none text-[#EDEFF0]/80 mt-2">
+        <h2 className="not-found-title relative z-10 font-chillax text-[28px] sm:text-[36px] leading-none text-[#FFFFFF]/80 mt-2">
           {t("title")}
         </h2>
 
         {/* Description */}
-        <p className="not-found-desc relative z-10 font-chillax text-sm sm:text-base text-[#EDEFF0]/50 mt-4 max-w-sm leading-relaxed">
+        <p className="not-found-desc relative z-10 font-chillax text-sm sm:text-base text-[#FFFFFF]/50 mt-4 max-w-sm leading-relaxed">
           {t("description")}
         </p>
 
         {/* CTA */}
         <Link
           href="/"
-          className="not-found-btn relative z-10 mt-10 inline-flex items-center gap-2 bg-primary text-white font-chillax font-semibold text-sm px-8 py-3.5 rounded-md hover:bg-[#d12f27] transition-colors duration-200"
+          className="not-found-btn relative z-10 mt-10 inline-flex items-center gap-2 bg-primary text-white font-chillax font-semibold text-sm px-8 py-3.5 rounded-md hover:bg-[#EB0B1A] transition-colors duration-200"
         >
           {t("backHome")}
         </Link>

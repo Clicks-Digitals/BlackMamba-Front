@@ -43,13 +43,13 @@ export function SummarySidebar({ buildId, onBrowseSlot }: SummarySidebarProps) {
       <motion.aside
         id="bm-build-summary"
         {...fadeUp(0.92, reduceMotion)}
-        className="order-1 hidden h-auto w-full flex-col gap-4 overflow-visible rounded-lg border border-[#9e1d20]/30 bg-[#0a0b0c]/92 p-4 shadow-[0_0_60px_-28px_rgba(158,29,32,0.85)] backdrop-blur-sm lg:order-2 lg:sticky lg:top-[calc(var(--layout-chrome-top)+1rem)] lg:flex lg:w-[26rem]"
+        className="order-1 hidden h-auto w-full flex-col gap-4 overflow-visible rounded-lg border border-[#EB0B1A]/30 bg-[#000000]/92 p-4 shadow-[0_12px_40px_-28px_rgba(0,0,0,0.45)] backdrop-blur-sm lg:order-2 lg:sticky lg:top-[calc(var(--layout-chrome-top)+1rem)] lg:flex lg:w-[26rem]"
       >
         <BuildSummaryBody buildId={buildId} onBrowseSlot={onBrowseSlot} />
       </motion.aside>
 
       <div className={cn("pointer-events-none fixed inset-x-0 bottom-0 z-40 lg:hidden", activeSlot && "hidden")}>
-        <div className="pointer-events-auto border-t border-[#9e1d20]/30 bg-[#0a0b0c]/95 px-4 py-2.5 shadow-[0_-12px_40px_-20px_rgba(0,0,0,0.85)] backdrop-blur-md pb-[max(0.65rem,env(safe-area-inset-bottom))]">
+        <div className="pointer-events-auto border-t border-[#EB0B1A]/30 bg-[#000000]/95 px-4 py-2.5 shadow-[0_-12px_40px_-20px_rgba(0,0,0,0.85)] backdrop-blur-md pb-[max(0.65rem,env(safe-area-inset-bottom))]">
           <button
             type="button"
             onClick={() => setMobileSummaryOpen(true)}
@@ -59,7 +59,7 @@ export function SummarySidebar({ buildId, onBrowseSlot }: SummarySidebarProps) {
             <MiniProgress filled={filled} total={SLOT_ORDER.length} />
             <div className="min-w-0 flex-1">
               <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/40">{t("summary.title")}</p>
-              <p className="truncate text-sm font-semibold tabular-nums text-[#EDEFF0]">
+              <p className="truncate text-sm font-semibold tabular-nums text-[#FFFFFF]">
                 {price.toFixed(2)} JOD
                 <span className="ms-2 font-normal text-white/40">{Math.round(watts)}W</span>
               </p>
@@ -69,9 +69,9 @@ export function SummarySidebar({ buildId, onBrowseSlot }: SummarySidebarProps) {
               <ChevronUp className="size-3.5" />
             </span>
             {hasBlockingIssues ? (
-              <XCircle className="size-4 shrink-0 text-[#FF6B70]" />
+              <XCircle className="size-4 shrink-0 text-[#EB0B1A]" />
             ) : (
-              <CheckCircle2 className="size-4 shrink-0 text-emerald-400/80" />
+              <CheckCircle2 className="size-4 shrink-0 text-primary" />
             )}
           </button>
         </div>
@@ -80,10 +80,10 @@ export function SummarySidebar({ buildId, onBrowseSlot }: SummarySidebarProps) {
       <Sheet open={mobileSummaryOpen} onOpenChange={setMobileSummaryOpen}>
         <SheetContent
           side="bottom"
-          className="flex h-[100dvh] max-h-[100dvh] flex-col gap-0 overflow-y-auto border-t border-[#9e1d20]/25 bg-[#0a0b0c] p-4 text-[#EDEFF0] lg:hidden"
+          className="flex h-[100dvh] max-h-[100dvh] flex-col gap-0 overflow-y-auto border-t border-[#EB0B1A]/25 bg-[#000000] p-4 text-[#FFFFFF] lg:hidden"
         >
           <SheetHeader className="px-0 pb-3">
-            <SheetTitle className="text-start font-chillax text-xl uppercase tracking-wide text-[#EDEFF0]">
+            <SheetTitle className="text-start font-chillax text-xl uppercase tracking-wide text-[#FFFFFF]">
               {t("summary.title")}
             </SheetTitle>
             <SheetDescription className="sr-only">{t("hud.chassis")}</SheetDescription>
@@ -107,7 +107,7 @@ function MiniProgress({ filled, total }: { filled: number; total: number }) {
         cy="18"
         r={r}
         fill="none"
-        stroke="#d12f27"
+        stroke="#EB0B1A"
         strokeWidth="3"
         strokeLinecap="round"
         strokeDasharray={c}
@@ -211,9 +211,9 @@ function BuildSummaryBody({
       )}
 
       <div className="flex items-center justify-between">
-        <h2 className="font-chillax text-xl uppercase tracking-wide text-[#EDEFF0]">{tSummary("title")}</h2>
+        <h2 className="font-chillax text-xl uppercase tracking-wide text-[#FFFFFF]">{tSummary("title")}</h2>
         <span className="flex items-center gap-1.5 text-sm tabular-nums text-white/50">
-          <Zap className="h-4 w-4 text-[#9e1d20]" />
+          <Zap className="h-4 w-4 text-[#EB0B1A]" />
           {Math.round(displayWatts)}W
         </span>
       </div>
@@ -224,7 +224,7 @@ function BuildSummaryBody({
             key={slot}
             title={t(`slots.${slot}`)}
             className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
-              items[slot] ? "bg-[#d12f27]" : "bg-white/10"
+              items[slot] ? "bg-[#EB0B1A]" : "bg-white/10"
             }`}
           />
         ))}
@@ -233,12 +233,12 @@ function BuildSummaryBody({
       <RigPreview />
 
       {hasBlockingIssues ? (
-        <div className="flex items-center gap-2 rounded-md bg-[#2A1416] px-3 py-2 text-sm text-[#FF6B70]">
+        <div className="flex items-center gap-2 rounded-md bg-[#EB0B1A] px-3 py-2 text-sm text-[#EB0B1A]">
           <XCircle className="h-4 w-4 shrink-0" />
           {tSummary("issuesToResolve", { count: compatibility.red_issues.length })}
         </div>
       ) : (
-        <div className="flex items-center gap-2 rounded-md bg-emerald-500/8 px-3 py-2 text-sm text-emerald-300/90">
+        <div className="flex items-center gap-2 rounded-md bg-primary/8 px-3 py-2 text-sm text-primary">
           <CheckDraw className="h-4 w-4 shrink-0" key={complete ? "done" : "ok"} />
           {complete ? t("hud.systemsClear") : tSummary("allCompatible")}
         </div>
@@ -256,7 +256,7 @@ function BuildSummaryBody({
                   ? ` (${item.variation_details.attribute_names.join(", ")})`
                   : ""}
               </span>
-              <span className="shrink-0 font-medium tabular-nums text-[#EDEFF0]">
+              <span className="shrink-0 font-medium tabular-nums text-[#FFFFFF]">
                 {Number(item.unit_price).toFixed(2)} JOD
               </span>
             </li>
@@ -272,11 +272,11 @@ function BuildSummaryBody({
           </div>
           <div className="flex justify-between text-white/60">
             <span>{tSummary("bundleDiscount")}</span>
-            <span className="text-[#9e1d20]">-{pricing.discount_percent}%</span>
+            <span className="text-[#EB0B1A]">-{pricing.discount_percent}%</span>
           </div>
-          <div className="flex justify-between text-base font-semibold text-[#EDEFF0]">
+          <div className="flex justify-between text-base font-semibold text-[#FFFFFF]">
             <span>{tSummary("total")}</span>
-            <span className="text-lg font-bold tabular-nums text-[#9e1d20]">{displayTotal.toFixed(2)} JOD</span>
+            <span className="text-lg font-bold tabular-nums text-[#EB0B1A]">{displayTotal.toFixed(2)} JOD</span>
           </div>
         </div>
       )}
@@ -288,7 +288,7 @@ function BuildSummaryBody({
               <div
                 key={tier.min}
                 className={`flex-1 rounded-md py-1 text-center text-[11px] font-semibold ${
-                  pricing.part_count >= tier.min ? "bg-[#2A1416] text-[#FF8A8E]" : "bg-white/5 text-white/30"
+                  pricing.part_count >= tier.min ? "bg-[#EB0B1A] text-[#EB0B1A]" : "bg-white/5 text-white/30"
                 }`}
               >
                 {tier.min}+ · {tier.pct}%
@@ -299,7 +299,7 @@ function BuildSummaryBody({
             <>
               <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
                 <div
-                  className="h-full rounded-full bg-[#9e1d20] transition-all duration-300"
+                  className="h-full rounded-full bg-[#EB0B1A] transition-all duration-300"
                   style={{ width: `${Math.min(100, (pricing.part_count / pricing.next_tier.min_parts) * 100)}%` }}
                 />
               </div>
@@ -311,7 +311,7 @@ function BuildSummaryBody({
               </p>
             </>
           ) : (
-            <p className="text-xs text-emerald-300/80">{tSummary("maxDiscountUnlocked")}</p>
+            <p className="text-xs text-primary">{tSummary("maxDiscountUnlocked")}</p>
           )}
         </div>
       )}
@@ -319,7 +319,7 @@ function BuildSummaryBody({
       {(compatibility.red_issues.length > 0 || compatibility.yellow_issues.length > 0) && (
         <div className="flex flex-col gap-2 border-t border-white/10 pt-4">
           {compatibility.red_issues.map((issue) => (
-            <div key={issue.id} className="bm-warn-pulse flex flex-col gap-2 rounded-md bg-[#2A1416] p-3 text-sm text-[#F08A8A]">
+            <div key={issue.id} className="bm-warn-pulse flex flex-col gap-2 rounded-md bg-primary/15 p-3 text-sm text-white">
               <div className="flex items-start gap-2">
                 <XCircle className="mt-0.5 h-4 w-4 shrink-0" />
                 <span>{issue.message}</span>
@@ -329,7 +329,7 @@ function BuildSummaryBody({
                   type="button"
                   disabled={isFixing && fixingIssueId === issue.id}
                   onClick={() => handleApplyFix(issue.id)}
-                  className="min-h-11 self-start rounded-md bg-[#9e1d20]/20 px-2.5 py-2 text-xs font-semibold text-[#FF8A8E] hover:bg-[#9e1d20]/30 disabled:opacity-50"
+                  className="min-h-11 self-start rounded-md bg-[#EB0B1A]/20 px-2.5 py-2 text-xs font-semibold text-[#EB0B1A] hover:bg-[#EB0B1A]/30 disabled:opacity-50"
                 >
                   {isFixing && fixingIssueId === issue.id
                     ? tSummary("applying")
@@ -339,15 +339,15 @@ function BuildSummaryBody({
             </div>
           ))}
           {compatibility.yellow_issues.map((issue) => (
-            <div key={issue.id} className="flex flex-col gap-2 rounded-md bg-white/5 p-3 text-sm text-[#EDEFF0]/80">
+            <div key={issue.id} className="flex flex-col gap-2 rounded-md bg-white/5 p-3 text-sm text-[#FFFFFF]/80">
               <div className="flex items-start gap-2">
-                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#F5C147]" />
+                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#EB0B1A]" />
                 <span>{issue.message}</span>
               </div>
               <button
                 type="button"
                 onClick={() => onBrowseSlot(issue.slot)}
-                className="min-h-11 self-start rounded-md bg-white/10 px-2.5 py-2 text-xs font-semibold text-[#EDEFF0] hover:bg-white/15"
+                className="min-h-11 self-start rounded-md bg-white/10 px-2.5 py-2 text-xs font-semibold text-[#FFFFFF] hover:bg-white/15"
               >
                 {tSummary("browseCategory", { slot: t(`slots.${issue.slot}`) })}
               </button>
@@ -361,7 +361,7 @@ function BuildSummaryBody({
           type="button"
           disabled={isAdding || hasBlockingIssues || selectedSlots.length === 0}
           onClick={handleAddToCart}
-          className="group flex min-h-11 flex-1 items-center justify-center gap-2 rounded-md bg-[#9e1d20] px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#7a1618] disabled:opacity-40"
+          className="group flex min-h-11 flex-1 items-center justify-center gap-2 rounded-md bg-[#EB0B1A] px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#EB0B1A] disabled:opacity-40"
         >
           {isAdding ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -375,7 +375,7 @@ function BuildSummaryBody({
           disabled={isSharing || selectedSlots.length === 0}
           onClick={handleShare}
           title={tSummary("shareTitle")}
-          className="flex min-h-11 min-w-11 items-center justify-center rounded-md border border-white/15 px-3 text-white/70 transition-colors duration-200 hover:border-[#9e1d20]/40 hover:bg-[#9e1d20]/10 hover:text-[#d12f27] disabled:opacity-40"
+          className="flex min-h-11 min-w-11 items-center justify-center rounded-md border border-white/15 px-3 text-white/70 transition-colors duration-200 hover:border-[#EB0B1A]/40 hover:bg-[#EB0B1A]/10 hover:text-[#EB0B1A] disabled:opacity-40"
         >
           {isSharing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Share2 className="h-4 w-4" />}
         </button>

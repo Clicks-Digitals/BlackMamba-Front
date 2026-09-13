@@ -67,12 +67,12 @@ export function CurrencySwitcher({
           disabled={isPending}
           aria-label="Select currency"
           className={[
-            "flex h-8 items-center gap-1 rounded-full px-3 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:opacity-60",
+            "flex h-8 items-center gap-1 px-2 text-[12px] font-medium transition-colors focus-visible:outline-none disabled:opacity-60",
             isDrawer
-              ? "border border-white/15 bg-white/5 text-white/80 hover:bg-white/10 focus-visible:ring-white/30"
+              ? "border border-white/15 text-white/80 hover:bg-white/10"
               : isStoreNav
-                ? "border border-store-nav-fg/35 bg-store-nav/80 text-store-nav-fg hover:bg-white/10 focus-visible:ring-white/40"
-                : "border border-white/30 bg-white/10 text-white/90 backdrop-blur-sm hover:bg-white/20 focus-visible:ring-white/60"
+                ? "text-white/80 hover:text-white"
+                : "border border-white/20 text-white/90 hover:bg-white/10"
           ].join(" ")}
         >
           <span>{active.code}</span>

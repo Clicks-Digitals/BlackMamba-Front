@@ -66,10 +66,10 @@ export function AddressesTab() {
           <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
       ) : addresses.length === 0 ? (
-        <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-[#26292C] bg-[#17181B] py-16 text-center">
+        <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-[#000000] bg-[#000000] py-16 text-center">
           <MapPin size={48} className="text-white/25" />
           <div>
-            <p className="text-[16px] font-medium text-[#EDEFF0]">{t("noRecentAddresses")}</p>
+            <p className="text-[16px] font-medium text-[#FFFFFF]">{t("noRecentAddresses")}</p>
             <p className="text-[13px] text-white/45">
               {t("noSavedAddressesDesc")}
             </p>

@@ -67,7 +67,7 @@ export function StoreNavDrawer({
 
   return (
     <Drawer direction={locale === "ar" ? "right" : "left"} open={open} onOpenChange={setOpen}>
-      <DrawerContent className="flex h-svh max-h-svh max-w-sm flex-col overflow-hidden bg-[#161718]">
+      <DrawerContent className="flex h-svh max-h-svh max-w-sm flex-col overflow-hidden bg-[#000000]">
         <DrawerHeader className="shrink-0 border-b border-white/8 py-4">
           <DrawerTitle className="text-center font-letterman text-xl font-semibold tracking-widest text-white uppercase">
             {t("storeName")}
@@ -81,15 +81,15 @@ export function StoreNavDrawer({
                 href="/pc-builder"
                 aria-current={pcBuilderActive ? "page" : undefined}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg bg-[#0B0F0E] px-3.5 py-3 transition-colors duration-200 hover:bg-[#0B0F0E]/80",
-                  pcBuilderActive && "ring-2 ring-[#d12f27] ring-offset-2 ring-offset-[#161718]"
+                  "flex items-center gap-3 rounded-lg bg-[#000000] px-3.5 py-3 transition-colors duration-200 hover:bg-[#000000]/80",
+                  pcBuilderActive && "ring-2 ring-[#EB0B1A] ring-offset-2 ring-offset-[#000000]"
                 )}
               >
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#9e1d20]/20">
-                  <Cpu className="h-5 w-5 text-[#d12f27]" />
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#EB0B1A]/20">
+                  <Cpu className="h-5 w-5 text-[#EB0B1A]" />
                 </div>
                 <div className="min-w-0">
-                  <p className="leading-tight font-semibold text-[#d12f27]">{t("nav.pcBuilder")}</p>
+                  <p className="leading-tight font-semibold text-[#EB0B1A]">{t("nav.pcBuilder")}</p>
                   <p className="text-xs leading-snug text-white/50">
                     {locale === "ar" ? "صمّم جهازك بنفسك" : "Design your custom rig"}
                   </p>
@@ -186,7 +186,7 @@ export function StoreNavDrawer({
           </div>
         </nav>
 
-        <div className="shrink-0 border-t border-white/8 bg-[#121314] p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+        <div className="shrink-0 border-t border-white/8 bg-[#000000] p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
           {loggedIn ? (
             <button
               type="button"
@@ -200,7 +200,7 @@ export function StoreNavDrawer({
             <DrawerClose asChild>
               <Link
                 href="/login"
-                className="flex min-h-11 w-full items-center justify-center rounded-md bg-primary py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#d12f27]"
+                className="flex min-h-11 w-full items-center justify-center rounded-md bg-primary py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#EB0B1A]"
               >
                 {t("login")}
               </Link>
