@@ -1,6 +1,7 @@
-import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { cn } from "@/lib/utils";
+import { OverviewHtml } from "./overview-html";
+import { OverviewImage } from "./overview-image";
 
 function loneImageFromHtml(html: string | null): string | null {
   if (!html?.trim()) return null;
@@ -41,29 +42,15 @@ export async function ProductOverviewImage({
   const t = await getTranslations("SingleProduct");
 
   return (
-    <section className="border-y border-border bg-background py-8 sm:py-12" id="overview">
-      <div className="layout-page layout-gutter-x">
-        <h2
-          className={cn(
-            "mb-6 text-[clamp(1.5rem,2.8vw,2rem)] leading-none text-foreground sm:mb-8",
-            rtl ? "font-cairo font-semibold" : "font-chillax font-semibold tracking-wide"
-          )}
-        >
-          {t("overviewHeading")}
-        </h2>
-        <div className="overflow-hidden bg-white">
-          <Image
-            src={src}
-            alt={alt}
-            width={1600}
-            height={4800}
-            className="block h-auto w-full object-contain object-top"
-            sizes="(max-width: 1440px) 100vw, 1440px"
-            unoptimized
-          />
-        </div>
-      </div>
-    </section>
+    <OverviewImage
+      src={src}
+      alt={alt}
+      heading={t("overviewHeading")}
+      headingClassName={cn(
+        "mb-6 text-[clamp(1.5rem,2.8vw,2rem)] leading-none text-foreground sm:mb-8",
+        rtl ? "font-cairo font-semibold" : "font-chillax font-semibold tracking-wide"
+      )}
+    />
   );
 }
 
@@ -84,7 +71,9 @@ export async function ProductOverview({ html, locale }: { html: string | null; l
           {t("overviewHeading")}
         </h2>
 
-        <div
+        {/* Sanitized server-side before storage — safe to render as-is. */}
+        <OverviewHtml
+          html={html}
           dir={rtl ? "rtl" : "ltr"}
           className={cn(
             "prose max-w-none dark:prose-invert",
@@ -100,7 +89,6 @@ export async function ProductOverview({ html, locale }: { html: string | null; l
             "prose-code:font-chillax prose-code:text-foreground",
             "[&_img]:mx-auto"
           )}
-          dangerouslySetInnerHTML={{ __html: html }}
         />
       </div>
     </section>

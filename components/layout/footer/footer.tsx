@@ -35,9 +35,27 @@ const companyItems = [
   { key: "serviceCenter" as const, href: "/service-center" }
 ];
 
+function InstagramIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function FacebookIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M15 4h-2a4 4 0 0 0-4 4v3H7v4h2v7h4v-7h2.5l.5-4h-3V8a1 1 0 0 1 1-1h2z" />
+    </svg>
+  );
+}
+
 const socialItems = [
-  { key: "instagram" as const, href: "#", initials: "IG" },
-  { key: "facebook" as const, href: "#", initials: "FB" }
+  { key: "instagram" as const, href: "#", icon: InstagramIcon },
+  { key: "facebook" as const, href: "#", icon: FacebookIcon }
 ];
 
 function Column({
@@ -180,14 +198,14 @@ export function Footer({ categories = [], locale = "en" }: { categories?: Catego
               </FooterLink>
             ))}
             <div className="mt-2 flex items-center gap-2.5">
-              {socialItems.map(({ key, href, initials }) => (
+              {socialItems.map(({ key, href, icon: Icon }) => (
                 <Link
                   key={key}
                   href={href}
                   aria-label={t(`companyLinks.${key}`)}
-                  className="flex size-9 items-center justify-center rounded-md border border-white/12 text-[10px] font-bold text-white/70 transition-colors duration-200 hover:border-primary/50 hover:text-white"
+                  className="flex size-9 items-center justify-center rounded-md border border-white/12 text-white/70 transition-colors duration-200 hover:border-primary/50 hover:text-white"
                 >
-                  {initials}
+                  <Icon size={16} />
                 </Link>
               ))}
             </div>

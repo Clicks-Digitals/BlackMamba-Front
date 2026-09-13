@@ -88,10 +88,10 @@ export function CurrencySwitcher({
             className="flex cursor-pointer items-center justify-between gap-3"
           >
             <div className="flex items-center gap-2">
-              <span className="w-9 rounded bg-white/8 px-1.5 py-0.5 text-center text-[11px] font-semibold text-[#FFFFFF]">
+              <span className="w-9 rounded bg-muted px-1.5 py-0.5 text-center text-[11px] font-semibold text-foreground">
                 {currency.code}
               </span>
-              <span className="text-sm text-white/55">{currency.name}</span>
+              <span className="text-sm text-muted-foreground">{currency.name}</span>
             </div>
             {currency.code === currentCurrency && (
               <Check size={14} className="text-primary shrink-0" />

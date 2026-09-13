@@ -20,7 +20,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   return (
     <div
       role="group"
-      aria-label={t("themeToLight")}
+      aria-label={t("themeToggleLabel")}
       className={cn("inline-flex h-8 shrink-0 items-center px-1", className)}
     >
       <button

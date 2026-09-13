@@ -15,7 +15,7 @@ export async function EmptyWishlist() {
 
   return (
     <div className="flex min-h-[50vh] flex-col items-center justify-center px-6 py-16 text-center">
-      <div className="mb-6 flex size-16 items-center justify-center rounded-lg border border-white/8 bg-[#000000] text-white/35">
+      <div className="mb-6 flex size-16 items-center justify-center rounded-lg border border-border bg-muted text-muted-foreground">
         <Heart size={28} strokeWidth={1.5} />
       </div>
       <p className="bm-kicker mb-3">{t("title")}</p>
@@ -29,7 +29,7 @@ export async function EmptyWishlist() {
       </h2>
       <p
         className={cn(
-          "mt-3 mb-8 max-w-md text-[15px] text-white/45",
+          "mt-3 mb-8 max-w-md text-[15px] text-muted-foreground",
           rtl ? "font-cairo" : "font-chillax"
         )}
       >
@@ -49,7 +49,7 @@ export async function EmptyWishlist() {
           <Link
             href="/login"
             className={cn(
-              "inline-flex h-11 items-center justify-center rounded-md border border-white/12 px-7 text-[15px] font-semibold text-white/80 transition-colors duration-200 hover:border-white/25 hover:text-white",
+              "inline-flex h-11 items-center justify-center rounded-md border border-border px-7 text-[15px] font-semibold text-foreground transition-colors duration-200 hover:border-primary hover:text-foreground",
               rtl ? "font-cairo" : "font-chillax"
             )}
           >

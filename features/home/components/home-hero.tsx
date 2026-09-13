@@ -218,7 +218,7 @@ export function HomeHero({
                 onMouseLeave={() => setPaused(false)}
               >
                 <div className="relative min-h-[13rem] sm:min-h-[17rem] lg:min-h-[18.5rem] xl:min-h-[20.5rem]">
-                  <AnimatePresence mode="wait" initial={false}>
+                  <AnimatePresence initial={false}>
                     <motion.div
                       key={active.id}
                       initial={reduce ? false : { opacity: 0.65 }}
