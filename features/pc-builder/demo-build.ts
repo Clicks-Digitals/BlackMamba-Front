@@ -263,6 +263,15 @@ function toItem(part: DemoPart, index: number): PCBuildItemData {
   };
 }
 
+/**
+ * Whether a build item is a client-only preview placeholder (from `withDemoBuild`)
+ * rather than a real, backend-persisted selection. Demo items always carry a
+ * `demo-` product id (see `toPart`/`toItem` above) — never a real product's id.
+ */
+export function isDemoBuildItem(item: Pick<PCBuildItemData, "product">): boolean {
+  return item.product.startsWith("demo-");
+}
+
 /** Demo catalogue for picker when the API returns no parts for a slot. */
 export function getDemoPartsForSlot(slot: PCSlot): PCPart[] {
   const primary = DEMO_PARTS.find((p) => p.slot === slot);
