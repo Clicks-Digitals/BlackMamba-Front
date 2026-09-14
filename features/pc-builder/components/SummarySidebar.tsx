@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { usePCBuilderStore } from "@/stores/pc-builder-store";
 import { applyFixAction, addBuildToCartAction, shareBuildAction } from "@/features/pc-builder/actions/mutations";
 import { SLOT_ORDER, CORE_SLOTS, type PCSlot } from "@/features/pc-builder/types";
+import { isDemoBuildItem } from "@/features/pc-builder/demo-build";
 import { useCartStore } from "@/stores/cart-store";
 import {
   Sheet,
@@ -195,6 +196,15 @@ function BuildSummaryBody({
   const filled = selectedSlots.length;
   const coreFilled = CORE_SLOTS.filter((slot) => items[slot]).length;
   const complete = coreFilled === CORE_SLOTS.length && !hasBlockingIssues;
+  // `items` may include client-only preview placeholders from `withDemoBuild` (used to
+  // show a fully-populated example rig before the guest has picked anything real). Those
+  // never exist on the backend build, so checkout must require every core slot to hold a
+  // genuine, persisted selection — otherwise "Add to Cart" sends an ID the backend has no
+  // real items for and rejects with a generic "Bad request."
+  const hasCompleteRealBuild = CORE_SLOTS.every((slot) => {
+    const item = items[slot];
+    return item && !isDemoBuildItem(item);
+  });
   const discountTiers = [
     { min: 3, pct: 5 },
     { min: 5, pct: 8 },
@@ -359,7 +369,7 @@ function BuildSummaryBody({
       <div className="mt-2 flex gap-2">
         <button
           type="button"
-          disabled={isAdding || hasBlockingIssues || selectedSlots.length === 0}
+          disabled={isAdding || hasBlockingIssues || selectedSlots.length === 0 || !hasCompleteRealBuild}
           onClick={handleAddToCart}
           className="group flex min-h-11 flex-1 items-center justify-center gap-2 rounded-md bg-[#EB0B1A] px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#EB0B1A] disabled:opacity-40"
         >
