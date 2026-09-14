@@ -32,13 +32,13 @@ export async function getStorefrontCategories(): Promise<Category[]> {
 }
 
 export async function getHomeSwipers(): Promise<HomeSwiperSlide[]> {
-  const res = await apiClient<unknown>("/swipers/");
+  const res = await apiClient<unknown>("/cms/swipers/");
   if (!res.ok) return [];
   return normalizeSwipers(res.data);
 }
 
 export async function getHomeSections(): Promise<HomeSection[]> {
-  const res = await apiClient<unknown>("/sections/");
+  const res = await apiClient<unknown>("/cms/sections/");
   if (!res.ok) return [];
   return normalizeHomeSections(res.data);
 }
@@ -119,7 +119,7 @@ function withLocalBrandLogo(brand: HomeBrand): HomeBrand {
 }
 
 export async function getHomeBanners(): Promise<HomeBanner[]> {
-  const res = await apiClient<unknown>("/banners/");
+  const res = await apiClient<unknown>("/cms/banners/");
   if (!res.ok) return [];
   return normalizeBanners(res.data);
 }
