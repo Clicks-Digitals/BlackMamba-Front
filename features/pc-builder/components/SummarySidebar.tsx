@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { usePCBuilderStore } from "@/stores/pc-builder-store";
 import { applyFixAction, addBuildToCartAction, shareBuildAction } from "@/features/pc-builder/actions/mutations";
 import { SLOT_ORDER, CORE_SLOTS, type PCSlot } from "@/features/pc-builder/types";
+import { DISCOUNT_TIERS } from "@/features/pc-builder/lib/pricing";
 import { isDemoBuildItem } from "@/features/pc-builder/demo-build";
 import { useCartStore } from "@/stores/cart-store";
 import {
@@ -146,6 +147,8 @@ function BuildSummaryBody({
   const displayWatts = useAnimatedNumber(totalPowerDrawWatts);
   const displayTotal = useAnimatedNumber(Number(pricing?.total_price ?? 0));
   const displaySub = useAnimatedNumber(Number(pricing?.subtotal ?? 0));
+  const displayAccessories = useAnimatedNumber(Number(pricing?.accessories_subtotal ?? 0));
+  const displayDiscount = useAnimatedNumber(Number(pricing?.discount_amount ?? 0));
 
   function handleShare() {
     startShare(async () => {
@@ -205,12 +208,6 @@ function BuildSummaryBody({
     const item = items[slot];
     return item && !isDemoBuildItem(item);
   });
-  const discountTiers = [
-    { min: 3, pct: 5 },
-    { min: 5, pct: 8 },
-    { min: 7, pct: 12 },
-    { min: 9, pct: 15 },
-  ];
 
   return (
     <div className="relative flex flex-col gap-4">
@@ -280,9 +277,17 @@ function BuildSummaryBody({
             <span>{tSummary("subtotal")}</span>
             <span className="tabular-nums">{displaySub.toFixed(2)} JOD</span>
           </div>
+          {Number(pricing.accessories_subtotal) > 0 && (
+            <div className="flex justify-between text-white/40">
+              <span>{tSummary("accessoriesNotDiscounted")}</span>
+              <span className="tabular-nums">{displayAccessories.toFixed(2)} JOD</span>
+            </div>
+          )}
           <div className="flex justify-between text-white/60">
             <span>{tSummary("bundleDiscount")}</span>
-            <span className="text-[#EB0B1A]">-{pricing.discount_percent}%</span>
+            <span className="text-[#EB0B1A] tabular-nums">
+              -{displayDiscount.toFixed(2)} JOD ({pricing.discount_percent}%)
+            </span>
           </div>
           <div className="flex justify-between text-base font-semibold text-[#FFFFFF]">
             <span>{tSummary("total")}</span>
@@ -294,7 +299,7 @@ function BuildSummaryBody({
       {pricing && (
         <div className="flex flex-col gap-2">
           <div className="flex gap-1">
-            {discountTiers.map((tier) => (
+            {DISCOUNT_TIERS.map((tier) => (
               <div
                 key={tier.min}
                 className={`flex-1 rounded-md py-1 text-center text-[11px] font-semibold ${

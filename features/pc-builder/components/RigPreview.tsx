@@ -383,13 +383,6 @@ export function RigPreview({ className }: { className?: string }) {
 
           <rect x="38" y="22" width="178" height="276" rx="5" fill={`url(#glass-${uid})`} stroke="rgba(255,255,255,0.14)" opacity={live ? 1 : 0.35} />
           <path d="M48 30 L92 30 L70 86 L42 70 Z" fill="rgba(255,255,255,0.07)" />
-
-          <SlotGroup filled={isFilled("OS")} assembling={assembling} index={8} reduce={reduceMotion} ready={motionReady} alert={alertSlots.has("OS")} enter={{ opacity: 0, scale: 0.75 }}>
-            <rect x="188" y="28" width="22" height="11" rx="2" fill={isFilled("OS") && live ? "#EB0B1A" : "#000000"} stroke={isFilled("OS") && live ? "#EB0B1A" : "rgba(255,255,255,0.16)"} />
-            <text x="199" y="36" textAnchor="middle" fill="#FFFFFF" fontSize="4" fontWeight="600">
-              {isFilled("OS") ? "WIN" : "OS"}
-            </text>
-          </SlotGroup>
         </svg>
         <p className="mt-2 text-center text-[10px] text-white/35">{t("hud.powerHint")}</p>
       </div>

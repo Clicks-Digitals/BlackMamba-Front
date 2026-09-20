@@ -7,7 +7,6 @@ export type PCSlot =
   | "STORAGE"
   | "PSU"
   | "CASE"
-  | "OS"
   | "MONITOR"
   | "KEYBOARD"
   | "MOUSE"
@@ -24,7 +23,6 @@ export const CORE_SLOTS: PCSlot[] = [
   "PSU",
   "CASE",
   "STORAGE",
-  "OS",
 ];
 
 /** Optional peripherals — Newegg/Microless-style extras. */
@@ -47,7 +45,6 @@ export const SLOT_LABELS: Record<PCSlot, string> = {
   STORAGE: "Storage",
   PSU: "Power Supply",
   CASE: "Case",
-  OS: "Operating System",
   MONITOR: "Monitor",
   KEYBOARD: "Keyboard",
   MOUSE: "Mouse",
@@ -138,9 +135,17 @@ export interface NextTier {
 
 export interface BuildPricing {
   subtotal: string;
+  /** Core parts only — the portion the bundle discount applies to. */
+  core_subtotal: string;
+  /** Peripherals & accessories — added at full price, never discounted. */
+  accessories_subtotal: string;
   discount_percent: string;
+  /** Currency amount taken off, i.e. discount_percent of core_subtotal. */
+  discount_amount: string;
   total_price: string;
+  /** Core parts only — peripherals do not move you up the discount ladder. */
   part_count: number;
+  accessory_count: number;
   next_tier: NextTier | null;
 }
 
@@ -189,3 +194,16 @@ export interface PCBuild {
   is_shareable: boolean;
   share_slug: string | null;
 }
+
+/** Zero-state pricing, for placeholder builds before the API responds. */
+export const EMPTY_PRICING: BuildPricing = {
+  subtotal: "0",
+  core_subtotal: "0",
+  accessories_subtotal: "0",
+  discount_percent: "0",
+  discount_amount: "0",
+  total_price: "0",
+  part_count: 0,
+  accessory_count: 0,
+  next_tier: null,
+};

@@ -6,13 +6,20 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useWishlistStore } from "@/stores/wishlist-store";
 import { addToWishlistAction, removeFromWishlistAction } from "@/features/wishlist/actions/mutations";
+import { productPayload, trackAddToWishlist } from "@/features/analytics";
+import type { Product } from "@/types";
 
 interface WishlistButtonProps {
   productId: string;
   className?: string;
+  /**
+   * Optional, for analytics only. Supplying it lets the AddToWishlist event
+   * carry a real value and product name instead of just an id.
+   */
+  product?: Product;
 }
 
-export function WishlistButton({ productId, className }: WishlistButtonProps) {
+export function WishlistButton({ productId, className, product }: WishlistButtonProps) {
   const inWishlist = useWishlistStore((s) => s.ids.includes(productId));
   const addId = useWishlistStore((s) => s.add);
   const removeId = useWishlistStore((s) => s.remove);
@@ -42,6 +49,8 @@ export function WishlistButton({ productId, className }: WishlistButtonProps) {
         else addId(productId);
         toast.error(res.message);
       } else {
+        // Only the "added" direction is a standard event worth reporting.
+        if (next && product) trackAddToWishlist(productPayload(product));
         toast.success(res.message);
         setOptimistic(null);
       }

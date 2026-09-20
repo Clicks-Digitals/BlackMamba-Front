@@ -9,6 +9,7 @@ import { Lock, Mail } from "lucide-react";
 import { Input, PasswordInput, SubmitButton } from "@/components/forms";
 import { useAuthStore } from "@/stores/auth-store";
 import { loginAction, type LoginData } from "@/features/auth";
+import { GoogleSignInButton } from "@/features/auth/components/google-sign-in-button";
 import type { ActionState, User as UserType } from "@/types";
 
 const initialState: ActionState<LoginData, UserType> = { status: "idle", message: "" };
@@ -109,6 +110,8 @@ export function LoginView() {
         >
           {t("submitBtn")}
         </SubmitButton>
+
+        <GoogleSignInButton />
 
         <p className="text-center text-[12px] text-white/45">
           {t("noAccount")}{" "}

@@ -15,6 +15,7 @@ import {
   ProductReviewsSection,
   RelatedProducts,
 } from "@/features/single-product";
+import { TrackProductView } from "@/features/analytics";
 import { resolveOverviewImage } from "./product-overview";
 import { ProductBulletLists, bulletsFromProduct } from "./product-bullet-lists";
 
@@ -112,6 +113,7 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
 
   return (
     <div className="bg-background">
+      <TrackProductView product={product} />
       <nav
         className="layout-page layout-gutter-x flex h-11 items-center gap-1.5 font-chillax text-xs text-muted-foreground"
         aria-label="Breadcrumb"

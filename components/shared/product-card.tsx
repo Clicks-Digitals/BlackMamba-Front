@@ -11,6 +11,7 @@ import type { Product } from "@/types/product";
 import { WishlistButton } from "./wishlist-button";
 import { ClearanceSaleCountdown } from "./clearance-countdown";
 import { addToCartAction, updateCartItemAction } from "@/features/cart/actions/mutations";
+import { productPayload, trackAddToCart } from "@/features/analytics";
 import { useCartStore, buildCartItemKey } from "@/stores/cart-store";
 
 function discountPercent(p: Product): number | null {
@@ -100,6 +101,7 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
         if (res.data?.itemId) {
           upsertItemRef(itemKey, { itemId: res.data.itemId, quantity: res.data.itemQuantity ?? 1 });
         }
+        trackAddToCart(productPayload(product, 1));
         toast.success(res.message);
       } else {
         toast.error(res.message);
@@ -170,6 +172,7 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
           <div className="absolute top-0 end-0 z-20">
             <WishlistButton
               productId={product.id}
+              product={product}
               className="size-7 rounded-none border-border bg-white/90 p-0 text-muted-foreground shadow-none hover:border-primary hover:bg-white hover:text-primary"
             />
           </div>

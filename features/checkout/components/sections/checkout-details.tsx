@@ -16,6 +16,7 @@ import { PaymentMethodSection } from "@/features/checkout/components/sections/pa
 import { OrderSummary } from "@/features/checkout/components/sections/order-summary";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { cartToAnalyticsItems, trackBeginCheckout, trackPurchase } from "@/features/analytics";
 
 interface CheckoutDetailsProps {
   cart: Cart | null;
@@ -89,6 +90,36 @@ export default function CheckoutDetails({
   const selectedShipping = shippingOptions.find((s) => s.id === selectedShippingId);
   const shippingPrice = parseFloat(selectedShipping?.price ?? "0") || 0;
   const finalTotal = (subtotalNum - discountAmount + shippingPrice).toFixed(2);
+
+  const currencyCode = cart?.items[0]?.product_details?.currency_info?.code ?? "JOD";
+
+  // Reaching this screen with a non-empty cart is the checkout funnel entry.
+  const hasCartItems = (cart?.items.length ?? 0) > 0;
+  useEffect(() => {
+    if (!hasCartItems) return;
+    trackBeginCheckout({
+      items: cartToAnalyticsItems(cart),
+      value: subtotalNum,
+      currency: currencyCode,
+    });
+    // Fires once per checkout visit, not on every coupon or shipping change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasCartItems]);
+
+  useEffect(() => {
+    if (state.status !== "success" || !state.data?.orderId) return;
+    // eventID is derived from the order id, matching the backend's
+    // Conversions API event so Meta counts this Purchase once.
+    trackPurchase({
+      orderId: state.data.orderId,
+      items: cartToAnalyticsItems(cart),
+      value: parseFloat(finalTotal) || 0,
+      currency: currencyCode,
+      shipping: shippingPrice,
+      coupon: appliedCoupon?.code,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.status, state.data?.orderId]);
 
   if (!cart || cart.items.length === 0) {
     return (

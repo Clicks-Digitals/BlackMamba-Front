@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { usePCBuilderStore } from "@/stores/pc-builder-store";
 import { removeBuildItemAction } from "@/features/pc-builder/actions/mutations";
 import { SLOT_ORDER, type PCSlot } from "@/features/pc-builder/types";
+import { estimatePricing } from "@/features/pc-builder/lib/pricing";
 import { SLOT_ICONS } from "./slot-icons";
 import { useBuilderMotion } from "./builder-motion";
 
@@ -45,9 +46,7 @@ export function SlotRow({ slot, buildId, onOpenPicker, index = 0 }: SlotRowProps
         const nextItems = { ...store.items };
         delete nextItems[slot];
         const itemList = Object.values(nextItems).filter(Boolean) as NonNullable<(typeof nextItems)[PCSlot]>[];
-        const subtotal = itemList.reduce((sum, entry) => sum + Number(entry.unit_price || 0), 0);
-        const discountPercent =
-          itemList.length >= 12 ? 15 : itemList.length >= 9 ? 12 : itemList.length >= 7 ? 8 : itemList.length >= 5 ? 5 : 0;
+
         setBuild({
           id: buildId,
           build_token: null,
@@ -65,13 +64,7 @@ export function SlotRow({ slot, buildId, onOpenPicker, index = 0 }: SlotRowProps
           total_power_draw_watts: store.totalPowerDrawWatts,
           has_blocking_issues: store.hasBlockingIssues,
           compatibility: store.compatibility,
-          pricing: {
-            subtotal: subtotal.toFixed(2),
-            discount_percent: String(discountPercent),
-            total_price: (subtotal * (1 - discountPercent / 100)).toFixed(2),
-            part_count: itemList.length,
-            next_tier: null,
-          },
+          pricing: estimatePricing(itemList),
           is_shareable: false,
           share_slug: null,
         });
