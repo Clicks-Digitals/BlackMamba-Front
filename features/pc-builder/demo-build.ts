@@ -5,6 +5,7 @@ import {
   type PCPart,
   type PCSlot,
 } from "@/features/pc-builder/types";
+import { estimatePricing } from "@/features/pc-builder/lib/pricing";
 
 type DemoPart = {
   slot: PCSlot;
@@ -79,14 +80,6 @@ const DEMO_PARTS: DemoPart[] = [
     name_ar: "سامسونج 990 برو 2 تيرا",
     price: "159.00",
     watts: 8,
-    spec: {},
-  },
-  {
-    slot: "OS",
-    name: "Windows 11 Pro",
-    name_ar: "ويندوز 11 برو",
-    price: "99.00",
-    watts: 0,
     spec: {},
   },
   {
@@ -296,12 +289,6 @@ export function withDemoBuild(build: PCBuild): PCBuild {
   const demoOnly = SLOT_ORDER.every((slot) =>
     items.find((item) => item.slot === slot)?.id.startsWith("demo-")
   );
-  const subtotal = demoOnly
-    ? DEMO_PARTS.reduce((sum, part) => sum + Number(part.price), 0)
-    : items.reduce((sum, item) => sum + Number(item.unit_price || 0), 0);
-  const discountPercent =
-    items.length >= 12 ? 15 : items.length >= 9 ? 12 : items.length >= 7 ? 8 : items.length >= 5 ? 5 : 0;
-  const total = subtotal * (1 - discountPercent / 100);
   const watts = demoOnly
     ? DEMO_PARTS.reduce((sum, part) => sum + part.watts, 0)
     : build.total_power_draw_watts;
@@ -319,12 +306,6 @@ export function withDemoBuild(build: PCBuild): PCBuild {
     total_power_draw_watts: watts || 446,
     has_blocking_issues: false,
     compatibility: { red_issues: [], yellow_issues: [] },
-    pricing: {
-      subtotal: subtotal.toFixed(2),
-      discount_percent: String(discountPercent),
-      total_price: total.toFixed(2),
-      part_count: items.length,
-      next_tier: items.length >= 12 ? null : build.pricing?.next_tier ?? null,
-    },
+    pricing: estimatePricing(items),
   };
 }

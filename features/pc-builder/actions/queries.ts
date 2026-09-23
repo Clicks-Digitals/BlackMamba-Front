@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { apiClient } from "@/lib/api";
 import type { PaginatedResponse } from "@/types";
 import type { PCBuild, PCPart, PCSlot, PartFilters } from "@/features/pc-builder";
+import { EMPTY_PRICING } from "@/features/pc-builder/types";
 
 const BUILD_TOKEN_COOKIE = "pc_build_token";
 
@@ -25,13 +26,7 @@ function emptyGuestBuild(): PCBuild {
     total_power_draw_watts: 0,
     has_blocking_issues: false,
     compatibility: { red_issues: [], yellow_issues: [] },
-    pricing: {
-      subtotal: "0",
-      discount_percent: "0",
-      total_price: "0",
-      part_count: 0,
-      next_tier: null
-    },
+    pricing: EMPTY_PRICING,
     is_shareable: false,
     share_slug: null
   };

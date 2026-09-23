@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import type { Product, VariationGroup, VariationOption, Combination } from "@/types";
 import { addToCartAction, updateCartItemAction } from "@/features/cart/actions/mutations";
+import { productPayload, trackAddToCart } from "@/features/analytics";
 import { useCartStore, buildCartItemKey } from "@/stores/cart-store";
 import { useProductImageStore } from "@/stores/product-image-store";
 import { WishlistButton } from "@/components/shared";
@@ -183,6 +184,7 @@ export function ProductActions({ product }: ProductActionsProps) {
         if (res.data?.itemId) {
           upsertItemRef(key, { itemId: res.data.itemId, quantity: res.data.itemQuantity ?? quantity });
         }
+        trackAddToCart(productPayload(product, quantity));
         toast.success(res.message);
         cueAdded();
       } else {
@@ -438,6 +440,7 @@ export function ProductActions({ product }: ProductActionsProps) {
 
         <WishlistButton
           productId={product.id}
+          product={product}
           className="h-12 w-12 shrink-0 rounded-md border-border bg-muted/50 p-0 hover:bg-primary hover:text-primary-foreground"
         />
       </div>

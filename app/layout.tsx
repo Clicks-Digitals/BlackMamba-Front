@@ -7,6 +7,7 @@ import { NavProgress } from "@/components/shared/nav-progress";
 import { ConfirmDialogProvider } from "@/components/shared/confirm-dialog-provider";
 import { ThemeProvider } from "@/components/shared/theme-provider";
 import { ThemedToaster } from "@/components/shared/themed-toaster";
+import { AnalyticsProvider, AnalyticsScripts } from "@/features/analytics";
 import "./globals.css";
 
 const inter = Inter({
@@ -48,8 +49,10 @@ export default async function RootLayout({
             {children}
             <ThemedToaster />
             <ConfirmDialogProvider />
+            <AnalyticsProvider />
           </NextIntlClientProvider>
         </ThemeProvider>
+        <AnalyticsScripts />
       </body>
     </html>
   );

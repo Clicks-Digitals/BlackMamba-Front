@@ -10,6 +10,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useCartStore, buildCartItemKey } from "@/stores/cart-store";
 import { removeCartItemAction, updateCartItemAction } from "@/features/cart/actions/mutations";
+import { cartItemToAnalyticsItem, trackRemoveFromCart } from "@/features/analytics";
 import type { CartItem } from "@/features/cart/types";
 import { ProductCard } from "@/components/shared/product-card";
 import { CartVariationBadges } from "@/features/cart/components/cart-variation-badges";
@@ -89,6 +90,12 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
       if (res.status === "success") {
         setCount(res.data?.count ?? 0);
         removeItemRef(buildCartItemKey(item));
+        const analyticsItem = cartItemToAnalyticsItem(item);
+        trackRemoveFromCart({
+          items: [analyticsItem],
+          value: analyticsItem.price * (analyticsItem.quantity ?? 1),
+          currency: item.product_details?.currency_info?.code ?? "JOD",
+        });
         toast.success(res.message);
       } else {
         toast.error(res.message);

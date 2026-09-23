@@ -28,6 +28,7 @@ import { cn } from "@/lib/utils";
 import type { Category } from "@/types/category";
 import type { Product } from "@/types/product";
 import { addToCartAction, updateCartItemAction } from "@/features/cart/actions/mutations";
+import { productPayload, trackAddToCart } from "@/features/analytics";
 import { useCartStore, buildCartItemKey } from "@/stores/cart-store";
 import type { FeaturedCoupon } from "../actions/queries";
 import type { HomeSwiperSlide } from "../types";
@@ -399,6 +400,7 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
         if (res.data?.itemId) {
           upsertItemRef(itemKey, { itemId: res.data.itemId, quantity: res.data.itemQuantity ?? 1 });
         }
+        trackAddToCart(productPayload(product, 1));
         toast.success(res.message);
       } else {
         toast.error(res.message);

@@ -4,6 +4,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { getStorefrontCategories, getBrands } from "@/features/home";
 import { getProductFilters, getProducts, ProductsView } from "@/features/products";
 import { findCategoryBySlug } from "@/lib/utils";
+import { TrackSearch } from "@/features/analytics";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Products");
@@ -76,8 +77,11 @@ export default async function ProductsPage({
     (c) => !!c.parent && rootIds.has(c.parent) && c.is_active !== false
   );
 
+  const searchTerm = first(sp.search) ?? "";
+
   return (
     <Suspense fallback={null}>
+      {searchTerm && <TrackSearch term={searchTerm} />}
       <ProductsView
         categories={categories}
         activeCategories={activeCategories}

@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import Link from "next/link";
 import { Lock, Mail, Phone, User, UserPlus } from "lucide-react";
 import { Input, PasswordInput, SubmitButton } from "@/components/forms";
+import { GoogleSignInButton } from "@/features/auth/components/google-sign-in-button";
 import { useAuthStore } from "@/stores/auth-store";
 import { registerAction, type RegisterData } from "@/features/auth";
 import type { ActionState, User as UserType } from "@/types";
@@ -135,6 +136,8 @@ export function RegisterView() {
         >
           {t("submitBtn")}
         </SubmitButton>
+
+        <GoogleSignInButton />
 
         <p className="text-center text-[12px] text-white/45">
           {t("hasAccount")}{" "}
