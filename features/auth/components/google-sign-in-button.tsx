@@ -95,6 +95,30 @@ function useGsiScript() {
  * let it draw inside. The width is re-read on resize because GIS renders at a
  * fixed pixel width rather than stretching.
  */
+/** Google's four-colour "G", inline so no external asset is required. */
+function GoogleGlyph() {
+  return (
+    <svg width="17" height="17" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+      <path
+        fill="#FFC107"
+        d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8a12 12 0 1 1 7.9-21l5.7-5.7A20 20 0 1 0 24 44a20 20 0 0 0 19.6-23.5z"
+      />
+      <path
+        fill="#FF3D00"
+        d="m6.3 14.7 6.6 4.8A12 12 0 0 1 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7A20 20 0 0 0 6.3 14.7z"
+      />
+      <path
+        fill="#4CAF50"
+        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2A12 12 0 0 1 12.7 28l-6.5 5A20 20 0 0 0 24 44z"
+      />
+      <path
+        fill="#1976D2"
+        d="M43.6 20.5H42V20H24v8h11.3a12 12 0 0 1-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.2-.1-2.4-.4-3.5z"
+      />
+    </svg>
+  );
+}
+
 export function GoogleSignInButton() {
   const t = useTranslations("Auth.Google");
   const locale = useLocale();
@@ -148,9 +172,9 @@ export function GoogleSignInButton() {
 
     const render = () => {
       container.innerHTML = "";
-      // Google draws into its own cross-origin iframe, so these options and the
-      // wrapper below are the only styling available. `width` must be a number
-      // of pixels - GIS ignores percentages and caps at 400.
+      // `width` must be a number of pixels - GIS ignores percentages and caps
+      // at 400. Render at the wrapper's width so the real (invisible) button
+      // covers our visible one exactly.
       const width = Math.min(
         400,
         Math.round(container.getBoundingClientRect().width) || 320
@@ -184,16 +208,32 @@ export function GoogleSignInButton() {
         <span className="h-px flex-1 bg-white/10" />
       </div>
 
-      {/* The iframe carries its own focus ring and a light default corner, so
-          the wrapper squares the corners, suppresses the stray outline and
-          holds the row height steady while Google's script loads. */}
-      <div
-        ref={containerRef}
-        aria-busy={isPending}
-        className="flex h-11 w-full items-center justify-center overflow-hidden rounded-md
-                   [&_iframe]:!mx-auto [&_iframe]:!my-0 [&>div]:w-full
-                   [&_*]:!outline-none [&_*]:!rounded-md"
-      />
+      {/*
+        Google draws into a cross-origin iframe we cannot restyle, and once the
+        visitor has a live Google session it switches to a personalised card
+        ("Continue as Ali") on a white background that ignores `filled_black`
+        entirely. So we draw our own button and lay Google's real one over it,
+        invisible but still the thing being clicked - their script sees a
+        genuine click on their own button, and the page keeps its dark theme.
+      */}
+      <div className="relative h-11 w-full" aria-busy={isPending}>
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 flex items-center justify-center gap-3
+                     rounded-md border border-white/15 bg-white/5 px-4
+                     text-[13px] font-semibold tracking-wide text-white
+                     transition-colors duration-150"
+        >
+          <GoogleGlyph />
+          <span>{t("continueWith")}</span>
+        </div>
+
+        <div
+          ref={containerRef}
+          className="absolute inset-0 z-10 overflow-hidden opacity-0
+                     [color-scheme:light] [&>div]:!w-full [&_iframe]:!w-full"
+        />
+      </div>
 
       {isPending && (
         <p className="text-center text-[12px] text-white/45">{t("signingIn")}</p>
