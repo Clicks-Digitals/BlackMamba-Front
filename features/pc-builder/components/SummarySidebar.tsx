@@ -209,6 +209,12 @@ function BuildSummaryBody({
     return item && !isDemoBuildItem(item);
   });
 
+  // How many core slots the shopper still has to choose for themselves.
+  const demoSlotCount = CORE_SLOTS.filter((slot) => {
+    const item = items[slot];
+    return !item || isDemoBuildItem(item);
+  }).length;
+
   return (
     <div className="relative flex flex-col gap-4">
       {assembling && !reduceMotion && (
@@ -369,6 +375,17 @@ function BuildSummaryBody({
             </div>
           ))}
         </div>
+      )}
+
+      {/*
+        The example rig looks exactly like a finished build, so a greyed-out
+        button with no explanation reads as broken. Say which slots are still
+        showing example parts.
+      */}
+      {!hasCompleteRealBuild && !hasBlockingIssues && (
+        <p className="mt-2 text-xs leading-relaxed text-white/45">
+          {tSummary("demoBuildHint", { count: demoSlotCount })}
+        </p>
       )}
 
       <div className="mt-2 flex gap-2">
