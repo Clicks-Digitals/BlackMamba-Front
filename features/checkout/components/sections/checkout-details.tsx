@@ -58,7 +58,10 @@ export default function CheckoutDetails({
   useEffect(() => {
     if (state.status === "success" && state.data?.orderId) {
       toast.success(tToast("orderPlaced"));
-      router.push(`/order-success?order_id=${state.data.orderId}`);
+      router.push(
+        `/order-success?order_id=${state.data.orderId}` +
+          `&order_number=${encodeURIComponent(state.data.orderNumber ?? "")}`
+      );
     } else if (state.status === "error" && state.message) {
       toast.error(state.message);
     }

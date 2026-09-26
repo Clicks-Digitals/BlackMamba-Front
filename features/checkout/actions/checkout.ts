@@ -12,9 +12,9 @@ import type { CheckoutData, CheckoutResponse } from "@/features/checkout/types";
 import { ActionState } from "@/types";
 
 export async function placeOrderAction(
-  _prev: ActionState<CheckoutData, { orderId: string }>,
+  _prev: ActionState<CheckoutData, { orderId: string; orderNumber: string }>,
   formData: FormData
-): Promise<ActionState<CheckoutData, { orderId: string }>> {
+): Promise<ActionState<CheckoutData, { orderId: string; orderNumber: string }>> {
   const rawData = formDataToObject(formData);
 
   const cookieStore = await cookies();
@@ -61,7 +61,10 @@ export async function placeOrderAction(
       status: "success",
       message: locale === "ar" ? "تم تأكيد الطلب بنجاح." : "Order placed successfully.",
       data: {
-        orderId: res.data.id
+        // orderId is the internal UUID, used for links. orderNumber is the
+        // reference the customer sees - it must match the one in their email.
+        orderId: res.data.id,
+        orderNumber: res.data.order_number ?? ""
       }
     };
   }

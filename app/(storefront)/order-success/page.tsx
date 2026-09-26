@@ -11,6 +11,10 @@ import { useAuthStore } from "@/stores/auth-store";
 export default function OrderSuccessPage() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("order_id");
+  // Show the reference the customer will see everywhere else - their email,
+  // the invoice, and what support searches by. `order_id` is the internal
+  // UUID and means nothing to them.
+  const orderNumber = searchParams.get("order_number") || orderId;
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const t = useTranslations("OrderSuccess");
 
@@ -19,7 +23,7 @@ export default function OrderSuccessPage() {
   }
 
   const handleCopyOrderId = () => {
-    navigator.clipboard.writeText(orderId);
+    navigator.clipboard.writeText(orderNumber ?? "");
     toast.success(t("copyToast"));
   };
 
@@ -48,8 +52,8 @@ export default function OrderSuccessPage() {
                 {t("orderNumberLabel")}
               </p>
               <div className="flex items-center justify-between rounded-lg border-b-2 border-primary/50 bg-primary/8 p-5">
-                <p className="font-mono text-3xl font-bold tracking-widest text-[#FFFFFF] md:text-4xl">
-                  {orderId.substring(0, 16).toUpperCase()}
+                <p className="font-mono text-xl font-bold tracking-wider break-all text-[#FFFFFF] sm:text-2xl md:text-3xl">
+                  {orderNumber}
                 </p>
                 <button
                   type="button"
