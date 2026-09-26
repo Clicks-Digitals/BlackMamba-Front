@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { googleLoginAction } from "@/features/auth/actions/google-login";
@@ -98,7 +98,6 @@ function useGsiScript() {
 export function GoogleSignInButton() {
   const t = useTranslations("Auth.Google");
   const locale = useLocale();
-  const router = useRouter();
   const searchParams = useSearchParams();
   const setAuth = useAuthStore((s) => s.setAuth);
 
@@ -120,14 +119,20 @@ export function GoogleSignInButton() {
           }
           trackLogin({ method: "google" });
           toast.success(result.message, { id: "google-login" });
-          router.push(callbackUrl || "/");
-          router.refresh();
+
+          // A full document navigation, not router.push. The session cookies
+          // were just set by the server action, and this runs after an await
+          // inside a transition - by then the transition scope has ended and
+          // the client-side push is dropped, which left the user sitting on
+          // the login page with a success toast. Reloading also guarantees
+          // every server component re-renders with the new session.
+          window.location.assign(callbackUrl || "/");
         } else {
           toast.error(result.message);
         }
       });
     },
-    [callbackUrl, router, setAuth]
+    [callbackUrl, setAuth]
   );
 
   useEffect(() => {
@@ -143,15 +148,22 @@ export function GoogleSignInButton() {
 
     const render = () => {
       container.innerHTML = "";
+      // Google draws into its own cross-origin iframe, so these options and the
+      // wrapper below are the only styling available. `width` must be a number
+      // of pixels - GIS ignores percentages and caps at 400.
+      const width = Math.min(
+        400,
+        Math.round(container.getBoundingClientRect().width) || 320
+      );
       window.google?.accounts.id.renderButton(container, {
         type: "standard",
         theme: "filled_black",
         size: "large",
         shape: "rectangular",
         text: "continue_with",
-        logo_alignment: "center",
+        logo_alignment: "left",
         locale,
-        width: Math.round(container.getBoundingClientRect().width) || 320,
+        width,
       });
     };
 
@@ -172,10 +184,15 @@ export function GoogleSignInButton() {
         <span className="h-px flex-1 bg-white/10" />
       </div>
 
+      {/* The iframe carries its own focus ring and a light default corner, so
+          the wrapper squares the corners, suppresses the stray outline and
+          holds the row height steady while Google's script loads. */}
       <div
         ref={containerRef}
         aria-busy={isPending}
-        className="flex min-h-11 w-full justify-center [&>div]:w-full [&_iframe]:mx-auto"
+        className="flex h-11 w-full items-center justify-center overflow-hidden rounded-md
+                   [&_iframe]:!mx-auto [&_iframe]:!my-0 [&>div]:w-full
+                   [&_*]:!outline-none [&_*]:!rounded-md"
       />
 
       {isPending && (
