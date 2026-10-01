@@ -6,7 +6,6 @@ import { normalizeCategories } from "@/lib/api/normalize-category";
 import { normalizeBanners, normalizeHomeSections, normalizeSwipers } from "@/lib/api/normalize-home";
 import type { Category } from "@/types/category";
 import type { PaginatedResponse } from "@/types/api";
-import { SHOWCASE_BRANDS } from "@/features/brand/data/showcase";
 import type { HomeBanner, HomeBrand, HomeLayoutSection, HomeSection, HomeSponsor, HomeSwiperSlide, HomeTestimonial } from "../types";
 import type { Campaign } from "@/types/campaign";
 
@@ -58,41 +57,26 @@ export async function getBrands(categoryId?: string | number): Promise<HomeBrand
   return extractList<HomeBrand>(res.data).filter((b) => b.is_active !== false);
 }
 
-/** Brands for the home “Shop by Brand” rail. Falls back to a showcase list if the API is empty. */
+/**
+ * Brands for the home "Shop by Brand" rail — whatever is in the panel.
+ *
+ * This used to collect brands from the *featured categories* and fall back to
+ * a hardcoded showcase list when that came back empty. Production has no
+ * featured categories, so the fallback was what everyone actually saw: a rail
+ * of brands that do not exist in the catalogue and lead nowhere. Reported by
+ * the client as "static brands, they are not in the panel".
+ *
+ * Now it reads the brand list directly. If the panel has no active brands the
+ * rail renders nothing, which is honest — better an absent section than seven
+ * logos a shopper cannot buy.
+ */
 export async function getShopByBrands(): Promise<HomeBrand[]> {
-  const categories = await getFeaturedCategories();
-  const merged = new Map<string, HomeBrand>();
+  const brands = await getBrands();
 
-  await Promise.all(
-    categories.slice(0, 8).map(async (cat) => {
-      const list = await getBrands(cat.id);
-      for (const brand of list) {
-        const key = brand.slug || brand.id;
-        if (key && !merged.has(key)) merged.set(key, brand);
-      }
-    })
-  );
-
-  if (merged.size > 0) {
-    return Array.from(merged.values()).map((brand) => withLocalBrandLogo(brand));
-  }
-
-  return SHOWCASE_BRANDS.map((entry, index) => ({
-    id: `showcase-${entry.slug}`,
-    name: entry.name,
-    name_ar: entry.name,
-    slug: entry.slug,
-    description: null,
-    description_ar: null,
-    logo: entry.logo,
-    logo_url: entry.logo,
-    website: null,
-    categories: [],
-    is_active: true,
-    display_order: index,
-    created_at: "",
-    updated_at: "",
-  }));
+  return brands
+    .slice()
+    .sort((a, b) => (a.display_order ?? 0) - (b.display_order ?? 0))
+    .map((brand) => withLocalBrandLogo(brand));
 }
 
 const LOCAL_BRAND_LOGOS: Record<string, string> = {

@@ -148,9 +148,11 @@ export function FiltersPanel({
 
   return (
     <div>
-      {/* Hierarchical category tree */}
+      {/* Hierarchical category tree. Collapsed by default - it is long enough
+          to push every other filter below the fold - but opens on its own when
+          a category is selected, so an active filter is never hidden. */}
       {hasCategories && (
-        <Section title={t("categories")} defaultOpen>
+        <Section title={t("categories")} defaultOpen={activeSlugs.size > 0}>
           <ul className="flex flex-col gap-1.5">
             {topLevel.map((cat) => (
               <CategoryNode

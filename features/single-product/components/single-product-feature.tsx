@@ -11,7 +11,6 @@ import {
   ProductComparisonTable,
   ProductOverview,
   ProductOverviewImage,
-  ProductFeatureShowcase,
   ProductReviewsSection,
   RelatedProducts,
 } from "@/features/single-product";
@@ -317,9 +316,6 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
       ) : overviewHtml ? (
         <ProductOverview html={overviewHtml} locale={locale} />
       ) : null}
-
-      {/* Demo marketing photos (Microless-style). Real content comes from overview HTML in CMS. */}
-      <ProductFeatureShowcase locale={locale} />
 
       <ProductComparisonTable
         table={product.table}
