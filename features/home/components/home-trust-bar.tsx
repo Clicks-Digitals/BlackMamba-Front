@@ -26,8 +26,8 @@ const TRUST_ITEMS: {
   },
   {
     Icon: Award,
-    enTitle: "1-Year Guarantee",
-    arTitle: "كفالة سنة كاملة",
+    enTitle: "Guaranteed Products",
+    arTitle: "منتجات مكفولة",
     enSub: "On all products",
     arSub: "على جميع المنتجات",
   },
