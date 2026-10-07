@@ -18,8 +18,15 @@ export async function getProducts(
   const results = res.ok ? (res.data.results ?? []).map(normalizeProduct) : [];
   return {
     count: res.ok ? res.data.count ?? results.length : 0,
-    next: res.ok ? res.data.next : null,
-    previous: res.ok ? res.data.previous : null,
+    // The API paginates under `links.next` and `total_pages`; there is no
+    // top-level `next`. Dropping them here left the infinite scroll unable to
+    // tell there was a second page, so the catalogue stopped dead at the
+    // first 24 products no matter how many existed.
+    next: res.ok ? res.data.next ?? res.data.links?.next ?? null : null,
+    previous: res.ok ? res.data.previous ?? res.data.links?.previous ?? null : null,
+    links: res.ok ? res.data.links : undefined,
+    total_pages: res.ok ? res.data.total_pages : undefined,
+    current_page: res.ok ? res.data.current_page : undefined,
     results,
   };
 }

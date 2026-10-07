@@ -98,7 +98,7 @@
       "addToCart": "Add Build to Cart",
       "shareTitle": "Save / Share build",
       "shareLinkCopied": "Share link copied to clipboard!",
-      "demoBuildHint": "{count, plural, one {# slot still shows an example part - pick your own to add this build to the cart.} other {# slots still show example parts - pick your own to add this build to the cart.}}"
+      "incompleteBuildHint": "{count, plural, one {# core slot still needs a part before you can add this build to the cart.} other {# core slots still need parts before you can add this build to the cart.}}"
     },
     "picker": {
       "description": "Search the catalog and pick a part for this slot.",

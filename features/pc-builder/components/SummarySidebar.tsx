@@ -11,7 +11,6 @@ import { usePCBuilderStore } from "@/stores/pc-builder-store";
 import { applyFixAction, addBuildToCartAction, shareBuildAction } from "@/features/pc-builder/actions/mutations";
 import { SLOT_ORDER, CORE_SLOTS, type PCSlot } from "@/features/pc-builder/types";
 import { DISCOUNT_TIERS } from "@/features/pc-builder/lib/pricing";
-import { isDemoBuildItem } from "@/features/pc-builder/demo-build";
 import { useCartStore } from "@/stores/cart-store";
 import {
   Sheet,
@@ -199,21 +198,13 @@ function BuildSummaryBody({
   const filled = selectedSlots.length;
   const coreFilled = CORE_SLOTS.filter((slot) => items[slot]).length;
   const complete = coreFilled === CORE_SLOTS.length && !hasBlockingIssues;
-  // `items` may include client-only preview placeholders from `withDemoBuild` (used to
-  // show a fully-populated example rig before the guest has picked anything real). Those
-  // never exist on the backend build, so checkout must require every core slot to hold a
-  // genuine, persisted selection — otherwise "Add to Cart" sends an ID the backend has no
-  // real items for and rejects with a generic "Bad request."
-  const hasCompleteRealBuild = CORE_SLOTS.every((slot) => {
-    const item = items[slot];
-    return item && !isDemoBuildItem(item);
-  });
+  // Every item is now a genuine, persisted selection — the example rig that
+  // used to pre-fill the slots has been removed — so a complete build is just
+  // every core slot being filled.
+  const hasCompleteRealBuild = CORE_SLOTS.every((slot) => items[slot]);
 
-  // How many core slots the shopper still has to choose for themselves.
-  const demoSlotCount = CORE_SLOTS.filter((slot) => {
-    const item = items[slot];
-    return !item || isDemoBuildItem(item);
-  }).length;
+  // How many core slots the shopper still has to choose.
+  const remainingCoreSlots = CORE_SLOTS.filter((slot) => !items[slot]).length;
 
   return (
     <div className="relative flex flex-col gap-4">
@@ -378,13 +369,12 @@ function BuildSummaryBody({
       )}
 
       {/*
-        The example rig looks exactly like a finished build, so a greyed-out
-        button with no explanation reads as broken. Say which slots are still
-        showing example parts.
+        A greyed-out Add to Cart with no explanation reads as broken.
+        Say how many core slots are still empty.
       */}
       {!hasCompleteRealBuild && !hasBlockingIssues && (
         <p className="mt-2 text-xs leading-relaxed text-white/45">
-          {tSummary("demoBuildHint", { count: demoSlotCount })}
+          {tSummary("incompleteBuildHint", { count: remainingCoreSlots })}
         </p>
       )}
 

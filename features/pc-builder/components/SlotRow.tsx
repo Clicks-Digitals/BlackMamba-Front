@@ -41,35 +41,6 @@ export function SlotRow({ slot, buildId, onOpenPicker, index = 0 }: SlotRowProps
   const handleRemove = (e: React.MouseEvent) => {
     e.stopPropagation();
     startRemove(async () => {
-      if (item?.id.startsWith("demo-")) {
-        const store = usePCBuilderStore.getState();
-        const nextItems = { ...store.items };
-        delete nextItems[slot];
-        const itemList = Object.values(nextItems).filter(Boolean) as NonNullable<(typeof nextItems)[PCSlot]>[];
-
-        setBuild({
-          id: buildId,
-          build_token: null,
-          is_template: false,
-          tier: null,
-          name: "Black Mamba Build",
-          name_ar: "جهاز بلاك مامبا",
-          target_performance: "",
-          thumbnail: null,
-          display_order: 0,
-          preference_processor_brand: store.preferences.preference_processor_brand,
-          preference_graphics_brand: store.preferences.preference_graphics_brand,
-          preference_color: store.preferences.preference_color,
-          items: itemList,
-          total_power_draw_watts: store.totalPowerDrawWatts,
-          has_blocking_issues: store.hasBlockingIssues,
-          compatibility: store.compatibility,
-          pricing: estimatePricing(itemList),
-          is_shareable: false,
-          share_slug: null,
-        });
-        return;
-      }
 
       const res = await removeBuildItemAction(buildId, slot);
       if (res.status === "success" && res.data) {

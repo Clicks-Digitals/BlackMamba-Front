@@ -19,7 +19,6 @@ import { getPartsForSlotAction } from "@/features/pc-builder/actions/queries";
 import { upsertBuildItemAction } from "@/features/pc-builder/actions/mutations";
 import { type PCSlot, type PCPart, type PCBuild, type PCPartSpec } from "@/features/pc-builder/types";
 import { estimatePricing } from "@/features/pc-builder/lib/pricing";
-import { getDemoPartsForSlot } from "@/features/pc-builder/demo-build";
 import { SLOT_ICONS } from "./slot-icons";
 
 interface PartPickerSheetProps {
@@ -94,16 +93,7 @@ export function PartPickerSheet({ slot, buildId, onClose }: PartPickerSheetProps
     const timer = setTimeout(async () => {
       const results = await getPartsForSlotAction(slot, buildId, search || undefined);
       if (!cancelled) {
-        const next =
-          results.length > 0
-            ? results
-            : getDemoPartsForSlot(slot).filter((p) =>
-                search
-                  ? p.name.toLowerCase().includes(search.toLowerCase()) ||
-                    (p.name_ar ?? "").includes(search)
-                  : true
-              );
-        setParts(next);
+        setParts(results);
         setIsLoading(false);
       }
     }, 250);
@@ -114,6 +104,13 @@ export function PartPickerSheet({ slot, buildId, onClose }: PartPickerSheetProps
   }, [slot, buildId, search]);
 
   const visibleParts = compatibleOnly ? parts.filter((p) => p.is_compatible !== false) : parts;
+
+  // Split rather than sort: the two groups are rendered under separate headings
+  // so a sold-out part never sits between two buyable ones.
+  const isPartInStock = (p: (typeof parts)[number]) =>
+    p.product_stock === null || (p.product_stock ?? 0) > 0;
+  const inStockParts = visibleParts.filter(isPartInStock);
+  const outOfStockParts = visibleParts.filter((p) => !isPartInStock(p));
   const compatibleCount = parts.filter((p) => p.is_compatible !== false).length;
   const SlotIcon = slot ? SLOT_ICONS[slot] : null;
 
@@ -200,18 +197,46 @@ export function PartPickerSheet({ slot, buildId, onClose }: PartPickerSheetProps
               )}
             </div>
           ) : (
-            <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              {visibleParts.map((part) => (
-                <PartPickerCard
-                  key={part.id}
-                  part={part}
-                  slot={slot!}
-                  buildId={buildId}
-                  slotIcon={SlotIcon}
-                  onAdded={handleAdded}
-                />
-              ))}
-            </ul>
+            <>
+              <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                {inStockParts.map((part) => (
+                  <PartPickerCard
+                    key={part.id}
+                    part={part}
+                    slot={slot!}
+                    buildId={buildId}
+                    slotIcon={SlotIcon}
+                    onAdded={handleAdded}
+                  />
+                ))}
+              </ul>
+
+              {/* Sold-out parts are kept visible but pushed below a divider, so
+                  they never sit between two parts the shopper can actually buy. */}
+              {outOfStockParts.length > 0 && (
+                <>
+                  <div className="mt-6 mb-3 flex items-center gap-3">
+                    <span className="h-px flex-1 bg-white/10" />
+                    <span className="text-[11px] font-semibold uppercase tracking-widest text-white/30">
+                      {tPicker("outOfStock")} ({outOfStockParts.length})
+                    </span>
+                    <span className="h-px flex-1 bg-white/10" />
+                  </div>
+                  <ul className="grid grid-cols-1 gap-2 opacity-60 sm:grid-cols-2">
+                    {outOfStockParts.map((part) => (
+                      <PartPickerCard
+                        key={part.id}
+                        part={part}
+                        slot={slot!}
+                        buildId={buildId}
+                        slotIcon={SlotIcon}
+                        onAdded={handleAdded}
+                      />
+                    ))}
+                  </ul>
+                </>
+              )}
+            </>
           )}
         </div>
       </SheetContent>
@@ -248,45 +273,6 @@ function PartPickerCard({
 
   function addToBuild(variationId?: string) {
     startSelect(async () => {
-      // Demo catalogue parts (client preview) — apply locally when API has no SKUs yet.
-      if (part.id.startsWith("demo-")) {
-        const store = usePCBuilderStore.getState();
-        const nextItems = { ...store.items };
-        nextItems[slot] = {
-          id: `demo-item-${slot.toLowerCase()}`,
-          slot,
-          product: part.id,
-          variation: variationId ?? null,
-          product_details: part,
-          variation_details: null,
-          unit_price: part.price ?? part.base_price ?? "0",
-        };
-        const itemList = Object.values(nextItems).filter(Boolean) as typeof nextItems[PCSlot][];
-
-        const build: PCBuild = {
-          id: buildId,
-          build_token: null,
-          is_template: false,
-          tier: null,
-          name: "Black Mamba Build",
-          name_ar: "جهاز بلاك مامبا",
-          target_performance: "",
-          thumbnail: null,
-          display_order: 0,
-          preference_processor_brand: store.preferences.preference_processor_brand,
-          preference_graphics_brand: store.preferences.preference_graphics_brand,
-          preference_color: store.preferences.preference_color,
-          items: itemList as NonNullable<(typeof nextItems)[PCSlot]>[],
-          total_power_draw_watts: store.totalPowerDrawWatts,
-          has_blocking_issues: store.hasBlockingIssues,
-          compatibility: store.compatibility,
-          pricing: estimatePricing(itemList),
-          is_shareable: false,
-          share_slug: null,
-        };
-        onAdded(build, partName);
-        return;
-      }
 
       const res = await upsertBuildItemAction(buildId, slot, part.id, variationId);
       if (res.status === "success" && res.data) {

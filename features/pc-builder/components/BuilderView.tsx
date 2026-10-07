@@ -17,7 +17,6 @@ import { BuilderMotionProvider, fadeUp, useBuilderMotion } from "./builder-motio
 import { EnergyBeam } from "./EnergyBeam";
 import { useAnimatedNumber } from "./use-animated-number";
 import { SLOT_ORDER, CORE_SLOTS, ACCESSORY_SLOTS, type PCBuild, type PCSlot } from "@/features/pc-builder/types";
-import { withDemoBuild } from "@/features/pc-builder/demo-build";
 
 interface BuilderViewProps {
   initialBuild: PCBuild;
@@ -25,11 +24,10 @@ interface BuilderViewProps {
 
 export function BuilderView({ initialBuild }: BuilderViewProps) {
   const [activeSlot, setActiveSlot] = useState<PCSlot | null>(null);
-  const seededBuild = useMemo(() => withDemoBuild(initialBuild), [initialBuild]);
 
   return (
     <BuilderMotionProvider activeSlot={activeSlot}>
-      <BuilderStage initialBuild={seededBuild} activeSlot={activeSlot} setActiveSlot={setActiveSlot} />
+      <BuilderStage initialBuild={initialBuild} activeSlot={activeSlot} setActiveSlot={setActiveSlot} />
     </BuilderMotionProvider>
   );
 }
