@@ -4,6 +4,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { HeaderIcons, HeaderUserMenu, NavDrawerOpenButton } from "@/components/layout/";
 import { HeaderSearch } from "@/components/layout/header/header-search";
 import { HeaderNav } from "@/components/layout/header/header-nav";
+import { HeaderOverflowMenu } from "@/components/layout/header/header-overflow-menu";
 import { LocaleSwitcher, CurrencySwitcher } from "@/components/shared";
 import { BrandLogo } from "@/components/shared/brand-logo";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
@@ -50,15 +51,18 @@ export async function Header() {
         <HeaderSearch variant="desktop" />
 
         <div className="ms-auto flex shrink-0 items-center gap-1">
-          <HeaderSearch variant="mobile" />
           <div className="hidden items-center divide-x divide-white/15 xl:flex">
             <LocaleSwitcher currentLocale={locale} variant="storeNav" />
             <CurrencySwitcher currencies={currencies} currentCurrency={currentCurrency} />
             <ThemeToggle />
           </div>
+          {/* Below xl, search / favourites / theme collapse into one menu so the
+              cart always has room — it was being clipped off the right edge. */}
           <div className="xl:hidden">
-            <ThemeToggle />
+            <HeaderOverflowMenu />
           </div>
+          {/* Hosts the mobile search overlay; the menu above opens it. */}
+          <HeaderSearch variant="mobile" showTrigger={false} />
           <HeaderIcons />
           <div className="hidden xl:block">
             <HeaderUserMenu />

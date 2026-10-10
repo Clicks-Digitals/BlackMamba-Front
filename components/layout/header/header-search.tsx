@@ -19,6 +19,7 @@ import { searchCategories } from "@/features/categories";
 import type { Product } from "@/types";
 import type { Category } from "@/types/category";
 import { formatPrice as priceWithCurrency } from "@/lib/utils";
+import { useHeaderSearch } from "@/stores/header-search-store";
 
 // ─── Recent searches (localStorage) ──────────────────────────────────────────
 
@@ -793,12 +794,19 @@ function MobileHeaderSearchOverlay({ search, isOpen, onClose }: MobileOverlayPro
 
 export function HeaderSearch({
   variant = "all",
+  showTrigger = true,
 }: {
   variant?: "all" | "desktop" | "mobile";
+  /**
+   * Set false to mount the overlay without its own button — for when the
+   * trigger lives elsewhere, such as the header's overflow menu.
+   */
+  showTrigger?: boolean;
 }) {
   const search = useSmartSearch();
   const t = useTranslations("Header");
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const mobileOpen = useHeaderSearch((s) => s.open);
+  const setMobileOpen = useHeaderSearch((s) => s.setOpen);
 
   const desktop = (
     <div className="hidden min-w-[320px] flex-1 xl:block xl:max-w-2xl 2xl:max-w-3xl">
@@ -808,14 +816,16 @@ export function HeaderSearch({
 
   const mobile = (
     <div className="xl:hidden">
-      <button
-        type="button"
-        onClick={() => setMobileOpen(true)}
-        aria-label={t("search")}
-        className="inline-flex size-9 shrink-0 items-center justify-center text-white/80 transition-colors duration-150 hover:bg-white/10 hover:text-white"
-      >
-        <Search className="size-5 shrink-0" strokeWidth={1.75} />
-      </button>
+      {showTrigger && (
+        <button
+          type="button"
+          onClick={() => setMobileOpen(true)}
+          aria-label={t("search")}
+          className="inline-flex size-9 shrink-0 items-center justify-center text-white/80 transition-colors duration-150 hover:bg-white/10 hover:text-white"
+        >
+          <Search className="size-5 shrink-0" strokeWidth={1.75} />
+        </button>
+      )}
       <MobileHeaderSearchOverlay
         search={search}
         isOpen={mobileOpen}

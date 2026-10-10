@@ -47,14 +47,14 @@ export function HeaderIcons() {
 
   return (
     <div className="flex items-center gap-1">
-      {/* Secondary: favourites. Icon only — the cart is the one that has to survive
-          a 360px viewport, so this one gives up its label first. */}
+      {/* Secondary: favourites. Below xl it lives in the header's overflow menu
+          instead, so the cart keeps the room it needs on a phone. */}
       <Link
         href="/favourites"
         aria-label={t("wishlist")}
         aria-current={favActive ? "page" : undefined}
         className={cn(
-          "relative inline-flex size-9 shrink-0 items-center justify-center text-store-nav-fg/80 transition-colors duration-150 hover:bg-white/10 hover:text-white",
+          "relative hidden size-9 shrink-0 items-center justify-center text-store-nav-fg/80 transition-colors duration-150 hover:bg-white/10 hover:text-white xl:inline-flex",
           favActive && "bg-white/10 text-white"
         )}
       >
@@ -77,7 +77,7 @@ export function HeaderIcons() {
         )}
       >
         <ShoppingCart className="pointer-events-none size-[19px]" strokeWidth={2} />
-        <span className="hidden text-[13px] font-semibold leading-none min-[420px]:inline">
+        <span className="hidden text-[13px] font-semibold leading-none min-[360px]:inline">
           {t("cart")}
         </span>
         <CountBadge count={cartCount} className="bg-white text-primary ring-1 ring-primary/20" />
