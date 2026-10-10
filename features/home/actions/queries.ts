@@ -10,7 +10,7 @@ import type { HomeBanner, HomeBrand, HomeLayoutSection, HomeSection, HomeSponsor
 import type { Campaign } from "@/types/campaign";
 
 export async function getFeaturedCategories(): Promise<Category[]> {
-  const res = await apiClient<unknown>("/categories/?featured=true", { revalidate: 300 });
+  const res = await apiClient<unknown>("/categories/?featured=true", { revalidate: 30 });
   if (!res.ok) return [];
   const cats = normalizeCategories(res.data);
   return cats.filter((c) => c.is_featured).length ? cats.filter((c) => c.is_featured) : cats;
@@ -19,31 +19,31 @@ export async function getFeaturedCategories(): Promise<Category[]> {
 export async function getNavCategories(): Promise<Category[]> {
   const featured = await getFeaturedCategories();
   if (featured.length) return featured;
-  const res = await apiClient<unknown>("/categories/?page_size=100", { revalidate: 300 });
+  const res = await apiClient<unknown>("/categories/?page_size=100", { revalidate: 30 });
   if (!res.ok) return [];
   return normalizeCategories(res.data).filter((c) => !c.parent).slice(0, 12);
 }
 
 export async function getStorefrontCategories(): Promise<Category[]> {
-  const res = await apiClient<unknown>("/categories/?page_size=100", { revalidate: 300 });
+  const res = await apiClient<unknown>("/categories/?page_size=100", { revalidate: 30 });
   if (!res.ok) return [];
   return normalizeCategories(res.data);
 }
 
 export async function getHomeSwipers(): Promise<HomeSwiperSlide[]> {
-  const res = await apiClient<unknown>("/cms/swipers/", { revalidate: 120 });
+  const res = await apiClient<unknown>("/cms/swipers/", { revalidate: 30 });
   if (!res.ok) return [];
   return normalizeSwipers(res.data);
 }
 
 export async function getHomeSections(): Promise<HomeSection[]> {
-  const res = await apiClient<unknown>("/cms/sections/", { revalidate: 120 });
+  const res = await apiClient<unknown>("/cms/sections/", { revalidate: 30 });
   if (!res.ok) return [];
   return normalizeHomeSections(res.data);
 }
 
 export async function getSponsors(): Promise<HomeSponsor[]> {
-  const res = await apiClient<PaginatedResponse<HomeSponsor>>("/cms/sponsors/", { revalidate: 300 });
+  const res = await apiClient<PaginatedResponse<HomeSponsor>>("/cms/sponsors/", { revalidate: 30 });
   if (!res.ok) return [];
   return extractList<HomeSponsor>(res.data).filter((s) => s.is_active && (s.image_url || s.image));
 }
@@ -52,7 +52,7 @@ export async function getBrands(categoryId?: string | number): Promise<HomeBrand
   const url = categoryId
     ? `/categories/brands/?page_size=100&category=${categoryId}`
     : `/categories/brands/?page_size=100`;
-  const res = await apiClient<PaginatedResponse<HomeBrand>>(url, { revalidate: 300 });
+  const res = await apiClient<PaginatedResponse<HomeBrand>>(url, { revalidate: 30 });
   if (!res.ok) return [];
   return extractList<HomeBrand>(res.data).filter((b) => b.is_active !== false);
 }
@@ -103,13 +103,13 @@ function withLocalBrandLogo(brand: HomeBrand): HomeBrand {
 }
 
 export async function getHomeBanners(): Promise<HomeBanner[]> {
-  const res = await apiClient<unknown>("/cms/banners/", { revalidate: 120 });
+  const res = await apiClient<unknown>("/cms/banners/", { revalidate: 30 });
   if (!res.ok) return [];
   return normalizeBanners(res.data);
 }
 
 export async function getHomeLayout(): Promise<HomeLayoutSection[]> {
-  const res = await apiClient<PaginatedResponse<HomeLayoutSection>>("/cms/home-layout/", { revalidate: 120 });
+  const res = await apiClient<PaginatedResponse<HomeLayoutSection>>("/cms/home-layout/", { revalidate: 30 });
   if (!res.ok) return [];
   return (res.data.results ?? []).sort((a, b) => a.order - b.order);
 }
@@ -123,13 +123,13 @@ export type FeaturedCoupon = {
 };
 
 export async function getFeaturedCoupon(): Promise<FeaturedCoupon | null> {
-  const res = await apiClient<FeaturedCoupon>("/promotions/coupons/featured/", { revalidate: 300 });
+  const res = await apiClient<FeaturedCoupon>("/promotions/coupons/featured/", { revalidate: 30 });
   if (!res.ok || !res.data) return null;
   return res.data;
 }
 
 export async function getHomeTestimonials(): Promise<HomeTestimonial[]> {
-  const res = await apiClient<PaginatedResponse<HomeTestimonial>>("/testimonials/", { revalidate: 300 });
+  const res = await apiClient<PaginatedResponse<HomeTestimonial>>("/testimonials/", { revalidate: 30 });
   if (!res.ok) return [];
   return res.data.results ?? [];
 }
@@ -145,14 +145,14 @@ export type OfferSection = {
 
 /** All active announcement/offer bar entries (already filtered & ordered by the CMS). */
 export async function getActiveOffers(): Promise<OfferSection[]> {
-  const res = await apiClient<PaginatedResponse<OfferSection>>("/cms/offer-sections/", { revalidate: 300 });
+  const res = await apiClient<PaginatedResponse<OfferSection>>("/cms/offer-sections/", { revalidate: 30 });
   if (!res.ok) return [];
   return res.data.results ?? [];
 }
 
 /** Currently-live campaigns for the carousel (backend filters by is_active + date range). */
 export async function getActiveCampaigns(): Promise<Campaign[]> {
-  const res = await apiClient<PaginatedResponse<Campaign>>("/cms/campaigns/", { revalidate: 60 });
+  const res = await apiClient<PaginatedResponse<Campaign>>("/cms/campaigns/", { revalidate: 30 });
   if (!res.ok) return [];
   return res.data.results ?? [];
 }
