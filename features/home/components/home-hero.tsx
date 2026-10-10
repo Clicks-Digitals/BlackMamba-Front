@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import type { Category } from "@/types/category";
 import type { Product } from "@/types/product";
 import { addToCartAction, updateCartItemAction } from "@/features/cart/actions/mutations";
@@ -79,7 +79,7 @@ function productPrices(product: Product) {
       ? product.discount_price!
       : product.base_price;
   const origPrice = hasCampaign || hasDiscount ? product.base_price : null;
-  return { finalPrice, origPrice, sym: product.currency_info?.symbol ?? "" };
+  return { finalPrice, origPrice, currency: product.currency_info ?? null };
 }
 
 function categoryLucideIcon(cat: Category): LucideIcon {
@@ -236,7 +236,6 @@ export function HomeHero({
                           priority
                           sizes="(max-width: 1024px) 100vw, 75vw"
                           className="object-cover object-center"
-                          unoptimized
                         />
                       ) : (
                         <div className="absolute inset-0 bg-white dark:bg-background" />
@@ -346,7 +345,6 @@ function ProductMedia({ src, alt }: { src: string | null; alt: string }) {
           fill
           sizes="120px"
           className="object-contain p-2"
-          unoptimized
         />
       ) : (
         <div className="absolute inset-0 bg-muted" />
@@ -360,7 +358,7 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
   const rtl = locale === "ar";
   const name = rtl ? product.name_ar || product.name : product.name;
   const img = productThumb(product);
-  const { finalPrice, origPrice, sym } = productPrices(product);
+  const { finalPrice, origPrice, currency } = productPrices(product);
   const brand = product.brand
     ? rtl
       ? product.brand.name_ar || product.brand.name
@@ -441,15 +439,19 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
           </p>
           <div className="mt-auto flex flex-wrap items-baseline gap-1.5 pt-3">
             {finalPrice && (
-              <span className={cn("text-[1.2rem] font-bold tabular-nums text-foreground", rtl && "font-cairo")}>
-                {sym}
-                {finalPrice}
+              <span
+                dir={rtl ? "auto" : "ltr"}
+                className={cn("text-[1.2rem] font-bold tabular-nums text-foreground", rtl && "font-cairo")}
+              >
+                {formatPrice(finalPrice, currency, rtl ? "ar" : "en")}
               </span>
             )}
             {origPrice && (
-              <span className="text-[12px] tabular-nums text-muted-foreground line-through">
-                {sym}
-                {origPrice}
+              <span
+                dir={rtl ? "auto" : "ltr"}
+                className="text-[12px] tabular-nums text-muted-foreground line-through"
+              >
+                {formatPrice(origPrice, currency, rtl ? "ar" : "en")}
               </span>
             )}
           </div>
@@ -513,7 +515,7 @@ function HeroDealCard({
   if (product) {
     const name = rtl ? product.name_ar || product.name : product.name;
     const img = productThumb(product);
-    const { finalPrice, origPrice, sym } = productPrices(product);
+    const { finalPrice, origPrice, currency } = productPrices(product);
 
     return (
       <article className="group/card flex h-full flex-col overflow-hidden rounded-[6px] border border-border bg-card transition-colors duration-150 hover:border-primary/50 sm:col-span-2 lg:col-span-1">
@@ -549,15 +551,19 @@ function HeroDealCard({
             </p>
             <div className="mt-auto flex flex-wrap items-baseline gap-1.5 pt-3">
               {finalPrice && (
-                <span className={cn("text-[1.35rem] font-bold tabular-nums text-deal", rtl && "font-cairo")}>
-                  {sym}
-                  {finalPrice}
+                <span
+                  dir={rtl ? "auto" : "ltr"}
+                  className={cn("text-[1.35rem] font-bold tabular-nums text-deal", rtl && "font-cairo")}
+                >
+                  {formatPrice(finalPrice, currency, rtl ? "ar" : "en")}
                 </span>
               )}
               {origPrice && (
-                <span className="text-[12px] tabular-nums text-muted-foreground line-through">
-                  {sym}
-                  {origPrice}
+                <span
+                  dir={rtl ? "auto" : "ltr"}
+                  className="text-[12px] tabular-nums text-muted-foreground line-through"
+                >
+                  {formatPrice(origPrice, currency, rtl ? "ar" : "en")}
                 </span>
               )}
             </div>

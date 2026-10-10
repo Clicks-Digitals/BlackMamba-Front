@@ -25,7 +25,7 @@ export const CORE_SLOTS: PCSlot[] = [
   "STORAGE",
 ];
 
-/** Optional peripherals — Newegg/Microless-style extras. */
+/** Optional peripherals. */
 export const ACCESSORY_SLOTS: PCSlot[] = [
   "MONITOR",
   "KEYBOARD",

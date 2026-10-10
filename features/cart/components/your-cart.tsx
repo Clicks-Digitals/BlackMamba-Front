@@ -14,7 +14,7 @@ import { cartItemToAnalyticsItem, trackRemoveFromCart } from "@/features/analyti
 import type { CartItem } from "@/features/cart/types";
 import { ProductCard } from "@/components/shared/product-card";
 import { CartVariationBadges } from "@/features/cart/components/cart-variation-badges";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import type { Product } from "@/types";
 
 interface YourCartProps {
@@ -77,7 +77,8 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
 
   const optimisticTotal = optimisticItems.reduce((s, i) => s + parseFloat(i.total_price || "0"), 0).toFixed(2);
   const displayedTotal = isPending ? optimisticTotal : totalAmount;
-  const currencySymbol = optimisticItems[0]?.product_details?.currency_info?.symbol ?? "JD";
+  const currency = optimisticItems[0]?.product_details?.currency_info ?? null;
+  const price = (amount: string | number) => formatPrice(amount, currency, locale);
 
   const subtotal = parseFloat(displayedTotal);
   const shippingFee = 3;
@@ -138,15 +139,20 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
       <div className="layout-page layout-gutter-x pb-16">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
           <div className="flex-1">
-            <div className="rounded-lg border border-[#EB0B1A]/15 bg-white/3 px-3 py-5 sm:px-6">
-              <div className="mb-4 grid grid-cols-[1fr_auto_auto] gap-2 border-b border-white/8 pb-3 sm:gap-4">
-                <span className="text-sm font-medium text-[#FFFFFF] sm:text-xl">{t("tableOrder")}</span>
-                <span className="w-14 text-center text-xs font-medium text-white/50 sm:w-20 sm:text-sm">
+            <div className="rounded-lg border border-border bg-card px-3 py-5 sm:px-6">
+              {/* The three-column header only makes sense once price and qty sit
+                  on the same row, which is from sm up. */}
+              <div className="mb-4 hidden grid-cols-[1fr_auto_auto] gap-4 border-b border-border pb-3 sm:grid">
+                <span className="text-xl font-medium text-foreground">{t("tableOrder")}</span>
+                <span className="w-24 text-center text-sm font-medium text-muted-foreground">
                   {t("tablePrice")}
                 </span>
-                <span className="w-16 text-center text-xs font-medium text-white/50 sm:w-24 sm:text-sm">
+                <span className="w-28 text-center text-sm font-medium text-muted-foreground">
                   {t("tableQty")}
                 </span>
+              </div>
+              <div className="mb-4 border-b border-border pb-3 sm:hidden">
+                <span className="text-base font-semibold text-foreground">{t("tableOrder")}</span>
               </div>
 
               <div className="flex flex-col gap-4">
@@ -161,9 +167,9 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
 
                   return (
                     <React.Fragment key={item.id}>
-                      <div className="grid grid-cols-[1fr_auto_auto] items-center gap-2 sm:gap-4">
-                        <div className="flex items-center gap-2 sm:gap-3">
-                          <div className="relative size-16 shrink-0 overflow-hidden rounded-lg border border-[#000000] bg-[#000000] sm:size-22.5">
+                      <div className="flex flex-col gap-3 sm:grid sm:grid-cols-[1fr_auto_auto] sm:items-center sm:gap-4">
+                        <div className="flex items-start gap-3">
+                          <div className="relative size-16 shrink-0 overflow-hidden rounded-lg border border-border bg-muted sm:size-22.5">
                             {thumbnail ? (
                               <Image
                                 src={thumbnail}
@@ -171,19 +177,18 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                                 fill
                                 sizes="(max-width:640px) 64px, 90px"
                                 className="object-cover"
-                                unoptimized
                               />
                             ) : (
-                              <div className="flex size-full items-center justify-center bg-white/5">
-                                <span className="font-chillax text-lg text-foreground/30">PC</span>
+                              <div className="flex size-full items-center justify-center bg-muted">
+                                <span className="font-chillax text-lg text-muted-foreground">PC</span>
                               </div>
                             )}
                           </div>
                           <div className="min-w-0">
                             {categoryLine && !isBuild ? (
-                              <p className="text-[11px] text-white/45">{categoryLine}</p>
+                              <p className="text-[11px] text-muted-foreground">{categoryLine}</p>
                             ) : null}
-                            <p className="text-[15px] font-bold text-[#FFFFFF]">{name}</p>
+                            <p className="text-[15px] font-bold text-foreground">{name}</p>
                             {isBuild && buildParts.length > 0 && (
                               <button
                                 type="button"
@@ -194,7 +199,7 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                                     return next;
                                   })
                                 }
-                                className="mt-0.5 flex items-center gap-0.5 text-[11px] font-medium text-foreground/60 hover:text-foreground transition-colors"
+                                className="mt-0.5 flex items-center gap-0.5 text-[11px] font-medium text-muted-foreground transition-colors hover:text-foreground"
                               >
                                 {buildParts.length} {ar ? "قطعة" : "parts"}
                                 <ChevronDown
@@ -209,53 +214,58 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                           </div>
                         </div>
 
-                        <div className="w-20 text-center" dir="ltr">
-                          <span className="text-base font-medium text-[#FFFFFF] tabular-nums">
-                            {currencySymbol}
-                            {item.price_at_time}
-                          </span>
-                        </div>
-
-                        <div className="flex w-24 items-center justify-between gap-1">
-                          <div
-                            className="flex items-center rounded-lg border border-[#EB0B1A]/40 bg-white/4 px-1"
-                            dir="ltr"
-                          >
-                            <button
-                              type="button"
-                              onClick={() => handleQuantity(item, -1)}
-                              disabled={item.quantity <= 1 || isPending}
-                              className="flex size-5 items-center justify-center text-[19px] text-[#FFFFFF] disabled:opacity-40"
-                            >
-                              <Minus size={12} />
-                            </button>
-                            <span className="min-w-5 text-center text-[19px] text-[#FFFFFF]">
-                              {item.quantity}
+                        {/* Mobile puts price and quantity on their own row under
+                            the product; sm+ restores the three-column table. */}
+                        <div className="flex items-center justify-between gap-3 sm:contents">
+                          <div className="text-start sm:w-24 sm:text-center" dir={ar ? "auto" : "ltr"}>
+                            <span className="text-base font-semibold text-foreground tabular-nums">
+                              {price(item.price_at_time)}
                             </span>
+                          </div>
+
+                          <div className="flex items-center gap-2 sm:w-28 sm:justify-between sm:gap-1">
+                            <div
+                              className="flex items-center gap-1 rounded-lg border border-border bg-background px-1.5 py-1"
+                              dir="ltr"
+                            >
+                              <button
+                                type="button"
+                                onClick={() => handleQuantity(item, -1)}
+                                disabled={item.quantity <= 1 || isPending}
+                                aria-label="-"
+                                className="flex size-7 items-center justify-center rounded text-foreground transition-colors hover:bg-muted disabled:opacity-40"
+                              >
+                                <Minus size={14} />
+                              </button>
+                              <span className="min-w-6 text-center text-[15px] font-semibold text-foreground tabular-nums">
+                                {item.quantity}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => handleQuantity(item, 1)}
+                                disabled={isPending}
+                                aria-label="+"
+                                className="flex size-7 items-center justify-center rounded text-foreground transition-colors hover:bg-muted disabled:opacity-40"
+                              >
+                                <Plus size={14} />
+                              </button>
+                            </div>
                             <button
                               type="button"
-                              onClick={() => handleQuantity(item, 1)}
+                              onClick={() => handleRemove(item)}
                               disabled={isPending}
-                              className="flex size-5 items-center justify-center text-[19px] text-[#FFFFFF] disabled:opacity-40"
+                              className="flex size-8 items-center justify-center rounded text-muted-foreground transition-colors hover:bg-muted hover:text-primary"
+                              aria-label={t("removeAria")}
                             >
-                              <Plus size={12} />
+                              <Trash2 size={16} />
                             </button>
                           </div>
-                          <button
-                            type="button"
-                            onClick={() => handleRemove(item)}
-                            disabled={isPending}
-                            className="text-white/40 transition-colors hover:text-[#EB0B1A]"
-                            aria-label={t("removeAria")}
-                          >
-                            <Trash2 size={16} />
-                          </button>
                         </div>
                       </div>
 
                       {/* ── PC Build parts breakdown ── */}
                       {isBuild && isExpanded && buildParts.length > 0 && (
-                        <div className="ms-18 sm:ms-25.5 overflow-hidden rounded-lg border border-primary/10 bg-[#000000]">
+                        <div className="overflow-hidden rounded-lg border border-border bg-background sm:ms-25.5">
                           {buildParts.map((part, idx) => {
                             const SlotIcon = SLOT_ICONS[part.slot];
                             return (
@@ -263,13 +273,13 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                               key={part.id}
                               className={cn(
                                 "flex items-center gap-2.5 px-3 py-2",
-                                idx < buildParts.length - 1 && "border-b border-primary/8"
+                                idx < buildParts.length - 1 && "border-b border-border"
                               )}
                             >
-                              <span className="w-22 shrink-0 text-[10px] font-semibold uppercase tracking-wide text-foreground/40">
+                              <span className="w-22 shrink-0 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
                                 {SLOT_LABELS[part.slot]}
                               </span>
-                              <div className="relative size-7 shrink-0 overflow-hidden rounded-md bg-[#000000] border border-[#000000] flex items-center justify-center">
+                              <div className="relative flex size-7 shrink-0 items-center justify-center overflow-hidden rounded-md border border-border bg-card">
                                 {part.product_details.thumbnail ? (
                                   <Image
                                     src={part.product_details.thumbnail}
@@ -277,17 +287,19 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                                     fill
                                     sizes="28px"
                                     className="object-contain p-0.5"
-                                    unoptimized
                                   />
                                 ) : (
-                                  <SlotIcon className="size-3.5 text-foreground/30" />
+                                  <SlotIcon className="size-3.5 text-muted-foreground" />
                                 )}
                               </div>
-                              <span className="flex-1 truncate text-[12px] text-ink">
+                              <span className="flex-1 truncate text-[12px] text-foreground">
                                 {(ar && part.product_details.name_ar) || part.product_details.name}
                               </span>
-                              <span className="shrink-0 text-[12px] font-semibold tabular-nums text-ink" dir="ltr">
-                                {currencySymbol}{part.unit_price}
+                              <span
+                                className="shrink-0 text-[12px] font-semibold tabular-nums text-foreground"
+                                dir={ar ? "auto" : "ltr"}
+                              >
+                                {price(part.unit_price)}
                               </span>
                             </div>
                             );
@@ -295,7 +307,7 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                         </div>
                       )}
 
-                      <div className="h-px bg-white/8" />
+                      <div className="h-px bg-border" />
                     </React.Fragment>
                   );
                 })}
@@ -306,45 +318,51 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
           <div className="w-full lg:w-89.5 lg:shrink-0">
             <h2
               className={cn(
-                "mb-3 text-3xl text-[#FFFFFF]",
+                "mb-3 text-3xl text-foreground",
                 ar ? "font-cairo font-semibold" : "font-chillax"
               )}
             >
               {t("paymentSummary")}
             </h2>
-            <div className="rounded-lg border border-[#EB0B1A]/15 bg-white/3 px-6 py-5">
+            <div className="rounded-lg border border-border bg-card px-4 py-5 sm:px-6">
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-[15px] font-medium text-[#FFFFFF]">{t("summaryOrder")}</span>
-                  <span className="text-[15px] font-medium text-[#FFFFFF] tabular-nums" dir="ltr">
-                    {currencySymbol}
-                    {displayedTotal}
+                  <span className="text-[15px] font-medium text-foreground">{t("summaryOrder")}</span>
+                  <span
+                    className="text-[15px] font-medium text-foreground tabular-nums"
+                    dir={ar ? "auto" : "ltr"}
+                  >
+                    {price(displayedTotal)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[15px] font-medium text-[#FFFFFF]">{t("shippingFees")}</span>
-                  <span className="text-[15px] font-medium text-[#FFFFFF] tabular-nums" dir="ltr">
-                    {currencySymbol}
-                    {shippingFee}
+                  <span className="text-[15px] font-medium text-foreground">{t("shippingFees")}</span>
+                  <span
+                    className="text-[15px] font-medium text-foreground tabular-nums"
+                    dir={ar ? "auto" : "ltr"}
+                  >
+                    {price(shippingFee)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[15px] font-medium text-[#FFFFFF]">{t("paymentMethod")}</span>
-                  <span className="text-[15px] font-medium text-[#FFFFFF]">{t("cashOnDelivery")}</span>
+                  <span className="text-[15px] font-medium text-foreground">{t("paymentMethod")}</span>
+                  <span className="text-[15px] font-medium text-foreground">{t("cashOnDelivery")}</span>
                 </div>
-                <div className="my-1 h-px bg-white/8" />
+                <div className="my-1 h-px bg-border" />
                 <div className="flex items-center justify-between">
-                  <span className="text-[15px] font-bold text-[#FFFFFF]">{t("totalAmount")}</span>
-                  <span className="text-[15px] font-bold text-[#EB0B1A] tabular-nums" dir="ltr">
-                    {currencySymbol}
-                    {grandTotal.toFixed(2)}
+                  <span className="text-[15px] font-bold text-foreground">{t("totalAmount")}</span>
+                  <span
+                    className="text-[15px] font-bold text-primary tabular-nums"
+                    dir={ar ? "auto" : "ltr"}
+                  >
+                    {price(grandTotal)}
                   </span>
                 </div>
               </div>
 
               <Link
                 href="/checkout"
-                className="mt-5 flex h-11.75 w-full items-center justify-center rounded-lg bg-primary text-[15px] font-medium text-white transition-colors hover:bg-[#EB0B1A]"
+                className="mt-5 flex h-11.75 w-full items-center justify-center rounded-lg bg-primary text-[15px] font-semibold text-white transition-colors hover:bg-[#c40a16]"
               >
                 {t("orderNow")}
               </Link>
@@ -357,13 +375,13 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
             <div className="mb-6 flex flex-col items-stretch justify-between gap-4 sm:flex-row sm:items-center">
               <h2
                 className={cn(
-                  "text-5xl text-foreground sm:text-6xl",
+                  "text-2xl text-foreground sm:text-4xl lg:text-5xl",
                   ar ? "font-cairo font-semibold tracking-normal" : "font-chillax tracking-wide"
                 )}
               >
                 {t("youMayAlsoLike")}
               </h2>
-              <Link href="/products" className="text-xl font-medium text-foreground hover:underline sm:text-2xl">
+              <Link href="/products" className="text-sm font-medium text-foreground hover:underline sm:text-base">
                 {t("viewMore")}
               </Link>
             </div>

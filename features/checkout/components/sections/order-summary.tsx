@@ -86,7 +86,7 @@ export function OrderSummary({
                 <div className="flex gap-3">
                   <div className="relative aspect-square w-14 shrink-0 overflow-hidden rounded-lg border border-border bg-card">
                     {thumbnail ? (
-                      <Image src={thumbnail} fill sizes="56px" className="object-cover" alt={name ?? ""} unoptimized />
+                      <Image src={thumbnail} fill sizes="56px" className="object-cover" alt={name ?? ""} />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center text-xs font-bold text-white/35">
                         PC
@@ -144,7 +144,6 @@ export function OrderSummary({
                               fill
                               sizes="32px"
                               className="object-contain p-0.5"
-                              unoptimized
                             />
                           ) : (
                             <SlotIcon className="size-4 text-white/30" />

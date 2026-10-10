@@ -75,7 +75,7 @@ export function ReadyMadeCard({ build }: { build: PCBuild }) {
     <article className="group flex flex-col overflow-hidden rounded-lg border border-[#000000] bg-[#000000] transition-colors hover:border-[#EB0B1A]/30">
       <div className="relative h-28 w-full overflow-hidden bg-[#000000]">
         {build.thumbnail ? (
-          <Image src={build.thumbnail} alt={name} fill className="object-cover" unoptimized />
+          <Image src={build.thumbnail} alt={name} fill className="object-cover" />
         ) : (
           <RigStrip filledSlots={filledSlots} />
         )}

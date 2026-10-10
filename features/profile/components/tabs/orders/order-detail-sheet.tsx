@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/sheet";
 import type { Order } from "@/types";
 import { useTranslations, useLocale } from "next-intl";
+import { currencyLabel } from "@/lib/utils";
 import { formatDate } from "@/lib/utils/date";
 
 interface OrderDetailSheetProps {
@@ -129,8 +130,10 @@ export function OrderDetailSheet({
             <div className="space-y-2">
               {(() => {
                 const info = order.currency_info as { symbol?: string; code?: string } | string | undefined;
-                const currencySymbol =
-                  typeof info === "string" ? info : info?.symbol || info?.code || "";
+                const currencySymbol = currencyLabel(
+                  typeof info === "string" ? { code: info, symbol: info } : info,
+                  locale
+                );
 
                 return (
                   <>

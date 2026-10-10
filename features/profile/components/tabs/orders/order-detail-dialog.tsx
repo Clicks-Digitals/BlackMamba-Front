@@ -11,6 +11,7 @@ import {
 import type { Order } from "@/types";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
+import { currencyLabel } from "@/lib/utils";
 import { formatDate } from "@/lib/utils/date";
 
 interface OrderDetailDialogProps {
@@ -67,12 +68,12 @@ export function OrderDetailDialog({
     UNPAID: t("paymentUnpaid"),
     FAILED: t("paymentFailed"),
   } as Record<string, string>)[order.payment_status] ?? order.payment_status;
-  const currencySymbol =
+  const currencySymbol = currencyLabel(
     typeof order.currency_info === "string"
-      ? order.currency_info
-      : (order.currency_info as Record<string, string>)?.symbol ||
-        (order.currency_info as Record<string, string>)?.code ||
-        "";
+      ? { code: order.currency_info, symbol: order.currency_info }
+      : (order.currency_info as { symbol?: string; code?: string } | undefined),
+    locale
+  );
 
   return (
     <Dialog open={open} onOpenChange={onClose}>

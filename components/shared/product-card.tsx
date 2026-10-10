@@ -6,7 +6,7 @@ import { useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { ShoppingCart, Check, Loader2, Star } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import type { Product } from "@/types/product";
 import { WishlistButton } from "./wishlist-button";
 import { ClearanceSaleCountdown } from "./clearance-countdown";
@@ -36,7 +36,7 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
     product.thumbnail ||
     product.gallery?.find((g) => g.is_primary)?.file ||
     product.gallery?.[0]?.file;
-  const sym = product.currency_info?.symbol ?? "";
+  const currency = product.currency_info;
   const brand = product.brand
     ? rtl
       ? product.brand.name_ar || product.brand.name
@@ -116,22 +116,24 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
     : t("addToCart");
 
   const cartButtonClass = cn(
-    "inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-none transition-colors duration-150",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+    "inline-flex h-10 w-full items-center justify-center gap-2 rounded-[4px] px-3",
+    "text-[13px] font-semibold leading-none transition-colors duration-150",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-1",
     outOfStock
-      ? "cursor-not-allowed bg-muted text-muted-foreground/50"
+      ? "cursor-not-allowed bg-muted text-muted-foreground/60"
       : isInCart
-        ? "bg-primary text-white hover:bg-[var(--blue-hover)]"
-        : "border border-border bg-transparent text-foreground hover:border-primary hover:bg-primary hover:text-white",
+        ? "bg-foreground text-background hover:bg-foreground/85"
+        : "bg-primary text-white shadow-sm hover:bg-[#c40a16] active:translate-y-px",
+    rtl && "font-cairo",
     isPending && "cursor-not-allowed opacity-70"
   );
 
   const cartIcon = isPending ? (
-    <Loader2 size={14} className="animate-spin" strokeWidth={2} />
+    <Loader2 size={16} className="animate-spin" strokeWidth={2} />
   ) : isInCart && !outOfStock ? (
-    <Check size={14} strokeWidth={2.25} />
+    <Check size={16} strokeWidth={2.5} />
   ) : (
-    <ShoppingCart size={14} strokeWidth={1.75} />
+    <ShoppingCart size={16} strokeWidth={2} />
   );
 
   return (
@@ -155,7 +157,6 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
               fill
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
               className="object-contain p-4"
-              unoptimized
             />
           ) : (
             <div className="absolute inset-0 bg-[#FFFFFF]" />
@@ -226,20 +227,22 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
         <div className="mt-auto pt-3">
           {finalPrice && (
             <p
+              dir={rtl ? "auto" : "ltr"}
               className={cn(
                 "text-[18px] leading-none font-bold tabular-nums text-foreground",
                 hasCampaign && "text-deal",
                 rtl && "font-cairo"
               )}
             >
-              {sym}
-              {finalPrice}
+              {formatPrice(finalPrice, currency, rtl ? "ar" : "en")}
             </p>
           )}
           {origPrice && (
-            <p className="mt-1 text-[12px] leading-none text-muted-foreground line-through tabular-nums">
-              {sym}
-              {origPrice}
+            <p
+              dir={rtl ? "auto" : "ltr"}
+              className="mt-1 text-[12px] leading-none text-muted-foreground line-through tabular-nums"
+            >
+              {formatPrice(origPrice, currency, rtl ? "ar" : "en")}
             </p>
           )}
 
@@ -251,10 +254,15 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
             </p>
           ) : null}
 
-          <div className="mt-3 flex justify-end">
+          <div className="mt-3">
             {needsVariations ? (
-              <Link href={`/products/${product.slug}`} aria-label={t("addToCart")} className={cartButtonClass}>
-                <ShoppingCart size={14} strokeWidth={1.75} />
+              <Link
+                href={`/products/${product.slug}`}
+                aria-label={t("addToCart")}
+                className={cartButtonClass}
+              >
+                <ShoppingCart size={16} strokeWidth={2} />
+                <span className="truncate">{t("addToCart")}</span>
               </Link>
             ) : (
               <button
@@ -265,6 +273,7 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
                 className={cartButtonClass}
               >
                 {cartIcon}
+                <span className="truncate">{cartLabel}</span>
               </button>
             )}
           </div>

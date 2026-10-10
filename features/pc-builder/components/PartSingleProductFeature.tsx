@@ -68,7 +68,7 @@ export async function PartSingleProductFeature({ partSlug }: { partSlug: string 
           <div className="lg:sticky lg:top-28">
             <div className="relative aspect-square w-full overflow-hidden rounded-lg border border-[#000000] bg-[#000000]">
               {part.thumbnail ? (
-                <Image src={part.thumbnail} alt={partName} fill className="object-contain p-10" unoptimized />
+                <Image src={part.thumbnail} alt={partName} fill className="object-contain p-10" />
               ) : (
                 <div className="flex h-full items-center justify-center">
                   {SlotIcon && <SlotIcon className="h-20 w-20 text-white/15" />}
@@ -114,7 +114,6 @@ export async function PartSingleProductFeature({ partSlug }: { partSlug: string 
                           alt={optName}
                           fill
                           className="object-contain p-1"
-                          unoptimized
                         />
                       </div>
                     )}

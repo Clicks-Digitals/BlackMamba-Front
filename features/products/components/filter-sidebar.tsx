@@ -252,7 +252,6 @@ export function FiltersPanel({
                           alt={name}
                           fill
                           className="object-contain p-0.5"
-                          unoptimized
                         />
                       </span>
                     )}

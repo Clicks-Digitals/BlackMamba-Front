@@ -85,7 +85,6 @@ export async function HomeBlackMamba() {
               alt=""
               fill
               className="object-contain p-10 opacity-90 sm:p-14"
-              unoptimized
             />
             <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
               <p className={cn("text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground", rtl && "font-cairo tracking-normal")}>

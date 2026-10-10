@@ -59,7 +59,7 @@ export function PartCatalogueCard({ part, buildId }: PartCatalogueCardProps) {
     <div className="group flex w-full flex-col overflow-hidden rounded-[10px] border border-[#000000] bg-[#000000] transition-colors hover:border-[#EB0B1A]/30">
       <Link href={`/pc-builder/parts/${part.slug}`} className="relative block aspect-[1/0.85] w-full bg-[#000000]">
         {part.thumbnail ? (
-          <Image src={part.thumbnail} alt={partName} fill className="object-contain p-3" unoptimized />
+          <Image src={part.thumbnail} alt={partName} fill className="object-contain p-3" />
         ) : (
           <div className="flex h-full items-center justify-center">
             {SlotIcon && <SlotIcon className="h-8 w-8 text-white/15" />}

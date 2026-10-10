@@ -85,7 +85,7 @@ function ThumbStack({ order, size = 40 }: { order: Order; size?: number }) {
           className="absolute overflow-hidden rounded-xl border-2 border-[#000000] shadow-sm"
           style={{ width: px, height: px, insetInlineStart: idx * (px - overlap), zIndex: visible.length - idx }}
         >
-          <Image src={src} alt="" fill className="object-cover" unoptimized />
+          <Image src={src} alt="" fill className="object-cover" />
         </div>
       ))}
       {extra > 0 && (
@@ -118,7 +118,7 @@ function MiniThumbs({ order }: { order: Order }) {
           className="absolute overflow-hidden rounded border-2 border-[#000000] shadow-sm"
           style={{ width: 24, height: 24, insetInlineStart: idx * 18 }}
         >
-          <Image src={src} alt="" fill className="object-cover" unoptimized />
+          <Image src={src} alt="" fill className="object-cover" />
         </div>
       ))}
     </div>

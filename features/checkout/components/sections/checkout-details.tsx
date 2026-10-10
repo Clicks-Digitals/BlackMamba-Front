@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useMemo, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
@@ -37,10 +37,9 @@ export default function CheckoutDetails({
   const tToast = useTranslations("Checkout.toast");
   const tShip = useTranslations("Checkout.shipping");
 
-  const currencySuffix = useMemo(() => {
-    const sym = cart?.items[0]?.product_details?.currency_info?.symbol;
-    return sym && sym.trim() !== "" ? sym : tShip("currencySuffix");
-  }, [cart?.items, tShip]);
+  // The translation is already per-locale (JOD / د.أ). The API symbol is a single
+  // Arabic glyph that renders as mojibake next to Latin digits, so it loses.
+  const currencySuffix = tShip("currencySuffix");
 
   const [state, action] = useActionState(placeOrderAction, {
     status: "idle",

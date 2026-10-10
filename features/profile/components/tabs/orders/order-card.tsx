@@ -17,7 +17,7 @@ import { cancelOrderAction } from "@/features/profile";
 import type { Order } from "@/types";
 import { useTranslations, useLocale } from "next-intl";
 import { formatDate } from "@/lib/utils/date";
-import { cn } from "@/lib/utils";
+import { cn, currencyLabel } from "@/lib/utils";
 
 interface OrderCardProps {
   order: Order;
@@ -72,12 +72,12 @@ export function OrderCard({ order, onViewDetails, onRefresh }: OrderCardProps) {
   const statusLabel  = t(`status${order.status.charAt(0) + order.status.slice(1).toLowerCase()}` as never, { defaultValue: order.status } as never);
   const paymentLabel = t(`payment${order.payment_status.charAt(0) + order.payment_status.slice(1).toLowerCase()}` as never, { defaultValue: order.payment_status } as never);
   const canCancel    = order.status === "PENDING" || order.status === "CONFIRMED";
-  const currencySymbol =
+  const currencySymbol = currencyLabel(
     typeof order.currency_info === "string"
-      ? order.currency_info
-      : (order.currency_info as { symbol?: string; code?: string } | undefined)?.symbol ||
-        (order.currency_info as { symbol?: string; code?: string } | undefined)?.code ||
-        "";
+      ? { code: order.currency_info, symbol: order.currency_info }
+      : (order.currency_info as { symbol?: string; code?: string } | undefined),
+    locale
+  );
 
   return (
     <div className="overflow-hidden rounded-xl border border-[#000000] bg-[#000000] transition hover:border-[#EB0B1A]/30">

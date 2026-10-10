@@ -18,6 +18,7 @@ import { searchProducts, searchProductsByTag } from "@/features/products";
 import { searchCategories } from "@/features/categories";
 import type { Product } from "@/types";
 import type { Category } from "@/types/category";
+import { formatPrice as priceWithCurrency } from "@/lib/utils";
 
 // ─── Recent searches (localStorage) ──────────────────────────────────────────
 
@@ -161,12 +162,11 @@ export function useSmartSearch(): SmartSearchState {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-function formatPrice(product: Product): string {
+function formatPrice(product: Product, locale: string): string {
   const price =
     product.has_discount && product.discount_price ? product.discount_price : product.base_price;
   if (!price) return "";
-  const symbol = product.currency_info?.symbol || product.currency_info?.code || "";
-  return `${price} ${symbol}`.trim();
+  return priceWithCurrency(price, product.currency_info, locale);
 }
 
 function productTitle(p: Product, locale: string) {
@@ -301,7 +301,7 @@ function CategoryCards({ categories, tagQuery, locale, onSelect }: CategoryCards
               >
                 <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-primary/7 ring-1 ring-primary/8">
                   {img ? (
-                    <Image src={img} alt={name} fill className="object-cover transition-transform duration-300 group-hover:scale-105" unoptimized />
+                    <Image src={img} alt={name} fill className="object-cover transition-transform duration-300 group-hover:scale-105" />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center">
                       <FolderOpen size={16} className="text-foreground/35" />
@@ -353,7 +353,7 @@ function ProductsList({ products, query, locale, onSelect, t, viewAllHref }: Pro
       <ul className="space-y-px px-2">
         {products.map((product) => {
           const title = productTitle(product, locale);
-          const price = formatPrice(product);
+          const price = formatPrice(product, locale);
           const catLabel = product.categories?.length > 0
             ? product.categories.map(c => locale === "ar" && c.name_ar ? c.name_ar : c.name).join(" · ")
             : null;
@@ -376,7 +376,6 @@ function ProductsList({ products, query, locale, onSelect, t, viewAllHref }: Pro
                       fill
                       sizes="48px"
                       className="object-contain p-1 transition-transform duration-300 group-hover:scale-105"
-                      unoptimized
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center">
@@ -400,7 +399,7 @@ function ProductsList({ products, query, locale, onSelect, t, viewAllHref }: Pro
                   <div className="flex shrink-0 flex-col items-end">
                     {product.has_discount && product.discount_price && (
                       <span className="font-chillax text-[10px] text-foreground/35 line-through" dir="ltr">
-                        {`${product.base_price} ${product.currency_info?.symbol ?? ""}`}
+                        {priceWithCurrency(product.base_price, product.currency_info, locale)}
                       </span>
                     )}
                     <span className="font-chillax text-sm tracking-wide text-foreground" dir="ltr">{price}</span>

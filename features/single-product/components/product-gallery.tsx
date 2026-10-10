@@ -102,7 +102,6 @@ export function ProductGallery({ images, thumbnail, productName }: ProductGaller
               alt={productName}
               fill
               className="pointer-events-none object-contain p-4 sm:p-6"
-              unoptimized
               priority
             />
           </motion.div>
@@ -159,7 +158,7 @@ export function ProductGallery({ images, thumbnail, productName }: ProductGaller
                     : "border-border opacity-55 hover:border-muted-foreground/50 hover:opacity-100"
                 )}
               >
-                <Image src={src} alt="" fill className="object-contain p-1.5" unoptimized />
+                <Image src={src} alt="" fill className="object-contain p-1.5" />
               </button>
             );
           })}

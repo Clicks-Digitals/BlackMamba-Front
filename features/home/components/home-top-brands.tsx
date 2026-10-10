@@ -49,7 +49,6 @@ export async function HomeTopBrands({ locale }: { locale: string }) {
                           width={110}
                           height={52}
                           className="max-h-8 w-auto object-contain opacity-80 transition-opacity duration-150 group-hover:opacity-100 md:max-h-9"
-                          unoptimized
                         />
                       </div>
                     );

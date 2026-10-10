@@ -86,7 +86,6 @@ export async function HomeShopByBrand({
                       width={140}
                       height={56}
                       className="h-9 w-auto max-w-[72%] object-contain sm:h-10"
-                      unoptimized
                     />
                   ) : (
                     <span

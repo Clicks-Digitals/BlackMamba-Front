@@ -73,7 +73,6 @@ function BannerSlide({
             sizes="100vw"
             className="object-cover"
             priority={priority}
-            unoptimized
           />
         ) : (
           <div className="absolute inset-0 bg-black" />

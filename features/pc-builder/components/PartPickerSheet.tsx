@@ -314,7 +314,6 @@ function PartPickerCard({
               width={72}
               height={72}
               className="h-full w-full object-contain p-1.5"
-              unoptimized
             />
           ) : SlotIcon ? (
             <SlotIcon className="h-7 w-7 text-white/20" />

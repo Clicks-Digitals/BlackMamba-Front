@@ -70,16 +70,16 @@ export function CartVariationBadges({ item, locale, className }: Props) {
       {attrs.map((attr, i) => (
         <span key={i} className="flex items-center gap-1">
           {attr.label && (
-            <span className="text-[11px] text-white/45">{attr.label}:</span>
+            <span className="text-[11px] text-muted-foreground">{attr.label}:</span>
           )}
           {attr.isColor ? (
             <span
-              className="inline-block size-[14px] rounded-full border border-white/20 shadow-sm"
+              className="inline-block size-[14px] rounded-full border border-border shadow-sm"
               style={{ backgroundColor: attr.value }}
               title={attr.displayValue}
             />
           ) : (
-            <span className="text-[12px] font-medium text-white/70">{attr.displayValue}</span>
+            <span className="text-[12px] font-medium text-foreground">{attr.displayValue}</span>
           )}
         </span>
       ))}

@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Check, Minus, Plus, ShoppingCart, Truck, RotateCcw, ShieldCheck, BadgeCheck } from "lucide-react";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import type { Product, VariationGroup, VariationOption, Combination } from "@/types";
 import { addToCartAction, updateCartItemAction } from "@/features/cart/actions/mutations";
 import { productPayload, trackAddToCart } from "@/features/analytics";
@@ -118,7 +118,8 @@ export function ProductActions({ product }: ProductActionsProps) {
   const { setCount, getItemRef, upsertItemRef } = useCartStore();
   const { setActiveVariationImage } = useProductImageStore();
 
-  const sym = product.currency_info?.symbol ?? "";
+  const currency = product.currency_info;
+  const price = (amount: string | number) => formatPrice(amount, currency, rtl ? "ar" : "en");
   const apiBase = parseFloat(product.base_price ?? "0");
   const effectiveBase = product.has_discount && product.discount_price
     ? parseFloat(product.discount_price)
@@ -356,7 +357,7 @@ export function ProductActions({ product }: ProductActionsProps) {
               rtl ? "font-cairo text-[1.65rem] font-bold" : "font-letterman text-[1.75rem]"
             )}
           >
-            {sym} {displayPrice}
+            {price(displayPrice)}
           </span>
           {strikethroughPrice && (
             <span className="relative font-chillax text-lg leading-none text-muted-foreground">
@@ -364,7 +365,7 @@ export function ProductActions({ product }: ProductActionsProps) {
                 aria-hidden
                 className="pointer-events-none absolute inset-x-0 top-1/2 block h-px -translate-y-1/2 bg-primary/60"
               />
-              {sym} {strikethroughPrice}
+              {price(strikethroughPrice)}
             </span>
           )}
         </div>
@@ -374,7 +375,9 @@ export function ProductActions({ product }: ProductActionsProps) {
         {discountPct !== null && strikethroughPrice && displayPrice && (
           <p className={cn("mt-1 text-[12px] font-medium text-deal", rtl && "font-cairo")}>
             {t("youSave", {
-              amount: `${sym} ${(Number.parseFloat(strikethroughPrice) - Number.parseFloat(displayPrice)).toFixed(2)}`,
+              amount: price(
+                Number.parseFloat(strikethroughPrice) - Number.parseFloat(displayPrice)
+              ),
             })}
           </p>
         )}

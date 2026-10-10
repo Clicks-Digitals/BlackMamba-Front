@@ -34,7 +34,6 @@ export function BrandLogo({ size = "md", className, priority }: BrandLogoProps) 
         HEIGHT[size],
         className
       )}
-      unoptimized
       priority={priority}
     />
   );
@@ -49,7 +48,6 @@ export function BrandMark({ size = 32, className }: { size?: number; className?:
       width={size}
       height={size}
       className={cn("object-contain", className)}
-      unoptimized
     />
   );
 }

@@ -90,7 +90,6 @@ export function ProfileTabs({ user: initialUser }: ProfileTabsProps) {
                       width={96}
                       height={96}
                       className="h-full w-full object-cover"
-                      unoptimized
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center text-2xl font-bold text-white/80 sm:text-3xl">

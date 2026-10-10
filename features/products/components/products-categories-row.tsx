@@ -150,7 +150,6 @@ export function ProductsCategoriesRow({
                           fill
                           sizes="(min-width: 768px) 80px, 64px"
                           className="object-cover"
-                          unoptimized
                         />
                       ) : (
                         <span className="font-chillax text-xl text-foreground/70 md:text-2xl">
@@ -191,7 +190,6 @@ export function ProductsCategoriesRow({
                         fill
                         sizes="24px"
                         className="object-cover"
-                        unoptimized
                       />
                     ) : (
                       <span className="text-[10px] font-bold">{name.charAt(0)}</span>

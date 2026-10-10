@@ -21,7 +21,7 @@ interface SlotRowProps {
   index?: number;
 }
 
-/** Newegg/Microless-style component row: category | selection | price | select */
+/** Component row: category | selection | price | select */
 export function SlotRow({ slot, buildId, onOpenPicker, index = 0 }: SlotRowProps) {
   const t = useTranslations("PCBuilder");
   const locale = useLocale();
@@ -144,7 +144,7 @@ export function SlotRow({ slot, buildId, onOpenPicker, index = 0 }: SlotRowProps
       <div className="flex min-w-0 items-center gap-3">
         {part?.thumbnail ? (
           <div className="relative hidden size-11 shrink-0 overflow-hidden rounded-md border border-border bg-background sm:block">
-            <Image src={part.thumbnail} alt="" fill className="object-contain p-1" unoptimized />
+            <Image src={part.thumbnail} alt="" fill className="object-contain p-1" />
           </div>
         ) : null}
         <div className="min-w-0 flex-1">

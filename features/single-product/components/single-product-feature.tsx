@@ -168,6 +168,53 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
               </p>
             ) : null}
 
+            {product.variants && product.variants.length > 0 && (() => {
+              const groupLabel =
+                product.variant_group?.display_label || product.variant_group?.name;
+              const currentLabel =
+                product.variant_label ||
+                (isAr ? product.name_ar ?? product.name : product.name);
+              const allHex =
+                isHexColor(currentLabel) &&
+                product.variants.every((v) => isHexColor(v.variant_label || v.name));
+
+              return (
+                <div className="mt-4 space-y-2.5">
+                  <div className="flex items-baseline gap-2">
+                    {groupLabel && (
+                      <span className="font-chillax text-[11px] font-bold tracking-widest text-muted-foreground uppercase">
+                        {groupLabel}:
+                      </span>
+                    )}
+                    {!allHex && (
+                      <span className="font-chillax text-[13px] font-semibold text-foreground">
+                        {currentLabel}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {allHex ? (
+                      <ColorSwatch hex={currentLabel} title={name} active />
+                    ) : (
+                      <TextChip label={currentLabel} active />
+                    )}
+                    {product.variants.map((v) => {
+                      const vLabel = v.variant_label || v.name;
+                      return allHex ? (
+                        <Link key={v.id} href={`/products/${v.slug}`} title={v.name}>
+                          <ColorSwatch hex={vLabel} title={v.name} active={false} />
+                        </Link>
+                      ) : (
+                        <Link key={v.id} href={`/products/${v.slug}`}>
+                          <TextChip label={vLabel} active={false} />
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })()}
+
             <div className="mt-3 flex flex-wrap items-center gap-3">
               {inStockBadge && (
                 <span className="inline-flex h-6 items-center gap-1.5 rounded border border-success/30 bg-success/10 px-2 font-chillax text-[11px] font-semibold text-success">
@@ -209,52 +256,6 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
               </p>
             )}
 
-            {product.variants && product.variants.length > 0 && (() => {
-              const groupLabel =
-                product.variant_group?.display_label || product.variant_group?.name;
-              const currentLabel =
-                product.variant_label ||
-                (isAr ? product.name_ar ?? product.name : product.name);
-              const allHex =
-                isHexColor(currentLabel) &&
-                product.variants.every((v) => isHexColor(v.variant_label || v.name));
-
-              return (
-                <div className="mt-6 space-y-2.5">
-                  <div className="flex items-baseline gap-2">
-                    {groupLabel && (
-                      <span className="font-chillax text-[11px] font-bold tracking-widest text-muted-foreground uppercase">
-                        {groupLabel}:
-                      </span>
-                    )}
-                    {!allHex && (
-                      <span className="font-chillax text-[13px] font-semibold text-foreground">
-                        {currentLabel}
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {allHex ? (
-                      <ColorSwatch hex={currentLabel} title={name} active />
-                    ) : (
-                      <TextChip label={currentLabel} active />
-                    )}
-                    {product.variants.map((v) => {
-                      const vLabel = v.variant_label || v.name;
-                      return allHex ? (
-                        <Link key={v.id} href={`/products/${v.slug}`} title={v.name}>
-                          <ColorSwatch hex={vLabel} title={v.name} active={false} />
-                        </Link>
-                      ) : (
-                        <Link key={v.id} href={`/products/${v.slug}`}>
-                          <TextChip label={vLabel} active={false} />
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            })()}
 
             {brandName && product.brand && (
               <div className="mt-8 flex items-center gap-4 border-t border-border pt-5">
@@ -269,7 +270,6 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
                       width={112}
                       height={48}
                       className="max-h-10 w-auto object-contain"
-                      unoptimized
                     />
                   </Link>
                 ) : (

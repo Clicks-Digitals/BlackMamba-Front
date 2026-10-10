@@ -24,6 +24,10 @@ export async function BrandStoreFeature({ slug }: { slug: string }) {
 
   const products = await getProducts(1, { search: brand.name });
   const preview = products.results.slice(0, 10);
+  // The brand endpoint gives categories with their own artwork. When a brand has
+  // none assigned, we derive them from its products instead — and those nested
+  // category objects carry no image, so stand in the product's own thumbnail
+  // rather than leaving every tile as a grey placeholder.
   const categories =
     brand.categories.length > 0
       ? brand.categories
@@ -37,7 +41,7 @@ export async function BrandStoreFeature({ slug }: { slug: string }) {
                   name: cat.name,
                   name_ar: cat.name_ar,
                   slug: cat.slug,
-                  image_url: null,
+                  image_url: product.thumbnail ?? null,
                 },
               ])
             )
@@ -71,7 +75,6 @@ export async function BrandStoreFeature({ slug }: { slug: string }) {
             fill
             sizes="100vw"
             className="object-cover"
-            unoptimized
             priority
           />
         ) : null}
@@ -80,7 +83,7 @@ export async function BrandStoreFeature({ slug }: { slug: string }) {
           <div className="flex min-w-0 items-center gap-4 sm:gap-5">
             {logo ? (
               <div className="relative size-[72px] shrink-0 overflow-hidden rounded-[10px] border border-white/20 bg-white shadow-lg sm:size-[96px] md:size-[108px]">
-                <Image src={logo} alt={name} fill className="object-contain p-2.5" unoptimized />
+                <Image src={logo} alt={name} fill className="object-contain p-2.5" />
               </div>
             ) : null}
             <div className="min-w-0">
@@ -180,7 +183,6 @@ export async function BrandStoreFeature({ slug }: { slug: string }) {
                           fill
                           sizes="(max-width: 640px) 50vw, 220px"
                           className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                          unoptimized
                         />
                       ) : (
                         <span className="absolute inset-0 flex items-center justify-center bg-muted">
