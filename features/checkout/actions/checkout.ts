@@ -35,17 +35,20 @@ export async function placeOrderAction(
   const data = validated.data;
   const isLoggedIn = data.is_logged_in === "true";
 
+  // The API field is `shipping_option`. Sending `shipping_option_id` meant DRF
+  // dropped it as an unknown key, so every order was saved with zero shipping
+  // while the customer had been shown — and agreed to — a delivery fee.
   const payload = isLoggedIn
     ? {
         address_id: data.address_id,
-        shipping_option_id: data.shipping_option_id,
+        shipping_option: data.shipping_option_id,
         payment_method: data.payment_method,
         coupon_code: data.coupon_code || undefined
       }
     : {
         shipping_address: data.shipping_address,
         guest_email: data.guest_email,
-        shipping_option_id: data.shipping_option_id,
+        shipping_option: data.shipping_option_id,
         payment_method: data.payment_method,
         coupon_code: data.coupon_code || undefined
       };
