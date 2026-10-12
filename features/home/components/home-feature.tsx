@@ -50,9 +50,17 @@ export async function HomeFeature() {
 
   const isAr = locale === "ar";
 
+  // Each carousel shows about five products at a time, but every one it was
+  // given had to be rendered on the server and serialised into the page a
+  // second time for hydration. Eight sections of twelve is 94 cards, and a
+  // card costs roughly 30ms to render — most of the homepage's wait. Eight per
+  // section still leaves plenty to scroll through.
+  const PRODUCTS_PER_SECTION = 8;
+
   const orderedSections = sections
     .filter((s) => s.is_active && s.products?.length)
-    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    .map((s) => ({ ...s, products: (s.products ?? []).slice(0, PRODUCTS_PER_SECTION) }));
 
   const sectionProducts = orderedSections.flatMap((s) => s.products ?? []);
   const highlightProducts = (orderedSections[0]?.products ?? sectionProducts).slice(0, 2);
