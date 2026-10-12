@@ -17,6 +17,7 @@ import { OrderSummary } from "@/features/checkout/components/sections/order-summ
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { cartToAnalyticsItems, trackBeginCheckout, trackPurchase } from "@/features/analytics";
+import { CheckoutErrorSummary } from "@/features/checkout/components/sections/checkout-error-summary";
 
 interface CheckoutDetailsProps {
   cart: Cart | null;
@@ -153,6 +154,10 @@ export default function CheckoutDetails({
               <input type="hidden" name="coupon_code" value={appliedCoupon?.code ?? ""} />
               <input type="hidden" name="payment_method" value="CASH_ON_DELIVERY" />
               <input type="hidden" name="is_logged_in" value={isLoggedIn ? "true" : "false"} />
+
+              {state.status === "error" ? (
+                <CheckoutErrorSummary fieldErrors={fe} message={state.message} />
+              ) : null}
 
               <AddressSection
                 isLoggedIn={isLoggedIn}

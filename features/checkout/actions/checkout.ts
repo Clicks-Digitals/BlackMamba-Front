@@ -10,6 +10,7 @@ import {
 } from "@/features/checkout/schema/checkout.schema";
 import type { CheckoutData, CheckoutResponse } from "@/features/checkout/types";
 import { ActionState } from "@/types";
+import { summarise, toIssues } from "@/features/checkout/lib/checkout-errors";
 
 export async function placeOrderAction(
   _prev: ActionState<CheckoutData, { orderId: string; orderNumber: string }>,
@@ -72,11 +73,18 @@ export async function placeOrderAction(
     };
   }
 
+  // The response's `errors` object is what says *which* part of the address
+  // (or the shipping option, or the coupon) was rejected. Dropping it left the
+  // shopper with DRF's bare "Bad request." and nothing to act on.
+  const issues = toIssues(res.fieldErrors, locale);
+  const fallback =
+    res.message ??
+    (locale === "ar" ? "تعذر إتمام الطلب. حاول مرة أخرى." : "Failed to place order. Please try again.");
+
   return {
     status: "error",
-    message:
-      res.message ??
-      (locale === "ar" ? "تعذر إتمام الطلب. حاول مرة أخرى." : "Failed to place order. Please try again."),
+    message: summarise(issues, fallback),
+    fieldErrors: res.fieldErrors as Partial<Record<string, string[]>> | undefined,
     inputs: rawData as unknown as Partial<CheckoutData>
   };
 }
