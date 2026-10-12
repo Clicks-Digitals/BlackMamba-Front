@@ -215,6 +215,9 @@ export function Footer({ categories = [], locale = "en" }: { categories?: Catego
 
       <div className="layout-page layout-gutter-x relative z-10 flex flex-wrap items-center gap-3 border-t border-white/8 py-5 text-[12px] text-white/40">
         <span>{t("copyright", { year })}</span>
+        <Link href="/privacy" className="transition-colors duration-150 hover:text-white">
+          {rtl ? "سياسة الخصوصية" : "Privacy Policy"}
+        </Link>
         <div className={cn("flex flex-wrap gap-2", rtl ? "mr-auto" : "ml-auto")}>
           {(["cod", "visa", "mastercard", "cliq"] as const).map((badge) => (
             <span

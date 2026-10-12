@@ -66,20 +66,17 @@ export function HeaderIcons() {
         <CountBadge count={wishlistCount} />
       </Link>
 
-      {/* Primary: the cart. Always a solid, labelled target. */}
+      {/* Primary: the cart. A solid red target that is always visible. */}
       <Link
         href="/cart"
         aria-label={t("cart")}
         aria-current={cartActive ? "page" : undefined}
         className={cn(
-          "relative inline-flex h-9 shrink-0 items-center gap-1.5 rounded-[4px] bg-primary px-2.5 text-white transition-colors duration-150 hover:bg-[#c40a16] sm:px-3",
+          "relative inline-flex size-9 shrink-0 items-center justify-center rounded-[4px] bg-primary text-white transition-colors duration-150 hover:bg-[#c40a16]",
           cartActive && "ring-1 ring-white/40"
         )}
       >
         <ShoppingCart className="pointer-events-none size-[19px]" strokeWidth={2} />
-        <span className="hidden text-[13px] font-semibold leading-none min-[360px]:inline">
-          {t("cart")}
-        </span>
         <CountBadge count={cartCount} className="bg-white text-primary ring-1 ring-primary/20" />
       </Link>
     </div>
