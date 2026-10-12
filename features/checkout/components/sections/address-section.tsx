@@ -50,10 +50,10 @@ export function AddressSection({
         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
           {stepNumber}
         </span>
-        <h3 className="text-sm font-bold uppercase tracking-wider text-[#FFFFFF]">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">
           {t("section.shippingAddress")}
         </h3>
-        <Separator className="flex-1 bg-white/10" />
+        <Separator className="flex-1 bg-border" />
       </div>
 
       {isLoggedIn ? (
@@ -66,24 +66,24 @@ export function AddressSection({
                     <div key={addr.id}>
                       <label
                         htmlFor={`addr-${addr.id}`}
-                        className="flex cursor-pointer items-start gap-4 rounded-lg p-4 transition-colors hover:bg-white/5"
+                        className="flex cursor-pointer items-start gap-4 rounded-lg p-4 transition-colors hover:bg-muted"
                       >
                         <RadioGroupItem value={addr.id} id={`addr-${addr.id}`} />
                         <div className="flex-1 space-y-2">
                           <div className="flex items-start justify-between">
-                            <p className="text-sm font-bold text-[#FFFFFF]">{addr.title}</p>
+                            <p className="text-sm font-bold text-foreground">{addr.title}</p>
                             {addr.is_default && (
                               <span className="inline-block rounded-lg bg-primary/15 px-2 py-1 text-xs font-semibold text-primary">
                                 {t("address.default")}
                               </span>
                             )}
                           </div>
-                          <p className="text-xs text-white/50">
+                          <p className="text-xs text-muted-foreground">
                             {addr.street}
                             {addr.building && `, ${addr.building}`}
                           </p>
-                          <p className="text-xs text-white/50">{addr.city}</p>
-                          <p className="text-xs text-white/50" dir={locale === "ar" ? "ltr" : undefined}>
+                          <p className="text-xs text-muted-foreground">{addr.city}</p>
+                          <p className="text-xs text-muted-foreground" dir={locale === "ar" ? "ltr" : undefined}>
                             {addr.phone}
                           </p>
                         </div>
@@ -95,11 +95,11 @@ export function AddressSection({
               </ScrollArea>
             </RadioGroup>
           ) : (
-            <div className="rounded-lg border-2 border-dashed border-white/15 p-5 text-center">
-              <p className="mb-3 text-sm text-white/50">{t("address.noSaved")}</p>
+            <div className="rounded-lg border-2 border-dashed border-border p-5 text-center">
+              <p className="mb-3 text-sm text-muted-foreground">{t("address.noSaved")}</p>
               <Link
                 href="/profile?tab=addresses"
-                className="inline-flex items-center gap-2 rounded-lg border border-[#000000] bg-white/4 px-3 py-2 text-sm font-medium text-[#FFFFFF] hover:border-[#EB0B1A]/40 hover:bg-[#EB0B1A]/15"
+                className="inline-flex items-center gap-2 rounded-lg border border-border bg-muted px-3 py-2 text-sm font-medium text-foreground hover:border-[#EB0B1A]/40 hover:bg-[#EB0B1A]/15"
               >
                 {t("address.addFromProfile")}
                 <ChevronRight size={16} className="rtl:rotate-180" />
@@ -111,7 +111,7 @@ export function AddressSection({
         <div className="space-y-4">
           {/* Sign-in nudge for guests */}
           <div className="flex items-center justify-between rounded-lg border border-border bg-card px-4 py-3">
-            <p className="text-sm text-white/50">
+            <p className="text-sm text-muted-foreground">
               {locale === "ar" ? "هل لديك حساب؟" : "Have an account?"}
             </p>
             <Link

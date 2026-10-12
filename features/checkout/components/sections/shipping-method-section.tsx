@@ -45,10 +45,10 @@ export function ShippingMethodSection({
         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
           {stepNumber}
         </span>
-        <h3 className="text-sm font-bold uppercase tracking-wider text-[#FFFFFF]">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">
           {t("section.shippingMethod")}
         </h3>
-        <Separator className="flex-1 bg-white/10" />
+        <Separator className="flex-1 bg-border" />
       </div>
 
       {shippingOptions.length > 0 ? (
@@ -59,14 +59,14 @@ export function ShippingMethodSection({
                 <div key={option.id}>
                   <label
                     htmlFor={`shipping-${option.id}`}
-                    className="flex cursor-pointer items-start gap-4 rounded-lg p-4 transition-colors hover:bg-white/5"
+                    className="flex cursor-pointer items-start gap-4 rounded-lg p-4 transition-colors hover:bg-muted"
                   >
                     <RadioGroupItem value={option.id} id={`shipping-${option.id}`} />
                     <div className="flex-1 space-y-2">
                       <div className="flex items-start justify-between">
                         <div>
-                          <p className="text-sm font-bold text-[#FFFFFF]">{labelFor(option)}</p>
-                          <p className="text-xs text-white/50">{descFor(option)}</p>
+                          <p className="text-sm font-bold text-foreground">{labelFor(option)}</p>
+                          <p className="text-xs text-muted-foreground">{descFor(option)}</p>
                         </div>
                         <span className="text-sm font-bold text-[#EB0B1A]">
                           {option.price} {currencySuffix}
@@ -75,7 +75,7 @@ export function ShippingMethodSection({
 
                       <div className="mt-2 flex items-center gap-2">
                         <Calendar size={14} className="text-[var(--secondary-text)]" />
-                        <span className="text-xs font-semibold text-[#FFFFFF]">{etaLabel(option)}</span>
+                        <span className="text-xs font-semibold text-foreground">{etaLabel(option)}</span>
                       </div>
                     </div>
                   </label>
@@ -86,8 +86,8 @@ export function ShippingMethodSection({
           </ScrollArea>
         </RadioGroup>
       ) : (
-        <div className="rounded-lg border-2 border-dashed border-white/15 p-5 text-center">
-          <p className="text-sm text-white/50">{t("shipping.noOptions")}</p>
+        <div className="rounded-lg border-2 border-dashed border-border p-5 text-center">
+          <p className="text-sm text-muted-foreground">{t("shipping.noOptions")}</p>
         </div>
       )}
     </section>

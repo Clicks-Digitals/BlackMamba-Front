@@ -65,9 +65,9 @@ export function OrderSummary({
   if (!cart) return null;
 
   return (
-    <div className="sticky top-4 space-y-4 rounded-lg border border-[#EB0B1A]/15 bg-white/3 p-4 md:p-6">
-      <div className="border-b border-white/8 pb-3 text-center">
-        <h2 className="text-base font-bold tracking-wider text-[#FFFFFF] uppercase">{t("title")}</h2>
+    <div className="sticky top-4 space-y-4 rounded-lg border border-[#EB0B1A]/15 bg-muted p-4 md:p-6">
+      <div className="border-b border-border pb-3 text-center">
+        <h2 className="text-base font-bold tracking-wider text-foreground uppercase">{t("title")}</h2>
       </div>
 
       <ScrollArea className="scrollbar-thin max-h-52 pe-2">
@@ -82,20 +82,20 @@ export function OrderSummary({
             const isExpanded = expandedBuilds.has(item.id);
 
             return (
-              <div key={item.id} className="border-b border-white/8 pb-3 last:border-0">
+              <div key={item.id} className="border-b border-border pb-3 last:border-0">
                 <div className="flex gap-3">
                   <div className="relative aspect-square w-14 shrink-0 overflow-hidden rounded-lg border border-border bg-card">
                     {thumbnail ? (
                       <Image src={thumbnail} fill sizes="56px" className="object-cover" alt={name ?? ""} />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center text-xs font-bold text-white/35">
+                      <div className="flex h-full w-full items-center justify-center text-xs font-bold text-muted-foreground">
                         PC
                       </div>
                     )}
                   </div>
                   <div className="flex-1 min-w-0 space-y-0.5">
-                    <h4 className="text-xs font-bold text-[#FFFFFF] uppercase leading-snug">{name}</h4>
-                    <p className="text-xs text-white/45">{t("qty", { count: item.quantity })}</p>
+                    <h4 className="text-xs font-bold text-foreground uppercase leading-snug">{name}</h4>
+                    <p className="text-xs text-muted-foreground">{t("qty", { count: item.quantity })}</p>
                     {isBuild && buildParts.length > 0 ? (
                       <button
                         type="button"
@@ -106,7 +106,7 @@ export function OrderSummary({
                             return next;
                           })
                         }
-                        className="flex items-center gap-0.5 text-[11px] font-medium text-white/45 hover:text-[#FFFFFF] transition-colors"
+                        className="flex items-center gap-0.5 text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors"
                       >
                         {locale === "ar" ? `${buildParts.length} قطعة` : `${buildParts.length} parts`}
                         <ChevronDown
@@ -133,7 +133,7 @@ export function OrderSummary({
                       return (
                       <div
                         key={part.id}
-                        className={`flex items-center gap-2.5 px-2.5 py-2${idx < buildParts.length - 1 ? " border-b border-white/8" : ""}`}
+                        className={`flex items-center gap-2.5 px-2.5 py-2${idx < buildParts.length - 1 ? " border-b border-border" : ""}`}
                       >
                         {/* Thumbnail */}
                         <div className="relative size-8 shrink-0 overflow-hidden rounded-md border border-border bg-white flex items-center justify-center">
@@ -146,16 +146,16 @@ export function OrderSummary({
                               className="object-contain p-0.5"
                             />
                           ) : (
-                            <SlotIcon className="size-4 text-white/30" />
+                            <SlotIcon className="size-4 text-muted-foreground" />
                           )}
                         </div>
 
                         {/* Name + slot label */}
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-[11px] font-medium leading-tight text-[#FFFFFF]">
+                          <p className="truncate text-[11px] font-medium leading-tight text-foreground">
                             {(locale === "ar" && part.product_details.name_ar) || part.product_details.name}
                           </p>
-                          <p className="text-[9px] font-semibold uppercase tracking-wide text-white/40 mt-0.5">
+                          <p className="text-[9px] font-semibold uppercase tracking-wide text-muted-foreground mt-0.5">
                             {SLOT_LABELS[part.slot]}
                           </p>
                         </div>
@@ -175,7 +175,7 @@ export function OrderSummary({
         </div>
       </ScrollArea>
 
-      <div className="space-y-3 border-t border-b border-white/8 py-3">
+      <div className="space-y-3 border-t border-b border-border py-3">
         {appliedCoupon ? (
           <div className="rounded-lg border border-primary/25 bg-primary/10 p-3 space-y-2">
             <div className="flex items-center justify-between">
@@ -239,8 +239,8 @@ export function OrderSummary({
 
       <div className="space-y-3">
         <div className="flex justify-between text-sm">
-          <span className="text-white/50">{t("subtotal")}</span>
-          <span className="font-semibold text-[#FFFFFF]">
+          <span className="text-muted-foreground">{t("subtotal")}</span>
+          <span className="font-semibold text-foreground">
             {totalAmount} {currencySuffix}
           </span>
         </div>
@@ -256,10 +256,10 @@ export function OrderSummary({
 
         {selectedShipping && (
           <div className="flex justify-between text-sm">
-            <span className="text-white/50">
+            <span className="text-muted-foreground">
               {(locale === "ar" && selectedShipping.name_ar) || selectedShipping.name}
             </span>
-            <span className="font-semibold text-[#FFFFFF]">
+            <span className="font-semibold text-foreground">
               {selectedShipping.price} {currencySuffix}
             </span>
           </div>
@@ -268,7 +268,7 @@ export function OrderSummary({
         <Separator className="my-2" />
 
         <div className="flex items-center justify-between pt-2">
-          <span className="text-sm font-bold text-[#FFFFFF] uppercase">{t("total")}</span>
+          <span className="text-sm font-bold text-foreground uppercase">{t("total")}</span>
           <span className="text-2xl font-light text-[#EB0B1A]">
             {finalTotal} {currencySuffix}
           </span>
