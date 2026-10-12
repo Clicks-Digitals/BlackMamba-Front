@@ -5,8 +5,10 @@ import { Check, Copy, MessageCircle } from "lucide-react";
 import { useLocale } from "next-intl";
 import { cn } from "@/lib/utils";
 import type { FeaturedCoupon } from "../actions/queries";
+import { STORE, hasValue } from "@/config/store";
 
-const WHATSAPP_NUMBER = "962XXXXXXXXX"; // replace with real number
+// Set NEXT_PUBLIC_STORE_WHATSAPP (digits only, e.g. 9627xxxxxxxx).
+const WHATSAPP_NUMBER = STORE.whatsapp;
 
 function CopyButton({ code, rtl }: { code: string; rtl: boolean }) {
   const [copied, setCopied] = useState(false);
@@ -120,18 +122,22 @@ export function HomePromoSplit({ coupon }: { coupon: FeaturedCoupon }) {
               </p>
             </div>
 
-            <a
-              href={waUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                "inline-flex items-center gap-2 rounded-[4px] bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors duration-150 hover:bg-primary/80",
-                rtl && "font-cairo"
-              )}
-            >
-              <MessageCircle className="h-4 w-4 shrink-0" />
-              {rtl ? "تواصل الآن" : "Chat Now"}
-            </a>
+            {/* Without a configured number the link would go to a bare wa.me/,
+                which is a dead end — hide the button instead. */}
+            {hasValue(WHATSAPP_NUMBER) ? (
+              <a
+                href={waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "inline-flex items-center gap-2 rounded-[4px] bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors duration-150 hover:bg-primary/80",
+                  rtl && "font-cairo"
+                )}
+              >
+                <MessageCircle className="h-4 w-4 shrink-0" />
+                {rtl ? "تواصل الآن" : "Chat Now"}
+              </a>
+            ) : null}
 
             <p className={cn("text-[11px] text-muted-foreground", rtl && "font-cairo")}>
               {rtl ? "متاح طوال أيام الأسبوع" : "Available 7 days a week"}
