@@ -10,3 +10,4 @@ export { imageAspectRatio } from "./image";
 export { formatDate, formatDateShort, formatDateTime } from "./date";
 export { buildCategoryTree, findCategoryBySlug, getChildren } from "./category-tree";
 export type { CategoryWithChildren } from "./category-tree";
+export { productHref, buildProductHref, RESERVED_SEGMENTS } from "./product-url";

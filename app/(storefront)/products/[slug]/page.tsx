@@ -1,54 +1,30 @@
-import type { Metadata } from "next";
-import { getLocale } from "next-intl/server";
-import { SingleProductFeature, getProduct } from "@/features/single-product";
+import { notFound, permanentRedirect } from "next/navigation";
+import { getProduct } from "@/features/single-product";
+import { buildProductHref } from "@/lib/utils";
 
+/**
+ * The old flat product URL.
+ *
+ * Products now live under their category trail, so this only exists to carry
+ * the links already out in the world — and Google's index — across to the new
+ * path with a 301. A product with no category has no trail to move to, so it
+ * is still served here.
+ */
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+export default async function LegacyProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const [res, locale] = await Promise.all([getProduct(slug), getLocale()]);
+  const res = await getProduct(slug);
+  if (!res.ok) notFound();
 
-  if (!res.ok) {
-    return { title: "Product Not Found" };
-  }
+  const canonical = buildProductHref(res.data.category_path, res.data.slug);
+  if (canonical !== `/products/${slug}`) permanentRedirect(canonical);
 
-  const product = res.data;
-  const isAr = locale === "ar";
-
-  const name = (isAr && product.name_ar) || product.name;
-  const title = (isAr ? product.meta_title_ar : product.meta_title) || name;
-  const description =
-    (isAr ? product.meta_description_ar : product.meta_description) ||
-    ((isAr && product.description_ar) || product.description) ||
-    undefined;
-  const keywords = (isAr ? product.meta_keywords_ar : product.meta_keywords) || undefined;
-  const ogImage = product.og_image || product.thumbnail || undefined;
-  const canonical = product.canonical_url || `/products/${product.slug}`;
-
-  const [robotsIndex, robotsFollow] = (product.meta_robots || "index,follow").split(",");
-
-  return {
-    title,
-    description,
-    keywords,
-    alternates: {
-      canonical,
-    },
-    robots: {
-      index: robotsIndex === "index",
-      follow: robotsFollow === "follow",
-    },
-    openGraph: {
-      title,
-      description,
-      images: ogImage ? [{ url: ogImage }] : undefined,
-    },
-  };
-}
-
-export default async function ProductPage({ params }: ProductPageProps) {
-  const { slug } = await params;
+  // No category: this flat path is the canonical one.
+  const { SingleProductFeature } = await import("@/features/single-product");
   return <SingleProductFeature productSlug={slug} />;
 }
+
+export { generateMetadata } from "./metadata";

@@ -16,6 +16,12 @@ export interface ProductTable {
   rows: ProductTableRow[];
 }
 
+export interface CategoryTrailItem {
+  slug: string;
+  name: string;
+  name_ar: string | null;
+}
+
 export interface CategoryInfo {
   id: string;
   name: string;
@@ -117,6 +123,12 @@ export interface Product {
   created_at: string;
   updated_at: string;
   categories: CategoryInfo[];
+  /**
+   * Category trail, root first — the slugs build the canonical URL and the
+   * names build the breadcrumb. Empty when the product has no category; those
+   * keep the flat /products/<slug> form.
+   */
+  category_path?: CategoryTrailItem[];
   brand: ProductBrand | null;
   gallery: gallaryItem[];
   inventory_mode: "TRACK" | "TOGGLE" | "TRACK_VARIATIONS" | null;

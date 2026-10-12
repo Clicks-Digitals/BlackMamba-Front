@@ -6,7 +6,7 @@ import { useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { ShoppingCart, Check, Loader2, Star } from "lucide-react";
-import { cn, formatPrice } from "@/lib/utils";
+import { cn, formatPrice, productHref } from "@/lib/utils";
 import type { Product } from "@/types/product";
 import { WishlistButton } from "./wishlist-button";
 import { ClearanceSaleCountdown } from "./clearance-countdown";
@@ -145,7 +145,7 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
         className
       )}
     >
-      <Link href={`/products/${product.slug}`} className="block">
+      <Link href={productHref(product)} className="block">
         <div
           data-card-media
           className="relative aspect-square w-full overflow-hidden rounded-none bg-white"
@@ -199,7 +199,7 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
           </p>
         ) : null}
 
-        <Link href={`/products/${product.slug}`}>
+        <Link href={productHref(product)}>
           <p
             className={cn(
               "line-clamp-3 min-h-[3.9em] text-[13px] leading-[1.3] font-semibold text-foreground hover:text-primary",
@@ -257,7 +257,7 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
           <div className="mt-3">
             {needsVariations ? (
               <Link
-                href={`/products/${product.slug}`}
+                href={productHref(product)}
                 aria-label={t("addToCart")}
                 className={cartButtonClass}
               >

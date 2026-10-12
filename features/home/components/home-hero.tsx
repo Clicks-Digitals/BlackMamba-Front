@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { cn, formatPrice } from "@/lib/utils";
+import { cn, formatPrice, productHref } from "@/lib/utils";
 import type { Category } from "@/types/category";
 import type { Product } from "@/types/product";
 import { addToCartAction, updateCartItemAction } from "@/features/cart/actions/mutations";
@@ -415,7 +415,7 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
           </p>
         </div>
         <Link
-          href={`/products/${product.slug}`}
+          href={productHref(product)}
           className={cn(
             "shrink-0 text-[11px] font-semibold text-muted-foreground transition-colors hover:text-foreground",
             rtl && "font-cairo"
@@ -426,7 +426,7 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
         </Link>
       </div>
 
-      <Link href={`/products/${product.slug}`} className="flex flex-1 gap-3 p-3.5">
+      <Link href={productHref(product)} className="flex flex-1 gap-3 p-3.5">
         <ProductMedia src={img} alt={name} />
         <div className="flex min-w-0 flex-1 flex-col">
           <p
@@ -460,7 +460,7 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
 
       <div className="mt-auto flex gap-2 border-t border-border p-3">
         <Link
-          href={`/products/${product.slug}`}
+          href={productHref(product)}
           className={cn(
             "inline-flex h-8 flex-1 items-center justify-center rounded-[4px] border border-border text-[12px] font-medium text-foreground transition-colors duration-150 hover:border-primary/50 hover:bg-muted",
             rtl && "font-cairo"
@@ -470,7 +470,7 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
         </Link>
         {needsVariations ? (
           <Link
-            href={`/products/${product.slug}`}
+            href={productHref(product)}
             className={cn(
               "inline-flex h-8 flex-1 items-center justify-center gap-1.5 rounded-[4px] bg-primary text-[12px] font-semibold text-white transition-colors duration-150 hover:bg-[var(--blue-hover)]",
               rtl && "font-cairo"
@@ -538,7 +538,7 @@ function HeroDealCard({
           </Link>
         </div>
 
-        <Link href={`/products/${product.slug}`} className="flex flex-1 gap-3 p-3.5">
+        <Link href={productHref(product)} className="flex flex-1 gap-3 p-3.5">
           <ProductMedia src={img} alt={name} />
           <div className="flex min-w-0 flex-1 flex-col">
             <p
@@ -572,7 +572,7 @@ function HeroDealCard({
 
         <div className="border-t border-border p-3">
           <Link
-            href={`/products/${product.slug}`}
+            href={productHref(product)}
             className={cn(
               "inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-[4px] bg-primary text-[12px] font-semibold text-white transition-colors duration-150 hover:bg-[var(--blue-hover)]",
               rtl && "font-cairo"

@@ -18,7 +18,7 @@ import { searchProducts, searchProductsByTag } from "@/features/products";
 import { searchCategories } from "@/features/categories";
 import type { Product } from "@/types";
 import type { Category } from "@/types/category";
-import { formatPrice as priceWithCurrency } from "@/lib/utils";
+import { formatPrice as priceWithCurrency, productHref } from "@/lib/utils";
 import { useHeaderSearch } from "@/stores/header-search-store";
 
 // ─── Recent searches (localStorage) ──────────────────────────────────────────
@@ -361,7 +361,7 @@ function ProductsList({ products, query, locale, onSelect, t, viewAllHref }: Pro
           return (
             <li key={product.id}>
               <Link
-                href={`/products/${product.slug}`}
+                href={productHref(product)}
                 onClick={onSelect}
                 className="group relative flex items-center gap-3 rounded-xl px-2 py-2.5 transition-colors duration-150 hover:bg-primary/5"
               >

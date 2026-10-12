@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ChevronRight, Star } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, buildProductHref } from "@/lib/utils";
 import {
   getProduct,
   ProductGallery,
@@ -124,17 +124,18 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
         <Link href="/products" className="transition-colors hover:text-foreground">
           {t("products")}
         </Link>
-        {categories.length > 0 && (
-          <>
+        {/* The full category trail, matching the URL: department then section. */}
+        {(product.category_path ?? []).map((crumb) => (
+          <span key={crumb.slug} className="flex items-center gap-1.5">
             <ChevronRight size={12} strokeWidth={2} className="shrink-0 rtl:rotate-180" />
             <Link
-              href={`/products?category_slug=${categories[0].slug}`}
+              href={`/products?category_slug=${crumb.slug}`}
               className="max-w-36 truncate transition-colors hover:text-foreground"
             >
-              {categories[0].name}
+              {(isAr && crumb.name_ar) || crumb.name}
             </Link>
-          </>
-        )}
+          </span>
+        ))}
         <ChevronRight size={12} strokeWidth={2} className="shrink-0 rtl:rotate-180" />
         <span className="truncate font-medium text-foreground/80">{name}</span>
       </nav>
@@ -201,11 +202,11 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
                     {product.variants.map((v) => {
                       const vLabel = v.variant_label || v.name;
                       return allHex ? (
-                        <Link key={v.id} href={`/products/${v.slug}`} title={v.name}>
+                        <Link key={v.id} href={buildProductHref(product.category_path, v.slug)} title={v.name}>
                           <ColorSwatch hex={vLabel} title={v.name} active={false} />
                         </Link>
                       ) : (
-                        <Link key={v.id} href={`/products/${v.slug}`}>
+                        <Link key={v.id} href={buildProductHref(product.category_path, v.slug)}>
                           <TextChip label={vLabel} active={false} />
                         </Link>
                       );
