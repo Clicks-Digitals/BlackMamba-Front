@@ -256,9 +256,9 @@ export function OrderSummary({
 
         {selectedShipping && (
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">
-              {(locale === "ar" && selectedShipping.name_ar) || selectedShipping.name}
-            </span>
+            {/* The option's own name is an internal label — the only one
+                configured is literally called "default". */}
+            <span className="text-muted-foreground">{t("shippingLine")}</span>
             <span className="font-semibold text-foreground">
               {selectedShipping.price} {currencySuffix}
             </span>

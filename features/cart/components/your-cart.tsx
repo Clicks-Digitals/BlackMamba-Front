@@ -81,8 +81,9 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
   const price = (amount: string | number) => formatPrice(amount, currency, locale);
 
   const subtotal = parseFloat(displayedTotal);
-  const shippingFee = 3;
-  const grandTotal = Math.max(0, subtotal + shippingFee);
+  // Delivery is priced by the shipping method, which is only chosen at
+  // checkout — the cart used to show a hardcoded 3 while checkout charged 5.
+  const grandTotal = Math.max(0, subtotal);
 
   function handleRemove(item: CartItem) {
     startTransition(async () => {
@@ -336,15 +337,6 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[15px] font-medium text-foreground">{t("shippingFees")}</span>
-                  <span
-                    className="text-[15px] font-medium text-foreground tabular-nums"
-                    dir={ar ? "auto" : "ltr"}
-                  >
-                    {price(shippingFee)}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
                   <span className="text-[15px] font-medium text-foreground">{t("paymentMethod")}</span>
                   <span className="text-[15px] font-medium text-foreground">{t("cashOnDelivery")}</span>
                 </div>
@@ -358,6 +350,11 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                     {price(grandTotal)}
                   </span>
                 </div>
+                <p className={cn("text-[12px] text-muted-foreground", ar && "font-cairo")}>
+                  {ar
+                    ? "تُحتسب رسوم التوصيل عند إتمام الطلب."
+                    : "Delivery is calculated at checkout."}
+                </p>
               </div>
 
               <Link
