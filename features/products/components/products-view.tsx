@@ -141,6 +141,30 @@ export function ProductsView({
     return new Set(raw.split(",").filter(Boolean));
   }, [searchParams]);
 
+  /**
+   * Drop selections that do not belong to the category being viewed.
+   *
+   * Clearing them when the category changes handles clicking around the page.
+   * This covers the other way in: a link, a bookmark or a shared URL carrying
+   * another category's filters, which would silently return nothing with no
+   * matching control on screen to explain why. `filters` arrives from the
+   * server already scoped to the active category, so it is the authority on
+   * what is valid here.
+   */
+  useEffect(() => {
+    if (activeFilterKeys.size === 0 || filters.length === 0) return;
+
+    const valid = new Set<string>();
+    for (const f of filters) for (const v of f.values) valid.add(v.key);
+
+    const stale = Array.from(activeFilterKeys).filter((key) => !valid.has(key));
+    if (stale.length === 0) return;
+
+    const kept = Array.from(activeFilterKeys).filter((key) => valid.has(key));
+    setParam("filter_values", kept.length ? kept.join(",") : undefined);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeFilterKeys, filters]);
+
   const activeValues = useMemo(() => {
     const map: Record<string, Set<string>> = {};
     for (const f of filters) {
@@ -269,6 +293,26 @@ export function ProductsView({
     [setParam]
   );
 
+  /**
+   * Point the listing at a category, dropping what no longer applies.
+   *
+   * Attribute filters belong to a category — "Socket AM5" means nothing under
+   * Monitors. Switching category used to leave the previous category's
+   * selections in the URL, so the shopper landed on an empty result set with
+   * filters they could not see the origin of. Cleared in the same update as
+   * the category, so the two can never disagree.
+   */
+  const applyCategory = useCallback((params: URLSearchParams, slug: string | null) => {
+    const previous = params.get("category_slug");
+    if (slug) params.set("category_slug", slug);
+    else params.delete("category_slug");
+
+    if (previous !== (slug ?? null)) {
+      params.delete("filter_values");
+      params.delete("page");
+    }
+  }, []);
+
   const handleCategoryToggle = useCallback(
     (slug: string) => {
       const cat = categories.find((c) => c.slug === slug);
@@ -281,30 +325,26 @@ export function ProductsView({
         // descendant categories, so this shows every product in it and all
         // of its nested sub-categories.
         setExpandedPath((prev) => [...prev, slug]);
-        updateParams((p) => p.set("category_slug", slug));
+        updateParams((p) => applyCategory(p, slug));
       } else {
         // Leaf category → filter, keep the current row of siblings visible.
         // Clicking an already selected leaf keeps it selected (idempotent)
         // rather than clearing the filter; use "Back" to go up a level.
         updateParams((p) => {
           const isSelected = p.get("category_slug") === slug;
-          if (isSelected) p.delete("category_slug");
-          else p.set("category_slug", slug);
+          applyCategory(p, isSelected ? null : slug);
         });
       }
     },
-    [updateParams, categories, parentChildrenMap]
+    [updateParams, categories, parentChildrenMap, applyCategory]
   );
 
   const handleBack = useCallback(() => {
     const next = expandedPath.slice(0, -1);
     setExpandedPath(next);
     const parentSlug = next[next.length - 1];
-    updateParams((p) => {
-      if (parentSlug) p.set("category_slug", parentSlug);
-      else p.delete("category_slug");
-    });
-  }, [expandedPath, updateParams]);
+    updateParams((p) => applyCategory(p, parentSlug ?? null));
+  }, [expandedPath, updateParams, applyCategory]);
 
   const filterSidebarProps = {
     categories,
