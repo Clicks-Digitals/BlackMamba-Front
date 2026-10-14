@@ -185,7 +185,11 @@ function OrderPicker({ defaultValue, error, label, locale }: OrderPickerProps) {
 
   return (
     <div ref={wrapperRef} className="dark relative">
-      <input type="hidden" name="order" value={selected?.order_number ?? ""} />
+      {/* The API identifies an order by its id. Sending the order NUMBER
+          meant the request was rejected as a malformed uuid — and once the
+          form validated it client-side too, Submit did nothing at all. The
+          customer still sees the number; only the value sent changes. */}
+      <input type="hidden" name="order" value={selected?.id ?? ""} />
 
       <label className="mb-1.5 block text-sm font-medium text-muted-foreground">{label}</label>
 
