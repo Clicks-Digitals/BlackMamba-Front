@@ -10,7 +10,7 @@
     },
     "columns": {
       "discover": "Shop",
-      "blackMamba": "Black Mamba",
+      "blackMamba": "Mamba Gears",
       "offers": "Offers",
       "company": "Company"
     },
@@ -45,7 +45,7 @@
       "instagram": "Instagram",
       "facebook": "Facebook"
     },
-    "copyright": "© {year} Black Mamba · Amman, Jordan",
+    "copyright": "© {year} Mamba Gears · Amman, Jordan",
     "payBadges": {
       "cod": "Cash on Delivery",
       "visa": "Visa",

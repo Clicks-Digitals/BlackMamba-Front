@@ -24,9 +24,11 @@ const blackMambaItems = [
 ];
 
 const offerItems = [
-  { key: "bestDeals" as const, href: "/products" },
-  { key: "bestSeller" as const, href: "/products" },
-  { key: "latestProducts" as const, href: "/products" }
+  // These all pointed at a plain, unfiltered /products, so three different
+  // promises led to the same page.
+  { key: "bestDeals" as const, href: "/products?clearance_sale=true" },
+  { key: "bestSeller" as const, href: "/products?best_seller=true" },
+  { key: "latestProducts" as const, href: "/products?ordering=-created_at" }
 ];
 
 const companyItems = [
@@ -149,7 +151,7 @@ export function Footer({ categories = [], locale = "en" }: { categories?: Catego
 
       <div className="layout-page layout-gutter-x relative grid gap-8 pt-8 pb-6 md:grid-cols-12 md:gap-8 md:pt-10 md:pb-8">
         <div className="md:col-span-4">
-          <Link href="/" aria-label="Black Mamba" className="inline-flex items-center">
+          <Link href="/" aria-label="Mamba Gears" className="inline-flex items-center">
             <BrandLogo size="sm" />
           </Link>
           <p className="mt-4 max-w-sm text-[14px] leading-relaxed text-white/50">
@@ -215,9 +217,24 @@ export function Footer({ categories = [], locale = "en" }: { categories?: Catego
 
       <div className="layout-page layout-gutter-x relative z-10 flex flex-wrap items-center gap-3 border-t border-white/8 py-5 text-[12px] text-white/40">
         <span>{t("copyright", { year })}</span>
-        <Link href="/privacy" className="transition-colors duration-150 hover:text-white">
-          {rtl ? "سياسة الخصوصية" : "Privacy Policy"}
-        </Link>
+        {(
+          [
+            { href: "/privacy", en: "Privacy Policy", ar: "سياسة الخصوصية" },
+            { href: "/terms", en: "Terms", ar: "الشروط" },
+            { href: "/returns", en: "Returns", ar: "الإرجاع" },
+            { href: "/shipping", en: "Delivery", ar: "التوصيل" },
+            { href: "/contact", en: "Contact", ar: "تواصل" },
+            { href: "/about", en: "About", ar: "عن المتجر" },
+          ] as const
+        ).map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="transition-colors duration-150 hover:text-white"
+          >
+            {rtl ? item.ar : item.en}
+          </Link>
+        ))}
         <div className={cn("flex flex-wrap gap-2", rtl ? "mr-auto" : "ml-auto")}>
           {(["cod", "visa", "mastercard", "cliq"] as const).map((badge) => (
             <span

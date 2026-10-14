@@ -20,9 +20,12 @@ export async function BrandStoreFeature({ slug }: { slug: string }) {
   const logo = brand.logo_url || brand.logo;
   const banner = brand.banner_image_url || brand.banner_image;
   const website = brand.website || findShowcaseBrand(brand.slug)?.website || null;
-  const productsHref = `/products?search=${encodeURIComponent(brand.name)}`;
+  const productsHref = `/products?brand_slug=${encodeURIComponent(brand.slug)}`;
 
-  const products = await getProducts(1, { search: brand.name });
+  // Searching the brand NAME matched it anywhere in a product's title, so
+  // /brand/intel listed ASUS and Dell laptops that merely mention an Intel
+  // CPU. Filter on the brand relation instead.
+  const products = await getProducts(1, { brand_slug: brand.slug });
   const preview = products.results.slice(0, 10);
   // The brand endpoint gives categories with their own artwork. When a brand has
   // none assigned, we derive them from its products instead — and those nested
@@ -172,7 +175,7 @@ export async function BrandStoreFeature({ slug }: { slug: string }) {
                 return (
                   <Link
                     key={cat.id}
-                    href={`/products?search=${encodeURIComponent(brand.name)}&category_slug=${cat.slug}`}
+                    href={`/products?brand_slug=${encodeURIComponent(brand.slug)}&category_slug=${cat.slug}`}
                     className="group flex flex-col overflow-hidden rounded-[8px] border border-border bg-card transition-colors hover:border-primary/50"
                   >
                     <span className="relative aspect-square w-full overflow-hidden bg-white">

@@ -10,7 +10,7 @@
     },
     "columns": {
       "discover": "تسوق",
-      "blackMamba": "Black Mamba",
+      "blackMamba": "Mamba Gears",
       "offers": "العروض",
       "company": "الشركة"
     },
@@ -45,7 +45,7 @@
       "instagram": "إنستغرام",
       "facebook": "فيسبوك"
     },
-    "copyright": "© {year} Black Mamba · عمّان، الأردن",
+    "copyright": "© {year} Mamba Gears · عمّان، الأردن",
     "payBadges": {
       "cod": "الدفع عند الاستلام",
       "visa": "فيزا",

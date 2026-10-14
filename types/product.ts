@@ -34,6 +34,8 @@ export interface ProductBrand {
   name: string;
   name_ar: string | null;
   slug: string;
+  /** A brand switched off in the panel must not be linked from the storefront. */
+  is_active?: boolean;
   logo_url: string;
   website: string | null;
 }

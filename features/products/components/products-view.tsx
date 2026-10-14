@@ -85,6 +85,7 @@ export function ProductsView({
 
   const sort = (searchParams.get("ordering") as SortValue) || DEFAULT_SORT;
   const search = searchParams.get("search") ?? "";
+  const isBestSeller = searchParams.get("best_seller") === "true";
   const isNewRelease = searchParams.get("new_release") === "true";
   const isClearanceSale = searchParams.get("clearance_sale") === "true";
 
@@ -183,11 +184,12 @@ export function ProductsView({
     if (search) out.search = search;
     if (sort && sort !== DEFAULT_SORT) out.ordering = sort;
     if (activeFilterKeys.size > 0) out.filter_values = Array.from(activeFilterKeys).join(",");
+    if (isBestSeller) out.best_seller = "true";
     if (isNewRelease) out.new_release = "true";
     if (isClearanceSale) out.clearance_sale = "true";
     if (activeBrandSlugs.length > 0) out.brand_slug = activeBrandSlugs.join(",");
     return out;
-  }, [activeSlugs, search, sort, activeFilterKeys, isNewRelease, isClearanceSale, activeBrandSlugs]);
+  }, [activeSlugs, search, sort, activeFilterKeys, isBestSeller, isNewRelease, isClearanceSale, activeBrandSlugs]);
 
   const filterKey = useMemo(
     () =>

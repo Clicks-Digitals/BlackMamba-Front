@@ -12,7 +12,7 @@ export async function HomeBlackMamba() {
       <div className="layout-page layout-gutter-x relative z-10 grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
         <div className={cn(rtl && "lg:order-2")}>
           <p className="mb-3 text-[13px] font-medium text-muted-foreground">
-            Black Mamba
+            Mamba Gears
           </p>
 
           <h2

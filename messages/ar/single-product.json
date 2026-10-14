@@ -34,9 +34,9 @@
     "deleteReviewDescription": "لا يمكن التراجع. سيتم حذف تقييمك نهائيًا.",
     "deleteReviewConfirm": "حذف",
     "deleteReviewAria": "حذف التقييم",
-    "freeDelivery": "توصيل مجاني",
-    "easyReturns": "إرجاع سهل",
-    "securePayment": "دفع آمن",
+    "freeDelivery": "توصيل لكل الأردن",
+    "easyReturns": "إرجاع خلال ١٤ يوم",
+    "securePayment": "الدفع عند الاستلام",
     "inStock": "متوفر",
     "lowStock": "كمية محدودة",
     "reviews": "تقييمات",
@@ -65,10 +65,18 @@
       }
     },
     "useCase": {
-      "studio": { "title": "استوديو إبداعي" },
-      "office": { "title": "مكتب إنتاجي" },
-      "gaming": { "title": "محاكي ألعاب" },
-      "setup": { "title": "إعداد متعدد الشاشات" }
+      "studio": {
+        "title": "استوديو إبداعي"
+      },
+      "office": {
+        "title": "مكتب إنتاجي"
+      },
+      "gaming": {
+        "title": "محاكي ألعاب"
+      },
+      "setup": {
+        "title": "إعداد متعدد الشاشات"
+      }
     },
     "reviewsTab": "التقييمات",
     "relatedKicker": "تابع التصفح",

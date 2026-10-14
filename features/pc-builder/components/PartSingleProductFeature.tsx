@@ -39,7 +39,7 @@ export async function PartSingleProductFeature({ partSlug }: { partSlug: string 
 
   return (
     <div className="bg-[#000000]">
-      {/* ── Breadcrumb — Black Mamba dark chrome ── */}
+      {/* ── Breadcrumb — Mamba Gears dark chrome ── */}
       <div className="layout-gutter-x border-b border-[#000000]">
         <nav
           className="layout-page flex h-11 items-center gap-1.5 font-chillax text-xs text-white/40"

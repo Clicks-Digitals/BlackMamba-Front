@@ -34,9 +34,9 @@
     "deleteReviewDescription": "This cannot be undone. Your review will be removed permanently.",
     "deleteReviewConfirm": "Delete",
     "deleteReviewAria": "Delete review",
-    "freeDelivery": "Free Delivery",
-    "easyReturns": "Easy Returns",
-    "securePayment": "Secure Payment",
+    "freeDelivery": "Delivery across Jordan",
+    "easyReturns": "14-day returns",
+    "securePayment": "Cash on delivery",
     "inStock": "In Stock",
     "lowStock": "Low Stock",
     "reviews": "reviews",
@@ -65,10 +65,18 @@
       }
     },
     "useCase": {
-      "studio": { "title": "Creative Studio" },
-      "office": { "title": "Productivity Office" },
-      "gaming": { "title": "Gaming Simulator" },
-      "setup": { "title": "Multi-Monitor Setup" }
+      "studio": {
+        "title": "Creative Studio"
+      },
+      "office": {
+        "title": "Productivity Office"
+      },
+      "gaming": {
+        "title": "Gaming Simulator"
+      },
+      "setup": {
+        "title": "Multi-Monitor Setup"
+      }
     },
     "reviewsTab": "Reviews",
     "relatedKicker": "Continue browsing",

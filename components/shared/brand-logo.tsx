@@ -26,7 +26,7 @@ export function BrandLogo({ size = "md", className, priority }: BrandLogoProps) 
   return (
     <Image
       src="/images/brand/logo-on-dark.png"
-      alt="Black Mamba"
+      alt="Mamba Gears"
       width={300}
       height={67}
       className={cn(
@@ -44,7 +44,7 @@ export function BrandMark({ size = 32, className }: { size?: number; className?:
   return (
     <Image
       src="/images/brand/mark-red.png"
-      alt="Black Mamba"
+      alt="Mamba Gears"
       width={size}
       height={size}
       className={cn("object-contain", className)}

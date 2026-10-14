@@ -41,7 +41,7 @@ export async function Header() {
               className="flex size-10 items-center justify-center text-store-nav-fg/80 transition-colors duration-150 hover:bg-white/10 hover:text-store-nav-fg"
             />
           </div>
-          <Link href="/" aria-label="Black Mamba" className="flex shrink-0 items-center">
+          <Link href="/" aria-label="Mamba Gears" className="flex shrink-0 items-center">
             <BrandLogo size="xs" priority />
           </Link>
         </div>

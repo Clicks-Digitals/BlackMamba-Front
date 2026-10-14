@@ -78,7 +78,7 @@ export function PartDetailView({ part, buildId }: PartDetailViewProps) {
 
       <div className="h-px bg-[#000000]" />
 
-      {/* Compatibility badge — Black Mamba: white = ok, red = incompatible (no green) */}
+      {/* Compatibility badge — Mamba Gears: white = ok, red = incompatible (no green) */}
       {part.is_compatible === false && (
         <div className="flex items-center gap-2 rounded-lg border border-[#EB0B1A] bg-[#EB0B1A] px-3 py-2 text-sm text-[#EB0B1A]">
           <X className="h-4 w-4 shrink-0" />

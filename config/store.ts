@@ -7,8 +7,8 @@
  * the page — fill these in before launch.
  */
 export const STORE = {
-  name: "Black Mamba",
-  nameAr: "بلاك مامبا",
+  name: "Mamba Gears",
+  nameAr: "مامبا غيرز",
   domain: "mambagears.com",
 
   /** Digits only, international format, no "+" — used to build wa.me links. */

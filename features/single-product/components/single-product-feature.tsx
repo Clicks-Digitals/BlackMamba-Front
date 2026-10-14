@@ -258,7 +258,9 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
             )}
 
 
-            {brandName && product.brand && (
+            {/* A brand switched off in the panel kept its "Visit the … Store"
+                link here, which led to a page that no longer exists. */}
+            {brandName && product.brand && product.brand.is_active !== false && (
               <div className="mt-8 flex items-center gap-4 border-t border-border pt-5">
                 {product.brand.logo_url ? (
                   <Link

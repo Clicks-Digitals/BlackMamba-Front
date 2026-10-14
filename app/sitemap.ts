@@ -9,6 +9,11 @@ const ROUTES: { path: string; changeFrequency: MetadataRoute.Sitemap[number]['ch
   { path: '/pc-builder/parts', changeFrequency: 'weekly', priority: 0.6 },
   { path: '/pc-builder/ready-made', changeFrequency: 'weekly', priority: 0.6 },
   { path: '/service-center', changeFrequency: 'monthly', priority: 0.5 },
+  { path: '/about', changeFrequency: 'monthly', priority: 0.5 },
+  { path: '/contact', changeFrequency: 'monthly', priority: 0.5 },
+  { path: '/shipping', changeFrequency: 'monthly', priority: 0.4 },
+  { path: '/returns', changeFrequency: 'monthly', priority: 0.4 },
+  { path: '/terms', changeFrequency: 'yearly', priority: 0.3 },
   { path: '/privacy', changeFrequency: 'yearly', priority: 0.3 },
 ];
 

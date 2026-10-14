@@ -21,8 +21,8 @@ const cairo = Cairo({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
-  title: 'Black Mamba - E-Commerce',
-  description: 'Black Mamba multi-language e-commerce platform',
+  title: 'Mamba Gears',
+  description: 'Mamba Gears — computers, components and electronics in Jordan',
 };
 
 export default async function RootLayout({

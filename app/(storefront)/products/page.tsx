@@ -18,6 +18,7 @@ type SearchParamsShape = {
   ordering?: string | string[];
   search?: string | string[];
   filter_values?: string | string[];
+  best_seller?: string | string[];
   new_release?: string | string[];
   clearance_sale?: string | string[];
   brand_slug?: string | string[];
@@ -46,6 +47,7 @@ export default async function ProductsPage({
   if (search) initialFilters.search = search;
   const filterValues = first(sp.filter_values);
   if (filterValues) initialFilters.filter_values = filterValues;
+  if (first(sp.best_seller) === "true") initialFilters.best_seller = "true";
   if (first(sp.new_release) === "true") initialFilters.new_release = "true";
   if (first(sp.clearance_sale) === "true") initialFilters.clearance_sale = "true";
   const brandSlug = first(sp.brand_slug);

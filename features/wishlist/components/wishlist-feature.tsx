@@ -15,7 +15,7 @@ export async function WishlistFeature() {
     <div className="min-h-screen bg-background">
       <div className="bm-page-hero">
         <div className="layout-page layout-gutter-x py-10 md:py-12">
-          <p className="bm-kicker mb-3">Black Mamba</p>
+          <p className="bm-kicker mb-3">Mamba Gears</p>
           <h1
             className={cn(
               "text-[clamp(1.8rem,3.4vw,2.8rem)] leading-none text-foreground",

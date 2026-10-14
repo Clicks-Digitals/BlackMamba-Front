@@ -7,8 +7,8 @@ import { BrandLogo } from "@/components/shared/brand-logo";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Black Mamba",
-    default: "Black Mamba",
+    template: "%s | Mamba Gears",
+    default: "Mamba Gears",
   },
 };
 
@@ -47,7 +47,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
         />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-0.75 bg-primary" />
 
-        <Link href="/" aria-label="Black Mamba" className="relative z-10 inline-flex items-center">
+        <Link href="/" aria-label="Mamba Gears" className="relative z-10 inline-flex items-center">
           <BrandLogo size="md" priority />
         </Link>
 
@@ -84,7 +84,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
 
       {/* Form panel */}
       <div className="flex flex-1 flex-col items-center justify-center bg-[#000000] px-4 py-10 sm:px-6 lg:py-16">
-        <Link href="/" aria-label="Black Mamba" className="mb-8 inline-flex items-center lg:hidden">
+        <Link href="/" aria-label="Mamba Gears" className="mb-8 inline-flex items-center lg:hidden">
           <BrandLogo size="sm" priority />
         </Link>
         <main className="w-full max-w-md">{children}</main>

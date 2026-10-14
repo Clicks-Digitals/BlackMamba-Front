@@ -49,9 +49,12 @@ export async function getSponsors(): Promise<HomeSponsor[]> {
 }
 
 export async function getBrands(categoryId?: string | number): Promise<HomeBrand[]> {
+  // 100 cut the list at exactly 100 tiles out of 115 active brands, and
+  // because the cut happened before the inactive ones were filtered out, the
+  // brands sitting at a higher display order never appeared at all.
   const url = categoryId
-    ? `/categories/brands/?page_size=100&category=${categoryId}`
-    : `/categories/brands/?page_size=100`;
+    ? `/categories/brands/?page_size=500&category=${categoryId}`
+    : `/categories/brands/?page_size=500`;
   const res = await apiClient<PaginatedResponse<HomeBrand>>(url, { revalidate: 30 });
   if (!res.ok) return [];
   return extractList<HomeBrand>(res.data).filter((b) => b.is_active !== false);
