@@ -103,13 +103,6 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
   const reviewCount = product.review_count ?? 0;
   const filledStars = avgRating != null ? Math.min(5, Math.max(0, Math.round(avgRating))) : 0;
 
-  const inStockBadge =
-    product.inventory_mode === "TOGGLE"
-      ? product.in_stock
-      : product.inventory_mode === "TRACK"
-        ? (product.product_stock ?? 0) > 0
-        : product.is_available;
-
   return (
     <div className="bg-background">
       <TrackProductView product={product} />
@@ -217,12 +210,9 @@ export async function SingleProductFeature({ productSlug }: { productSlug: strin
             })()}
 
             <div className="mt-3 flex flex-wrap items-center gap-3">
-              {inStockBadge && (
-                <span className="inline-flex h-6 items-center gap-1.5 rounded border border-success/30 bg-success/10 px-2 font-chillax text-[11px] font-semibold text-success">
-                  <span className="size-1.5 rounded-full bg-success" aria-hidden />
-                  {t("inStock")}
-                </span>
-              )}
+              {/* The buy box carries the stock badge, and it knows about low
+                  stock too. Having one here as well meant a product with two
+                  left said "In Stock" and "Low Stock" at the same time. */}
               {avgRating != null && (
                 <a
                   href="#reviews"
