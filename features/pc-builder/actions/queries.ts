@@ -118,7 +118,17 @@ export async function getSharedBuildAction(shareSlug: string): Promise<PCBuild |
 }
 
 export async function getReadyMadeBuildsAction(): Promise<PCBuild[]> {
-  const res = await apiClient<PaginatedResponse<PCBuild>>("/pc-builder/ready-made/?page_size=50");
-  if (res.ok && res.data) return res.data.results;
-  return [];
+  const res = await apiClient<PaginatedResponse<PCBuild>>(
+    "/pc-builder/ready-made/?page_size=50",
+    { revalidate: 30 }
+  );
+  if (!res.ok || !res.data) return [];
+
+  // Four builds with no parts were on sale at 0.00 JOD with a working Add to
+  // Cart, advertising "~75 FPS" for a machine that contained nothing. A build
+  // with no parts is not a product yet, so it is not offered until it has
+  // some.
+  return res.data.results.filter(
+    (build) => (build.items?.length ?? 0) > 0 && Number(build.pricing?.total_price ?? 0) > 0
+  );
 }

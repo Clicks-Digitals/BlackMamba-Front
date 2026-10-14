@@ -125,7 +125,9 @@
       "variantDetails": "Variant Details",
       "bundleContents": "Bundle Contents",
       "each": "each",
-      "noImage": "No image"
+      "noImage": "No image",
+      "paymentMethodCod": "Cash on delivery",
+      "orderNumberLabel": "Order"
     },
     "SupportTab": {
       "supportTickets": "Support tickets",

@@ -47,7 +47,7 @@ export function OrderCard({ order, onViewDetails, onRefresh }: OrderCardProps) {
   const t = useTranslations("Profile.OrdersTab");
 
   function copyId() {
-    navigator.clipboard.writeText(order.id);
+    navigator.clipboard.writeText(order.order_number || order.id);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }
@@ -99,11 +99,13 @@ export function OrderCard({ order, onViewDetails, onRefresh }: OrderCardProps) {
       <div className="flex flex-col gap-2.5 px-5 py-4">
         {/* Order ID row */}
         <div className="flex items-center gap-2">
-          <span className="font-mono text-[11px] text-white/35 truncate flex-1">{order.id}</span>
+          <span className="font-mono text-[11px] text-muted-foreground truncate flex-1">
+            {t("orderNumberLabel")} {order.order_number || order.id}
+          </span>
           <button
             type="button"
             onClick={copyId}
-            title="Copy order ID"
+            title="Copy order number"
             className="shrink-0 text-white/35 transition hover:text-[#FFFFFF]"
           >
             {copied ? <Check size={13} className="text-foreground" /> : <Copy size={13} />}
@@ -124,7 +126,11 @@ export function OrderCard({ order, onViewDetails, onRefresh }: OrderCardProps) {
 
         <div className="flex items-center gap-2.5 text-white/50">
           <CreditCard size={14} className="shrink-0 text-foreground/40" />
-          <span className="text-[13px]">{order.payment_method}</span>
+          <span className="text-[13px]">
+            {order.payment_method === "CASH_ON_DELIVERY"
+              ? t("paymentMethodCod")
+              : order.payment_method}
+          </span>
           <span
             className={cn(
               "ms-auto rounded-full px-2 py-0.5 text-[10.5px] font-medium",

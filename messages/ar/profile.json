@@ -125,7 +125,9 @@
       "variantDetails": "تفاصيل المتغير",
       "bundleContents": "محتويات الباقة",
       "each": "للقطعة",
-      "noImage": "لا توجد صورة"
+      "noImage": "لا توجد صورة",
+      "paymentMethodCod": "الدفع عند الاستلام",
+      "orderNumberLabel": "الطلب"
     },
     "SupportTab": {
       "supportTickets": "تذاكر الدعم",
