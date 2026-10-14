@@ -101,30 +101,21 @@ export async function HomeFeature() {
       />
     ),
     product_sections: orderedSections.length ? (
-      <HomeProductSections
-        sections={orderedSections}
-        locale={locale}
-        startIndex={0}
-        betweenSlot={shopByBrand}
-        betweenAfterIndex={0}
-      />
-    ) : (
-      shopByBrand
-    ),
+      <HomeProductSections sections={orderedSections} locale={locale} startIndex={0} />
+    ) : null,
     promo_split: featuredCoupon ? <HomePromoSplit coupon={featuredCoupon} /> : null,
     black_mamba: <HomeBlackMamba />,
     promo_banner: <HomePromoBanner banners={banners} locale={locale} />,
     top_brands: <HomeTopBrands locale={locale} />,
-    // Rendered inside product_sections (between first and second collection).
-    shop_by_brand: null,
+    // An ordinary block now: it sits where Home Layout puts it, and hiding it
+    // in the panel actually hides it.
+    shop_by_brand: shopByBrand,
   };
 
   const keys: HomeSectionKey[] =
     layout.length > 0
-      ? (layout
-          .filter((s) => s.is_visible && s.key !== "shop_by_brand")
-          .map((s) => s.key) as HomeSectionKey[])
-      : DEFAULT_ORDER.filter((k) => k !== "shop_by_brand");
+      ? (layout.filter((s) => s.is_visible).map((s) => s.key) as HomeSectionKey[])
+      : DEFAULT_ORDER;
 
   // Ensure product sections (and thus Shop by Brand) still appear if CMS omitted them.
   const finalKeys = keys.includes("product_sections")
