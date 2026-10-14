@@ -17,11 +17,20 @@ export async function getFeaturedCategories(): Promise<Category[]> {
 }
 
 export async function getNavCategories(): Promise<Category[]> {
-  const featured = await getFeaturedCategories();
-  if (featured.length) return featured;
-  const res = await apiClient<unknown>("/categories/?page_size=100", { revalidate: 30 });
+  // The nav bar belongs to "Navigation Status", not "Featured". Asking for
+  // featured first meant the panel's eight featured categories filled the
+  // menu while every category had Navigation Status switched off — turning
+  // that setting on or off changed nothing.
+  const res = await apiClient<unknown>("/categories/?page_size=500", { revalidate: 30 });
   if (!res.ok) return [];
-  return normalizeCategories(res.data).filter((c) => !c.parent).slice(0, 12);
+
+  const all = normalizeCategories(res.data);
+  const nav = all.filter((c) => c.is_nav && c.is_active !== false);
+  if (nav.length) return nav.slice(0, 12);
+
+  // Nothing marked for the menu: fall back to top-level categories so the bar
+  // is never empty.
+  return all.filter((c) => !c.parent && c.is_active !== false).slice(0, 12);
 }
 
 export async function getStorefrontCategories(): Promise<Category[]> {
