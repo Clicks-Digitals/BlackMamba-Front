@@ -34,7 +34,10 @@ export async function getNavCategories(): Promise<Category[]> {
 }
 
 export async function getStorefrontCategories(): Promise<Category[]> {
-  const res = await apiClient<unknown>("/categories/?page_size=100", { revalidate: 30 });
+  // Categories come back ordered by display_order, so at 100 the ones with a
+  // non-zero order (Mice, Keyboards, Headsets…) fell past the cut and vanished
+  // from the products page's sub-category row and filters.
+  const res = await apiClient<unknown>("/categories/?page_size=500", { revalidate: 30 });
   if (!res.ok) return [];
   return normalizeCategories(res.data);
 }
