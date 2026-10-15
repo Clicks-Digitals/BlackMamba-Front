@@ -56,13 +56,13 @@ export async function Header() {
             <CurrencySwitcher currencies={currencies} currentCurrency={currentCurrency} />
             <ThemeToggle />
           </div>
-          {/* Below xl, search / favourites / theme collapse into one menu so the
-              cart always has room — it was being clipped off the right edge. */}
+          {/* Search keeps its own icon on mobile; favourites / theme collapse
+              into one menu so the cart always has room — it was being clipped
+              off the right edge. */}
+          <HeaderSearch variant="mobile" />
           <div className="xl:hidden">
             <HeaderOverflowMenu />
           </div>
-          {/* Hosts the mobile search overlay; the menu above opens it. */}
-          <HeaderSearch variant="mobile" showTrigger={false} />
           <HeaderIcons />
           <div className="hidden xl:block">
             <HeaderUserMenu />

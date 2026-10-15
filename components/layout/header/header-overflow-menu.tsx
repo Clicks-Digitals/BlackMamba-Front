@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
-import { Heart, MoreVertical, Moon, Search, Sun } from "lucide-react";
+import { Heart, MoreVertical, Moon, Sun } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,19 +13,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useHeaderSearch } from "@/stores/header-search-store";
 import { useWishlistStore } from "@/stores/wishlist-store";
 import { cn } from "@/lib/utils";
 
 /**
- * Below xl the header cannot fit search, favourites, the theme toggle and the
- * cart alongside the logo — the cart was being pushed off the right edge. The
- * cart is the one that matters, so the other three collapse in here.
+ * Below xl the header cannot fit favourites and the theme toggle alongside
+ * search, the cart and the logo — the cart was being pushed off the right
+ * edge. Search and the cart keep their own icons; the other two collapse in
+ * here.
  */
 export function HeaderOverflowMenu() {
   const t = useTranslations("Header");
   const pathname = usePathname();
-  const openSearch = useHeaderSearch((s) => s.setOpen);
   const wishlistCount = useWishlistStore((s) => s.ids.length);
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -56,16 +55,6 @@ export function HeaderOverflowMenu() {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" sideOffset={6} className="min-w-52">
-        <DropdownMenuItem
-          // The overlay is mounted by HeaderSearch, not here, so it survives
-          // this menu closing.
-          onSelect={() => openSearch(true)}
-          className="cursor-pointer gap-2.5"
-        >
-          <Search className="size-4 shrink-0" strokeWidth={1.75} />
-          <span>{t("search")}</span>
-        </DropdownMenuItem>
-
         <DropdownMenuItem asChild className="cursor-pointer gap-2.5">
           <Link href="/favourites">
             <Heart

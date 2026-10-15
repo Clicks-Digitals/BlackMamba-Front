@@ -23,6 +23,7 @@ import type { User, ActionState } from "@/types";
 import { useTranslations, useLocale } from "next-intl";
 import { cn } from "@/lib/utils";
 import { formatDateShort } from "@/lib/utils/date";
+import { DeleteAccountSection } from "./delete-account-section";
 
 interface ProfileInfoTabProps {
   user: User;
@@ -334,6 +335,8 @@ export function ProfileInfoTab({ user: initialUser }: ProfileInfoTabProps) {
           </form>
         </div>
       )}
+
+      <DeleteAccountSection />
     </div>
   );
 }
