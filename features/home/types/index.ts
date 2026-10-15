@@ -27,6 +27,8 @@ export interface HomeSection {
   title_ar: string;
   order: number;
   is_active: boolean;
+  /** Set per section in the panel; blank falls back to /products. */
+  link: string | null;
   products: Product[];
   created_at: string;
   updated_at: string;

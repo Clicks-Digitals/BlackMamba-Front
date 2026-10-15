@@ -225,6 +225,10 @@ export function Footer({ categories = [], locale = "en" }: { categories?: Catego
             { href: "/shipping", en: "Delivery", ar: "التوصيل" },
             { href: "/contact", en: "Contact", ar: "تواصل" },
             { href: "/about", en: "About", ar: "عن المتجر" },
+            // T4: both of these have had a panel section since launch with no
+            // page to show for it.
+            { href: "/blog", en: "Blog", ar: "المدونة" },
+            { href: "/testimonials", en: "Reviews", ar: "آراء العملاء" },
           ] as const
         ).map((item) => (
           <Link

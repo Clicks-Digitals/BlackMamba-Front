@@ -267,7 +267,10 @@ export function FiltersPanel({
       {/* Dynamic filter groups */}
       {hasFilters && (
         <>
-          {filters.map((f) => {
+          {/* S17: a filter whose values all matched nothing in this category
+              is now served with an empty list — drop the heading too, rather
+              than leaving an empty section open. */}
+          {filters.filter((f) => f.values.length > 0).map((f) => {
             const groupValues = activeValues[f.key] ?? new Set<string>();
             const name = rtl ? f.name_ar || f.name : f.name;
             return (

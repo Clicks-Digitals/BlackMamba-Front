@@ -1,11 +1,12 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { PasswordInput, SubmitButton } from "@/components/forms";
 import { resetPasswordAction, type ResetPasswordData } from "@/features/auth";
+import { PasswordRules } from "@/features/auth/components/password-rules";
 import type { ActionState } from "@/types";
 
 const initialState: ActionState<ResetPasswordData, void> = { status: "idle", message: "" };
@@ -21,6 +22,7 @@ export function ResetPasswordView({ email, otpCode }: Props) {
   const [state, action] = useActionState(resetPasswordAction, initialState);
 
   const fe = state.fieldErrors || {};
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     if (state.status === "success") {
@@ -48,18 +50,24 @@ export function ResetPasswordView({ email, otpCode }: Props) {
         <input type="hidden" name="email" value={email} />
         <input type="hidden" name="code" value={otpCode} />
 
-        <PasswordInput
-          name="new_password"
-          label={t("newPassword", { defaultValue: "New Password" })}
-          placeholder="••••••••"
-          error={fe.new_password?.[0] ? t(fe.new_password[0] as never) : undefined}
-       
-        />
+        <div>
+          <PasswordInput
+            name="new_password"
+            label={t("newPassword", { defaultValue: "New Password" })}
+            placeholder="••••••••"
+            autoComplete="new-password"
+            onChange={(e) => setPassword(e.target.value)}
+            error={fe.new_password?.[0] ? t(fe.new_password[0] as never) : undefined}
+          />
+          {/* A5: the server enforces five rules; the form used to name one. */}
+          <PasswordRules value={password} namespace="Auth.ResetPassword" />
+        </div>
 
         <PasswordInput
           name="confirm_password"
           label={t("confirmPassword", { defaultValue: "Confirm Password" })}
           placeholder="••••••••"
+          autoComplete="new-password"
           error={fe.confirm_password?.[0] ? t(fe.confirm_password[0] as never) : undefined}
        
         />

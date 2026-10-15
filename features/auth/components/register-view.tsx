@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Lock, Mail, Phone, User, UserPlus } from "lucide-react";
 import { Input, PasswordInput, SubmitButton } from "@/components/forms";
 import { GoogleSignInButton } from "@/features/auth/components/google-sign-in-button";
+import { PasswordRules } from "@/features/auth/components/password-rules";
 import { useAuthStore } from "@/stores/auth-store";
 import { registerAction, type RegisterData } from "@/features/auth";
 import type { ActionState, User as UserType } from "@/types";
@@ -23,6 +24,7 @@ export function RegisterView() {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const [state, action] = useActionState(registerAction, initialState);
   const fe = state.fieldErrors || {};
+  const [password, setPassword] = useState(state.inputs?.password1 ?? "");
 
   useEffect(() => {
     if (state.status === "success" && state.data) {
@@ -108,16 +110,20 @@ export function RegisterView() {
           className={FOCUS_RING}
         />
 
-        <PasswordInput
-          icon={Lock}
-          label={t("passwordLabel")}
-          name="password1"
-          placeholder={t("passwordPlaceholder")}
-          autoComplete="new-password"
-          defaultValue={state.inputs?.password1 ?? ""}
-          error={fe.password1?.[0] && t(fe.password1[0] as never)}
-          className={FOCUS_RING}
-        />
+        <div>
+          <PasswordInput
+            icon={Lock}
+            label={t("passwordLabel")}
+            name="password1"
+            placeholder={t("passwordPlaceholder")}
+            autoComplete="new-password"
+            defaultValue={state.inputs?.password1 ?? ""}
+            onChange={(e) => setPassword(e.target.value)}
+            error={fe.password1?.[0] && t(fe.password1[0] as never)}
+            className={FOCUS_RING}
+          />
+          <PasswordRules value={password} namespace="Auth.Register" />
+        </div>
 
         <PasswordInput
           icon={Lock}

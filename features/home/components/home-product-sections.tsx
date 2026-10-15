@@ -73,6 +73,7 @@ export function HomeProductSections({
                   title={title}
                   rtl={rtl}
                   viewMoreLabel={t("viewMore")}
+                  viewMoreHref={section.link || "/products"}
                   layout={layout}
                   onLayoutChange={(mode) => setLayout(section.id, mode)}
                   layoutGridLabel={t("layoutGrid")}
@@ -120,6 +121,7 @@ function RowHeader({
   title,
   rtl,
   viewMoreLabel,
+  viewMoreHref,
   layout,
   onLayoutChange,
   layoutGridLabel,
@@ -128,6 +130,8 @@ function RowHeader({
   title: string;
   rtl: boolean;
   viewMoreLabel: string;
+  /** Set per section in the panel. Every section used to land on /products. */
+  viewMoreHref: string;
   layout: LayoutMode;
   onLayoutChange: (mode: LayoutMode) => void;
   layoutGridLabel: string;
@@ -186,7 +190,7 @@ function RowHeader({
         </div>
 
         <Link
-          href="/products"
+          href={viewMoreHref}
           onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
           className={cn(
             "store-view-all inline-flex shrink-0 items-center gap-0.5",

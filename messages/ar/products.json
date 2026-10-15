@@ -18,6 +18,8 @@
     "clearAll": "مسح الكل",
     "newRelease": "إصدارات جديدة",
     "clearanceSale": "تصفية المخزون",
-    "brandsTitle": "العلامات التجارية"
+    "brandsTitle": "العلامات التجارية",
+    "noSearchResults": "لم نجد أي نتائج لـ \"{query}\".",
+    "noSearchResultsHint": "تأكد من الإملاء، أو جرّب كلمة أقصر أو أعم."
   }
 }

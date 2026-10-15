@@ -18,6 +18,8 @@
     "clearAll": "Clear All",
     "newRelease": "New Release",
     "clearanceSale": "Clearance Sale",
-    "brandsTitle": "Brands"
+    "brandsTitle": "Brands",
+    "noSearchResults": "We found nothing for \"{query}\".",
+    "noSearchResultsHint": "Check the spelling, or try a shorter or more general word."
   }
 }

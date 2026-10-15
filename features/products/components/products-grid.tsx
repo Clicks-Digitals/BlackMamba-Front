@@ -37,7 +37,21 @@ export function ProductsGrid({ filters, locale, onCountChange, initialData }: Pr
       onCountChange={onCountChange}
       loadingUI={null}
       emptyState={
-        <p className="py-16 text-center text-sm text-muted-foreground">{t("noResults")}</p>
+        <div className="py-16 text-center">
+          <p className="text-sm text-muted-foreground">
+            {/* S13: a shopper who searched "ryzn" was told nothing matched
+                their *filters*, which they had never touched. Name the search
+                term back to them instead — it is almost always a typo. */}
+            {filters.search
+              ? t("noSearchResults", { query: filters.search })
+              : t("noResults")}
+          </p>
+          {filters.search ? (
+            <p className="mt-2 text-[13px] text-muted-foreground/70">
+              {t("noSearchResultsHint")}
+            </p>
+          ) : null}
+        </div>
       }
     >
       {(items, isLoading) => (
