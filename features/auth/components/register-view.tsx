@@ -9,6 +9,7 @@ import { Lock, Mail, Phone, User, UserPlus } from "lucide-react";
 import { Input, PasswordInput, SubmitButton } from "@/components/forms";
 import { GoogleSignInButton } from "@/features/auth/components/google-sign-in-button";
 import { PasswordRules } from "@/features/auth/components/password-rules";
+import { ConsentNotice } from "@/features/auth/components/consent-notice";
 import { useAuthStore } from "@/stores/auth-store";
 import { registerAction, type RegisterData } from "@/features/auth";
 import type { ActionState, User as UserType } from "@/types";
@@ -135,6 +136,9 @@ export function RegisterView() {
           error={fe.password2?.[0] && t(fe.password2[0] as never)}
           className={FOCUS_RING}
         />
+
+        {/* S2: sign-up had no reference to the terms or privacy policy. */}
+        <ConsentNotice action="register" rtl={false} className="text-white/45" />
 
         <SubmitButton
           pendingText={t("submittingBtn")}

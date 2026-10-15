@@ -190,6 +190,17 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                               <p className="text-[11px] text-muted-foreground">{categoryLine}</p>
                             ) : null}
                             <p className="text-[15px] font-bold text-foreground">{name}</p>
+                            {/* S19: a withdrawn product used to vanish from
+                                the basket with no explanation. It stays put
+                                now, and says what happened. */}
+                            {item.product_details &&
+                            item.product_details.is_available === false ? (
+                              <p className="mt-1 inline-flex items-center gap-1 rounded bg-destructive/10 px-1.5 py-0.5 text-[11px] font-semibold text-destructive">
+                                {locale === "ar"
+                                  ? "لم يعد متوفرًا — أزله لإتمام الطلب"
+                                  : "No longer available — remove it to check out"}
+                              </p>
+                            ) : null}
                             {isBuild && buildParts.length > 0 && (
                               <button
                                 type="button"

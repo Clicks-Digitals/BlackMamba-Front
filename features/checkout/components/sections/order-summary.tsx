@@ -9,6 +9,7 @@ import { Input } from "@/components/forms/Input";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { ConsentNotice } from "@/features/auth/components/consent-notice";
 import type { Cart } from "@/features/cart/types";
 import type { CouponData } from "@/features/cart/actions/mutations";
 import { CartVariationBadges } from "@/features/cart/components/cart-variation-badges";
@@ -33,15 +34,20 @@ interface OrderSummaryProps {
 function SubmitOrderButton() {
   const { pending } = useFormStatus();
   const t = useTranslations("Checkout.orderSummary");
+  const rtl = useLocale() === "ar";
 
   return (
-    <Button
-      type="submit"
-      disabled={pending}
-      className="w-full cursor-pointer rounded-lg bg-primary py-6 font-bold tracking-wider text-white uppercase hover:bg-[#EB0B1A] disabled:opacity-50"
-    >
-      {pending ? t("processing") : t("completePurchase")}
-    </Button>
+    <div className="space-y-3">
+      <Button
+        type="submit"
+        disabled={pending}
+        className="w-full cursor-pointer rounded-lg bg-primary py-6 font-bold tracking-wider text-white uppercase hover:bg-[#EB0B1A] disabled:opacity-50"
+      >
+        {pending ? t("processing") : t("completePurchase")}
+      </Button>
+      {/* S2: checkout pointed at no terms or privacy policy. */}
+      <ConsentNotice action="order" rtl={rtl} />
+    </div>
   );
 }
 

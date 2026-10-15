@@ -127,7 +127,9 @@
       "each": "للقطعة",
       "noImage": "لا توجد صورة",
       "paymentMethodCod": "الدفع عند الاستلام",
-      "orderNumberLabel": "الطلب"
+      "orderNumberLabel": "الطلب",
+      "cancelOrderConfirm": "نعم، ألغِ طلبي",
+      "cancelOrderDismiss": "احتفظ بالطلب"
     },
     "SupportTab": {
       "supportTickets": "تذاكر الدعم",

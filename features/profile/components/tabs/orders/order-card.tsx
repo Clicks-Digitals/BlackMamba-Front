@@ -56,7 +56,10 @@ export function OrderCard({ order, onViewDetails, onRefresh }: OrderCardProps) {
     openConfirm({
       title: t("cancelOrder"),
       description: t("cancelOrderDesc", { orderNumber: order.order_number }),
-      confirmLabel: t("cancelOrder"),
+      confirmLabel: t("cancelOrderConfirm"),
+      // The dialog read "Cancel" beside "Cancel Order", which is two
+      // buttons that both look like they cancel the order.
+      cancelLabel: t("cancelOrderDismiss"),
       variant: "destructive",
       onConfirm: () =>
         startCancel(async () => {

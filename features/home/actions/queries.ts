@@ -6,7 +6,7 @@ import { normalizeCategories } from "@/lib/api/normalize-category";
 import { normalizeBanners, normalizeHomeSections, normalizeSwipers } from "@/lib/api/normalize-home";
 import type { Category } from "@/types/category";
 import type { PaginatedResponse } from "@/types/api";
-import type { HomeBanner, HomeBrand, HomeLayoutSection, HomeSection, HomeSponsor, HomeSwiperSlide, HomeTestimonial } from "../types";
+import type { HomeBanner, HomeBrand, HomeDealCard, HomeLayoutSection, HomeSection, HomeSponsor, HomeSwiperSlide, HomeTestimonial } from "../types";
 import type { Campaign } from "@/types/campaign";
 
 export async function getFeaturedCategories(): Promise<Category[]> {
@@ -170,4 +170,21 @@ export async function getActiveCampaigns(): Promise<Campaign[]> {
   const res = await apiClient<PaginatedResponse<Campaign>>("/cms/campaigns/", { revalidate: 30 });
   if (!res.ok) return [];
   return res.data.results ?? [];
+}
+
+
+/**
+ * The deal card's wording and link.
+ *
+ * It used to be a fixed English sentence pointing at every product, with
+ * nothing in the panel to change it. Null means staff switched it off.
+ */
+export async function getDealCard(): Promise<HomeDealCard | null> {
+  const res = await apiClient<HomeDealCard[] | PaginatedResponse<HomeDealCard>>(
+    "/cms/deal-card/",
+    { revalidate: 60 }
+  );
+  if (!res.ok || !res.data) return null;
+  const rows = Array.isArray(res.data) ? res.data : res.data.results;
+  return rows?.[0] ?? null;
 }

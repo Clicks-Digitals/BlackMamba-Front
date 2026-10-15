@@ -114,3 +114,16 @@ export interface HomeTestimonial {
   rating: number;
   created_at?: string;
 }
+
+/** Matches DealCard from /api/cms/deal-card/ — the card beside the hero. */
+export interface HomeDealCard {
+  id: string;
+  heading: string;
+  heading_ar: string;
+  text: string;
+  text_ar: string;
+  button_label: string;
+  button_label_ar: string;
+  link: string;
+  is_active: boolean;
+}

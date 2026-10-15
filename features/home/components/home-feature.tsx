@@ -4,6 +4,7 @@ import {
   getFeaturedCategories,
   getFeaturedCoupon,
   getHomeBanners,
+  getDealCard,
   getHomeLayout,
   getHomeSections,
   getHomeSwipers,
@@ -35,7 +36,7 @@ const DEFAULT_ORDER: HomeSectionKey[] = [
 ];
 
 export async function HomeFeature() {
-  const [locale, swipers, categories, sections, banners, t, layout, featuredCoupon, campaigns] =
+  const [locale, swipers, categories, sections, banners, t, layout, featuredCoupon, campaigns, dealCard] =
     await Promise.all([
       getLocale(),
       getHomeSwipers(),
@@ -46,6 +47,7 @@ export async function HomeFeature() {
       getHomeLayout(),
       getFeaturedCoupon(),
       getActiveCampaigns(),
+      getDealCard(),
     ]);
 
   const isAr = locale === "ar";
@@ -79,6 +81,7 @@ export async function HomeFeature() {
         highlightProducts={highlightProducts}
         dealProduct={dealProduct}
         featuredCoupon={featuredCoupon}
+        dealCard={dealCard}
         locale={locale}
         shopLabel={t("shopNow")}
       />

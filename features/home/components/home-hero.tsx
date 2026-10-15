@@ -31,7 +31,7 @@ import { addToCartAction, updateCartItemAction } from "@/features/cart/actions/m
 import { productPayload, trackAddToCart } from "@/features/analytics";
 import { useCartStore, buildCartItemKey } from "@/stores/cart-store";
 import type { FeaturedCoupon } from "../actions/queries";
-import type { HomeSwiperSlide } from "../types";
+import type { HomeDealCard, HomeSwiperSlide } from "../types";
 
 type HomeHeroProps = {
   slides: HomeSwiperSlide[];
@@ -39,6 +39,8 @@ type HomeHeroProps = {
   highlightProducts: Product[];
   dealProduct: Product | null;
   featuredCoupon: FeaturedCoupon | null;
+  /** The deal card's wording and link, set in the panel. */
+  dealCard: HomeDealCard | null;
   locale: string;
   shopLabel: string;
 };
@@ -103,6 +105,7 @@ export function HomeHero({
   highlightProducts = [],
   dealProduct = null,
   featuredCoupon = null,
+  dealCard = null,
   locale,
   shopLabel,
 }: HomeHeroProps) {
@@ -324,6 +327,7 @@ export function HomeHero({
               <HeroDealCard
                 product={dealProduct}
                 coupon={featuredCoupon}
+                dealCard={dealCard}
                 locale={locale}
                 shopLabel={shopLabel}
               />
@@ -501,16 +505,30 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
 function HeroDealCard({
   product,
   coupon,
+  dealCard,
   locale,
   shopLabel,
 }: {
   product: Product | null;
   coupon: FeaturedCoupon | null;
+  /** Set in the panel. Null means staff switched the card off. */
+  dealCard: HomeDealCard | null;
   locale: string;
   shopLabel: string;
 }) {
   const t = useTranslations("Home");
   const rtl = locale === "ar";
+
+  // The card was a fixed English sentence linking to every product, with no
+  // way to change either. Staff own all three now.
+  const heading =
+    (rtl ? dealCard?.heading_ar || dealCard?.heading : dealCard?.heading) || t("deal");
+  const fallbackText =
+    (rtl ? dealCard?.text_ar || dealCard?.text : dealCard?.text) || t("dealFallback");
+  const ctaLabel =
+    (rtl ? dealCard?.button_label_ar || dealCard?.button_label : dealCard?.button_label) ||
+    shopLabel;
+  const href = dealCard?.link || "/products";
 
   if (product) {
     const name = rtl ? product.name_ar || product.name : product.name;
@@ -596,7 +614,7 @@ function HeroDealCard({
       <article className="flex h-full flex-col overflow-hidden rounded-[6px] border border-border bg-card sm:col-span-2 lg:col-span-1">
         <div className="flex items-center gap-1.5 border-b border-border px-3 py-2">
           <Zap className="size-3.5 shrink-0 text-deal" strokeWidth={2} />
-          <p className={cn("text-[13px] font-semibold text-foreground", rtl && "font-cairo")}>{t("deal")}</p>
+          <p className={cn("text-[13px] font-semibold text-foreground", rtl && "font-cairo")}>{heading}</p>
         </div>
         <div className="flex flex-1 flex-col justify-center gap-3 p-4">
           <p className={cn("text-[12px] text-muted-foreground", rtl && "font-cairo")}>{t("couponDeal")}</p>
@@ -605,13 +623,13 @@ function HeroDealCard({
           </p>
           <p className="font-mono text-[13px] tracking-wide text-primary">{coupon.code}</p>
           <Link
-            href="/products"
+            href={href}
             className={cn(
               "mt-1 inline-flex h-9 items-center justify-center rounded-[4px] bg-primary text-[13px] font-semibold text-white hover:bg-[var(--blue-hover)]",
               rtl && "font-cairo"
             )}
           >
-            {shopLabel}
+            {ctaLabel}
           </Link>
         </div>
       </article>
@@ -622,20 +640,20 @@ function HeroDealCard({
     <article className="flex h-full flex-col overflow-hidden rounded-[6px] border border-border bg-card sm:col-span-2 lg:col-span-1">
       <div className="flex items-center gap-1.5 border-b border-border px-3 py-2">
         <Zap className="size-3.5 shrink-0 text-deal" strokeWidth={2} />
-        <p className={cn("text-[13px] font-semibold text-foreground", rtl && "font-cairo")}>{t("deal")}</p>
+        <p className={cn("text-[13px] font-semibold text-foreground", rtl && "font-cairo")}>{heading}</p>
       </div>
       <div className="flex flex-1 flex-col items-start justify-center gap-3 p-4">
         <p className={cn("text-[14px] leading-relaxed text-muted-foreground", rtl && "font-cairo")}>
-          {t("dealFallback")}
+          {fallbackText}
         </p>
         <Link
-          href="/products"
+          href={href}
           className={cn(
             "inline-flex h-9 items-center gap-1.5 rounded-[4px] bg-primary px-4 text-[13px] font-semibold text-white hover:bg-[var(--blue-hover)]",
             rtl && "font-cairo"
           )}
         >
-          {shopLabel}
+          {ctaLabel}
           <ChevronRight className={cn("size-4", rtl && "rotate-180")} />
         </Link>
       </div>

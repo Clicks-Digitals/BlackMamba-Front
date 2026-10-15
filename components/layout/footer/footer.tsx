@@ -34,7 +34,10 @@ const offerItems = [
 const companyItems = [
   { key: "account" as const, href: "/profile" },
   { key: "wishlist" as const, href: "/favourites" },
-  { key: "serviceCenter" as const, href: "/service-center" }
+  { key: "serviceCenter" as const, href: "/service-center" },
+  // S2: a guest order belongs to no account, so there is no list to find
+  // it in — this is the only way back to it.
+  { key: "trackOrder" as const, href: "/track-order" }
 ];
 
 function InstagramIcon({ size = 16 }: { size?: number }) {

@@ -24,6 +24,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { cn } from "@/lib/utils";
 import { formatDateShort } from "@/lib/utils/date";
 import { DeleteAccountSection } from "./delete-account-section";
+import { VerifyEmailNotice } from "./verify-email-notice";
 
 interface ProfileInfoTabProps {
   user: User;
@@ -122,12 +123,15 @@ export function ProfileInfoTab({ user: initialUser }: ProfileInfoTabProps) {
 
   return (
     <div className="space-y-6">
+      {/* A3: nothing was ever sent to the address, so this said nothing. */}
+      {user.is_email_verified ? null : <VerifyEmailNotice email={user.email} />}
+
       {/* ── Avatar + completeness row ── */}
       <div className="flex flex-col gap-5 rounded-lg border border-[#EB0B1A]/15 bg-white/3 p-6 sm:flex-row sm:items-start sm:gap-8">
         {/* Avatar */}
         <div className="flex shrink-0 flex-col items-center gap-3">
           <AvatarSection avatarUrl={user.avatar} />
-          {user.is_active ? (
+          {user.is_email_verified ? (
             <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--blue-tint)] px-3 py-1.5 text-[11.5px] font-semibold text-foreground">
               <ShieldCheck className="h-3.5 w-3.5" />
               {t("verified")}

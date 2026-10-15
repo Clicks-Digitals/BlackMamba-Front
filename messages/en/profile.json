@@ -127,7 +127,9 @@
       "each": "each",
       "noImage": "No image",
       "paymentMethodCod": "Cash on delivery",
-      "orderNumberLabel": "Order"
+      "orderNumberLabel": "Order",
+      "cancelOrderConfirm": "Yes, cancel my order",
+      "cancelOrderDismiss": "Keep my order"
     },
     "SupportTab": {
       "supportTickets": "Support tickets",
