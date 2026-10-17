@@ -40,7 +40,7 @@ export async function HomeBlackMamba() {
 
           <div className="mt-6 flex flex-wrap gap-2">
             {(rtl
-              ? ["توافق مضمون", "GPU · CPU · RAM", "ضمان المنتج", "أسعار JOD"]
+              ? ["توافق مضمون", "GPU · CPU · RAM", "ضمان المنتج", "الأسعار بالدينار"]
               : ["Compatibility Check", "GPU · CPU · RAM · SSD", "Product Warranty", "JOD Pricing"]
             ).map((chip) => (
               <span
