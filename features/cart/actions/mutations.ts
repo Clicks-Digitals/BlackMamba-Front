@@ -88,7 +88,8 @@ export async function addToCartAction(
         revalidatePath("/cart");
         return {
           status: "success",
-          message: updateRes.message ?? "Cart updated.",
+          // Same generic envelope as above; say what happened instead.
+          message: "Added to cart.",
           data: {
             count: updateRes.data.items.length,
             itemId: existing.id,
@@ -117,7 +118,7 @@ export async function updateCartItemAction(
     revalidatePath("/cart");
     return {
       status: "success",
-      message: res.message ?? "Cart item updated.",
+      message: "Cart updated.",
       data: {
         count: res.data.items.length,
         items: res.data.items,
@@ -141,7 +142,7 @@ export async function removeCartItemAction(
     revalidatePath("/cart");
     return {
       status: "success",
-      message: res.message ?? "Item removed from cart.",
+      message: "Removed from your cart.",
       data: {
         count: res.data.items.length,
         items: res.data.items,
@@ -161,7 +162,7 @@ export async function clearCartAction(): Promise<ActionState<never, never>> {
 
   if (res.ok) {
     revalidatePath("/cart");
-    return { status: "success", message: res.message ?? "Cart cleared." };
+    return { status: "success", message: "Your cart is empty now." };
   }
 
   return { status: "error", message: res.message ?? "Could not clear cart." };

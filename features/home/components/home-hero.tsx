@@ -363,11 +363,21 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
   const name = rtl ? product.name_ar || product.name : product.name;
   const img = productThumb(product);
   const { finalPrice, origPrice, currency } = productPrices(product);
-  const brand = product.brand
-    ? rtl
-      ? product.brand.name_ar || product.brand.name
-      : product.brand.name
-    : null;
+  // A brand switched off in the panel is hidden everywhere it is named,
+  // cards included - it has no page of its own to stand behind.
+  const brand =
+    product.brand && product.brand.is_active !== false
+      ? rtl
+        ? product.brand.name_ar || product.brand.name
+        : product.brand.name
+      : null;
+  // "See all" sits beside the brand name, so it belongs on the brand's own
+  // page. It pointed at the product itself, which is the card you are
+  // already looking at. A brand switched off has no page to send anyone to.
+  const seeAllHref =
+    product.brand && product.brand.slug && product.brand.is_active !== false
+      ? `/brand/${product.brand.slug}`
+      : "/products";
 
   const { setCount, getItemRef, upsertItemRef } = useCartStore();
   const [isPending, startTransition] = useTransition();
@@ -419,7 +429,7 @@ function HeroProductCard({ product, locale }: { product: Product; locale: string
           </p>
         </div>
         <Link
-          href={productHref(product)}
+          href={seeAllHref}
           className={cn(
             "shrink-0 text-[11px] font-semibold text-muted-foreground transition-colors hover:text-foreground",
             rtl && "font-cairo"

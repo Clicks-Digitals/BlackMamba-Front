@@ -35,9 +35,9 @@
       "addressLinePlaceholder": "شارع، بناء",
       "city": "المدينة *",
       "cityPlaceholder": "عمان",
-      "state": "المحافظة *",
+      "state": "المحافظة (اختياري)",
       "statePlaceholder": "عمان",
-      "postalCode": "الرمز البريدي *",
+      "postalCode": "الرمز البريدي (اختياري)",
       "postalCodePlaceholder": "11111",
       "country": "البلد *",
       "countryPlaceholder": "الأردن"

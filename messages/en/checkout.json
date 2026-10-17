@@ -35,9 +35,9 @@
       "addressLinePlaceholder": "123 Main St",
       "city": "City *",
       "cityPlaceholder": "Amman",
-      "state": "State *",
+      "state": "Governorate (optional)",
       "statePlaceholder": "Amman",
-      "postalCode": "Postal code *",
+      "postalCode": "Postal code (optional)",
       "postalCodePlaceholder": "11111",
       "country": "Country *",
       "countryPlaceholder": "Jordan"
