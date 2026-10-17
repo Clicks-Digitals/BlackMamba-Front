@@ -120,10 +120,17 @@ export function ProfileTabs({ user: initialUser }: ProfileTabsProps) {
                   {user.email && (
                     <span className="text-[13px] text-muted-foreground">{user.email}</span>
                   )}
-                  {user.is_active && (
+                  {/* A3: read is_active, so every account showed "Verified"
+                      beside an address nobody had confirmed. */}
+                  {user.is_email_verified ? (
                     <span className="flex items-center gap-1 text-[12px] font-medium text-primary">
                       <ShieldCheck className="h-3 w-3" />
                       {rtl ? "تم التحقق" : "Verified"}
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-1 text-[12px] font-medium text-amber-500">
+                      <ShieldCheck className="h-3 w-3" />
+                      {rtl ? "لم يتم التأكيد" : "Unconfirmed"}
                     </span>
                   )}
                   {user.created_at && (

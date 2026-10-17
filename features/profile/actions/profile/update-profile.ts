@@ -30,6 +30,9 @@ export async function updateProfileAction(
     return {
       status: "error",
       message: res.message || "Failed to update profile. Please try again.",
+      // Without these the "enter your current password" reply arrived as a
+      // toast that vanished, with nothing marking the field it belonged to.
+      fieldErrors: res.fieldErrors as Partial<Record<keyof ProfileData, string[]>>,
       inputs: rawData as unknown as Partial<ProfileData>,
     };
   }

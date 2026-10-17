@@ -243,7 +243,9 @@ export function Footer({ categories = [], locale = "en" }: { categories?: Catego
           </Link>
         ))}
         <div className={cn("flex flex-wrap gap-2", rtl ? "mr-auto" : "ml-auto")}>
-          {(["cod", "visa", "mastercard", "cliq"] as const).map((badge) => (
+          {/* Only what checkout actually accepts. Visa, Mastercard and CliQ
+              were advertised here with no way to pay by any of them. */}
+          {(["cod"] as const).map((badge) => (
             <span
               key={badge}
               className="rounded-[4px] border border-white/10 px-2 py-0.5 text-[10px] font-medium tracking-wide text-white/50"

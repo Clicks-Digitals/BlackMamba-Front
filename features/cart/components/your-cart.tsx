@@ -75,10 +75,39 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
     }
   );
 
-  const optimisticTotal = optimisticItems.reduce((s, i) => s + parseFloat(i.total_price || "0"), 0).toFixed(2);
+  // A withdrawn product keeps its line so the basket can explain itself,
+  // but it must not be charged for. The server leaves it out of the cart
+  // total; this keeps the optimistic figure in step while a change is in
+  // flight, instead of flickering to a higher number and back.
+  const optimisticTotal = optimisticItems
+    .filter((i) => i.is_purchasable !== false)
+    .reduce((s, i) => s + parseFloat(i.total_price || "0"), 0)
+    .toFixed(2);
   const displayedTotal = isPending ? optimisticTotal : totalAmount;
   const currency = optimisticItems[0]?.product_details?.currency_info ?? null;
   const price = (amount: string | number) => formatPrice(amount, currency, locale);
+
+  // Removing the last item left the summary on screen at 0.00 with an
+  // "Order now" button: the server component had already decided this cart
+  // had something in it, and the client list emptying does not remount it.
+  if (optimisticItems.length === 0) {
+    return (
+      <div className={cn("layout-page layout-gutter-x py-24 text-center", locale === "ar" && "font-cairo")}>
+        <p className="text-[17px] font-semibold text-foreground">
+          {locale === "ar" ? "سلتك فارغة" : "Your cart is empty"}
+        </p>
+        <p className="mt-2 text-[14px] text-muted-foreground">
+          {locale === "ar" ? "تصفّح المنتجات وأضف ما يعجبك." : "Browse the store and add something you like."}
+        </p>
+        <Link
+          href="/products"
+          className="mt-6 inline-flex h-11 items-center rounded-md bg-primary px-6 text-[12px] font-semibold uppercase tracking-[0.18em] text-white transition-colors hover:bg-primary/90"
+        >
+          {locale === "ar" ? "تسوق الآن" : "Continue shopping"}
+        </Link>
+      </div>
+    );
+  }
 
   const subtotal = parseFloat(displayedTotal);
   // Delivery is priced by the shipping method, which is only chosen at
@@ -193,8 +222,7 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                             {/* S19: a withdrawn product used to vanish from
                                 the basket with no explanation. It stays put
                                 now, and says what happened. */}
-                            {item.product_details &&
-                            item.product_details.is_available === false ? (
+                            {item.is_purchasable === false ? (
                               <p className="mt-1 inline-flex items-center gap-1 rounded bg-destructive/10 px-1.5 py-0.5 text-[11px] font-semibold text-destructive">
                                 {locale === "ar"
                                   ? "لم يعد متوفرًا — أزله لإتمام الطلب"

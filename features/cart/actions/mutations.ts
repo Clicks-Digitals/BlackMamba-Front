@@ -61,7 +61,9 @@ export async function addToCartAction(
     const addedItem = findItem(res.data.items, payload);
     return {
       status: "success",
-      message: res.message ?? "Added to cart.",
+      // The API's envelope says "Request completed successfully." for every
+      // call, so `?? fallback` never fired and that is what shoppers read.
+      message: "Added to cart.",
       data: {
         count: res.data.items.length,
         itemId: addedItem?.id ?? null,

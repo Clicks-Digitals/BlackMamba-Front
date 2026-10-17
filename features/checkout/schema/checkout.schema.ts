@@ -51,9 +51,12 @@ export function createCheckoutSchema(locale: CheckoutLocale) {
       phone: z.string().trim().min(1, m.phoneRequired),
       address_line: z.string().trim().min(1, m.addressRequired),
       city: z.string().trim().min(1, m.cityRequired),
-      state: z.string().trim().min(1, m.stateRequired),
-      postal_code: z.string().trim().min(1, m.postalRequired),
-      country: z.string().trim().min(1, m.countryRequired)
+      // The store delivers in Jordan only and the server requires neither.
+      // Demanding a governorate and a postal code to buy a keyboard loses
+      // the sale; the country is filled in rather than asked for.
+      state: z.string().trim().optional().default(""),
+      postal_code: z.string().trim().optional().default(""),
+      country: z.string().trim().optional().default("Jordan")
     }),
     guest_email: z.string().trim().min(1, m.emailRequired).email(m.emailInvalid),
     shipping_option_id: z.string().trim().min(1, m.selectShipping),

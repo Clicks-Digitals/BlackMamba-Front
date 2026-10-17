@@ -49,6 +49,33 @@ export function TrackOrderView({ rtl }: { rtl: boolean }) {
 
   const order = state.order;
 
+  // The page showed the database's own words - "PENDING", "UNPAID" - and a
+  // total of "5.9" with nothing to say what that was in.
+  const STATUS: Record<string, [string, string]> = {
+    PENDING: ["Pending", "قيد الانتظار"],
+    CONFIRMED: ["Confirmed", "مؤكد"],
+    SHIPPED: ["Shipped", "تم الشحن"],
+    DELIVERED: ["Delivered", "تم التوصيل"],
+    CANCELLED: ["Cancelled", "ملغي"],
+  };
+  const PAYMENT: Record<string, [string, string]> = {
+    UNPAID: ["Unpaid", "غير مدفوع"],
+    PAID: ["Paid", "مدفوع"],
+    FAILED: ["Failed", "فشل"],
+  };
+
+  const pick = (map: Record<string, [string, string]>, key: string) =>
+    map[key]?.[rtl ? 1 : 0] ?? key;
+  const statusLabel = (value: string) => pick(STATUS, value);
+  const paymentLabel = (value: string) => pick(PAYMENT, value);
+
+  const money = (value: string | number) => {
+    const amount = Number(value);
+    if (Number.isNaN(amount)) return String(value);
+    const shown = amount.toFixed(2);
+    return rtl ? `${shown} د.أ` : `JOD ${shown}`;
+  };
+
   return (
     <div className="bg-background">
       <div className="bm-page-hero">
@@ -103,10 +130,14 @@ export function TrackOrderView({ rtl }: { rtl: boolean }) {
 
               <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-[13.5px]">
                 <dt className="text-muted-foreground">{copy.status}</dt>
-                <dd className="text-end font-medium text-foreground">{order.status}</dd>
+                <dd className="text-end font-medium text-foreground">
+                  {statusLabel(order.status)}
+                </dd>
 
                 <dt className="text-muted-foreground">{copy.payment}</dt>
-                <dd className="text-end font-medium text-foreground">{order.payment_status}</dd>
+                <dd className="text-end font-medium text-foreground">
+                  {paymentLabel(order.payment_status)}
+                </dd>
 
                 <dt className="text-muted-foreground">{copy.placed}</dt>
                 <dd className="text-end font-medium text-foreground">
@@ -118,7 +149,9 @@ export function TrackOrderView({ rtl }: { rtl: boolean }) {
                 </dd>
 
                 <dt className="text-muted-foreground">{copy.total}</dt>
-                <dd className="text-end font-semibold text-foreground">{order.total_amount}</dd>
+                <dd className="text-end font-semibold text-foreground">
+                  {money(order.total_amount)}
+                </dd>
               </dl>
 
               <p className="mt-5 mb-2 text-[11.5px] uppercase tracking-widest text-muted-foreground">
@@ -130,7 +163,9 @@ export function TrackOrderView({ rtl }: { rtl: boolean }) {
                     <span className="text-foreground">
                       {item.quantity} &times; {item.product_name}
                     </span>
-                    <span className="shrink-0 text-muted-foreground">{item.total_price}</span>
+                    <span className="shrink-0 text-muted-foreground">
+                      {money(item.total_price)}
+                    </span>
                   </li>
                 ))}
               </ul>

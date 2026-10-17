@@ -17,6 +17,10 @@ export const profileSchema = z.object({
     .regex(/^\+?[0-9\s\-().]{7,20}$/, "validation.phoneInvalid"),
   address: z.string().trim().optional(),
   date_of_birth: z.string().trim().optional(),
+  // A4: the server requires this before it will change the email address.
+  // It was never in the schema, so the field's value was stripped out
+  // before the request and the change could never succeed.
+  current_password: z.string().optional(),
 });
 
 export type ProfileData = z.infer<typeof profileSchema>;

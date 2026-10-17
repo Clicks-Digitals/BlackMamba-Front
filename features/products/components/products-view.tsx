@@ -311,6 +311,14 @@ export function ProductsView({
 
     if (previous !== (slug ?? null)) {
       params.delete("filter_values");
+      // The catalogue-wide flags survived a category change, because they
+      // are not attribute values and so were never in the stale-value
+      // sweep. Picking New Release on Processors and switching to
+      // Motherboards carried new_release=true across and showed nothing.
+      params.delete("new_release");
+      params.delete("best_seller");
+      params.delete("clearance_sale");
+      params.delete("brand_slug");
       params.delete("page");
     }
   }, []);

@@ -44,7 +44,10 @@
       "lastUpdated": "آخر تحديث",
       "avatarInvalidType": "يُسمح فقط بصور JPEG وPNG وWebP وGIF",
       "avatarTooLarge": "يجب أن يكون حجم الملف أقل من 100 ميغابايت (حجم ملفك {size} ميغابايت)",
-      "changePhoto": "تغيير الصورة"
+      "changePhoto": "تغيير الصورة",
+      "currentPassword": "كلمة المرور الحالية",
+      "currentPasswordHint": "مطلوبة لتغيير بريدك الإلكتروني",
+      "activeUnverified": "نشط، البريد غير مؤكد"
     },
     "AddressesTab": {
       "savedAddresses": "العناوين المحفوظة",

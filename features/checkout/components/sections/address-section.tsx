@@ -177,13 +177,15 @@ export function AddressSection({
               error={fieldErrors?.["shipping_address.city"]?.[0]}
               required
             />
+            {/* The store delivers in Jordan only, and the server has never
+                required either of these. Asking a guest for a governorate
+                and a postal code to buy a keyboard loses the sale. */}
             <Input
               label={t("guest.state")}
               name="shipping_address.state"
               placeholder={t("guest.statePlaceholder")}
               defaultValue={getNestedValue(defaultValues, "shipping_address.state")}
               error={fieldErrors?.["shipping_address.state"]?.[0]}
-              required
             />
             <Input
               label={t("guest.postalCode")}
@@ -191,15 +193,14 @@ export function AddressSection({
               placeholder={t("guest.postalCodePlaceholder")}
               defaultValue={getNestedValue(defaultValues, "shipping_address.postal_code")}
               error={fieldErrors?.["shipping_address.postal_code"]?.[0]}
-              required
             />
-            <Input
-              label={t("guest.country")}
+            <input
+              type="hidden"
               name="shipping_address.country"
-              placeholder={t("guest.countryPlaceholder")}
-              defaultValue={getNestedValue(defaultValues, "shipping_address.country")}
-              error={fieldErrors?.["shipping_address.country"]?.[0]}
-              required
+              value={
+                (getNestedValue(defaultValues, "shipping_address.country") as string) ||
+                "Jordan"
+              }
             />
           </div>
         </div>

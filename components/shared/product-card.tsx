@@ -37,11 +37,15 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
     product.gallery?.find((g) => g.is_primary)?.file ||
     product.gallery?.[0]?.file;
   const currency = product.currency_info;
-  const brand = product.brand
-    ? rtl
-      ? product.brand.name_ar || product.brand.name
-      : product.brand.name
-    : null;
+  // A brand switched off in the panel is hidden on the product page but
+  // was still printed on the card, so it kept appearing across every
+  // listing in the store.
+  const brand =
+    product.brand && product.brand.is_active !== false
+      ? rtl
+        ? product.brand.name_ar || product.brand.name
+        : product.brand.name
+      : null;
 
   const hasCampaign = !!product.campaign_price;
   const hasDiscount = product.has_discount && !!product.discount_price;

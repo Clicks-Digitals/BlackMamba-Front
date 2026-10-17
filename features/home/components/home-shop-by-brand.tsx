@@ -40,7 +40,7 @@ export async function HomeShopByBrand({
           </div>
 
           <Link
-            href="/products"
+            href="/brands"
             className={cn(
               "store-view-all hidden shrink-0 items-center gap-1 sm:inline-flex",
               rtl && "font-cairo"

@@ -26,6 +26,9 @@ export interface CartCombinationDetails {
 }
 
 export interface CartItem {
+  /** False once the product behind this line is withdrawn. The line stays so
+   *  the basket can explain itself; it is left out of the total. */
+  is_purchasable?: boolean;
   id: string;
   cart: string | null;
   // Exactly one of (product) or (build) is set — a build line item has no single product.

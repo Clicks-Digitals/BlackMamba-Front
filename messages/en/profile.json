@@ -44,7 +44,10 @@
       "lastUpdated": "Last Updated",
       "avatarInvalidType": "Only JPEG, PNG, WebP, and GIF images are allowed",
       "avatarTooLarge": "File size must be less than 100 MB (your file is {size} MB)",
-      "changePhoto": "Change photo"
+      "changePhoto": "Change photo",
+      "currentPassword": "Current password",
+      "currentPasswordHint": "Needed to change your email address",
+      "activeUnverified": "Active, email unconfirmed"
     },
     "AddressesTab": {
       "savedAddresses": "Saved Addresses",

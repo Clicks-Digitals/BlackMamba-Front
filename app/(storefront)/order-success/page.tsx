@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { notFound, useSearchParams } from "next/navigation";
-import { CheckCircle2, Copy, User } from "lucide-react";
+import { CheckCircle2, Copy, PackageSearch, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -92,7 +92,7 @@ export default function OrderSuccessPage() {
                   <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
                     2
                   </span>
-                  <span>{t("stepProfile")}</span>
+                  <span>{isAuthenticated ? t("stepProfile") : t("stepTrack")}</span>
                 </li>
               )}
             </ul>
@@ -120,11 +120,24 @@ export default function OrderSuccessPage() {
               </Button>
             </div>
           ) : (
-            <div className="flex justify-center">
+            /* A guest has no profile to review orders in. Track Your Order
+               takes the order number and the email they just used. */
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <Button
                 asChild
                 size="lg"
-                className="rounded-lg bg-primary font-semibold tracking-wide text-white shadow-md transition-all hover:bg-[#EB0B1A]"
+                className="gap-2 rounded-lg bg-primary font-semibold tracking-wide text-white shadow-md transition-all hover:bg-[#EB0B1A]"
+              >
+                <Link href="/track-order">
+                  <PackageSearch size={20} />
+                  {t("trackOrder")}
+                </Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="gap-2 rounded-lg border-[#EB0B1A]/40 font-semibold tracking-wide text-[#FFFFFF] hover:bg-[#EB0B1A]/15"
               >
                 <Link href="/products">{t("continueShopping")}</Link>
               </Button>

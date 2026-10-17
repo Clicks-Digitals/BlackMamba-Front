@@ -92,6 +92,7 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
 export function ProfileInfoTab({ user: initialUser }: ProfileInfoTabProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [, startTransition] = useTransition();
+  const [emailTouched, setEmailTouched] = useState(false);
   const { user: storeUser, setAuth } = useAuthStore((s) => s);
   const [state, action] = useActionState(updateProfileAction, initialState);
   const t = useTranslations("Profile.ProfileInfoTab");
@@ -226,11 +227,27 @@ export function ProfileInfoTab({ user: initialUser }: ProfileInfoTabProps) {
                   <ShieldCheck className="h-3.5 w-3.5 text-white/45" />
                   <span className="text-[10.5px] uppercase tracking-[0.14em] text-white/40">{t("status")}</span>
                 </div>
+                {/* A3: this read "Active & Verified" off is_active alone,
+                    which is true from the moment an account exists. Being
+                    enabled and having confirmed your address are separate
+                    facts, and the Profile notice above already contradicted
+                    this one. */}
                 <span className={cn("inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 text-[12px] font-semibold",
-                  user.is_active ? "bg-primary/15 text-primary" : "bg-white/8 text-white/45"
+                  !user.is_active
+                    ? "bg-white/8 text-white/45"
+                    : user.is_email_verified
+                      ? "bg-primary/15 text-primary"
+                      : "bg-amber-500/15 text-amber-500"
                 )}>
-                  <span className={cn("h-1.5 w-1.5 rounded-full", user.is_active ? "bg-primary" : "bg-white/40")} />
-                  {user.is_active ? t("activeVerified") : t("inactive")}
+                  <span className={cn("h-1.5 w-1.5 rounded-full",
+                    !user.is_active ? "bg-white/40"
+                      : user.is_email_verified ? "bg-primary" : "bg-amber-500"
+                  )} />
+                  {!user.is_active
+                    ? t("inactive")
+                    : user.is_email_verified
+                      ? t("activeVerified")
+                      : t("activeUnverified")}
                 </span>
               </div>
 
@@ -295,8 +312,27 @@ export function ProfileInfoTab({ user: initialUser }: ProfileInfoTabProps) {
                 name="email"
                 type="email"
                 defaultValue={state.inputs?.email ?? user.email}
+                onChange={(e) => setEmailTouched(e.target.value !== user.email)}
                 error={fe.email?.[0] ? t(fe.email[0] as never) : undefined}
               />
+              {/* A4: changing the email needs the current password, which the
+                  server has always demanded and this form never asked for -
+                  so the email could not be changed at all. Only shown once
+                  the address actually differs. */}
+              {emailTouched || fe.current_password?.[0] ? (
+                <Input
+                  label={t("currentPassword")}
+                  name="current_password"
+                  type="password"
+                  autoComplete="current-password"
+                  placeholder={t("currentPasswordHint")}
+                  error={
+                    fe.current_password?.[0]
+                      ? t(fe.current_password[0] as never)
+                      : undefined
+                  }
+                />
+              ) : null}
               <Input
                 label={t("phone")}
                 name="phone"
