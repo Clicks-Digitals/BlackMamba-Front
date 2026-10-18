@@ -1,5 +1,6 @@
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
+import { PRODUCTS_TAG } from "@/lib/api/cache-tags";
 
 /**
  * On-demand revalidation, called by the panel's API when content changes.
@@ -40,6 +41,13 @@ export async function POST(request: Request) {
 
   for (const path of paths.slice(0, 50)) {
     revalidatePath(path);
+  }
+
+  // A product change. Its own page is in `paths`, but it also sits in cached
+  // lists on other pages - the cart's and every other product's "You may also
+  // like" - which revalidatePath can't reach. Expire those straight away.
+  if (paths.some((p) => p === "/products" || p.startsWith("/products/"))) {
+    revalidateTag(PRODUCTS_TAG, { expire: 0 });
   }
 
   return NextResponse.json({ ok: true, revalidated: paths.length });

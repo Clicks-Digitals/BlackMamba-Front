@@ -5,6 +5,7 @@ import { buildQueryParams } from "@/lib/utils";
 import type { PaginatedResponse } from "@/types";
 import type { Product } from "@/types/product";
 import type { Filter } from "../types";
+import { PRODUCTS_TAG } from "@/lib/api/cache-tags";
 
 const PAGE_SIZE = 24;
 const SEARCH_RESULTS_LIMIT = 6;
@@ -14,7 +15,10 @@ export async function getProducts(
   filters: Record<string, string>
 ): Promise<PaginatedResponse<Product>> {
   const qs = buildQueryParams({ page, page_size: PAGE_SIZE, ...filters });
-  const res = await apiClient<PaginatedResponse<Product>>(`/products/${qs}`, { revalidate: 60 });
+  const res = await apiClient<PaginatedResponse<Product>>(`/products/${qs}`, {
+    revalidate: 60,
+    tags: [PRODUCTS_TAG],
+  });
   const results = res.ok ? (res.data.results ?? []).map(normalizeProduct) : [];
   return {
     count: res.ok ? res.data.count ?? results.length : 0,
