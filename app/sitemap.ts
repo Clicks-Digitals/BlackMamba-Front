@@ -30,38 +30,47 @@ const ROUTES: { path: string; changeFrequency: MetadataRoute.Sitemap[number]['ch
   { path: '/privacy', changeFrequency: 'yearly', priority: 0.3 },
 ];
 
-/** Google's limit is 50,000 URLs per file; stay well inside it. */
-const MAX_PRODUCTS = 5000;
-const PAGE_SIZE = 200;
+/**
+ * Google's limit is 50,000 URLs per file. The catalogue is around 1,300
+ * products today, so this leaves plenty of room for the static pages,
+ * categories and brands on top.
+ */
+const MAX_PRODUCTS = 45000;
+/** The API's ceiling for page_size (apps.core.pagination). */
+const PAGE_SIZE = 500;
 
-async function allProducts(): Promise<Product[]> {
-  const out: Product[] = [];
-  for (let page = 1; out.length < MAX_PRODUCTS; page += 1) {
-    const res = await apiClient<PaginatedResponse<Product>>(
-      `/products/?page=${page}&page_size=${PAGE_SIZE}`,
+/**
+ * Walk every page of a list endpoint. The API puts the next page under
+ * `links.next`, not `next`, so checking `next` alone stopped after page 1
+ * and the sitemap only ever listed the first 200 products.
+ */
+async function allPages<T>(path: string, limit = Number.POSITIVE_INFINITY): Promise<T[]> {
+  const out: T[] = [];
+  const sep = path.includes('?') ? '&' : '?';
+  for (let page = 1; out.length < limit; page += 1) {
+    const res = await apiClient<PaginatedResponse<T>>(
+      `${path}${sep}page=${page}&page_size=${PAGE_SIZE}`,
       { revalidate: 3600 }
     );
     if (!res.ok || !res.data?.results?.length) break;
     out.push(...res.data.results);
-    if (!res.data.next) break;
+    const next = res.data.next ?? res.data.links?.next ?? null;
+    const totalPages = res.data.total_pages;
+    if (!next && !(totalPages && page < totalPages)) break;
   }
-  return out.slice(0, MAX_PRODUCTS);
+  return Number.isFinite(limit) ? out.slice(0, limit) : out;
 }
 
-async function allCategories(): Promise<Category[]> {
-  const res = await apiClient<PaginatedResponse<Category>>(
-    '/categories/?page_size=500',
-    { revalidate: 3600 }
-  );
-  return res.ok && res.data ? (res.data.results ?? []) : [];
+function allProducts(): Promise<Product[]> {
+  return allPages<Product>('/products/', MAX_PRODUCTS);
 }
 
-async function allBrands(): Promise<{ slug: string }[]> {
-  const res = await apiClient<PaginatedResponse<{ slug: string }>>(
-    '/categories/brands/?page_size=500',
-    { revalidate: 3600 }
-  );
-  return res.ok && res.data ? (res.data.results ?? []) : [];
+function allCategories(): Promise<Category[]> {
+  return allPages<Category>('/categories/');
+}
+
+function allBrands(): Promise<{ slug: string }[]> {
+  return allPages<{ slug: string }>('/categories/brands/');
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
