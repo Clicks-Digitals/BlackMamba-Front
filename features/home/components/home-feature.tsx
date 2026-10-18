@@ -116,8 +116,11 @@ export async function HomeFeature() {
       ? (layout.filter((s) => s.is_visible).map((s) => s.key) as HomeSectionKey[])
       : DEFAULT_ORDER;
 
-  // Ensure product sections (and thus Shop by Brand) still appear if CMS omitted them.
-  const finalKeys = keys.includes("product_sections")
+  // Older layouts were saved before product_sections existed, so add it when
+  // the layout doesn't mention it at all. A layout that lists it as hidden
+  // means the admin hid it, and it stays hidden.
+  const layoutMentionsSections = layout.some((s) => s.key === "product_sections");
+  const finalKeys = keys.includes("product_sections") || layoutMentionsSections
     ? keys
     : (() => {
         const next = [...keys];
