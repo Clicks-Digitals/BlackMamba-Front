@@ -12,6 +12,7 @@ import { Input, SubmitButton, Checkbox } from "@/components/forms";
 import { createAddressAction, updateAddressAction, type AddressData } from "@/features/profile";
 import type {Address , ActionState } from "@/types";
 import { useTranslations } from "next-intl";
+import { errorText } from "@/lib/utils";
 
 interface AddressFormDialogProps {
   open: boolean;
@@ -64,14 +65,14 @@ export function AddressFormDialog({ open, onClose, onSuccess, editingAddress }: 
               name="title"
               placeholder={t("titlePlaceholder")}
               defaultValue={state.inputs?.title ?? editingAddress?.title ?? ""}
-              error={fe.title?.[0] ? t(fe.title[0] as never) : undefined}
+              error={fe.title?.[0] ? errorText(t, fe.title[0]) : undefined}
             />
             <Input
               label={t("phoneLabel")}
               name="phone"
               placeholder={t("phonePlaceholder")}
               defaultValue={state.inputs?.phone ?? editingAddress?.phone ?? ""}
-              error={fe.phone?.[0] ? t(fe.phone[0] as never) : undefined}
+              error={fe.phone?.[0] ? errorText(t, fe.phone[0]) : undefined}
             />
           </div>
 
@@ -80,7 +81,7 @@ export function AddressFormDialog({ open, onClose, onSuccess, editingAddress }: 
             name="street"
             placeholder={t("streetPlaceholder")}
             defaultValue={state.inputs?.street ?? editingAddress?.street ?? ""}
-            error={fe.street?.[0] ? t(fe.street[0] as never) : undefined}
+            error={fe.street?.[0] ? errorText(t, fe.street[0]) : undefined}
           />
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -89,14 +90,14 @@ export function AddressFormDialog({ open, onClose, onSuccess, editingAddress }: 
               name="city"
               placeholder={t("cityPlaceholder")}
               defaultValue={state.inputs?.city ?? editingAddress?.city ?? ""}
-              error={fe.city?.[0] ? t(fe.city[0] as never) : undefined}
+              error={fe.city?.[0] ? errorText(t, fe.city[0]) : undefined}
             />
             <Input
               label={t("buildingOptional")}
               name="building"
               placeholder={t("buildingPlaceholder")}
               defaultValue={state.inputs?.building ?? editingAddress?.building ?? ""}
-              error={fe.building?.[0] ? t(fe.building[0] as never) : undefined}
+              error={fe.building?.[0] ? errorText(t, fe.building[0]) : undefined}
             />
           </div>
 

@@ -8,6 +8,7 @@ import { PasswordInput, SubmitButton } from "@/components/forms";
 import { resetPasswordAction, type ResetPasswordData } from "@/features/auth";
 import { PasswordRules } from "@/features/auth/components/password-rules";
 import type { ActionState } from "@/types";
+import { errorText } from "@/lib/utils";
 
 const initialState: ActionState<ResetPasswordData, void> = { status: "idle", message: "" };
 
@@ -57,7 +58,7 @@ export function ResetPasswordView({ email, otpCode }: Props) {
             placeholder="••••••••"
             autoComplete="new-password"
             onChange={(e) => setPassword(e.target.value)}
-            error={fe.new_password?.[0] ? t(fe.new_password[0] as never) : undefined}
+            error={fe.new_password?.[0] ? errorText(t, fe.new_password[0]) : undefined}
           />
           {/* A5: the server enforces five rules; the form used to name one. */}
           <PasswordRules value={password} namespace="Auth.ResetPassword" />
@@ -68,7 +69,7 @@ export function ResetPasswordView({ email, otpCode }: Props) {
           label={t("confirmPassword", { defaultValue: "Confirm Password" })}
           placeholder="••••••••"
           autoComplete="new-password"
-          error={fe.confirm_password?.[0] ? t(fe.confirm_password[0] as never) : undefined}
+          error={fe.confirm_password?.[0] ? errorText(t, fe.confirm_password[0]) : undefined}
        
         />
 

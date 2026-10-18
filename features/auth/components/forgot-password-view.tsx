@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Input, SubmitButton } from "@/components/forms";
 import { forgotPasswordAction, type ForgotPasswordData } from "@/features/auth";
 import type { ActionState } from "@/types";
+import { errorText } from "@/lib/utils";
 
 const initialState: ActionState<ForgotPasswordData, void> = { status: "idle", message: "" };
 
@@ -48,7 +49,7 @@ export function ForgotPasswordView({ onSuccess }: Props) {
           label={t("email", { defaultValue: "Email" })}
           type="email"
           placeholder={t("emailPlaceholder")}
-          error={fe.email?.[0] ? t(fe.email[0] as never) : undefined}
+          error={fe.email?.[0] ? errorText(t, fe.email[0]) : undefined}
           defaultValue={state.inputs?.email || ""}
         
         />

@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Input, SubmitButton } from "@/components/forms";
 import { verifyOtpAction, forgotPasswordAction, type VerifyOtpData } from "@/features/auth";
 import type { ActionState } from "@/types";
+import { errorText } from "@/lib/utils";
 
 const initialState: ActionState<VerifyOtpData, void> = { status: "idle", message: "" };
 
@@ -66,7 +67,7 @@ export function VerifyOtpView({ email, onSuccess }: Props) {
           label={t("code", { defaultValue: "OTP Code" })}
           type="text"
           placeholder="123456"
-          error={fe.code?.[0] ? t(fe.code[0] as never) : undefined}
+          error={fe.code?.[0] ? errorText(t, fe.code[0]) : undefined}
           defaultValue={state.inputs?.code || ""}
       
         />

@@ -11,6 +11,7 @@ import { useAuthStore } from "@/stores/auth-store";
 import { loginAction, type LoginData } from "@/features/auth";
 import { GoogleSignInButton } from "@/features/auth/components/google-sign-in-button";
 import type { ActionState, User as UserType } from "@/types";
+import { errorText } from "@/lib/utils";
 
 const initialState: ActionState<LoginData, UserType> = { status: "idle", message: "" };
 
@@ -80,7 +81,7 @@ export function LoginView() {
           placeholder={t("emailPlaceholder")}
           autoComplete="email"
           defaultValue={state.inputs?.email ?? ""}
-          error={fe.email?.[0] && t(fe.email[0] as never)}
+          error={fe.email?.[0] && errorText(t, fe.email[0])}
           className={FOCUS_RING}
         />
 
@@ -91,7 +92,7 @@ export function LoginView() {
           placeholder={t("passwordPlaceholder")}
           autoComplete="current-password"
           defaultValue={state.inputs?.password ?? ""}
-          error={fe.password?.[0] && t(fe.password[0] as never)}
+          error={fe.password?.[0] && errorText(t, fe.password[0])}
           className={FOCUS_RING}
         />
 

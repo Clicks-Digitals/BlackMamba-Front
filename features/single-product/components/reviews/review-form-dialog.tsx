@@ -9,6 +9,7 @@ import { Input, SubmitButton, Textarea } from "@/components/forms";
 import { createReviewAction, updateReviewAction, type ReviewFormData } from "@/features/single-product";
 
 import type { ProductReview, ActionState } from "@/types";
+import { errorText } from "@/lib/utils";
 
 interface ReviewFormDialogProps {
   open: boolean;
@@ -53,10 +54,10 @@ function ReviewFormFields({
 
       <RatingStars value={rating} onChange={setRating} label={t("ratingLabel")} />
       {fe.rating?.[0] && (
-        <p className="font-chillax text-xs text-primary">{t(fe.rating[0] as never)}</p>
+        <p className="font-chillax text-xs text-primary">{errorText(t, fe.rating[0])}</p>
       )}
       {fe.product?.[0] && (
-        <p className="font-chillax text-xs text-primary">{t(fe.product[0] as never)}</p>
+        <p className="font-chillax text-xs text-primary">{errorText(t, fe.product[0])}</p>
       )}
 
       <Input
@@ -64,7 +65,7 @@ function ReviewFormFields({
         name="title"
         placeholder={t("reviewTitlePlaceholder")}
         defaultValue={state.inputs?.title ?? review?.title ?? ""}
-        error={fe.title?.[0] ? t(fe.title[0] as never) : undefined}
+        error={fe.title?.[0] ? errorText(t, fe.title[0]) : undefined}
       />
 
       <Textarea
@@ -73,7 +74,7 @@ function ReviewFormFields({
         placeholder={t("reviewBodyPlaceholder")}
         rows={5}
         defaultValue={state.inputs?.body ?? review?.body ?? ""}
-        error={fe.body?.[0] ? t(fe.body[0] as never) : undefined}
+        error={fe.body?.[0] ? errorText(t, fe.body[0]) : undefined}
         className="min-h-[120px]"
       />
 

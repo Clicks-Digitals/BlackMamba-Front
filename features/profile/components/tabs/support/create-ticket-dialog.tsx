@@ -24,7 +24,7 @@ import {
 import { createSupportTicketAction, type CreateSupportTicketValues } from "@/features/profile";
 import { getOrders } from "@/features/profile/actions/orders/get-orders";
 import type { ActionState, Order } from "@/types";
-import { cn } from "@/lib/utils";
+import { cn, errorText, formatPrice, currencyLabel } from "@/lib/utils";
 import { formatDateShort } from "@/lib/utils/date";
 
 // Matches STATUS_MAP in order-card.tsx
@@ -226,7 +226,7 @@ function OrderPicker({ defaultValue, error, label, locale }: OrderPickerProps) {
             </span>
             <StatusBadge status={selected.status} />
             <span className="shrink-0 font-bold text-foreground">
-              {Number(selected.total_amount).toFixed(2)} JOD
+              {formatPrice(selected.total_amount, null, locale)}
             </span>
             {/* X as a button inside a div — valid HTML */}
             <button
@@ -323,7 +323,7 @@ function OrderPicker({ defaultValue, error, label, locale }: OrderPickerProps) {
 
                       <span className="shrink-0 font-bold text-foreground">
                         {Number(order.total_amount).toFixed(2)}{" "}
-                        <span className="font-normal text-white/40">JOD</span>
+                        <span className="font-normal text-white/40">{currencyLabel(null, locale)}</span>
                       </span>
                     </button>
                   </li>
@@ -426,7 +426,7 @@ export function CreateTicketDialog({ open, onClose, onSuccess, isGuest = false }
                 className="h-11 py-3"
                 placeholder={t("guestEmailPlaceholder")}
                 defaultValue={state.inputs?.guest_email || ""}
-                error={fe.guest_email?.[0] ? t(fe.guest_email[0] as never) : undefined}
+                error={fe.guest_email?.[0] ? errorText(t, fe.guest_email[0]) : undefined}
               />
             )}
 
@@ -452,7 +452,7 @@ export function CreateTicketDialog({ open, onClose, onSuccess, isGuest = false }
                   { value: "SHIPPING",    label: t("shipping")    },
                   { value: "GENERAL",     label: t("general")     },
                 ]}
-                error={fe.category?.[0] ? t(fe.category[0] as never) : undefined}
+                error={fe.category?.[0] ? errorText(t, fe.category[0]) : undefined}
                 onValueChange={(val) => setCategory(val ?? "")}
               />
 
@@ -460,7 +460,7 @@ export function CreateTicketDialog({ open, onClose, onSuccess, isGuest = false }
                 <OrderPicker
                   label={t("orderId")}
                   defaultValue={state.inputs?.order || ""}
-                  error={fe.order?.[0] ? t(fe.order[0] as never) : undefined}
+                  error={fe.order?.[0] ? errorText(t, fe.order[0]) : undefined}
                   locale={locale}
                 />
               )}
@@ -482,7 +482,7 @@ export function CreateTicketDialog({ open, onClose, onSuccess, isGuest = false }
                 className="h-11 py-3"
                 placeholder={t("subjectPlaceholder")}
                 defaultValue={state.inputs?.subject || ""}
-                error={fe.subject?.[0] ? t(fe.subject[0] as never) : undefined}
+                error={fe.subject?.[0] ? errorText(t, fe.subject[0]) : undefined}
               />
 
               <Textarea
@@ -491,7 +491,7 @@ export function CreateTicketDialog({ open, onClose, onSuccess, isGuest = false }
                 className="min-h-32 resize-none"
                 placeholder={t("messagePlaceholder")}
                 defaultValue={state.inputs?.body || ""}
-                error={fe.body?.[0] ? t(fe.body[0] as never) : undefined}
+                error={fe.body?.[0] ? errorText(t, fe.body[0]) : undefined}
               />
             </section>
 

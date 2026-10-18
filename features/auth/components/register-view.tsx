@@ -13,6 +13,7 @@ import { ConsentNotice } from "@/features/auth/components/consent-notice";
 import { useAuthStore } from "@/stores/auth-store";
 import { registerAction, type RegisterData } from "@/features/auth";
 import type { ActionState, User as UserType } from "@/types";
+import { errorText } from "@/lib/utils";
 
 const initialState: ActionState<RegisterData, UserType> = { status: "idle", message: "" };
 
@@ -72,7 +73,7 @@ export function RegisterView() {
             placeholder={t("firstNamePlaceholder")}
             autoComplete="given-name"
             defaultValue={state.inputs?.f_name ?? ""}
-            error={fe.f_name?.[0] && t(fe.f_name[0] as never)}
+            error={fe.f_name?.[0] && errorText(t, fe.f_name[0])}
             className={FOCUS_RING}
           />
           <Input
@@ -82,7 +83,7 @@ export function RegisterView() {
             placeholder={t("lastNamePlaceholder")}
             autoComplete="family-name"
             defaultValue={state.inputs?.l_name ?? ""}
-            error={fe.l_name?.[0] && t(fe.l_name[0] as never)}
+            error={fe.l_name?.[0] && errorText(t, fe.l_name[0])}
             className={FOCUS_RING}
           />
         </div>
@@ -95,7 +96,7 @@ export function RegisterView() {
           placeholder={t("emailPlaceholder")}
           autoComplete="email"
           defaultValue={state.inputs?.email ?? ""}
-          error={fe.email?.[0] && t(fe.email[0] as never)}
+          error={fe.email?.[0] && errorText(t, fe.email[0])}
           className={FOCUS_RING}
         />
 
@@ -107,7 +108,7 @@ export function RegisterView() {
           placeholder={t("phonePlaceholder")}
           autoComplete="tel"
           defaultValue={state.inputs?.phone ?? ""}
-          error={fe.phone?.[0] && t(fe.phone[0] as never)}
+          error={fe.phone?.[0] && errorText(t, fe.phone[0])}
           className={FOCUS_RING}
         />
 
@@ -120,7 +121,7 @@ export function RegisterView() {
             autoComplete="new-password"
             defaultValue={state.inputs?.password1 ?? ""}
             onChange={(e) => setPassword(e.target.value)}
-            error={fe.password1?.[0] && t(fe.password1[0] as never)}
+            error={fe.password1?.[0] && errorText(t, fe.password1[0])}
             className={FOCUS_RING}
           />
           <PasswordRules value={password} namespace="Auth.Register" />
@@ -133,7 +134,7 @@ export function RegisterView() {
           placeholder={t("confirmPasswordPlaceholder")}
           autoComplete="new-password"
           defaultValue={state.inputs?.password2 ?? ""}
-          error={fe.password2?.[0] && t(fe.password2[0] as never)}
+          error={fe.password2?.[0] && errorText(t, fe.password2[0])}
           className={FOCUS_RING}
         />
 

@@ -21,7 +21,7 @@ import { Input, SubmitButton } from "@/components/forms";
 import { updateProfileAction, AvatarSection, type ProfileData } from "@/features/profile";
 import type { User, ActionState } from "@/types";
 import { useTranslations, useLocale } from "next-intl";
-import { cn } from "@/lib/utils";
+import { cn, errorText } from "@/lib/utils";
 import { formatDateShort } from "@/lib/utils/date";
 import { DeleteAccountSection } from "./delete-account-section";
 import { VerifyEmailNotice } from "./verify-email-notice";
@@ -293,19 +293,19 @@ export function ProfileInfoTab({ user: initialUser }: ProfileInfoTabProps) {
                 label={t("firstName")}
                 name="first_name"
                 defaultValue={state.inputs?.first_name ?? user.first_name}
-                error={fe.first_name?.[0] ? t(fe.first_name[0] as never) : undefined}
+                error={fe.first_name?.[0] ? errorText(t, fe.first_name[0]) : undefined}
               />
               <Input
                 label={t("lastName")}
                 name="last_name"
                 defaultValue={state.inputs?.last_name ?? user.last_name}
-                error={fe.last_name?.[0] ? t(fe.last_name[0] as never) : undefined}
+                error={fe.last_name?.[0] ? errorText(t, fe.last_name[0]) : undefined}
               />
               <Input
                 label={t("username")}
                 name="username"
                 defaultValue={state.inputs?.username ?? user.username}
-                error={fe.username?.[0] ? t(fe.username[0] as never) : undefined}
+                error={fe.username?.[0] ? errorText(t, fe.username[0]) : undefined}
               />
               <Input
                 label={t("email")}
@@ -313,7 +313,7 @@ export function ProfileInfoTab({ user: initialUser }: ProfileInfoTabProps) {
                 type="email"
                 defaultValue={state.inputs?.email ?? user.email}
                 onChange={(e) => setEmailTouched(e.target.value !== user.email)}
-                error={fe.email?.[0] ? t(fe.email[0] as never) : undefined}
+                error={fe.email?.[0] ? errorText(t, fe.email[0]) : undefined}
               />
               {/* A4: changing the email needs the current password, which the
                   server has always demanded and this form never asked for -
@@ -328,7 +328,7 @@ export function ProfileInfoTab({ user: initialUser }: ProfileInfoTabProps) {
                   placeholder={t("currentPasswordHint")}
                   error={
                     fe.current_password?.[0]
-                      ? t(fe.current_password[0] as never)
+                      ? errorText(t, fe.current_password[0])
                       : undefined
                   }
                 />
@@ -338,21 +338,21 @@ export function ProfileInfoTab({ user: initialUser }: ProfileInfoTabProps) {
                 name="phone"
                 type="tel"
                 defaultValue={state.inputs?.phone ?? user.phone}
-                error={fe.phone?.[0] ? t(fe.phone[0] as never) : undefined}
+                error={fe.phone?.[0] ? errorText(t, fe.phone[0]) : undefined}
               />
               <Input
                 label={t("dateOfBirth")}
                 name="date_of_birth"
                 type="date"
                 defaultValue={state.inputs?.date_of_birth ?? user.date_of_birth}
-                error={fe.date_of_birth?.[0] ? t(fe.date_of_birth[0] as never) : undefined}
+                error={fe.date_of_birth?.[0] ? errorText(t, fe.date_of_birth[0]) : undefined}
               />
               <div className="sm:col-span-2">
                 <Input
                   label={t("address")}
                   name="address"
                   defaultValue={state.inputs?.address ?? user.address}
-                  error={fe.address?.[0] ? t(fe.address[0] as never) : undefined}
+                  error={fe.address?.[0] ? errorText(t, fe.address[0]) : undefined}
                 />
               </div>
             </div>

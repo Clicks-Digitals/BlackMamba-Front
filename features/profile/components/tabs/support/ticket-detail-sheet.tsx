@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Loader2, Send, Paperclip, X } from "lucide-react";
 import { toast } from "sonner";
-import { cn, formatDateTime } from "@/lib/utils";
+import { cn, formatDateTime, errorText } from "@/lib/utils";
 import {
   getSupportTicketDetails,
   createTicketReplyAction,
@@ -244,7 +244,7 @@ export function TicketDetailSheet({ ticket, open, onClose, onRefresh }: Props) {
 
               {fe.body?.[0] && (
                 <p className="text-xs font-medium text-primary px-1">
-                  {t(fe.body[0] as never)}
+                  {errorText(t, fe.body[0])}
                 </p>
               )}
 
