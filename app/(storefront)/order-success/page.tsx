@@ -87,14 +87,15 @@ export default function OrderSuccessPage() {
                 </span>
                 <span>{t("stepEmail")}</span>
               </li>
-              {isAuthenticated && (
-                <li className="flex items-start gap-3">
-                  <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
-                    2
-                  </span>
-                  <span>{isAuthenticated ? t("stepProfile") : t("stepTrack")}</span>
-                </li>
-              )}
+              {/* Second step for everyone: a signed-in customer has their
+                  profile, a guest has Track Your Order. This used to sit
+                  behind isAuthenticated, so guests never saw the track step. */}
+              <li className="flex items-start gap-3">
+                <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
+                  2
+                </span>
+                <span>{isAuthenticated ? t("stepProfile") : t("stepTrack")}</span>
+              </li>
             </ul>
           </div>
 
