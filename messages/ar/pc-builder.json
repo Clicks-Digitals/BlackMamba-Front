@@ -180,6 +180,31 @@
       "defaultName": "جهاز مخصص",
       "customizeThisBuild": "خصص هذا الجهاز",
       "partsCount": "{count} قطعة"
+    },
+    "messages": {
+      "partSelected": "تم اختيار القطعة.",
+      "partSelectFailed": "تعذّر اختيار هذه القطعة.",
+      "partRemoved": "أُزيلت القطعة.",
+      "partRemoveFailed": "تعذّرت إزالة هذه القطعة.",
+      "preferencesUpdated": "تم تحديث التفضيلات.",
+      "preferencesFailed": "تعذّر تحديث التفضيلات.",
+      "quickStartLoaded": "تم تحميل التجميعة السريعة.",
+      "quickStartFailed": "لا يوجد جهاز جاهز لهذه الفئة بعد.",
+      "surpriseGenerated": "تم إنشاء تجميعة مفاجئة.",
+      "surpriseFailed": "تعذّر إنشاء تجميعة.",
+      "budgetBuilt": "تم تجميع جهاز يناسب ميزانيتك.",
+      "budgetFailed": "تعذّر تجميع جهاز بهذه الميزانية.",
+      "fixApplied": "تم تطبيق الإصلاح.",
+      "fixFailed": "لا يوجد إصلاح متاح لهذه المشكلة.",
+      "buildShared": "يمكنك مشاركة تجميعتك الآن.",
+      "shareFailed": "تعذّرت مشاركة هذه التجميعة.",
+      "sharedNotFound": "لم يتم العثور على التجميعة المشتركة.",
+      "newBuildFailed": "تعذّر بدء تجميعة جديدة.",
+      "sharedLoaded": "تم تحميل التجميعة. تابع التخصيص!",
+      "readyToCustomize": "التجميعة جاهزة للتخصيص.",
+      "loadFailed": "تعذّر تحميل هذه التجميعة.",
+      "buildAdded": "أُضيفت التجميعة إلى السلة.",
+      "buildAddFailed": "تعذّرت إضافة هذه التجميعة إلى سلتك."
     }
   }
 }

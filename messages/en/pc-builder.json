@@ -180,6 +180,31 @@
       "defaultName": "Custom PC Build",
       "customizeThisBuild": "Customize this build",
       "partsCount": "{count} parts"
+    },
+    "messages": {
+      "partSelected": "Part selected.",
+      "partSelectFailed": "Could not select this part.",
+      "partRemoved": "Part removed.",
+      "partRemoveFailed": "Could not remove this part.",
+      "preferencesUpdated": "Preferences updated.",
+      "preferencesFailed": "Could not update preferences.",
+      "quickStartLoaded": "Quick-start build loaded.",
+      "quickStartFailed": "No ready-made template for this tier yet.",
+      "surpriseGenerated": "Surprise build generated.",
+      "surpriseFailed": "Could not generate a build.",
+      "budgetBuilt": "Build put together for your budget.",
+      "budgetFailed": "Could not put a build together for this budget.",
+      "fixApplied": "Fix applied.",
+      "fixFailed": "No fix available for this issue.",
+      "buildShared": "Your build can be shared now.",
+      "shareFailed": "Could not share this build.",
+      "sharedNotFound": "Shared build not found.",
+      "newBuildFailed": "Could not start a new build.",
+      "sharedLoaded": "Build loaded. Keep customizing!",
+      "readyToCustomize": "Build ready to customize.",
+      "loadFailed": "Could not load this build.",
+      "buildAdded": "Build added to cart.",
+      "buildAddFailed": "Could not add this build to your cart."
     }
   }
 }

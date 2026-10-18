@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { getTranslations } from "next-intl/server";
 import { apiClient } from "@/lib/api";
 import type { ActionState } from "@/types";
 import type { Cart } from "@/features/cart";
@@ -51,6 +52,7 @@ export type CouponData = {
 export async function addToCartAction(
   payload: AddToCartPayload
 ): Promise<ActionState<never, AddToCartData>> {
+  const t = await getTranslations("Cart.messages");
   const res = await apiClient<Cart>("/cart/add-item/", {
     method: "POST",
     body: JSON.stringify(payload)
@@ -63,7 +65,7 @@ export async function addToCartAction(
       status: "success",
       // The API's envelope says "Request completed successfully." for every
       // call, so `?? fallback` never fired and that is what shoppers read.
-      message: "Added to cart.",
+      message: t("added"),
       data: {
         count: res.data.items.length,
         itemId: addedItem?.id ?? null,
@@ -89,7 +91,7 @@ export async function addToCartAction(
         return {
           status: "success",
           // Same generic envelope as above; say what happened instead.
-          message: "Added to cart.",
+          message: t("added"),
           data: {
             count: updateRes.data.items.length,
             itemId: existing.id,
@@ -102,13 +104,14 @@ export async function addToCartAction(
     }
   }
 
-  return { status: "error", message: res.message ?? "Could not add to cart." };
+  return { status: "error", message: res.message ?? t("addFailed") };
 }
 
 export async function updateCartItemAction(
   itemId: string,
   quantity: number
 ): Promise<ActionState<never, CartMutationData>> {
+  const t = await getTranslations("Cart.messages");
   const res = await apiClient<Cart>("/cart/update-item/", {
     method: "POST",
     body: JSON.stringify({ item_id: itemId, quantity })
@@ -118,7 +121,7 @@ export async function updateCartItemAction(
     revalidatePath("/cart");
     return {
       status: "success",
-      message: "Cart updated.",
+      message: t("updated"),
       data: {
         count: res.data.items.length,
         items: res.data.items,
@@ -127,12 +130,13 @@ export async function updateCartItemAction(
     };
   }
 
-  return { status: "error", message: res.message ?? "Could not update cart item." };
+  return { status: "error", message: res.message ?? t("updateFailed") };
 }
 
 export async function removeCartItemAction(
   itemId: string
 ): Promise<ActionState<never, CartMutationData>> {
+  const t = await getTranslations("Cart.messages");
   const res = await apiClient<Cart>("/cart/remove-item/", {
     method: "POST",
     body: JSON.stringify({ item_id: itemId })
@@ -142,7 +146,7 @@ export async function removeCartItemAction(
     revalidatePath("/cart");
     return {
       status: "success",
-      message: "Removed from your cart.",
+      message: t("removed"),
       data: {
         count: res.data.items.length,
         items: res.data.items,
@@ -151,10 +155,11 @@ export async function removeCartItemAction(
     };
   }
 
-  return { status: "error", message: res.message ?? "Could not remove item from cart." };
+  return { status: "error", message: res.message ?? t("removeFailed") };
 }
 
 export async function clearCartAction(): Promise<ActionState<never, never>> {
+  const t = await getTranslations("Cart.messages");
   const res = await apiClient<Cart>("/cart/clear-cart/", {
     method: "POST",
     body: JSON.stringify({})
@@ -162,10 +167,10 @@ export async function clearCartAction(): Promise<ActionState<never, never>> {
 
   if (res.ok) {
     revalidatePath("/cart");
-    return { status: "success", message: "Your cart is empty now." };
+    return { status: "success", message: t("cleared") };
   }
 
-  return { status: "error", message: res.message ?? "Could not clear cart." };
+  return { status: "error", message: res.message ?? t("clearFailed") };
 }
 
 export async function validateCouponAction(
@@ -173,6 +178,7 @@ export async function validateCouponAction(
   subtotal: string,
   cartItems: { product_id: string; item_subtotal: string }[] = []
 ): Promise<ActionState<never, CouponData>> {
+  const t = await getTranslations("Cart.messages");
   const res = await apiClient<{
     code: string;
     discount_type: string;
@@ -200,5 +206,5 @@ export async function validateCouponAction(
     };
   }
 
-  return { status: "error", message: res.message || "Invalid coupon code." };
+  return { status: "error", message: res.message || t("couponInvalid") };
 }

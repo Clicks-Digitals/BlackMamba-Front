@@ -23,6 +23,17 @@
     "orderNow": "Order now",
     "youMayAlsoLike": "You may also like",
     "viewMore": "View more",
-    "removeAria": "Remove item from cart"
+    "removeAria": "Remove item from cart",
+    "messages": {
+      "added": "Added to cart.",
+      "updated": "Cart updated.",
+      "removed": "Removed from your cart.",
+      "cleared": "Your cart is empty now.",
+      "addFailed": "Could not add to cart.",
+      "updateFailed": "Could not update this item.",
+      "removeFailed": "Could not remove this item.",
+      "clearFailed": "Could not empty your cart.",
+      "couponInvalid": "That coupon code isn't valid."
+    }
   }
 }
