@@ -2,11 +2,13 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Globe, Coins } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useUiStore } from "@/stores/ui-store";
 
 export function AppLoader() {
   const { isAppLoading, switchTarget } = useUiStore((s) => s);
   const isLocale = switchTarget?.type === "locale";
+  const t = useTranslations("AppLoader");
 
   return (
     <AnimatePresence>
@@ -52,7 +54,7 @@ export function AppLoader() {
 
             {/* Label */}
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">
-              {isLocale ? "Switching Language" : "Switching Currency"}
+              {isLocale ? t("switchingLanguage") : t("switchingCurrency")}
             </p>
 
             {/* Target code / symbol */}

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import { getOrCreateBuildAction, getPartBySlugAction, searchPartsAction } from "@/features/pc-builder/actions/queries";
 import { SLOT_ICONS } from "./slot-icons";
 import { PartDetailView } from "./PartDetailView";
@@ -119,7 +119,7 @@ export async function PartSingleProductFeature({ partSlug }: { partSlug: string 
                     )}
                     <span className="flex-1 truncate text-sm font-medium text-[#FFFFFF]">{optName}</span>
                     <span className="shrink-0 font-bold text-[#EB0B1A]">
-                      {optPrice ? `${Number(optPrice).toFixed(2)} JOD` : "—"}
+                      {optPrice ? formatPrice(optPrice, null, locale) : "—"}
                     </span>
                   </Link>
                 );

@@ -4,9 +4,9 @@ import { useState, useTransition } from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { CheckCircle2, AlertTriangle, XCircle, Zap, ShoppingCart, Loader2, Share2, ChevronUp } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import { usePCBuilderStore } from "@/stores/pc-builder-store";
 import { applyFixAction, addBuildToCartAction, shareBuildAction } from "@/features/pc-builder/actions/mutations";
 import { SLOT_ORDER, CORE_SLOTS, type PCSlot } from "@/features/pc-builder/types";
@@ -31,6 +31,7 @@ interface SummarySidebarProps {
 export function SummarySidebar({ buildId, onBrowseSlot }: SummarySidebarProps) {
   const { reduceMotion, mobileSummaryOpen, setMobileSummaryOpen, activeSlot } = useBuilderMotion();
   const t = useTranslations("PCBuilder");
+  const locale = useLocale();
   const pricing = usePCBuilderStore((s) => s.pricing);
   const totalPowerDrawWatts = usePCBuilderStore((s) => s.totalPowerDrawWatts);
   const items = usePCBuilderStore((s) => s.items);
@@ -61,7 +62,7 @@ export function SummarySidebar({ buildId, onBrowseSlot }: SummarySidebarProps) {
             <div className="min-w-0 flex-1">
               <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/40">{t("summary.title")}</p>
               <p className="truncate text-sm font-semibold tabular-nums text-[#FFFFFF]">
-                {price.toFixed(2)} JOD
+                {formatPrice(price, null, locale)}
                 <span className="ms-2 font-normal text-white/40">{Math.round(watts)}W</span>
               </p>
             </div>
@@ -127,6 +128,7 @@ function BuildSummaryBody({
   onBrowseSlot: (slot: PCSlot) => void;
 }) {
   const t = useTranslations("PCBuilder");
+  const locale = useLocale();
   const tSummary = useTranslations("PCBuilder.summary");
   const items = usePCBuilderStore((s) => s.items);
   const pricing = usePCBuilderStore((s) => s.pricing);
@@ -261,7 +263,7 @@ function BuildSummaryBody({
                   : ""}
               </span>
               <span className="shrink-0 font-medium tabular-nums text-[#FFFFFF]">
-                {Number(item.unit_price).toFixed(2)} JOD
+                {formatPrice(item.unit_price, null, locale)}
               </span>
             </li>
           );
@@ -272,23 +274,23 @@ function BuildSummaryBody({
         <div className="flex flex-col gap-1 border-t border-white/10 pt-4 text-sm">
           <div className="flex justify-between text-white/60">
             <span>{tSummary("subtotal")}</span>
-            <span className="tabular-nums">{displaySub.toFixed(2)} JOD</span>
+            <span className="tabular-nums">{formatPrice(displaySub, null, locale)}</span>
           </div>
           {Number(pricing.accessories_subtotal) > 0 && (
             <div className="flex justify-between text-white/40">
               <span>{tSummary("accessoriesNotDiscounted")}</span>
-              <span className="tabular-nums">{displayAccessories.toFixed(2)} JOD</span>
+              <span className="tabular-nums">{formatPrice(displayAccessories, null, locale)}</span>
             </div>
           )}
           <div className="flex justify-between text-white/60">
             <span>{tSummary("bundleDiscount")}</span>
             <span className="text-[#EB0B1A] tabular-nums">
-              -{displayDiscount.toFixed(2)} JOD ({pricing.discount_percent}%)
+              -{formatPrice(displayDiscount, null, locale)} ({pricing.discount_percent}%)
             </span>
           </div>
           <div className="flex justify-between text-base font-semibold text-[#FFFFFF]">
             <span>{tSummary("total")}</span>
-            <span className="text-lg font-bold tabular-nums text-[#EB0B1A]">{displayTotal.toFixed(2)} JOD</span>
+            <span className="text-lg font-bold tabular-nums text-[#EB0B1A]">{formatPrice(displayTotal, null, locale)}</span>
           </div>
         </div>
       )}

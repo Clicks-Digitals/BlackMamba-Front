@@ -4,6 +4,7 @@ import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useLocale, useTranslations } from "next-intl";
+import { formatPrice } from "@/lib/utils";
 import { Wrench, Zap, Loader2 } from "lucide-react";
 import { cloneSharedBuildAction } from "@/features/pc-builder/actions/mutations";
 import type { PCBuild } from "@/features/pc-builder/types";
@@ -76,7 +77,7 @@ export function SharedBuildView({ build, shareSlug }: { build: PCBuild; shareSlu
                     <p className="text-xs uppercase tracking-wide text-white/40">{t(`slots.${item.slot}`)}</p>
                     <p className="truncate text-sm font-medium text-[#FFFFFF]">{partName}</p>
                   </div>
-                  <span className="text-sm font-semibold text-[#FFFFFF]">{Number(item.unit_price).toFixed(2)} JOD</span>
+                  <span className="text-sm font-semibold text-[#FFFFFF]">{formatPrice(item.unit_price, null, locale)}</span>
                 </li>
               );
             })}
@@ -85,7 +86,7 @@ export function SharedBuildView({ build, shareSlug }: { build: PCBuild; shareSlu
           <div className="mt-6 flex flex-col gap-1 border-t border-[#000000] pt-4 text-sm">
             <div className="flex justify-between text-white/60">
               <span>{tSummary("subtotal")}</span>
-              <span>{Number(build.pricing.subtotal).toFixed(2)} JOD</span>
+              <span>{formatPrice(build.pricing.subtotal, null, locale)}</span>
             </div>
             <div className="flex justify-between text-white/60">
               <span>{tSummary("bundleDiscount")}</span>
@@ -93,7 +94,7 @@ export function SharedBuildView({ build, shareSlug }: { build: PCBuild; shareSlu
             </div>
             <div className="flex justify-between text-base font-semibold text-[#FFFFFF]">
               <span>{tSummary("total")}</span>
-              <span className="text-lg font-bold text-[#EB0B1A]">{Number(build.pricing.total_price).toFixed(2)} JOD</span>
+              <span className="text-lg font-bold text-[#EB0B1A]">{formatPrice(build.pricing.total_price, null, locale)}</span>
             </div>
           </div>
         </div>

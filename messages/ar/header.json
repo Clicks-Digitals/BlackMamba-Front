@@ -39,6 +39,12 @@
       "browseCategory": "تصفح فئة",
       "products": "المنتجات",
       "tryCategory": "جرب تصفح فئة"
+    },
+    "currency": {
+      "select": "اختر العملة",
+      "names": {
+        "JOD": "دينار أردني"
+      }
     }
   }
 }

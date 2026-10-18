@@ -5,5 +5,9 @@
   },
   "ConfirmDialog": {
     "cancel": "Cancel"
+  },
+  "AppLoader": {
+    "switchingLanguage": "Switching language",
+    "switchingCurrency": "Switching currency"
   }
 }

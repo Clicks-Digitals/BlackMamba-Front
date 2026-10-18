@@ -6,7 +6,7 @@ import { useTransition } from "react";
 import { toast } from "sonner";
 import { useLocale, useTranslations } from "next-intl";
 import { ShoppingCart, Wrench, Loader2, Zap } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import { customizeReadyMadeAction, addBuildToCartAction } from "@/features/pc-builder/actions/mutations";
 import { useCartStore } from "@/stores/cart-store";
 import { CORE_SLOTS, type PCBuild, type PCSlot } from "@/features/pc-builder/types";
@@ -117,7 +117,7 @@ export function ReadyMadeCard({ build }: { build: PCBuild }) {
         <div className="flex flex-col gap-3 border-t border-[#000000] pt-3">
           <div>
             <p className="text-xs text-white/40">{t("bundlePrice")}</p>
-            <p className="text-lg font-bold text-[#EB0B1A]">{Number(build.pricing.total_price).toFixed(2)} JOD</p>
+            <p className="text-lg font-bold text-[#EB0B1A]">{formatPrice(build.pricing.total_price, null, locale)}</p>
           </div>
           <div className="grid grid-cols-2 gap-2">
             <button

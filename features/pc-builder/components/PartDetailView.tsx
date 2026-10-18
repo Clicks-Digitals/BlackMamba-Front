@@ -4,7 +4,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { Check, X, Loader2, Plus } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import { usePCBuilderStore } from "@/stores/pc-builder-store";
 import { upsertBuildItemAction } from "@/features/pc-builder/actions/mutations";
 import type { PCPart } from "@/features/pc-builder/types";
@@ -94,7 +94,7 @@ export function PartDetailView({ part, buildId }: PartDetailViewProps) {
 
       {/* Price */}
       <p className="font-chillax text-5xl leading-none text-[#FFFFFF]">
-        {price ? `${Number(price).toFixed(2)} JOD` : "—"}
+        {price ? formatPrice(price, null, locale) : "—"}
       </p>
 
       {/* Description */}

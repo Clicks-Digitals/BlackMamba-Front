@@ -11,13 +11,23 @@ export type CurrencyInfo = { code?: string | null; symbol?: string | null } | nu
 const FALLBACK = { code: "JOD", symbol: "د.أ" };
 
 /**
+ * Arabic labels for currencies whose symbol in the API is Latin ("JD"), so
+ * the Arabic store reads "د.أ" everywhere - prices, checkout and the
+ * currency switcher alike.
+ */
+const ARABIC_LABELS: Record<string, string> = { JOD: "د.أ" };
+
+/**
  * What to print next to a price.
  *
  * English uses the ISO code ("JOD"), because the Arabic glyph "د.أ" collides
  * with Latin digits and renders as mojibake ("175i.د"). Arabic uses the symbol.
  */
 export function currencyLabel(info: CurrencyInfo, locale: string = "en"): string {
-  if (locale === "ar") return info?.symbol?.trim() || FALLBACK.symbol;
+  if (locale === "ar") {
+    const code = info?.code?.trim().toUpperCase();
+    return (code && ARABIC_LABELS[code]) || info?.symbol?.trim() || FALLBACK.symbol;
+  }
   return info?.code?.trim() || FALLBACK.code;
 }
 

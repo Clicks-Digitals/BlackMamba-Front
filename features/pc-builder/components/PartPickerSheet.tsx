@@ -4,6 +4,7 @@ import { useEffect, useState, useTransition } from "react";
 import Image from "next/image";
 import { toast } from "sonner";
 import { useLocale, useTranslations } from "next-intl";
+import { formatPrice } from "@/lib/utils";
 import { Search, Check, X, Loader2, Zap, ChevronDown, ChevronUp, PackageX } from "lucide-react";
 import {
   Sheet,
@@ -353,7 +354,7 @@ function PartPickerCard({
               <>
                 {price && (
                   <span className="text-sm font-bold text-[#EB0B1A]">
-                    {Number(price).toFixed(2)} JOD
+                    {formatPrice(price, null, locale)}
                   </span>
                 )}
                 {hasDiscount && (
@@ -409,7 +410,7 @@ function PartPickerCard({
                     {(rtl && group.name_ar) || group.name}: {(rtl && option.value_ar) || option.value}
                   </span>
                   <span className="ms-4 shrink-0 font-bold text-[#EB0B1A]">
-                    {optionPrice ? `${Number(optionPrice).toFixed(2)} JOD` : ""}
+                    {optionPrice ? formatPrice(optionPrice, null, locale) : ""}
                     {!optionInStock && (
                       <span className="ms-1.5 font-normal text-white/30">{tPicker("outOfStock")}</span>
                     )}

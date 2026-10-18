@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { useLocale, useTranslations } from "next-intl";
 import { X, Plus } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import { usePCBuilderStore } from "@/stores/pc-builder-store";
 import { removeBuildItemAction } from "@/features/pc-builder/actions/mutations";
 import { SLOT_ORDER, type PCSlot } from "@/features/pc-builder/types";
@@ -176,7 +176,7 @@ export function SlotRow({ slot, buildId, onOpenPicker, index = 0 }: SlotRowProps
       <div className="hidden text-end sm:block">
         {part && price ? (
           <span className="text-sm font-bold tabular-nums text-primary">
-            {Number(price).toFixed(2)} JOD
+            {formatPrice(price, null, locale)}
           </span>
         ) : (
           <span className="text-xs text-muted-foreground/50">—</span>

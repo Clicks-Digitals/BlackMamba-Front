@@ -6,7 +6,7 @@ import { useTransition } from "react";
 import { toast } from "sonner";
 import { useLocale, useTranslations } from "next-intl";
 import { Check, X, Plus, Loader2 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import { usePCBuilderStore } from "@/stores/pc-builder-store";
 import { upsertBuildItemAction } from "@/features/pc-builder/actions/mutations";
 import type { PCPart } from "@/features/pc-builder/types";
@@ -92,7 +92,7 @@ export function PartCatalogueCard({ part, buildId }: PartCatalogueCardProps) {
 
         <div className={cn("mt-auto flex items-baseline gap-1.5", rtl && "flex-row-reverse justify-end")}>
           <span className="text-[15px] font-bold leading-none text-[#EB0B1A]">
-            {price ? `${Number(price).toFixed(2)} JOD` : "—"}
+            {price ? formatPrice(price, null, locale) : "—"}
           </span>
           {origPrice && (
             <span className="text-[10.5px] leading-none text-white/35 line-through">

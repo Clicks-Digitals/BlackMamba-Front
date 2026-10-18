@@ -39,6 +39,12 @@
       "browseCategory": "Browse category",
       "products": "Products",
       "tryCategory": "Try browsing a category"
+    },
+    "currency": {
+      "select": "Select currency",
+      "names": {
+        "JOD": "Jordanian Dinar"
+      }
     }
   }
 }
