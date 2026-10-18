@@ -9,7 +9,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: rtl ? "آراء العملاء" : "Customer reviews",
     description: rtl
-      ? "ما يقوله عملاؤنا عن مامبا جيرز."
+      ? "ما يقوله عملاؤنا عن مامبا غيرز."
       : "What our customers say about Mamba Gears.",
     alternates: { canonical: "/testimonials" },
   };

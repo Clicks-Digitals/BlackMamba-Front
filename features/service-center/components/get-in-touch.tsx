@@ -5,16 +5,31 @@ import { CheckCircle2, Clock, Mail, MapPin, Phone, Send } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useLocale, useTranslations } from "next-intl";
-import { cn } from "@/lib/utils";
+import { cn, errorText } from "@/lib/utils";
 import { Input, Textarea, SubmitButton } from "@/components/forms";
 import { submitContactAction, type ContactRequestInput } from "@/features/service-center";
 import type { ActionState } from "@/types";
+import { STORE, hasValue } from "@/config/store";
 
-const CONTACT_INFO: { icon: LucideIcon; labelKey: string; value: string }[] = [
-  { icon: Mail, labelKey: "emailLabel", value: "support@josouk.com" },
-  { icon: Phone, labelKey: "phoneLabel", value: "+962 7X XXX XXXX" },
-  { icon: MapPin, labelKey: "locationLabel", value: "Amman, Jordan" },
-];
+type ContactInfo = { icon: LucideIcon; labelKey: string; value: string };
+
+/**
+ * The store's own contact details, from config/store.ts. This used to print
+ * an old brand's address (support@josouk.com) and a made-up phone number;
+ * a detail that hasn't been configured is left out rather than invented.
+ */
+function contactInfo(rtl: boolean, fallbackLocation: string): ContactInfo[] {
+  const address = rtl ? STORE.addressAr || STORE.address : STORE.address;
+  const rows: ContactInfo[] = [];
+  if (hasValue(STORE.email)) rows.push({ icon: Mail, labelKey: "emailLabel", value: STORE.email });
+  if (hasValue(STORE.phone)) rows.push({ icon: Phone, labelKey: "phoneLabel", value: STORE.phone });
+  rows.push({
+    icon: MapPin,
+    labelKey: "locationLabel",
+    value: hasValue(address) ? address : fallbackLocation,
+  });
+  return rows;
+}
 
 const initialState: ActionState<ContactRequestInput> = { status: "idle", message: "" };
 
@@ -29,6 +44,7 @@ export function GetInTouch() {
   const [state, action] = useActionState(submitContactAction, initialState);
   const [sent, setSent] = useState(false);
   const fe = state.fieldErrors ?? {};
+  const contactRows = contactInfo(rtl, t("locationValue"));
 
   useEffect(() => {
     if (state.status === "success") {
@@ -75,7 +91,7 @@ export function GetInTouch() {
               </p>
 
               <div className="mt-8 flex flex-col gap-4">
-                {CONTACT_INFO.map(({ icon: Icon, labelKey, value }) => (
+                {contactRows.map(({ icon: Icon, labelKey, value }) => (
                   <div key={labelKey} className="flex items-center gap-3.5 rounded-md border border-border bg-muted/40 px-3.5 py-3">
                     <div className="flex size-10 shrink-0 items-center justify-center rounded-md border border-primary/25 bg-primary/10">
                       <Icon className="size-4 text-[#EB0B1A]" strokeWidth={1.7} />
@@ -84,7 +100,10 @@ export function GetInTouch() {
                       <p className={cn("text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground", rtl && "font-cairo tracking-normal")}>
                         {t(labelKey as never)}
                       </p>
-                      <p className="mt-0.5 text-[14px] font-medium text-foreground" dir="ltr">
+                      <p
+                        className={cn("mt-0.5 text-[14px] font-medium text-foreground", rtl && "font-cairo")}
+                        dir={labelKey === "locationLabel" ? "auto" : "ltr"}
+                      >
                         {value}
                       </p>
                     </div>
@@ -165,7 +184,7 @@ export function GetInTouch() {
                     name="name"
                     placeholder={t("namePlaceholder")}
                     defaultValue={state.inputs?.name ?? ""}
-                    error={fe.name?.[0] ? t(fe.name[0] as never) : undefined}
+                    error={fe.name?.[0] ? errorText(t, fe.name[0]) : undefined}
                     className={fieldClass}
                   />
                   <Input
@@ -174,7 +193,7 @@ export function GetInTouch() {
                     type="email"
                     placeholder={t("emailPlaceholder")}
                     defaultValue={state.inputs?.email ?? ""}
-                    error={fe.email?.[0] ? t(fe.email[0] as never) : undefined}
+                    error={fe.email?.[0] ? errorText(t, fe.email[0]) : undefined}
                     className={fieldClass}
                   />
                 </div>
@@ -185,7 +204,7 @@ export function GetInTouch() {
                     name="phone"
                     placeholder={t("phonePlaceholder")}
                     defaultValue={state.inputs?.phone ?? ""}
-                    error={fe.phone?.[0] ? t(fe.phone[0] as never) : undefined}
+                    error={fe.phone?.[0] ? errorText(t, fe.phone[0]) : undefined}
                     className={fieldClass}
                   />
                   <Input
@@ -193,7 +212,7 @@ export function GetInTouch() {
                     name="location"
                     placeholder={t("locationPlaceholder")}
                     defaultValue={state.inputs?.location ?? ""}
-                    error={fe.location?.[0] ? t(fe.location[0] as never) : undefined}
+                    error={fe.location?.[0] ? errorText(t, fe.location[0]) : undefined}
                     className={fieldClass}
                   />
                 </div>
@@ -203,7 +222,7 @@ export function GetInTouch() {
                   name="subject"
                   placeholder={t("subjectPlaceholder")}
                   defaultValue={state.inputs?.subject ?? ""}
-                  error={fe.subject?.[0] ? t(fe.subject[0] as never) : undefined}
+                  error={fe.subject?.[0] ? errorText(t, fe.subject[0]) : undefined}
                   className={fieldClass}
                 />
 
@@ -213,7 +232,7 @@ export function GetInTouch() {
                   rows={5}
                   placeholder={t("messagePlaceholder")}
                   defaultValue={state.inputs?.message ?? ""}
-                  error={fe.message?.[0] ? t(fe.message[0] as never) : undefined}
+                  error={fe.message?.[0] ? errorText(t, fe.message[0]) : undefined}
                   className="font-chillax rounded-md text-sm"
                 />
 

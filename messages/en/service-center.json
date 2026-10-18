@@ -72,6 +72,7 @@
       "phoneLabel": "Phone Number",
       "phonePlaceholder": "Enter your phone number",
       "locationLabel": "Location",
+      "locationValue": "Amman, Jordan",
       "locationPlaceholder": "Enter your city or area",
       "subjectLabel": "Subject",
       "subjectPlaceholder": "Enter the subject of your request",

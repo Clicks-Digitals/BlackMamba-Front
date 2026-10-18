@@ -36,12 +36,12 @@ export function privacyContent(rtl: boolean): {
           body: [
             {
               list: [
-                "بيانات الطلب التي تعطينا إياها: اسمك، رقم هاتفك، منطقتك وعنوان التوصيل، المنتجات التي تطلبها، وطريقة الدفع (الدفع عند الاستلام، CliQ، أو الدفع الإلكتروني).",
+                "بيانات الطلب التي تعطينا إياها: اسمك، رقم هاتفك، منطقتك وعنوان التوصيل، المنتجات التي تطلبها، وطريقة الدفع (حالياً الدفع عند الاستلام فقط).",
                 "الرسائل التي ترسلها لنا على Instagram أو Facebook Messenger أو WhatsApp أو موقعنا، بما فيها الصور والمرفقات، واسمك واسم المستخدم الظاهران على تلك المنصة.",
                 "بيانات الموقع: ملفات تعريف الارتباط (الكوكيز) اللازمة لعمل سلة التسوق وتسجيل الدخول، وبيانات تقنية أساسية مثل نوع المتصفح والصفحات التي تزورها. نستخدم Google Analytics و Meta Pixel لقياس أداء الموقع.",
               ],
             },
-            "لا نجمع ولا نخزّن أرقام البطاقات كاملة. عند الدفع الإلكتروني تُعالَج بطاقتك لدى مزوّد خدمة الدفع.",
+            "الدفع عند الاستلام هو طريقة الدفع الوحيدة لدينا، لذلك لا نطلب أرقام البطاقات ولا نجمعها ولا نخزّنها.",
           ],
         },
         {
@@ -65,7 +65,6 @@ export function privacyContent(rtl: boolean): {
             {
               list: [
                 "شركات التوصيل: اسمك ورقم هاتفك وعنوانك لإيصال طلبك.",
-                "مزوّدو خدمات الدفع: لمعالجة الدفع الإلكتروني.",
                 "مزوّدو الخدمات الذين يشغّلون أنظمتنا نيابة عنا: استضافة الموقع وقاعدة البيانات، وتخزين الملفات، وخدمة ذكاء اصطناعي تقرأ الرسائل الواردة لتجهّز مسودة طلب يراجعها موظفونا. كل طلب يراجعه ويؤكده شخص من فريقنا دائماً، ولا يحق لهؤلاء المزوّدين استخدام معلوماتك لأي غرض آخر.",
                 "الجهات الرسمية عندما يفرض القانون ذلك.",
               ],
@@ -143,12 +142,12 @@ export function privacyContent(rtl: boolean): {
         body: [
           {
             list: [
-              "Order details you give us: your name, phone number, delivery area and address, the products you order, and how you pay (cash on delivery, CliQ, or online).",
+              "Order details you give us: your name, phone number, delivery area and address, the products you order, and how you pay (currently cash on delivery only).",
               "Messages you send us on Instagram, Facebook Messenger, WhatsApp or our website, including any photos or attachments, and your public profile name and username on that platform.",
               "Website information: the cookies our website needs to keep your cart and login working, and basic technical data such as your browser type and pages visited. We use Google Analytics and the Meta Pixel to measure how the site performs.",
             ],
           },
-          "We do not collect or store full card numbers. If you pay online, your card is processed by our payment provider.",
+          "Cash on delivery is the only way to pay, so we never ask for, collect or store card numbers.",
         ],
       },
       {
@@ -172,7 +171,6 @@ export function privacyContent(rtl: boolean): {
           {
             list: [
               "Delivery companies get your name, phone number and address to bring your order.",
-              "Payment providers process online payments.",
               "Service providers that run our systems on our behalf: website and database hosting, file storage, and an AI service that reads incoming messages to draft an order for our staff to check. A person on our team always reviews and confirms every order. These providers may not use your information for anything else.",
               "Authorities, when the law requires it.",
             ],

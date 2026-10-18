@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: rtl ? "الماركات" : "Brands",
     description: rtl
-      ? "كل الماركات المتوفرة في مامبا جيرز."
+      ? "كل الماركات المتوفرة في مامبا غيرز."
       : "Every brand stocked at Mamba Gears.",
     alternates: { canonical: "/brands" },
   };

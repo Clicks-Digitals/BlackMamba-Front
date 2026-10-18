@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: rtl ? "المدونة" : "Blog",
     description: rtl
-      ? "أدلة وأخبار من فريق مامبا جيرز."
+      ? "أدلة وأخبار من فريق مامبا غيرز."
       : "Guides and news from the Mamba Gears team.",
     alternates: { canonical: "/blog" },
   };
