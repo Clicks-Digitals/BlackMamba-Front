@@ -9,6 +9,11 @@ import { cn } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
 
+/** True when the body was written in the panel's rich-text editor. */
+function isHtml(body: string): boolean {
+  return /<\/?[a-z][a-z0-9]*(\s[^>]*)?\/?>/i.test(body);
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = await getBlogPost(slug);
@@ -98,17 +103,41 @@ export default async function Page({ params }: Props) {
             </blockquote>
           ) : null}
 
-          {/* The panel stores the body as plain text, so paragraphs are blank
-              lines. Rendering it as text also means staff cannot inject markup. */}
-          {content
-            .split(/\n{2,}/)
-            .map((paragraph) => paragraph.trim())
-            .filter(Boolean)
-            .map((paragraph, i) => (
-              <p key={i} className="mb-4 text-[15px] leading-relaxed text-muted-foreground">
-                {paragraph}
-              </p>
-            ))}
+          {isHtml(content) ? (
+            // Rich text from the panel's editor. The API cleans it with nh3
+            // against a tag allowlist before it is stored, the same as a
+            // product's Overview, so it is rendered as the server sent it.
+            // There is no HTML sanitizer in the storefront's dependencies to
+            // clean it a second time here.
+            <div
+              dir={rtl ? "rtl" : "ltr"}
+              className={cn(
+                "prose max-w-none dark:prose-invert",
+                "prose-headings:text-foreground prose-headings:tracking-wide",
+                rtl ? "prose-headings:font-cairo" : "prose-headings:font-chillax",
+                "prose-p:text-[15px] prose-p:leading-relaxed prose-p:text-muted-foreground",
+                "prose-a:font-semibold prose-a:text-foreground prose-a:no-underline hover:prose-a:underline",
+                "prose-strong:text-foreground",
+                "prose-li:text-[15px] prose-li:text-muted-foreground prose-li:marker:text-primary",
+                "prose-blockquote:border-primary prose-blockquote:font-normal prose-blockquote:text-foreground",
+                "prose-img:w-full prose-img:rounded-md",
+                "prose-hr:border-border",
+                "prose-code:text-foreground"
+              )}
+              dangerouslySetInnerHTML={{ __html: content }}
+            />
+          ) : (
+            // Older posts are plain text: paragraphs are blank lines.
+            content
+              .split(/\n{2,}/)
+              .map((paragraph) => paragraph.trim())
+              .filter(Boolean)
+              .map((paragraph, i) => (
+                <p key={i} className="mb-4 text-[15px] leading-relaxed text-muted-foreground">
+                  {paragraph}
+                </p>
+              ))
+          )}
         </div>
       </article>
     </div>
