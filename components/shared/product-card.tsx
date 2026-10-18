@@ -6,21 +6,13 @@ import { useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { ShoppingCart, Check, Loader2, Star } from "lucide-react";
-import { cn, formatPrice, productHref } from "@/lib/utils";
+import { cn, formatPrice, productHref, productPricing } from "@/lib/utils";
 import type { Product } from "@/types/product";
 import { WishlistButton } from "./wishlist-button";
 import { ClearanceSaleCountdown } from "./clearance-countdown";
 import { addToCartAction, updateCartItemAction } from "@/features/cart/actions/mutations";
 import { productPayload, trackAddToCart } from "@/features/analytics";
 import { useCartStore, buildCartItemKey } from "@/stores/cart-store";
-
-function discountPercent(p: Product): number | null {
-  if (!p.has_discount || !p.base_price || !p.discount_price) return null;
-  const b = Number.parseFloat(p.base_price);
-  const d = Number.parseFloat(p.discount_price);
-  if (!Number.isFinite(b) || b <= 0 || !Number.isFinite(d) || d >= b) return null;
-  return Math.round(((b - d) / b) * 100);
-}
 
 export type ProductCardProps = {
   product: Product;
@@ -47,23 +39,10 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
         : product.brand.name
       : null;
 
-  const hasCampaign = !!product.campaign_price;
-  const hasDiscount = product.has_discount && !!product.discount_price;
-
-  const finalPrice = hasCampaign
-    ? product.campaign_price!
-    : hasDiscount
-    ? product.discount_price!
-    : product.base_price;
-  const origPrice = hasCampaign || hasDiscount ? product.base_price : null;
-  const pct = hasCampaign
-    ? (() => {
-        const b = Number.parseFloat(product.base_price ?? "0");
-        const c = Number.parseFloat(product.campaign_price!);
-        if (!Number.isFinite(b) || b <= 0 || !Number.isFinite(c) || c >= b) return null;
-        return Math.round(((b - c) / b) * 100);
-      })()
-    : discountPercent(product);
+  // Same rule as the cart and the product page: the lower of the campaign
+  // price and the product's own price.
+  const { price: finalPrice, original: origPrice, pct } = productPricing(product);
+  const hasCampaign = !!product.campaign_price && finalPrice === product.campaign_price;
 
   const rating = product.avg_rating;
   const reviews = product.review_count ?? 0;
@@ -193,7 +172,7 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
       <div className="flex flex-1 flex-col px-2.5 pt-2.5 pb-2.5">
         {pct != null ? (
           <span className="mb-1.5 inline-flex w-fit bg-[#b8e0b8] px-1.5 py-0.5 text-[11px] font-semibold leading-none text-[#1a5c2a]">
-            {pct}% OFF
+            {pct}% {t("off")}
           </span>
         ) : null}
 

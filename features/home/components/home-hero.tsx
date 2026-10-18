@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { cn, formatPrice, productHref } from "@/lib/utils";
+import { cn, formatPrice, productHref, productPricing } from "@/lib/utils";
 import type { Category } from "@/types/category";
 import type { Product } from "@/types/product";
 import { addToCartAction, updateCartItemAction } from "@/features/cart/actions/mutations";
@@ -73,14 +73,7 @@ function productThumb(product: Product) {
 }
 
 function productPrices(product: Product) {
-  const hasCampaign = !!product.campaign_price;
-  const hasDiscount = product.has_discount && !!product.discount_price;
-  const finalPrice = hasCampaign
-    ? product.campaign_price!
-    : hasDiscount
-      ? product.discount_price!
-      : product.base_price;
-  const origPrice = hasCampaign || hasDiscount ? product.base_price : null;
+  const { price: finalPrice, original: origPrice } = productPricing(product);
   return { finalPrice, origPrice, currency: product.currency_info ?? null };
 }
 

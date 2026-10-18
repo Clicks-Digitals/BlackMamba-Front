@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Check, Minus, Plus, ShoppingCart, Truck, RotateCcw, ShieldCheck, BadgeCheck } from "lucide-react";
 import { toast } from "sonner";
-import { cn, formatPrice } from "@/lib/utils";
+import { cn, formatPrice, productPricing } from "@/lib/utils";
 import type { Product, VariationGroup, VariationOption, Combination } from "@/types";
 import { addToCartAction, updateCartItemAction } from "@/features/cart/actions/mutations";
 import { productPayload, trackAddToCart } from "@/features/analytics";
@@ -121,9 +121,11 @@ export function ProductActions({ product }: ProductActionsProps) {
   const currency = product.currency_info;
   const price = (amount: string | number) => formatPrice(amount, currency, rtl ? "ar" : "en");
   const apiBase = parseFloat(product.base_price ?? "0");
-  const effectiveBase = product.has_discount && product.discount_price
-    ? parseFloat(product.discount_price)
-    : apiBase;
+  // C7: one rule for the card, the cart and this page - the lower of the
+  // campaign price and the product's own price. This page used to ignore the
+  // campaign, so it showed a higher price than the card and the cart.
+  const pricing = productPricing(product);
+  const effectiveBase = parseFloat(pricing.price ?? "0") || 0;
 
   function getCurrentKey(): string | null {
     if (product.inventory_mode === "TRACK_VARIATIONS") {
@@ -253,34 +255,23 @@ export function ProductActions({ product }: ProductActionsProps) {
         ? selection.combination.stock_quantity
         : 0;
 
-  // API returns base_price + extra; extract extra and apply to effectiveBase (discount-aware)
-  const displayPrice: string = (() => {
+  // API returns base_price + extra for a variation or combination; pull the
+  // extra out so it can sit on top of whichever price applies.
+  const selectionExtra: number = (() => {
     if (selection?.type === "combination" && selection.combination.combination_price) {
-      const extra = parseFloat(selection.combination.combination_price) - apiBase;
-      return (effectiveBase + extra).toFixed(2);
+      return parseFloat(selection.combination.combination_price) - apiBase;
     }
     if (selection?.type === "variation" && selection.option.variation_price) {
-      const extra = parseFloat(selection.option.variation_price) - apiBase;
-      return (effectiveBase + extra).toFixed(2);
+      return parseFloat(selection.option.variation_price) - apiBase;
     }
-    return product.has_discount && product.discount_price
-      ? product.discount_price
-      : product.base_price ?? "0";
+    return 0;
   })();
 
-  // Strikethrough shows the un-discounted price; when a combination is selected, include its extra too
-  const strikethroughPrice: string | null = product.has_discount && product.base_price
-    ? (() => {
-        if (selection?.type === "combination" && selection.combination.combination_price) {
-          const extra = parseFloat(selection.combination.combination_price) - apiBase;
-          return (apiBase + extra).toFixed(2);
-        }
-        if (selection?.type === "variation" && selection.option.variation_price) {
-          const extra = parseFloat(selection.option.variation_price) - apiBase;
-          return (apiBase + extra).toFixed(2);
-        }
-        return product.base_price;
-      })()
+  const displayPrice: string = (effectiveBase + selectionExtra).toFixed(2);
+
+  // Strikethrough shows the un-discounted price, plus the same extra.
+  const strikethroughPrice: string | null = pricing.original
+    ? (apiBase + selectionExtra).toFixed(2)
     : null;
 
   // A combination was resolved — user has made enough selections regardless of how many groups exist.
@@ -293,14 +284,7 @@ export function ProductActions({ product }: ProductActionsProps) {
         ? inStock
         : selection !== null && inStock;
 
-  const discountPct =
-    product.has_discount && product.base_price && product.discount_price
-      ? Math.round(
-          ((Number.parseFloat(product.base_price) - Number.parseFloat(product.discount_price)) /
-            Number.parseFloat(product.base_price)) *
-            100
-        )
-      : null;
+  const discountPct = pricing.pct;
 
   const stockLevel =
     product.inventory_mode === "TRACK" ? (product.product_stock ?? 0) : null;

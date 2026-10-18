@@ -1,6 +1,7 @@
 import type { Product } from "@/types";
 import type { Cart, CartItem } from "@/features/cart/types";
 import type { AnalyticsItem } from "./types";
+import { productPricing } from "@/lib/utils";
 
 /**
  * Turn cart lines into analytics items.
@@ -28,10 +29,9 @@ export function cartToAnalyticsItems(cart: Cart | null): AnalyticsItem[] {
   return (cart?.items ?? []).map(cartItemToAnalyticsItem);
 }
 
-/** Effective unit price: campaign beats clearance/discount beats base. */
+/** Effective unit price: the lower of the campaign price and the product's own. */
 export function productPrice(product: Product): number {
-  const price = product.campaign_price ?? product.discount_price ?? product.base_price;
-  return parseFloat(price ?? "0") || 0;
+  return parseFloat(productPricing(product).price ?? "0") || 0;
 }
 
 export function productToAnalyticsItem(product: Product, quantity = 1): AnalyticsItem {
