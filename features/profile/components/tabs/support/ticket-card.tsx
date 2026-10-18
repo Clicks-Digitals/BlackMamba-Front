@@ -47,7 +47,7 @@ export function TicketCard({
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
             <span className="text-[11px] font-medium uppercase tracking-[0.06em] text-white/45">
-              #{ticket.id.slice(0, 8)}
+              {ticket.ticket_number ?? `#${ticket.id.slice(0, 8)}`}
             </span>
             <span
               className={cn(

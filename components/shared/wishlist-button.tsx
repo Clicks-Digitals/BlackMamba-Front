@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useTranslations } from "next-intl";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -20,6 +21,7 @@ interface WishlistButtonProps {
 }
 
 export function WishlistButton({ productId, className, product }: WishlistButtonProps) {
+  const t = useTranslations("Wishlist");
   const inWishlist = useWishlistStore((s) => s.ids.includes(productId));
   const addId = useWishlistStore((s) => s.add);
   const removeId = useWishlistStore((s) => s.remove);
@@ -63,6 +65,8 @@ export function WishlistButton({ productId, className, product }: WishlistButton
       onClick={handleClick}
       disabled={isPending}
       aria-pressed={isActive}
+      // An icon on its own says nothing to a screen reader.
+      aria-label={isActive ? t("remove") : t("add")}
       className={cn(
         "inline-flex items-center justify-center rounded-none border border-border bg-card p-1.5 text-muted-foreground shadow-none transition-colors duration-150 hover:border-primary hover:text-primary disabled:opacity-50",
         className

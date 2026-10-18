@@ -121,7 +121,7 @@ export function TicketDetailSheet({ ticket, open, onClose, onRefresh }: Props) {
             {ticket?.subject}
           </SheetTitle>
           <div className="flex flex-wrap items-center gap-2 text-xs font-chillax text-white/45">
-            <span>#{ticket?.id.slice(0, 8)}</span>
+            <span>{ticket?.ticket_number ?? `#${ticket?.id.slice(0, 8)}`}</span>
             <span aria-hidden>•</span>
             {displayStatus ? (
               <span

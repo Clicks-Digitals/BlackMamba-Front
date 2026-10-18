@@ -20,6 +20,8 @@ export interface TicketReply {
 
 export interface SupportTicket {
   id: string;
+  /** TKT-20261018-XXXXXXXX: what support staff see and quote back. */
+  ticket_number?: string;
   user?: string;
   subject: string;
   category: TicketCategory;

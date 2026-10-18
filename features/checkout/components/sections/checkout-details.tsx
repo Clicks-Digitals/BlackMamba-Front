@@ -19,6 +19,28 @@ import Link from "next/link";
 import { cartToAnalyticsItems, trackBeginCheckout, trackPurchase } from "@/features/analytics";
 import { CheckoutErrorSummary } from "@/features/checkout/components/sections/checkout-error-summary";
 
+// An applied coupon used to live only in this component, so leaving checkout
+// to fix the cart dropped it. The code is kept for the tab's session and
+// checked again on return, because the cart it was valid for may have changed.
+const COUPON_KEY = "checkout_coupon";
+
+function readSavedCoupon(): string | null {
+  try {
+    return sessionStorage.getItem(COUPON_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function saveCoupon(code: string | null) {
+  try {
+    if (code) sessionStorage.setItem(COUPON_KEY, code);
+    else sessionStorage.removeItem(COUPON_KEY);
+  } catch {
+    // Storage blocked (private mode): the coupon just isn't remembered.
+  }
+}
+
 interface CheckoutDetailsProps {
   cart: Cart | null;
   addresses: Address[];
@@ -57,6 +79,7 @@ export default function CheckoutDetails({
 
   useEffect(() => {
     if (state.status === "success" && state.data?.orderId) {
+      saveCoupon(null);
       toast.success(tToast("orderPlaced"));
       router.push(
         `/order-success?order_id=${state.data.orderId}` +
@@ -67,15 +90,20 @@ export default function CheckoutDetails({
     }
   }, [state.status, state.message, state.data, router, tToast]);
 
-  const handleApplyCoupon = async () => {
-    if (!couponInput.trim()) return;
+  const checkCoupon = (code: string) => {
     const totalAmount = cart?.total_amount ?? "0";
     const cartItems = cart?.items
       .filter((item) => !!item.product)
       .map((item) => ({ product_id: item.product!, item_subtotal: item.total_price })) ?? [];
-    const res = await validateCouponAction(couponInput.trim(), totalAmount, cartItems);
+    return validateCouponAction(code, totalAmount, cartItems);
+  };
+
+  const handleApplyCoupon = async () => {
+    if (!couponInput.trim()) return;
+    const res = await checkCoupon(couponInput.trim());
     if (res.status === "success" && res.data) {
       setAppliedCoupon(res.data);
+      saveCoupon(res.data.code);
       toast.success(tToast("couponApplied", { amount: res.data.discountAmount }));
     } else {
       toast.error(res.message ?? tToast("invalidCoupon"));
@@ -85,7 +113,30 @@ export default function CheckoutDetails({
   const handleRemoveCoupon = () => {
     setAppliedCoupon(null);
     setCouponInput("");
+    saveCoupon(null);
   };
+
+  // Put back a coupon applied earlier in this session, quietly: if the cart
+  // no longer qualifies, it is simply forgotten rather than shown as an error.
+  useEffect(() => {
+    const saved = readSavedCoupon();
+    if (!saved || !cart?.items.length) return;
+    let cancelled = false;
+    checkCoupon(saved).then((res) => {
+      if (cancelled) return;
+      if (res.status === "success" && res.data) {
+        setAppliedCoupon(res.data);
+        setCouponInput(res.data.code);
+      } else {
+        saveCoupon(null);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+    // Once per visit to checkout; the cart is fixed for the life of this page.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const totalAmount = cart?.total_amount ?? "0";
   const subtotalNum = parseFloat(totalAmount) || 0;

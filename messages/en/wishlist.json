@@ -5,6 +5,8 @@
     "emptyDescription": "Save products you love and they will show up here.",
     "continueShopping": "Browse products",
     "loginToSave": "Sign in to save favourites",
+    "add": "Add to favourites",
+    "remove": "Remove from favourites",
     "messages": {
       "added": "Added to favourites.",
       "addFailed": "Could not add to favourites.",
