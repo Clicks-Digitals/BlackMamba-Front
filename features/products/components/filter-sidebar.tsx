@@ -1,11 +1,11 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import type { Category } from "@/types/category";
 import type { HomeBrand } from "@/features/home";
 import { type Filter } from "@/features/products";
@@ -23,6 +23,10 @@ export type FiltersPanelProps = {
   locale: string;
   isNewRelease: boolean;
   isClearanceSale: boolean;
+  /** Price bounds from the URL (price_min / price_max), if any. */
+  priceMin?: string;
+  priceMax?: string;
+  onClearPrice?: () => void;
   onToggleFilter: (filter: Filter, valueKey: string) => void;
   onToggleCategory: (slug: string) => void;
   onToggleBrand: (slug: string) => void;
@@ -129,7 +133,7 @@ function CategoryNode({
 export function FiltersPanel({
   categories = [], activeSlugs, filters, activeValues,
   brands, activeBrands, locale,
-  isNewRelease, isClearanceSale,
+  isNewRelease, isClearanceSale, priceMin, priceMax, onClearPrice,
   onToggleFilter, onToggleCategory, onToggleBrand, onToggleNewRelease, onToggleClearanceSale, onClear,
 }: FiltersPanelProps) {
   const t = useTranslations("Products");
@@ -140,7 +144,21 @@ export function FiltersPanel({
     Object.values(activeValues).some((s) => s.size > 0) ||
     isNewRelease ||
     isClearanceSale ||
-    activeBrands.size > 0;
+    activeBrands.size > 0 ||
+    !!priceMin ||
+    !!priceMax;
+
+  // There is no price slider, so a price bound that came in on a link is
+  // shown here, where it can be seen and removed.
+  const money = (value: string) => formatPrice(value, null, rtl ? "ar" : "en");
+  const priceLabel =
+    priceMin && priceMax
+      ? t("priceBetween", { min: money(priceMin), max: money(priceMax) })
+      : priceMax
+        ? t("priceUpTo", { price: money(priceMax) })
+        : priceMin
+          ? t("priceFrom", { price: money(priceMin) })
+          : null;
 
   const byParent = useMemo(() => buildByParent(categories), [categories]);
   const topLevel = byParent["__root__"] ?? [];
@@ -185,6 +203,23 @@ export function FiltersPanel({
           )}
         </div>
         <ul className="flex flex-col gap-2 pt-1">
+          {priceLabel && (
+            <li>
+              <span className="inline-flex items-center gap-1.5 rounded border border-primary/40 bg-primary/10 py-0.5 ps-2 pe-1 text-[12px] font-semibold text-foreground">
+                <span dir="auto">{priceLabel}</span>
+                {onClearPrice && (
+                  <button
+                    type="button"
+                    onClick={onClearPrice}
+                    aria-label={t("removePriceFilter")}
+                    className="inline-flex size-4 items-center justify-center rounded-sm text-foreground/70 hover:bg-primary/20 hover:text-foreground"
+                  >
+                    <X size={12} strokeWidth={2.4} />
+                  </button>
+                )}
+              </span>
+            </li>
+          )}
           <li className="flex items-center gap-2">
             <Checkbox
               id="quick-new-release"

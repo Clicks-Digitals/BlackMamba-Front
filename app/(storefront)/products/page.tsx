@@ -22,10 +22,20 @@ type SearchParamsShape = {
   new_release?: string | string[];
   clearance_sale?: string | string[];
   brand_slug?: string | string[];
+  price_min?: string | string[];
+  price_max?: string | string[];
 };
 
 function first(v: string | string[] | undefined): string | undefined {
   return v ? (Array.isArray(v) ? v[0] : v) : undefined;
+}
+
+/** A price bound from the URL, or undefined when it isn't a usable number. */
+function priceParam(v: string | string[] | undefined): string | undefined {
+  const raw = first(v)?.trim();
+  if (!raw) return undefined;
+  const n = Number(raw);
+  return Number.isFinite(n) && n >= 0 ? raw : undefined;
 }
 
 export default async function ProductsPage({
@@ -52,6 +62,11 @@ export default async function ProductsPage({
   if (first(sp.clearance_sale) === "true") initialFilters.clearance_sale = "true";
   const brandSlug = first(sp.brand_slug);
   if (brandSlug) initialFilters.brand_slug = brandSlug;
+  // "Under 30 JOD" links here with price_max; the API filters on the same names.
+  const priceMin = priceParam(sp.price_min);
+  if (priceMin) initialFilters.price_min = priceMin;
+  const priceMax = priceParam(sp.price_max);
+  if (priceMax) initialFilters.price_max = priceMax;
 
   const [locale, categories] = await Promise.all([
     getLocale(),

@@ -31,6 +31,13 @@ type Props = {
   initialFilters?: Record<string, string>;
 };
 
+function priceParam(raw: string | null): string | undefined {
+  const value = raw?.trim();
+  if (!value) return undefined;
+  const n = Number(value);
+  return Number.isFinite(n) && n >= 0 ? value : undefined;
+}
+
 // Given the category currently selected via `category_slug`, compute the
 // root-first chain of ancestor slugs whose CHILDREN should be shown in the
 // top category row: if the active category itself has children, drill into
@@ -88,6 +95,10 @@ export function ProductsView({
   const isBestSeller = searchParams.get("best_seller") === "true";
   const isNewRelease = searchParams.get("new_release") === "true";
   const isClearanceSale = searchParams.get("clearance_sale") === "true";
+  // Price bounds from the URL ("Under 30 JOD" on the homepage links here
+  // with price_max=30). Anything that isn't a number is ignored.
+  const priceMin = priceParam(searchParams.get("price_min"));
+  const priceMax = priceParam(searchParams.get("price_max"));
 
   const activeSlugs = useMemo(() => {
     const raw = searchParams.get("category_slug") ?? "";
@@ -188,8 +199,10 @@ export function ProductsView({
     if (isNewRelease) out.new_release = "true";
     if (isClearanceSale) out.clearance_sale = "true";
     if (activeBrandSlugs.length > 0) out.brand_slug = activeBrandSlugs.join(",");
+    if (priceMin) out.price_min = priceMin;
+    if (priceMax) out.price_max = priceMax;
     return out;
-  }, [activeSlugs, search, sort, activeFilterKeys, isBestSeller, isNewRelease, isClearanceSale, activeBrandSlugs]);
+  }, [activeSlugs, search, sort, activeFilterKeys, isBestSeller, isNewRelease, isClearanceSale, activeBrandSlugs, priceMin, priceMax]);
 
   const filterKey = useMemo(
     () =>
@@ -259,6 +272,15 @@ export function ProductsView({
       p.delete("new_release");
       p.delete("clearance_sale");
       p.delete("brand_slug");
+      p.delete("price_min");
+      p.delete("price_max");
+    });
+  }, [updateParams]);
+
+  const clearPrice = useCallback(() => {
+    updateParams((p) => {
+      p.delete("price_min");
+      p.delete("price_max");
     });
   }, [updateParams]);
 
@@ -319,6 +341,8 @@ export function ProductsView({
       params.delete("best_seller");
       params.delete("clearance_sale");
       params.delete("brand_slug");
+      params.delete("price_min");
+      params.delete("price_max");
       params.delete("page");
     }
   }, []);
@@ -368,6 +392,9 @@ export function ProductsView({
     locale,
     isNewRelease,
     isClearanceSale,
+    priceMin,
+    priceMax,
+    onClearPrice: clearPrice,
     onToggleFilter: toggleFilterValue,
     onToggleCategory: handleCategoryToggle,
     onToggleBrand: toggleBrand,
