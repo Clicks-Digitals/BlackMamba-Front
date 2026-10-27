@@ -1,6 +1,7 @@
 {
   "Products": {
     "title": "Products",
+    "breadcrumbHome": "Home",
     "count": "Showing {count} products",
     "filter": "Filter",
     "filtersTitle": "Filters",

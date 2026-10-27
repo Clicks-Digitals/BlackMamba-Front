@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDebounce } from "@/hooks";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import type { Category } from "@/types/category";
@@ -62,6 +64,30 @@ function computeDrillPath(categories: Category[], activeSlug: string | undefined
   return path;
 }
 
+// The breadcrumb trail for the selected category: root first, and unlike
+// computeDrillPath it ends ON the active category rather than its parent.
+// The two answer different questions - that one asks "whose children do I
+// show in the row", this one asks "where am I".
+function categoryTrail(categories: Category[], activeSlug: string | undefined): Category[] {
+  if (!activeSlug) return [];
+
+  const bySlug = new Map(categories.map((c) => [c.slug, c] as const));
+  const byId = new Map(categories.map((c) => [c.id, c] as const));
+
+  let node = bySlug.get(activeSlug);
+  const trail: Category[] = [];
+  // A malformed tree must not hang the page, so the walk is bounded and
+  // stops if it ever meets a category it has already passed.
+  const seen = new Set<string>();
+  while (node && !seen.has(node.id)) {
+    seen.add(node.id);
+    trail.unshift(node);
+    node = node.parent ? byId.get(node.parent) : undefined;
+  }
+  return trail;
+}
+
+
 export function ProductsView({
   categories,
   activeCategories,
@@ -106,6 +132,13 @@ export function ProductsView({
   }, [searchParams]);
 
   const activeSlugSet = useMemo(() => new Set(activeSlugs), [activeSlugs]);
+
+  // Several categories can be selected at once; the breadcrumb follows the
+  // first, the same one the category row drills into.
+  const trail = useMemo(
+    () => categoryTrail(categories, activeSlugs[0]),
+    [categories, activeSlugs]
+  );
 
   // `expandedPath` only self-updates via handleCategoryToggle/handleBack (row
   // clicks). Navigating here from elsewhere while already on this page — e.g.
@@ -408,6 +441,51 @@ export function ProductsView({
       {/* ── Hero: title + search + categories ── */}
       <div className="bm-page-hero">
         <div className="layout-page layout-gutter-x pt-5 pb-0 md:pt-6">
+          {/* The same trail the product page shows, so moving from a
+              product back up to its category does not change the
+              furniture. The last crumb is where you already are, so it is
+              text rather than a link. */}
+          <nav
+            className="flex h-8 items-center gap-1.5 font-chillax text-xs text-muted-foreground"
+            aria-label="Breadcrumb"
+          >
+            <Link href="/" className="transition-colors hover:text-foreground">
+              {t("breadcrumbHome")}
+            </Link>
+            <ChevronRight size={12} strokeWidth={2} className="shrink-0 rtl:rotate-180" />
+            {trail.length === 0 ? (
+              <span className="font-medium text-foreground/80">{t("title")}</span>
+            ) : (
+              <Link href="/products" className="transition-colors hover:text-foreground">
+                {t("title")}
+              </Link>
+            )}
+            {trail.map((crumb, index) => {
+              const last = index === trail.length - 1;
+              const label = (rtl && crumb.name_ar) || crumb.name;
+              return (
+                <span key={crumb.id} className="flex items-center gap-1.5">
+                  <ChevronRight size={12} strokeWidth={2} className="shrink-0 rtl:rotate-180" />
+                  {last ? (
+                    <span
+                      className="max-w-36 truncate font-medium text-foreground/80"
+                      aria-current="page"
+                    >
+                      {label}
+                    </span>
+                  ) : (
+                    <Link
+                      href={`/products?category_slug=${crumb.slug}`}
+                      className="max-w-36 truncate transition-colors hover:text-foreground"
+                    >
+                      {label}
+                    </Link>
+                  )}
+                </span>
+              );
+            })}
+          </nav>
+
           <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h1

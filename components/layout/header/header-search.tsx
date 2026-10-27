@@ -10,7 +10,7 @@ import {
 } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Search, X, Loader2, Clock, Hash, FolderOpen } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -77,10 +77,12 @@ export interface SmartSearchState {
   removeRecent: (q: string) => void;
   clearRecent: () => void;
   reset: () => void;
+  dismiss: () => void;
 }
 
 export function useSmartSearch(): SmartSearchState {
-  const [query, setQuery] = useState("");
+  const searchParams = useSearchParams();
+  const [query, setQuery] = useState(() => searchParams.get("search") ?? "");
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -142,6 +144,31 @@ export function useSmartSearch(): SmartSearchState {
     setIsLoading(false);
   };
 
+  // Putting the suggestions away without forgetting what was searched for.
+  // Submitting used to reset(), so the box emptied the moment you pressed
+  // Enter - the results page said "yholo" while the bar you typed it into
+  // had gone blank, and refining the search meant typing it again.
+  const dismiss = () => {
+    setProducts([]);
+    setCategories([]);
+    setHasSearched(false);
+    setIsLoading(false);
+  };
+
+  // Landing on /products?search=... with the bar empty looks the same as
+  // having searched for nothing, so the term is taken from the address.
+  //
+  // Adjusted during render rather than in an effect: React re-runs this
+  // component before touching the DOM, so the box is never painted empty
+  // and then corrected. Compared against what was last taken from the
+  // URL, not against the current text, so it cannot fight someone typing.
+  const urlTerm = searchParams.get("search") ?? "";
+  const [lastUrlTerm, setLastUrlTerm] = useState(urlTerm);
+  if (urlTerm !== lastUrlTerm) {
+    setLastUrlTerm(urlTerm);
+    if (urlTerm) setQuery(urlTerm);
+  }
+
   const activeRaw = debouncedQuery.trim();
   const isActive = activeRaw.length > 0;
 
@@ -158,6 +185,7 @@ export function useSmartSearch(): SmartSearchState {
     removeRecent,
     clearRecent,
     reset,
+    dismiss,
   };
 }
 
@@ -591,7 +619,7 @@ function DesktopHeaderSearch({ search }: DesktopSearchProps) {
     if (!isOpen) return;
     const onPointer = (e: PointerEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        search.reset();
+        search.dismiss();
         setIsOpen(false);
       }
     };
@@ -608,7 +636,7 @@ function DesktopHeaderSearch({ search }: DesktopSearchProps) {
       search.addRecent(q);
       router.push(`/products?search=${encodeURIComponent(q)}`);
     }
-    search.reset();
+    search.dismiss();
     setIsOpen(false);
   };
 
@@ -667,7 +695,7 @@ function DesktopHeaderSearch({ search }: DesktopSearchProps) {
         <div className="dark scrollbar-thin absolute start-0 top-[calc(100%+8px)] z-50 max-h-[26rem] w-full overflow-y-auto rounded-lg border border-white/10 bg-[#000000] shadow-[0_16px_40px_-16px_rgba(0,0,0,0.7)] animate-in fade-in slide-in-from-top-1 duration-150">
           <ResultsPanel
             search={search}
-            onSelect={() => { search.reset(); setIsOpen(false); }}
+            onSelect={() => { search.dismiss(); setIsOpen(false); }}
           />
         </div>
       )}
@@ -713,7 +741,7 @@ function MobileHeaderSearchOverlay({ search, isOpen, onClose }: MobileOverlayPro
         ? `/categories`
         : `/products?search=${encodeURIComponent(q)}`
       );
-      search.reset();
+      search.dismiss();
       onClose();
     }
   };
@@ -742,7 +770,7 @@ function MobileHeaderSearchOverlay({ search, isOpen, onClose }: MobileOverlayPro
               if (!q) return;
               if (!q.startsWith("#")) search.addRecent(q);
               router.push(q.startsWith("#") ? `/categories` : `/products?search=${encodeURIComponent(q)}`);
-              search.reset();
+              search.dismiss();
               onClose();
             }}
           >
@@ -781,7 +809,7 @@ function MobileHeaderSearchOverlay({ search, isOpen, onClose }: MobileOverlayPro
           <div className="dark scrollbar-thin mx-auto mt-2 max-h-[min(26rem,calc(100svh-9rem))] max-w-xl overflow-y-auto rounded-lg border border-white/10 bg-[#000000] shadow-xl">
             <ResultsPanel
               search={search}
-              onSelect={() => { search.reset(); onClose(); }}
+              onSelect={() => { search.dismiss(); onClose(); }}
             />
           </div>
         )}

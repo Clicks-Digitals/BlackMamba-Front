@@ -1,6 +1,7 @@
 {
   "Products": {
     "title": "المنتجات",
+    "breadcrumbHome": "الرئيسية",
     "count": "عرض {count} منتجًا",
     "filter": "تصفية",
     "filtersTitle": "عوامل التصفية",
