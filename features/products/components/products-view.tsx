@@ -118,6 +118,22 @@ export function ProductsView({
 
   const sort = (searchParams.get("ordering") as SortValue) || DEFAULT_SORT;
   const search = searchParams.get("search") ?? "";
+
+  // The box on this page is seeded from the address once, then left to the
+  // person typing in it. Searching from the header bar changes the address
+  // without remounting this page, so the two disagreed: the header and the
+  // results said "msi" while the box underneath still said "jbl".
+  //
+  // Mirrored exactly, empty included, because this box *is* this page's
+  // search. Adjusted during render rather than in an effect, and compared
+  // against the last term taken from the address rather than the current
+  // text, so typing here is never overwritten - while typing, the address
+  // has not changed yet, so this does not fire.
+  const [lastUrlSearch, setLastUrlSearch] = useState(search);
+  if (search !== lastUrlSearch) {
+    setLastUrlSearch(search);
+    setSearchDraft(search);
+  }
   const isBestSeller = searchParams.get("best_seller") === "true";
   const isNewRelease = searchParams.get("new_release") === "true";
   const isClearanceSale = searchParams.get("clearance_sale") === "true";
