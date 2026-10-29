@@ -266,7 +266,7 @@ function PartPickerCard({
   const partName = rtl && part.name_ar ? part.name_ar : part.name;
   const price = part.price ?? part.base_price;
   const hasDiscount = part.price && part.base_price && Number(part.price) < Number(part.base_price);
-  const inStock = part.product_stock === null || part.product_stock > 0;
+  const inStock = isPartInStock(part);
   const hasVariations = part.available_variations.length > 0;
   const isIncompatible = part.is_compatible === false;
   const specChips = getSpecChips(part.spec, slot);
