@@ -11,6 +11,7 @@ import { usePCBuilderStore } from "@/stores/pc-builder-store";
 import { upsertBuildItemAction } from "@/features/pc-builder/actions/mutations";
 import type { PCPart } from "@/features/pc-builder/types";
 import { SLOT_ICONS } from "./slot-icons";
+import { isPartInStock } from "@/features/pc-builder/lib/stock";
 
 interface PartCatalogueCardProps {
   part: PCPart;
@@ -37,7 +38,7 @@ export function PartCatalogueCard({ part, buildId }: PartCatalogueCardProps) {
   const price = part.price ?? part.base_price;
   const pct = discountPercent(part);
   const origPrice = pct != null ? part.base_price : null;
-  const inStock = part.product_stock === null || part.product_stock > 0;
+  const inStock = isPartInStock(part);
   const slot = part.spec?.slot;
   const SlotIcon = slot ? SLOT_ICONS[slot] : null;
   const hasVariations = part.available_variations.length > 0;

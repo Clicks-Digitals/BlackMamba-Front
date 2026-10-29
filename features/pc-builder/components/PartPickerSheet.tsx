@@ -21,6 +21,7 @@ import { upsertBuildItemAction } from "@/features/pc-builder/actions/mutations";
 import { type PCSlot, type PCPart, type PCBuild, type PCPartSpec } from "@/features/pc-builder/types";
 import { estimatePricing } from "@/features/pc-builder/lib/pricing";
 import { SLOT_ICONS } from "./slot-icons";
+import { isPartInStock } from "@/features/pc-builder/lib/stock";
 
 interface PartPickerSheetProps {
   slot: PCSlot | null;
@@ -108,8 +109,6 @@ export function PartPickerSheet({ slot, buildId, onClose }: PartPickerSheetProps
 
   // Split rather than sort: the two groups are rendered under separate headings
   // so a sold-out part never sits between two buyable ones.
-  const isPartInStock = (p: (typeof parts)[number]) =>
-    p.product_stock === null || (p.product_stock ?? 0) > 0;
   const inStockParts = visibleParts.filter(isPartInStock);
   const outOfStockParts = visibleParts.filter((p) => !isPartInStock(p));
   const compatibleCount = parts.filter((p) => p.is_compatible !== false).length;

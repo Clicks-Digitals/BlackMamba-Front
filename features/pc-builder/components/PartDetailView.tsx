@@ -10,6 +10,7 @@ import { upsertBuildItemAction } from "@/features/pc-builder/actions/mutations";
 import type { PCPart } from "@/features/pc-builder/types";
 import { SLOT_ICONS } from "./slot-icons";
 import { getSpecRows } from "./spec-rows";
+import { isPartInStock } from "@/features/pc-builder/lib/stock";
 
 interface PartDetailViewProps {
   part: PCPart;
@@ -37,7 +38,11 @@ export function PartDetailView({ part, buildId }: PartDetailViewProps) {
   const selectedVariation = variationOptions.find((v) => v.variation_id === selectedVariationId);
 
   const price = selectedVariation ? selectedVariation.variation_price ?? part.price : part.price ?? part.base_price;
-  const inStock = selectedVariation ? selectedVariation.variation_stock > 0 : part.product_stock === null || part.product_stock > 0;
+  // A chosen variation carries its own count, which is the real answer
+  // for a TRACK_VARIATIONS product; otherwise ask the part itself.
+  const inStock = selectedVariation
+    ? selectedVariation.variation_stock > 0
+    : isPartInStock(part);
 
   function handleAdd() {
     if (!slot) return;

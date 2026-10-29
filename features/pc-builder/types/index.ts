@@ -101,6 +101,10 @@ export interface PCPart {
   discount_price: string | null;
   price: string | null;
   is_available: boolean;
+  /** Whether it can be bought: already derived from the inventory mode. */
+  in_stock?: boolean;
+  inventory_mode?: "TOGGLE" | "TRACK" | "TRACK_VARIATIONS";
+  /** A count, and only meaningful in TRACK mode. Prefer `in_stock`. */
   product_stock: number | null;
   spec: PCPartSpec | null;
   is_compatible: boolean | null;
