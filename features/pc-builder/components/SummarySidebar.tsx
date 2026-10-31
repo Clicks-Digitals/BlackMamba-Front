@@ -10,7 +10,6 @@ import { cn, formatPrice } from "@/lib/utils";
 import { usePCBuilderStore } from "@/stores/pc-builder-store";
 import { applyFixAction, addBuildToCartAction, shareBuildAction } from "@/features/pc-builder/actions/mutations";
 import { SLOT_ORDER, CORE_SLOTS, type PCSlot } from "@/features/pc-builder/types";
-import { DISCOUNT_TIERS } from "@/features/pc-builder/lib/pricing";
 import { useCartStore } from "@/stores/cart-store";
 import {
   Sheet,
@@ -26,6 +25,12 @@ import { useAnimatedNumber } from "./use-animated-number";
 interface SummarySidebarProps {
   buildId: string;
   onBrowseSlot: (slot: PCSlot) => void;
+}
+
+/** 2.5 -> "2.5", 9 -> "9", "4.50" -> "4.5": one spelling for every percentage. */
+function formatPercent(value: number | string | null | undefined): string {
+  const n = Number(value);
+  return Number.isFinite(n) ? String(Number(n.toFixed(2))) : "0";
 }
 
 export function SummarySidebar({ buildId, onBrowseSlot }: SummarySidebarProps) {
@@ -298,14 +303,14 @@ function BuildSummaryBody({
       {pricing && (
         <div className="flex flex-col gap-2">
           <div className="flex gap-1">
-            {DISCOUNT_TIERS.map((tier) => (
+            {(pricing.tiers ?? []).map((tier) => (
               <div
-                key={tier.min}
+                key={tier.min_parts}
                 className={`flex-1 rounded-md py-1 text-center text-[11px] font-semibold ${
-                  pricing.part_count >= tier.min ? "bg-[#EB0B1A] text-[#EB0B1A]" : "bg-white/5 text-white/30"
+                  pricing.part_count >= tier.min_parts ? "bg-[#EB0B1A] text-[#EB0B1A]" : "bg-white/5 text-white/30"
                 }`}
               >
-                {tier.min}+ · {tier.pct}%
+                {tier.min_parts}+ · {formatPercent(tier.discount_percent)}%
               </div>
             ))}
           </div>
@@ -320,7 +325,7 @@ function BuildSummaryBody({
               <p className="text-xs text-white/40">
                 {tSummary("addMoreParts", {
                   count: pricing.next_tier.parts_needed,
-                  pct: pricing.next_tier.discount_percent,
+                  pct: formatPercent(pricing.next_tier.discount_percent),
                 })}
               </p>
             </>
@@ -374,7 +379,11 @@ function BuildSummaryBody({
         A greyed-out Add to Cart with no explanation reads as broken.
         Say how many core slots are still empty.
       */}
-      {!hasCompleteRealBuild && !hasBlockingIssues && (
+      {/*
+        A bundle can be bought, but say plainly that it is not a whole PC -
+        someone who adds a CPU and a board should not expect a computer.
+      */}
+      {selectedSlots.length > 0 && !hasCompleteRealBuild && !hasBlockingIssues && (
         <p className="mt-2 text-xs leading-relaxed text-white/45">
           {tSummary("incompleteBuildHint", { count: remainingCoreSlots })}
         </p>
@@ -383,7 +392,11 @@ function BuildSummaryBody({
       <div className="mt-2 flex gap-2">
         <button
           type="button"
-          disabled={isAdding || hasBlockingIssues || selectedSlots.length === 0 || !hasCompleteRealBuild}
+          // Any compatible selection can be bought - the same rule the
+          // cart applies. Requiring all eight core parts meant a discount
+          // shown from three parts that could never be used, and an upgrade
+          // (a CPU and a board) that could not be bought here at all.
+          disabled={isAdding || hasBlockingIssues || selectedSlots.length === 0}
           onClick={handleAddToCart}
           className="group flex min-h-11 flex-1 items-center justify-center gap-2 rounded-md bg-[#EB0B1A] px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#EB0B1A] disabled:opacity-40"
         >
@@ -392,7 +405,7 @@ function BuildSummaryBody({
           ) : (
             <ShoppingCart className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-px" />
           )}
-          {tSummary("addToCart")}
+          {hasCompleteRealBuild ? tSummary("addToCart") : tSummary("addBundleToCart")}
         </button>
         <button
           type="button"

@@ -19,7 +19,6 @@ import { usePCBuilderStore } from "@/stores/pc-builder-store";
 import { getPartsForSlotAction } from "@/features/pc-builder/actions/queries";
 import { upsertBuildItemAction } from "@/features/pc-builder/actions/mutations";
 import { type PCSlot, type PCPart, type PCBuild, type PCPartSpec } from "@/features/pc-builder/types";
-import { estimatePricing } from "@/features/pc-builder/lib/pricing";
 import { SLOT_ICONS } from "./slot-icons";
 import { isPartInStock } from "@/features/pc-builder/lib/stock";
 

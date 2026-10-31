@@ -96,9 +96,10 @@
       "applying": "Applying...",
       "browseCategory": "Browse {slot}",
       "addToCart": "Add Build to Cart",
+      "addBundleToCart": "Add Bundle to Cart",
       "shareTitle": "Save / Share build",
       "shareLinkCopied": "Share link copied to clipboard!",
-      "incompleteBuildHint": "{count, plural, one {# core slot still needs a part before you can add this build to the cart.} other {# core slots still need parts before you can add this build to the cart.}}"
+      "incompleteBuildHint": "{count, plural, one {This is a bundle of parts, not a complete PC: # core slot is still empty.} other {This is a bundle of parts, not a complete PC: # core slots are still empty.}}"
     },
     "picker": {
       "description": "Search the catalog and pick a part for this slot.",

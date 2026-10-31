@@ -11,6 +11,7 @@ import { customizeReadyMadeAction, addBuildToCartAction } from "@/features/pc-bu
 import { useCartStore } from "@/stores/cart-store";
 import { CORE_SLOTS, type PCBuild, type PCSlot } from "@/features/pc-builder/types";
 import { SLOT_ICONS } from "./slot-icons";
+import { isPartInStock } from "@/features/pc-builder/lib/stock";
 
 function RigStrip({ filledSlots }: { filledSlots: Set<PCSlot> }) {
   return (
@@ -38,6 +39,7 @@ function RigStrip({ filledSlots }: { filledSlots: Set<PCSlot> }) {
 
 export function ReadyMadeCard({ build }: { build: PCBuild }) {
   const t = useTranslations("PCBuilder.readyMade");
+  const tBadges = useTranslations("PCBuilder.badges");
   const locale = useLocale();
   const rtl = locale === "ar";
   const router = useRouter();
@@ -70,6 +72,11 @@ export function ReadyMadeCard({ build }: { build: PCBuild }) {
   }
 
   const filledSlots = new Set(build.items.map((item) => item.slot));
+  // A ready-made PC is only as buyable as its least available part. Without
+  // this the button looked ready and the cart refused it with a stock error
+  // - on a curated product, which reads as the shop being broken. The cart
+  // still has the final word; this just stops offering what it will refuse.
+  const unavailable = build.items.some((item) => !isPartInStock(item.product_details));
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-lg border border-[#000000] bg-[#000000] transition-colors hover:border-[#EB0B1A]/30">
@@ -132,11 +139,11 @@ export function ReadyMadeCard({ build }: { build: PCBuild }) {
             <button
               type="button"
               onClick={handleAddToCart}
-              disabled={isAdding || build.has_blocking_issues}
+              disabled={isAdding || build.has_blocking_issues || unavailable}
               className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg bg-[#EB0B1A] px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#EB0B1A] disabled:opacity-50"
             >
               {isAdding ? <Loader2 className="h-4 w-4 shrink-0 animate-spin" /> : <ShoppingCart className="h-4 w-4 shrink-0" />}
-              {t("addToCart")}
+              {unavailable ? tBadges("outOfStock") : t("addToCart")}
             </button>
           </div>
         </div>

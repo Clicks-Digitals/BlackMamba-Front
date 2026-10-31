@@ -10,7 +10,6 @@ import { cn, formatPrice } from "@/lib/utils";
 import { usePCBuilderStore } from "@/stores/pc-builder-store";
 import { removeBuildItemAction } from "@/features/pc-builder/actions/mutations";
 import { SLOT_ORDER, type PCSlot } from "@/features/pc-builder/types";
-import { estimatePricing } from "@/features/pc-builder/lib/pricing";
 import { SLOT_ICONS } from "./slot-icons";
 import { useBuilderMotion } from "./builder-motion";
 

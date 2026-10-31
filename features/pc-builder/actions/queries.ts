@@ -72,19 +72,48 @@ export async function getBuildAction(buildId: string): Promise<PCBuild> {
 }
 
 /** Browse/search parts for a single slot — used by the part picker. */
+/** The server's page ceiling (StandardResultsSetPagination.max_page_size). */
+const PARTS_PAGE_SIZE = 500;
+/** Belt and braces: never loop past this many pages for one slot. */
+const MAX_PARTS_PAGES = 10;
+
+/**
+ * Every part for a slot, not just the first page.
+ *
+ * This asked for 50 and stopped. Mice, coolers, cases, keyboards, monitors,
+ * motherboards and headsets all have more than that, and "Compatible only"
+ * and the "N compatible" count are worked out here, on the client - so a
+ * compatible part past the 50th did not just need a search, it was
+ * invisible to the filter and missing from the count. The biggest slot is
+ * about a hundred parts, so the whole slot comes back in one page; the loop
+ * is there in case one ever outgrows it.
+ */
 export async function getPartsForSlotAction(
   slot: PCSlot,
   buildId: string,
   search?: string
 ): Promise<PCPart[]> {
-  const params = new URLSearchParams({ slot, compatible_with: buildId, page_size: "50" });
-  if (search) params.set("search", search);
+  const parts: PCPart[] = [];
+  for (let page = 1; page <= MAX_PARTS_PAGES; page += 1) {
+    const params = new URLSearchParams({
+      slot,
+      compatible_with: buildId,
+      page: String(page),
+      page_size: String(PARTS_PAGE_SIZE),
+    });
+    if (search) params.set("search", search);
 
-  const res = await apiClient<PaginatedResponse<PCPart>>(`/pc-builder/parts/?${params.toString()}`, {
-    cache: "no-store"
-  });
-  if (res.ok && res.data) return res.data.results;
-  return [];
+    const res = await apiClient<PaginatedResponse<PCPart>>(`/pc-builder/parts/?${params.toString()}`, {
+      cache: "no-store"
+    });
+    if (!res.ok || !res.data) break;
+    parts.push(...res.data.results);
+    // The API puts the next page under links.next; a top-level `next` is
+    // never sent, so testing that alone would stop after the first page.
+    const next = res.data.links?.next ?? res.data.next;
+    if (!next || res.data.results.length === 0) break;
+  }
+  return parts;
 }
 
 /** Browse-all-parts catalogue: any combination of slot/spec/price filters, paginated. */

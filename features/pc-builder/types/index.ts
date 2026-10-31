@@ -133,7 +133,8 @@ export interface CompatibilityIssue {
 
 export interface NextTier {
   min_parts: number;
-  discount_percent: string;
+  /** Arrives as a JSON number (4.5), not a string. */
+  discount_percent: number | string;
   parts_needed: number;
 }
 
@@ -151,6 +152,18 @@ export interface BuildPricing {
   part_count: number;
   accessory_count: number;
   next_tier: NextTier | null;
+  /**
+   * The whole discount ladder, from the same rows the discount is worked out
+   * from. Draw the tier chips from this - a copy kept in the frontend had
+   * drifted to 5/8/12/15% while 2.5/4.5/9% was being charged.
+   */
+  tiers?: DiscountTier[];
+}
+
+export interface DiscountTier {
+  min_parts: number;
+  /** Arrives as a JSON number (2.5), not a string. */
+  discount_percent: number | string;
 }
 
 export type BrandPreference = "ANY" | "INTEL" | "AMD";
@@ -181,6 +194,8 @@ export interface PCBuild {
   id: string;
   build_token: string | null;
   is_template: boolean;
+  /** Every core slot filled: a complete PC rather than a bundle of parts. */
+  is_complete?: boolean;
   tier: string | null;
   name: string;
   name_ar: string;
