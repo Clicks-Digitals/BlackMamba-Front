@@ -97,6 +97,9 @@
       "browseCategory": "Browse {slot}",
       "addToCart": "Add Build to Cart",
       "addBundleToCart": "Add Bundle to Cart",
+      "addAnotherToCart": "Add Another to Cart",
+      "alreadyInCartHint": "You've already added this exact selection to your cart. Adding it again makes it 2.",
+      "viewCart": "View cart",
       "shareTitle": "Save / Share build",
       "shareLinkCopied": "Share link copied to clipboard!",
       "incompleteBuildHint": "{count, plural, one {This is a bundle of parts, not a complete PC: # core slot is still empty.} other {This is a bundle of parts, not a complete PC: # core slots are still empty.}}"
@@ -174,13 +177,13 @@
       "customize": "Customize",
       "addToCart": "Add to Cart",
       "bundlePrice": "Bundle price",
-      "morePartsCount": "+{count} more parts"
+      "morePartsCount": "{count, plural, one {+# more part} other {+# more parts}}"
     },
     "shared": {
       "badge": "Shared Build",
       "defaultName": "Custom PC Build",
       "customizeThisBuild": "Customize this build",
-      "partsCount": "{count} parts"
+      "partsCount": "{count, plural, one {# part} other {# parts}}"
     },
     "messages": {
       "partSelected": "Part selected.",
@@ -205,6 +208,7 @@
       "readyToCustomize": "Build ready to customize.",
       "loadFailed": "Could not load this build.",
       "buildAdded": "Build added to cart.",
+      "bundleAdded": "Bundle added to cart.",
       "buildAddFailed": "Could not add this build to your cart."
     }
   }

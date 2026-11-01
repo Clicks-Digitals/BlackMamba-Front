@@ -1,6 +1,6 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
-import { PRODUCTS_TAG } from "@/lib/api/cache-tags";
+import { PRODUCTS_TAG, READY_MADE_TAG } from "@/lib/api/cache-tags";
 
 /**
  * On-demand revalidation, called by the panel's API when content changes.
@@ -46,8 +46,15 @@ export async function POST(request: Request) {
   // A product change. Its own page is in `paths`, but it also sits in cached
   // lists on other pages - the cart's and every other product's "You may also
   // like" - which revalidatePath can't reach. Expire those straight away.
-  if (paths.some((p) => p === "/products" || p.startsWith("/products/"))) {
+  const productChanged = paths.some((p) => p === "/products" || p.startsWith("/products/"));
+  if (productChanged) {
     revalidateTag(PRODUCTS_TAG, { expire: 0 });
+  }
+
+  // A ready-made PC was saved in the panel - or one of its parts changed price
+  // or stock, which changes the card too.
+  if (productChanged || paths.some((p) => p.startsWith("/pc-builder"))) {
+    revalidateTag(READY_MADE_TAG, { expire: 0 });
   }
 
   return NextResponse.json({ ok: true, revalidated: paths.length });

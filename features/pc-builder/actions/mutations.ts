@@ -227,7 +227,9 @@ export async function customizeReadyMadeAction(
 
 export async function addBuildToCartAction(
   buildId: string,
-  quantity: number = 1
+  quantity: number = 1,
+  /** A selection short of a whole PC is announced as a bundle, as its button says. */
+  kind: "build" | "bundle" = "build"
 ): Promise<ActionState<never, { count: number }>> {
   const t = await getTranslations("PCBuilder.messages");
   const headers = await getBuildAuthHeaders();
@@ -241,7 +243,7 @@ export async function addBuildToCartAction(
     revalidatePath("/cart");
     return {
       status: "success",
-      message: t("buildAdded"),
+      message: kind === "bundle" ? t("bundleAdded") : t("buildAdded"),
       data: { count: res.data.items.length }
     };
   }

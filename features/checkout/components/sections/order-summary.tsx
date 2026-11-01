@@ -7,7 +7,6 @@ import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Input } from "@/components/forms/Input";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { ConsentNotice } from "@/features/auth/components/consent-notice";
 import type { Cart } from "@/features/cart/types";
@@ -16,6 +15,8 @@ import { CartVariationBadges } from "@/features/cart/components/cart-variation-b
 import { SLOT_LABELS } from "@/features/pc-builder/types";
 import { SLOT_ICONS } from "@/features/pc-builder/components/slot-icons";
 import type { ShippingOption } from "@/features/checkout/types";
+import { buildDiscount, partsLabel } from "@/features/pc-builder/lib/cart-line";
+import { formatPrice } from "@/lib/utils";
 
 interface OrderSummaryProps {
   cart: Cart | null;
@@ -28,7 +29,6 @@ interface OrderSummaryProps {
   onApplyCoupon: () => void;
   onRemoveCoupon: () => void;
   selectedShipping: ShippingOption | undefined;
-  currencySuffix: string;
 }
 
 function SubmitOrderButton() {
@@ -61,8 +61,7 @@ export function OrderSummary({
   onCouponInputChange,
   onApplyCoupon,
   onRemoveCoupon,
-  selectedShipping,
-  currencySuffix
+  selectedShipping
 }: OrderSummaryProps) {
   const t = useTranslations("Checkout.orderSummary");
   const locale = useLocale();
@@ -70,13 +69,21 @@ export function OrderSummary({
 
   if (!cart) return null;
 
+  // The same "JOD 1,278.10" as the cart. Checkout printed the raw amounts -
+  // "1278.1 JOD" - so the two pages disagreed about the same figures.
+  const currency = cart.items.find((i) => i.product_details)?.product_details?.currency_info ?? null;
+  const price = (amount: string | number) => formatPrice(amount, currency, locale);
+
   return (
     <div className="sticky top-4 space-y-4 rounded-lg border border-[#EB0B1A]/15 bg-muted p-4 md:p-6">
       <div className="border-b border-border pb-3 text-center">
         <h2 className="text-base font-bold tracking-wider text-foreground uppercase">{t("title")}</h2>
       </div>
 
-      <ScrollArea className="scrollbar-thin max-h-52 pe-2">
+      {/* A plain scroll box. The ScrollArea here had only a max height, which
+          its 100%-high viewport cannot resolve, so a long cart never scrolled:
+          it ran under the coupon field, the totals and Complete Purchase. */}
+      <div className="scrollbar-thin max-h-72 overflow-y-auto overscroll-contain pe-2">
         <div className="space-y-3">
           {cart.items.map((item) => {
             const isBuild = !!item.build_details;
@@ -114,7 +121,7 @@ export function OrderSummary({
                         }
                         className="flex items-center gap-0.5 text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors"
                       >
-                        {locale === "ar" ? `${buildParts.length} قطعة` : `${buildParts.length} parts`}
+                        {partsLabel(buildParts.length, locale)}
                         <ChevronDown
                           size={11}
                           className={`transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
@@ -125,8 +132,8 @@ export function OrderSummary({
                         <CartVariationBadges item={item} locale={locale} />
                       )
                     )}
-                    <p className="text-sm font-bold text-[#EB0B1A] pt-0.5">
-                      {item.total_price} {currencySuffix}
+                    <p className="text-sm font-bold text-[#EB0B1A] pt-0.5" dir={locale === "ar" ? "auto" : "ltr"}>
+                      {price(item.total_price)}
                     </p>
                   </div>
                 </div>
@@ -167,19 +174,35 @@ export function OrderSummary({
                         </div>
 
                         {/* Price */}
-                        <span className="shrink-0 text-[11px] font-bold tabular-nums text-[#EB0B1A]" dir="ltr">
-                          {part.unit_price} {currencySuffix}
+                        <span className="shrink-0 text-[11px] font-bold tabular-nums text-[#EB0B1A]" dir={locale === "ar" ? "auto" : "ltr"}>
+                          {price(part.unit_price)}
                         </span>
                       </div>
                       );
                     })}
+                    {(() => {
+                      const discount = buildDiscount(item.build_details);
+                      if (!discount) return null;
+                      return (
+                        <div className="flex items-center justify-between gap-2 border-t border-border px-2.5 py-2 text-[11px] font-semibold text-primary">
+                          <span>
+                            {locale === "ar"
+                              ? `خصم الحزمة (${discount.percent}%)`
+                              : `Bundle discount (${discount.percent}%)`}
+                          </span>
+                          <span className="tabular-nums" dir={locale === "ar" ? "auto" : "ltr"}>
+                            -{price(discount.amount)}
+                          </span>
+                        </div>
+                      );
+                    })()}
                   </div>
                 )}
               </div>
             );
           })}
         </div>
-      </ScrollArea>
+      </div>
 
       <div className="space-y-3 border-t border-b border-border py-3">
         {appliedCoupon ? (
@@ -246,16 +269,16 @@ export function OrderSummary({
       <div className="space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">{t("subtotal")}</span>
-          <span className="font-semibold text-foreground">
-            {totalAmount} {currencySuffix}
+          <span className="font-semibold text-foreground tabular-nums" dir={locale === "ar" ? "auto" : "ltr"}>
+            {price(totalAmount)}
           </span>
         </div>
 
         {discountAmount > 0 && (
           <div className="flex justify-between text-sm text-primary">
             <span>{t("discount", { code: appliedCoupon?.code ?? "" })}</span>
-            <span className="font-semibold">
-              -{discountAmount.toFixed(2)} {currencySuffix}
+            <span className="font-semibold tabular-nums" dir={locale === "ar" ? "auto" : "ltr"}>
+              -{price(discountAmount)}
             </span>
           </div>
         )}
@@ -265,8 +288,8 @@ export function OrderSummary({
             {/* The option's own name is an internal label — the only one
                 configured is literally called "default". */}
             <span className="text-muted-foreground">{t("shippingLine")}</span>
-            <span className="font-semibold text-foreground">
-              {selectedShipping.price} {currencySuffix}
+            <span className="font-semibold text-foreground tabular-nums" dir={locale === "ar" ? "auto" : "ltr"}>
+              {price(selectedShipping.price)}
             </span>
           </div>
         )}
@@ -275,8 +298,8 @@ export function OrderSummary({
 
         <div className="flex items-center justify-between pt-2">
           <span className="text-sm font-bold text-foreground uppercase">{t("total")}</span>
-          <span className="text-2xl font-light text-[#EB0B1A]">
-            {finalTotal} {currencySuffix}
+          <span className="text-2xl font-light text-[#EB0B1A] tabular-nums" dir={locale === "ar" ? "auto" : "ltr"}>
+            {price(finalTotal)}
           </span>
         </div>
       </div>

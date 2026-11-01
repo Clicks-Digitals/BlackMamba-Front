@@ -97,6 +97,9 @@
       "browseCategory": "تصفح {slot}",
       "addToCart": "أضف الجهاز إلى السلة",
       "addBundleToCart": "أضف الحزمة إلى السلة",
+      "addAnotherToCart": "أضف نسخة أخرى إلى السلة",
+      "alreadyInCartHint": "أضفت هذا الاختيار نفسه إلى سلتك من قبل. إضافته مرة أخرى تجعل الكمية 2.",
+      "viewCart": "عرض السلة",
       "shareTitle": "حفظ / مشاركة الجهاز",
       "shareLinkCopied": "تم نسخ رابط المشاركة!",
       "incompleteBuildHint": "{count, plural, one {هذه حزمة قطع وليست جهازًا كاملًا: ما زالت خانة أساسية واحدة فارغة.} other {هذه حزمة قطع وليست جهازًا كاملًا: ما زالت # خانات أساسية فارغة.}}"
@@ -174,13 +177,13 @@
       "customize": "تخصيص",
       "addToCart": "أضف إلى السلة",
       "bundlePrice": "سعر الباقة",
-      "morePartsCount": "+{count} قطعة أخرى"
+      "morePartsCount": "{count, plural, one {+قطعة أخرى} two {+قطعتان أخريان} few {+# قطع أخرى} other {+# قطعة أخرى}}"
     },
     "shared": {
       "badge": "جهاز مشارك",
       "defaultName": "جهاز مخصص",
       "customizeThisBuild": "خصص هذا الجهاز",
-      "partsCount": "{count} قطعة"
+      "partsCount": "{count, plural, one {قطعة واحدة} two {قطعتان} few {# قطع} other {# قطعة}}"
     },
     "messages": {
       "partSelected": "تم اختيار القطعة.",
@@ -205,6 +208,7 @@
       "readyToCustomize": "التجميعة جاهزة للتخصيص.",
       "loadFailed": "تعذّر تحميل هذه التجميعة.",
       "buildAdded": "أُضيفت التجميعة إلى السلة.",
+      "bundleAdded": "أُضيفت الحزمة إلى السلة.",
       "buildAddFailed": "تعذّرت إضافة هذه التجميعة إلى سلتك."
     }
   }

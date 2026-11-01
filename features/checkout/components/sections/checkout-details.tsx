@@ -58,11 +58,6 @@ export default function CheckoutDetails({
   const t = useTranslations("Checkout.emptyCart");
   const tDetails = useTranslations("Checkout.details");
   const tToast = useTranslations("Checkout.toast");
-  const tShip = useTranslations("Checkout.shipping");
-
-  // The translation is already per-locale (JOD / د.أ). The API symbol is a single
-  // Arabic glyph that renders as mojibake next to Latin digits, so it loses.
-  const currencySuffix = tShip("currencySuffix");
 
   const [state, action] = useActionState(placeOrderAction, {
     status: "idle",
@@ -225,7 +220,6 @@ export default function CheckoutDetails({
                 selectedShippingId={selectedShippingId}
                 onShippingChange={setSelectedShippingId}
                 stepNumber={2}
-                currencySuffix={currencySuffix}
               />
 
               <PaymentMethodSection stepNumber={3} />
@@ -242,7 +236,6 @@ export default function CheckoutDetails({
                   onApplyCoupon={handleApplyCoupon}
                   onRemoveCoupon={handleRemoveCoupon}
                   selectedShipping={selectedShipping}
-                  currencySuffix={currencySuffix}
                 />
               </div>
             </div>
@@ -259,7 +252,6 @@ export default function CheckoutDetails({
                 onApplyCoupon={handleApplyCoupon}
                 onRemoveCoupon={handleRemoveCoupon}
                 selectedShipping={selectedShipping}
-                currencySuffix={currencySuffix}
               />
             </div>
           </div>

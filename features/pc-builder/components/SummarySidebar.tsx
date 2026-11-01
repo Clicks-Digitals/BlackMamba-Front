@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useSyncExternalStore, useTransition } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -25,6 +26,33 @@ import { useAnimatedNumber } from "./use-animated-number";
 interface SummarySidebarProps {
   buildId: string;
   onBrowseSlot: (slot: PCSlot) => void;
+}
+
+/**
+ * What is selected, as one string: the same parts and variations give the
+ * same string, and the cart treats that as the same line.
+ */
+function selectionSignature(items: ReturnType<typeof usePCBuilderStore.getState>["items"]): string {
+  return SLOT_ORDER.map((slot) => {
+    const item = items[slot];
+    return item ? `${slot}:${item.product}:${item.variation ?? ""}` : "";
+  }).join("|");
+}
+
+const IN_CART_KEY = "bm:pcb-in-cart:";
+
+/** The selection last added to the cart from this build, if any. */
+function readCarted(buildId: string): string | null {
+  try {
+    return window.localStorage.getItem(IN_CART_KEY + buildId);
+  } catch {
+    return null;
+  }
+}
+
+function subscribeToStorage(onChange: () => void) {
+  window.addEventListener("storage", onChange);
+  return () => window.removeEventListener("storage", onChange);
 }
 
 /** 2.5 -> "2.5", 9 -> "9", "4.50" -> "4.5": one spelling for every percentage. */
@@ -189,10 +217,16 @@ function BuildSummaryBody({
   }
 
   function handleAddToCart() {
+    const signature = selectionSignature(items);
     startAdd(async () => {
-      const res = await addBuildToCartAction(buildId, 1);
+      const res = await addBuildToCartAction(buildId, 1, hasCompleteRealBuild ? "build" : "bundle");
       if (res.status === "success" && res.data) {
         setCartCount(res.data.count);
+        try {
+          window.localStorage.setItem(IN_CART_KEY + buildId, signature);
+        } catch {
+          // Storage blocked: the button just keeps its normal label.
+        }
         toast.success(res.message);
         router.push("/cart");
       } else {
@@ -209,6 +243,17 @@ function BuildSummaryBody({
   // used to pre-fill the slots has been removed — so a complete build is just
   // every core slot being filled.
   const hasCompleteRealBuild = CORE_SLOTS.every((slot) => items[slot]);
+
+  // The builder keeps its parts after Add to Cart, so the customer can come
+  // back and change them. Coming back and pressing the button again silently
+  // made it two in the cart; when nothing has changed since it was added,
+  // say so and let them choose.
+  const carted = useSyncExternalStore(
+    subscribeToStorage,
+    () => readCarted(buildId),
+    () => null,
+  );
+  const alreadyInCart = selectedSlots.length > 0 && carted === selectionSignature(items);
 
   // How many core slots the shopper still has to choose.
   const remainingCoreSlots = CORE_SLOTS.filter((slot) => !items[slot]).length;
@@ -383,6 +428,14 @@ function BuildSummaryBody({
         A bundle can be bought, but say plainly that it is not a whole PC -
         someone who adds a CPU and a board should not expect a computer.
       */}
+      {alreadyInCart && (
+        <p className="mt-2 text-xs leading-relaxed text-white/60">
+          {tSummary("alreadyInCartHint")}{" "}
+          <Link href="/cart" className="font-semibold text-[#EB0B1A] underline-offset-2 hover:underline">
+            {tSummary("viewCart")}
+          </Link>
+        </p>
+      )}
       {selectedSlots.length > 0 && !hasCompleteRealBuild && !hasBlockingIssues && (
         <p className="mt-2 text-xs leading-relaxed text-white/45">
           {tSummary("incompleteBuildHint", { count: remainingCoreSlots })}
@@ -405,7 +458,11 @@ function BuildSummaryBody({
           ) : (
             <ShoppingCart className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-px" />
           )}
-          {hasCompleteRealBuild ? tSummary("addToCart") : tSummary("addBundleToCart")}
+          {alreadyInCart
+            ? tSummary("addAnotherToCart")
+            : hasCompleteRealBuild
+              ? tSummary("addToCart")
+              : tSummary("addBundleToCart")}
         </button>
         <button
           type="button"

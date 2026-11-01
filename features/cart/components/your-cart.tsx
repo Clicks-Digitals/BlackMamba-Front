@@ -6,6 +6,7 @@ import React, { useOptimistic, useTransition, useState } from "react";
 import { Minus, Plus, Trash2, ChevronDown } from "lucide-react";
 import { SLOT_LABELS } from "@/features/pc-builder/types";
 import { SLOT_ICONS } from "@/features/pc-builder/components/slot-icons";
+import { buildDiscount, partsLabel } from "@/features/pc-builder/lib/cart-line";
 import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useCartStore, buildCartItemKey } from "@/stores/cart-store";
@@ -41,8 +42,7 @@ function itemDisplayName(item: CartItem, locale: string) {
 
 function itemSubtitle(item: CartItem, locale: string) {
   if (item.build_details) {
-    const n = item.build_details.items.length;
-    return locale === "ar" ? `${n} قطعة` : `${n} parts`;
+    return partsLabel(item.build_details.items.length, locale);
   }
   const c = item.product_details?.categories?.[0];
   if (!c) return "";
@@ -241,7 +241,7 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                                 }
                                 className="mt-0.5 flex items-center gap-0.5 text-[11px] font-medium text-muted-foreground transition-colors hover:text-foreground"
                               >
-                                {buildParts.length} {ar ? "قطعة" : "parts"}
+                                {partsLabel(buildParts.length, locale)}
                                 <ChevronDown
                                   size={12}
                                   className={cn("transition-transform duration-200", isExpanded && "rotate-180")}
@@ -344,6 +344,25 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                             </div>
                             );
                           })}
+                          {/* The line's price is after the bundle discount and
+                              the parts above are not, so say what the
+                              difference is. */}
+                          {(() => {
+                            const discount = buildDiscount(item.build_details);
+                            if (!discount) return null;
+                            return (
+                              <div className="flex items-center justify-between gap-2.5 border-t border-border px-3 py-2 text-[12px] font-semibold text-primary">
+                                <span>
+                                  {ar
+                                    ? `خصم الحزمة (${discount.percent}%)`
+                                    : `Bundle discount (${discount.percent}%)`}
+                                </span>
+                                <span className="tabular-nums" dir={ar ? "auto" : "ltr"}>
+                                  -{price(discount.amount)}
+                                </span>
+                              </div>
+                            );
+                          })()}
                         </div>
                       )}
 

@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 import { apiClient } from "@/lib/api";
+import { READY_MADE_TAG } from "@/lib/api/cache-tags";
 import type { PaginatedResponse } from "@/types";
 import type { PCBuild, PCPart, PCSlot, PartFilters } from "@/features/pc-builder";
 import { EMPTY_PRICING } from "@/features/pc-builder/types";
@@ -149,7 +150,9 @@ export async function getSharedBuildAction(shareSlug: string): Promise<PCBuild |
 export async function getReadyMadeBuildsAction(): Promise<PCBuild[]> {
   const res = await apiClient<PaginatedResponse<PCBuild>>(
     "/pc-builder/ready-made/?page_size=50",
-    { revalidate: 30 }
+    // Expired by /api/revalidate the moment the panel saves a ready-made;
+    // the 30 seconds is only the fallback when that is not configured.
+    { revalidate: 30, tags: [READY_MADE_TAG] }
   );
   if (!res.ok || !res.data) return [];
 

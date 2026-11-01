@@ -8,3 +8,9 @@
  * other paths. Tagging them lets one product change expire them all.
  */
 export const PRODUCTS_TAG = "products";
+
+/**
+ * The ready-made PC list. A fix made in the panel - a part swapped, a price
+ * corrected - showed the old build on the storefront for up to a minute.
+ */
+export const READY_MADE_TAG = "pc-ready-made";
