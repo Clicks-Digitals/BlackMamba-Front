@@ -268,6 +268,9 @@ function PartPickerCard({
   const inStock = isPartInStock(part);
   const hasVariations = part.available_variations.length > 0;
   const isIncompatible = part.is_compatible === false;
+  // An incompatible part can be looked at but never put in the build - the
+  // server refuses it too (engine.fits).
+  const blocked = isSelecting || !inStock || isIncompatible;
   const specChips = getSpecChips(part.spec, slot);
 
   function addToBuild(variationId?: string) {
@@ -288,21 +291,21 @@ function PartPickerCard({
         role="button"
         tabIndex={0}
         onClick={() => {
-          if (isSelecting || !inStock) return;
+          if (blocked) return;
           if (hasVariations) setShowVariations((v) => !v);
           else addToBuild();
         }}
-        onKeyDown={(e) => e.key === "Enter" && !isSelecting && inStock && (hasVariations ? setShowVariations((v) => !v) : addToBuild())}
+        onKeyDown={(e) => e.key === "Enter" && !blocked && (hasVariations ? setShowVariations((v) => !v) : addToBuild())}
         className={[
           "group flex h-full min-h-11 w-full cursor-pointer flex-col gap-3 rounded-lg border p-3 text-left transition-all duration-200",
           isIncompatible
-            ? "border-[#EB0B1A]/15 bg-white/2 hover:border-[#EB0B1A]/25"
+            ? "cursor-not-allowed border-[#EB0B1A]/15 bg-white/2"
             : part.is_compatible === true
               ? "border-white/8 bg-white/3 hover:border-[#EB0B1A]/40 hover:bg-[#EB0B1A]/6"
               : "border-white/8 bg-white/3 hover:border-[#EB0B1A]/40 hover:bg-[#EB0B1A]/6",
           !inStock && "cursor-not-allowed",
         ].join(" ")}
-        aria-disabled={isSelecting || !inStock}
+        aria-disabled={blocked}
       >
         {/* Thumbnail */}
         <div className="relative mx-auto flex aspect-square w-full max-w-[7.5rem] items-center justify-center overflow-hidden rounded-md bg-white/6 transition-colors group-hover:bg-white/9">
@@ -390,7 +393,7 @@ function PartPickerCard({
       </div>
 
       {/* Variation picker */}
-      {showVariations && hasVariations && (
+      {showVariations && hasVariations && !isIncompatible && (
         <div className="mt-1 flex flex-col gap-1.5 rounded-lg border border-[#EB0B1A]/15 bg-[#EB0B1A]/5 p-3">
           {part.available_variations.map((group) =>
             group.options.map((option) => {

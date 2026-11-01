@@ -190,8 +190,19 @@ export interface PartFilters {
   compatible_with?: string;
 }
 
+/** A part the server took out because it stopped fitting the build. */
+export interface AutoRemovedPart {
+  slot: PCSlot;
+  product: string;
+  name: string;
+  name_ar: string;
+  code: string;
+}
+
 export interface PCBuild {
   id: string;
+  /** Sent with the response to the change that caused it; empty otherwise. */
+  auto_removed?: AutoRemovedPart[];
   build_token: string | null;
   is_template: boolean;
   /** Every core slot filled: a complete PC rather than a bundle of parts. */

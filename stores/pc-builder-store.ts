@@ -9,6 +9,7 @@ import type {
   GraphicsPreference,
   ColorPreference
 } from "@/features/pc-builder";
+import { announceAutoRemoved } from "@/features/pc-builder/lib/auto-removed";
 
 interface PCBuilderState {
   buildId: string | null;
@@ -45,7 +46,8 @@ export const usePCBuilderStore = create<PCBuilderState>((set) => ({
   pricing: null,
   totalPowerDrawWatts: 0,
   hasBlockingIssues: false,
-  setBuild: (build) =>
+  setBuild: (build) => {
+    announceAutoRemoved(build.auto_removed);
     set({
       buildId: build.id,
       items: itemsBySlot(build),
@@ -58,7 +60,8 @@ export const usePCBuilderStore = create<PCBuilderState>((set) => ({
       pricing: build.pricing,
       totalPowerDrawWatts: build.total_power_draw_watts,
       hasBlockingIssues: build.has_blocking_issues
-    }),
+    });
+  },
   reset: () =>
     set({
       buildId: null,
