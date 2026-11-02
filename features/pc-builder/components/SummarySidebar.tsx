@@ -352,7 +352,7 @@ function BuildSummaryBody({
               <div
                 key={tier.min_parts}
                 className={`flex-1 rounded-md py-1 text-center text-[11px] font-semibold ${
-                  pricing.part_count >= tier.min_parts ? "bg-[#EB0B1A] text-[#EB0B1A]" : "bg-white/5 text-white/30"
+                  pricing.part_count >= tier.min_parts ? "bg-[#EB0B1A] text-white" : "bg-white/5 text-white/30"
                 }`}
               >
                 {tier.min_parts}+ · {formatPercent(tier.discount_percent)}%

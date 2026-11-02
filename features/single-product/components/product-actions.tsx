@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Check, Minus, Plus, ShoppingCart, Truck, RotateCcw, ShieldCheck, BadgeCheck } from "lucide-react";
+import { Check, Minus, Plus, ShoppingCart, Truck, ShieldCheck, BadgeCheck } from "lucide-react";
 import { toast } from "sonner";
 import { cn, formatPrice, productPricing } from "@/lib/utils";
 import type { Product, VariationGroup, VariationOption, Combination } from "@/types";
@@ -464,10 +464,6 @@ export function ProductActions({ product }: ProductActionsProps) {
         <div className="flex items-start gap-2.5">
           <Truck size={16} strokeWidth={1.6} className="mt-0.5 shrink-0 text-primary" />
           <p className={cn("text-[12px] text-muted-foreground", rtl && "font-cairo")}>{t("freeDelivery")}</p>
-        </div>
-        <div className="flex items-start gap-2.5">
-          <RotateCcw size={16} strokeWidth={1.6} className="mt-0.5 shrink-0 text-primary" />
-          <p className={cn("text-[12px] text-muted-foreground", rtl && "font-cairo")}>{t("easyReturns")}</p>
         </div>
         <div className="flex items-start gap-2.5">
           <ShieldCheck size={16} strokeWidth={1.6} className="mt-0.5 shrink-0 text-primary" />
