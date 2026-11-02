@@ -1,5 +1,6 @@
 "use client";
 
+import { AlertTriangle } from "lucide-react";
 import { useTransition } from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
@@ -80,8 +81,11 @@ export function PreferencesRow({ buildId }: PreferencesRowProps) {
   const t = useTranslations("PCBuilder");
   const preferences = usePCBuilderStore((s) => s.preferences);
   const setBuild = usePCBuilderStore((s) => s.setBuild);
+  const unavailable = usePCBuilderStore((s) => s.unavailablePreferences);
   const [isPending, startTransition] = useTransition();
   const { reduceMotion } = useBuilderMotion();
+  const brandName = (brand: string) =>
+    brand === "AMD" ? t("preferences.amd") : brand === "INTEL" ? t("preferences.intel") : t("preferences.nvidia");
 
   function update(patch: Partial<typeof preferences>) {
     startTransition(async () => {
@@ -135,6 +139,20 @@ export function PreferencesRow({ buildId }: PreferencesRowProps) {
         ]}
         onChange={(v) => update({ preference_color: v })}
       />
+      {/* A brand with nothing in stock leaves its slot empty on every
+          one-click build; say why, and how to fill it. */}
+      {unavailable.map(({ slot, brand }) => (
+        <p
+          key={slot}
+          role="status"
+          className="flex basis-full items-start gap-2 rounded-md border border-amber-400/25 bg-amber-400/10 px-3 py-2 text-xs leading-relaxed text-amber-200"
+        >
+          <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+          {t(slot === "GPU" ? "preferences.noGraphicsInStock" : "preferences.noProcessorInStock", {
+            brand: brandName(brand),
+          })}
+        </p>
+      ))}
     </motion.div>
   );
 }

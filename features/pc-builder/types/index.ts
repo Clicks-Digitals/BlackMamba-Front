@@ -221,6 +221,8 @@ export interface PCBuild {
   has_blocking_issues: boolean;
   compatibility: { red_issues: CompatibilityIssue[]; yellow_issues: CompatibilityIssue[] };
   pricing: BuildPricing;
+  /** Brand preferences nothing in stock can satisfy - the slot stays empty. */
+  unavailable_preferences?: { slot: "CPU" | "GPU"; brand: string }[];
   is_shareable: boolean;
   share_slug: string | null;
 }

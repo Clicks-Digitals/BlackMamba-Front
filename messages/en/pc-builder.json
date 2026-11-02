@@ -68,7 +68,9 @@
       "amd": "AMD",
       "nvidia": "NVIDIA",
       "black": "Black",
-      "white": "White"
+      "white": "White",
+      "noGraphicsInStock": "No {brand} graphics cards are in stock right now, so the graphics card is left empty. Set Graphics to Any to fill it.",
+      "noProcessorInStock": "No {brand} processors are in stock right now, so the processor is left empty. Set Processor to Any to fill it."
     },
     "autoBuilders": {
       "quickStart": "Quick-start",

@@ -23,6 +23,7 @@ interface PCBuilderState {
   pricing: BuildPricing | null;
   totalPowerDrawWatts: number;
   hasBlockingIssues: boolean;
+  unavailablePreferences: { slot: "CPU" | "GPU"; brand: string }[];
   setBuild: (build: PCBuild) => void;
   reset: () => void;
 }
@@ -46,6 +47,7 @@ export const usePCBuilderStore = create<PCBuilderState>((set) => ({
   pricing: null,
   totalPowerDrawWatts: 0,
   hasBlockingIssues: false,
+  unavailablePreferences: [],
   setBuild: (build) => {
     announceAutoRemoved(build.auto_removed);
     set({
@@ -59,7 +61,8 @@ export const usePCBuilderStore = create<PCBuilderState>((set) => ({
       compatibility: build.compatibility,
       pricing: build.pricing,
       totalPowerDrawWatts: build.total_power_draw_watts,
-      hasBlockingIssues: build.has_blocking_issues
+      hasBlockingIssues: build.has_blocking_issues,
+      unavailablePreferences: build.unavailable_preferences ?? []
     });
   },
   reset: () =>
@@ -69,6 +72,7 @@ export const usePCBuilderStore = create<PCBuilderState>((set) => ({
       compatibility: { red_issues: [], yellow_issues: [] },
       pricing: null,
       totalPowerDrawWatts: 0,
-      hasBlockingIssues: false
+      hasBlockingIssues: false,
+      unavailablePreferences: []
     })
 }));
