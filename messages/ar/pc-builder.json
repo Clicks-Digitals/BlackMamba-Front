@@ -80,7 +80,7 @@
       "budgetPlaceholder": "الميزانية بالدينار",
       "buildToBudget": "بناء حسب الميزانية",
       "invalidBudget": "أدخل قيمة ميزانية صحيحة.",
-      "budgetIncludesPeripherals": "تشمل الميزانية الجهاز كاملًا، بما في ذلك أي ملحقات أضفتها.",
+      "budgetIncludesPeripherals": "الميزانية للجهاز نفسه، وتُضاف الملحقات فوقها.",
       "clearAll": "مسح الكل",
       "clearConfirm": "إزالة كل القطع من جهازك، بما فيها الملحقات؟"
     },

@@ -80,7 +80,7 @@
       "budgetPlaceholder": "Budget in JOD",
       "buildToBudget": "Build to budget",
       "invalidBudget": "Enter a valid budget amount.",
-      "budgetIncludesPeripherals": "The budget covers the whole build, including any peripherals you've added.",
+      "budgetIncludesPeripherals": "The budget is for the PC itself. Peripherals are added on top.",
       "clearAll": "Clear all",
       "clearConfirm": "Remove every part from your build, peripherals included?"
     },
