@@ -21,6 +21,7 @@ import { upsertBuildItemAction } from "@/features/pc-builder/actions/mutations";
 import { type PCSlot, type PCPart, type PCBuild, type PCPartSpec } from "@/features/pc-builder/types";
 import { SLOT_ICONS } from "./slot-icons";
 import { isPartInStock } from "@/features/pc-builder/lib/stock";
+import { PickerFilters, applyPickerFilters, activeFilterCount, EMPTY_FILTERS } from "./PickerFilters";
 
 interface PartPickerSheetProps {
   slot: PCSlot | null;
@@ -80,11 +81,14 @@ export function PartPickerSheet({ slot, buildId, onClose }: PartPickerSheetProps
   const [compatibleOnly, setCompatibleOnly] = useState(true);
   const [parts, setParts] = useState<PCPart[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [filters, setFilters] = useState(EMPTY_FILTERS);
 
   useEffect(() => {
     if (!slot) return;
     setSearch("");
     setParts([]);
+    // Filters belong to a slot: a socket chosen for CPUs means nothing for RAM.
+    setFilters(EMPTY_FILTERS);
   }, [slot]);
 
   useEffect(() => {
@@ -104,7 +108,9 @@ export function PartPickerSheet({ slot, buildId, onClose }: PartPickerSheetProps
     };
   }, [slot, buildId, search]);
 
-  const visibleParts = compatibleOnly ? parts.filter((p) => p.is_compatible !== false) : parts;
+  const compatibleParts = compatibleOnly ? parts.filter((p) => p.is_compatible !== false) : parts;
+  const visibleParts = slot ? applyPickerFilters(compatibleParts, filters, slot) : compatibleParts;
+  const filtersActive = activeFilterCount(filters) > 0;
 
   // Split rather than sort: the two groups are rendered under separate headings
   // so a sold-out part never sits between two buyable ones.
@@ -167,6 +173,14 @@ export function PartPickerSheet({ slot, buildId, onClose }: PartPickerSheetProps
               </span>
             )}
           </label>
+          {slot && parts.length > 0 && (
+            <PickerFilters slot={slot} parts={compatibleParts} state={filters} onChange={setFilters} />
+          )}
+          {filtersActive && !isLoading && (
+            <p className="text-xs text-white/40">
+              {tPicker("shownOf", { shown: visibleParts.length, total: compatibleParts.length })}
+            </p>
+          )}
         </div>
 
         {/* Parts list */}
@@ -185,7 +199,15 @@ export function PartPickerSheet({ slot, buildId, onClose }: PartPickerSheetProps
             <div className="flex flex-col items-center gap-3 py-16 text-center">
               <PackageX className="h-10 w-10 text-white/15" />
               <p className="text-sm font-semibold text-white/30">{tPicker("noPartsFound")}</p>
-              {compatibleOnly && parts.length > 0 && (
+              {filtersActive ? (
+                <button
+                  type="button"
+                  onClick={() => setFilters({ ...EMPTY_FILTERS, sort: filters.sort })}
+                  className="text-xs text-[#EB0B1A] hover:underline"
+                >
+                  {tPicker("resetFilters")}
+                </button>
+              ) : compatibleOnly && parts.length > 0 && (
                 <button
                   type="button"
                   onClick={() => setCompatibleOnly(false)}

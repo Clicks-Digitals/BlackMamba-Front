@@ -95,6 +95,8 @@ export interface PCPart {
   name_ar: string | null;
   slug: string;
   thumbnail: string | null;
+  /** The manufacturer (ASUS, MSI, Kingston...), for the picker's Brand filter. */
+  brand_name?: string | null;
   description: string | null;
   description_ar: string | null;
   base_price: string | null;
