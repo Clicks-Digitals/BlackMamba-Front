@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { ArrowUpDown, SlidersHorizontal, X } from "lucide-react";
+import { ArrowUpDown, ChevronDown, SlidersHorizontal, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { PCPart, PCSlot } from "@/features/pc-builder/types";
 import { isPartInStock } from "@/features/pc-builder/lib/stock";
@@ -140,8 +140,12 @@ interface PickerFiltersProps {
 
 export function PickerFilters({ slot, parts, state, onChange }: PickerFiltersProps) {
   const t = useTranslations("PCBuilder.picker");
-  const [open, setOpen] = useState(false);
+  // Sort and Filters each open a section in place, under the buttons - one at
+  // a time. A dropdown floated over the list; this pushes it down instead.
+  const [open, setOpen] = useState<"sort" | "filters" | null>(null);
   const active = activeFilterCount(state);
+  const currentSort = SORT_OPTIONS.find((o) => o.value === state.sort) ?? SORT_OPTIONS[0];
+  const toggleSection = (section: "sort" | "filters") => setOpen((v) => (v === section ? null : section));
 
   const groups = facetsFor(slot)
     .map((facet) => {
@@ -170,27 +174,31 @@ export function PickerFilters({ slot, parts, state, onChange }: PickerFiltersPro
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
-        <label className="relative flex flex-1 items-center">
-          <ArrowUpDown className="pointer-events-none absolute start-3 h-3.5 w-3.5 text-white/40" />
-          <span className="sr-only">{t("sortBy")}</span>
-          <select
-            value={state.sort}
-            onChange={(e) => onChange({ ...state, sort: e.target.value as PickerSort })}
-            className="h-9 w-full appearance-none rounded-md border border-white/12 bg-white/5 ps-8 pe-3 text-xs text-white focus:border-[#EB0B1A]/50 focus:outline-none"
-          >
-            <option value="recommended" className="bg-black">{t("sortRecommended")}</option>
-            <option value="price_asc" className="bg-black">{t("sortPriceAsc")}</option>
-            <option value="price_desc" className="bg-black">{t("sortPriceDesc")}</option>
-            <option value="name" className="bg-black">{t("sortName")}</option>
-          </select>
-        </label>
         <button
           type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
+          onClick={() => toggleSection("sort")}
+          aria-expanded={open === "sort"}
           className={cn(
-            "flex h-9 items-center gap-1.5 rounded-md border px-3 text-xs font-semibold transition-colors",
-            open || active
+            "flex h-9 min-w-0 flex-1 items-center gap-2 rounded-md border px-3 text-xs transition-colors",
+            open === "sort"
+              ? "border-[#EB0B1A]/50 bg-[#EB0B1A]/10 text-white"
+              : "border-white/12 bg-white/5 text-white/70 hover:text-white"
+          )}
+        >
+          <ArrowUpDown className="h-3.5 w-3.5 shrink-0 text-white/50" />
+          <span className="text-white/45">{t("sortBy")}:</span>
+          <span className="truncate font-semibold text-white">{t(currentSort.label)}</span>
+          <ChevronDown
+            className={cn("ms-auto h-3.5 w-3.5 shrink-0 transition-transform", open === "sort" && "rotate-180")}
+          />
+        </button>
+        <button
+          type="button"
+          onClick={() => toggleSection("filters")}
+          aria-expanded={open === "filters"}
+          className={cn(
+            "flex h-9 shrink-0 items-center gap-1.5 rounded-md border px-3 text-xs font-semibold transition-colors",
+            open === "filters" || active
               ? "border-[#EB0B1A]/50 bg-[#EB0B1A]/10 text-white"
               : "border-white/12 bg-white/5 text-white/70 hover:text-white"
           )}
@@ -200,10 +208,33 @@ export function PickerFilters({ slot, parts, state, onChange }: PickerFiltersPro
           {active > 0 && (
             <span className="rounded-full bg-[#EB0B1A] px-1.5 text-[10px] font-bold text-white">{active}</span>
           )}
+          <ChevronDown
+            className={cn("h-3.5 w-3.5 transition-transform", open === "filters" && "rotate-180")}
+          />
         </button>
       </div>
 
-      {open && (
+      {open === "sort" && (
+        <div className="flex flex-wrap gap-1.5 rounded-lg border border-white/8 bg-white/2 p-3" role="radiogroup" aria-label={t("sortBy")}>
+          {SORT_OPTIONS.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              role="radio"
+              aria-checked={option.value === state.sort}
+              onClick={() => {
+                onChange({ ...state, sort: option.value });
+                setOpen(null);
+              }}
+              className={chip(option.value === state.sort)}
+            >
+              {t(option.label)}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {open === "filters" && (
         <div className="flex max-h-72 flex-col gap-3 overflow-y-auto rounded-lg border border-white/8 bg-white/2 p-3">
           {groups.map(({ facet, values }) => (
             <div key={facet.key} className="flex flex-col gap-1.5">
@@ -281,3 +312,10 @@ export function PickerFilters({ slot, parts, state, onChange }: PickerFiltersPro
     </div>
   );
 }
+
+const SORT_OPTIONS: { value: PickerSort; label: string }[] = [
+  { value: "recommended", label: "sortRecommended" },
+  { value: "price_asc", label: "sortPriceAsc" },
+  { value: "price_desc", label: "sortPriceDesc" },
+  { value: "name", label: "sortName" },
+];
