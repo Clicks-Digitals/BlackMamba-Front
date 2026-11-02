@@ -61,6 +61,20 @@ export async function removeBuildItemAction(
   return { status: "error", message: res.message ?? t("partRemoveFailed") };
 }
 
+/** Empty the build - core parts and peripherals - to start over. */
+export async function clearBuildAction(buildId: string): Promise<ActionState<never, PCBuild>> {
+  const t = await getTranslations("PCBuilder.messages");
+  const headers = await getBuildAuthHeaders();
+  const res = await apiClient<PCBuild>(`/pc-builder/builds/${buildId}/clear/`, {
+    method: "POST",
+    headers
+  });
+  if (res.ok && res.data) {
+    return { status: "success", message: t("buildCleared"), data: res.data };
+  }
+  return { status: "error", message: res.message ?? t("clearFailed") };
+}
+
 export async function updateBuildPreferencesAction(
   buildId: string,
   preferences: Partial<{

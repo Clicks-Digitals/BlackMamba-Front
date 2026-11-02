@@ -4,9 +4,14 @@ import { useState, useTransition } from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
-import { Sparkles, Wand2, Wallet, Loader2 } from "lucide-react";
+import { Sparkles, Wand2, Wallet, Loader2, Trash2 } from "lucide-react";
 import { usePCBuilderStore } from "@/stores/pc-builder-store";
-import { quickStartAction, surpriseMeAction, buildToBudgetAction } from "@/features/pc-builder/actions/mutations";
+import {
+  quickStartAction,
+  surpriseMeAction,
+  buildToBudgetAction,
+  clearBuildAction,
+} from "@/features/pc-builder/actions/mutations";
 import { useBuilderMotion, fadeUp } from "./builder-motion";
 
 const TIER_VALUES = ["BUDGET", "MID", "HIGH", "ULTRA"] as const;
@@ -28,7 +33,9 @@ export function AutoBuilderControls({ buildId }: AutoBuilderControlsProps) {
   const [isQuickStarting, startQuickStart] = useTransition();
   const [isSurprising, startSurprise] = useTransition();
   const [isBudgeting, startBudget] = useTransition();
+  const [isClearing, startClear] = useTransition();
   const [budget, setBudget] = useState("");
+  const hasParts = usePCBuilderStore((s) => Object.keys(s.items).length > 0);
   const { setAssembling, setMobileSummaryOpen, reduceMotion } = useBuilderMotion();
   const busy = isQuickStarting || isSurprising || isBudgeting;
 
@@ -74,6 +81,19 @@ export function AutoBuilderControls({ buildId }: AutoBuilderControlsProps) {
       } else {
         toast.error(res.message);
         afterResult(false);
+      }
+    });
+  }
+
+  function handleClearAll() {
+    if (!window.confirm(t("clearConfirm"))) return;
+    startClear(async () => {
+      const res = await clearBuildAction(buildId);
+      if (res.status === "success" && res.data) {
+        setBuild(res.data);
+        toast.success(res.message);
+      } else {
+        toast.error(res.message);
       }
     });
   }
@@ -143,6 +163,16 @@ export function AutoBuilderControls({ buildId }: AutoBuilderControlsProps) {
             )}
             {t("surpriseMe")}
           </button>
+
+          <button
+            type="button"
+            disabled={isClearing || busy || !hasParts}
+            onClick={handleClearAll}
+            className="group ms-auto flex min-h-11 items-center gap-1.5 rounded-md border border-white/15 px-3 text-sm font-medium text-white/60 transition-all duration-200 hover:border-[#EB0B1A]/40 hover:bg-[#EB0B1A]/10 hover:text-[#EB0B1A] active:scale-[0.98] disabled:opacity-40"
+          >
+            {isClearing ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}
+            {t("clearAll")}
+          </button>
         </div>
 
         <form onSubmit={handleBuildToBudget} className="flex flex-wrap items-center gap-2">
@@ -168,6 +198,7 @@ export function AutoBuilderControls({ buildId }: AutoBuilderControlsProps) {
             )}
             {t("buildToBudget")}
           </button>
+          <p className="basis-full text-xs text-white/40">{t("budgetIncludesPeripherals")}</p>
         </form>
       </div>
     </motion.div>

@@ -79,7 +79,10 @@
       "surpriseMe": "فاجئني",
       "budgetPlaceholder": "الميزانية بالدينار",
       "buildToBudget": "بناء حسب الميزانية",
-      "invalidBudget": "أدخل قيمة ميزانية صحيحة."
+      "invalidBudget": "أدخل قيمة ميزانية صحيحة.",
+      "budgetIncludesPeripherals": "تشمل الميزانية الجهاز كاملًا، بما في ذلك أي ملحقات أضفتها.",
+      "clearAll": "مسح الكل",
+      "clearConfirm": "إزالة كل القطع من جهازك، بما فيها الملحقات؟"
     },
     "summary": {
       "title": "جهازك",
@@ -209,7 +212,9 @@
       "loadFailed": "تعذّر تحميل هذه التجميعة.",
       "buildAdded": "أُضيفت التجميعة إلى السلة.",
       "bundleAdded": "أُضيفت الحزمة إلى السلة.",
-      "buildAddFailed": "تعذّرت إضافة هذه التجميعة إلى سلتك."
+      "buildAddFailed": "تعذّرت إضافة هذه التجميعة إلى سلتك.",
+      "buildCleared": "تم مسح الجهاز.",
+      "clearFailed": "تعذّر مسح الجهاز."
     }
   }
 }

@@ -79,7 +79,10 @@
       "surpriseMe": "Surprise me",
       "budgetPlaceholder": "Budget in JOD",
       "buildToBudget": "Build to budget",
-      "invalidBudget": "Enter a valid budget amount."
+      "invalidBudget": "Enter a valid budget amount.",
+      "budgetIncludesPeripherals": "The budget covers the whole build, including any peripherals you've added.",
+      "clearAll": "Clear all",
+      "clearConfirm": "Remove every part from your build, peripherals included?"
     },
     "summary": {
       "title": "Your Build",
@@ -209,7 +212,9 @@
       "loadFailed": "Could not load this build.",
       "buildAdded": "Build added to cart.",
       "bundleAdded": "Bundle added to cart.",
-      "buildAddFailed": "Could not add this build to your cart."
+      "buildAddFailed": "Could not add this build to your cart.",
+      "buildCleared": "Build cleared.",
+      "clearFailed": "Could not clear the build."
     }
   }
 }
