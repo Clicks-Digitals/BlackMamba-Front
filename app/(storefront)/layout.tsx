@@ -15,6 +15,27 @@ import { getCurrencies, DEFAULT_CURRENCY } from "@/actions/getCurrencies";
 import { getFeaturedCategories, getNavCategories, getStorefrontCategories, getActiveOffers } from "@/features/home";
 import { getMyCart } from "@/features/cart";
 import { getWishlist } from "@/features/wishlist";
+import type { Category } from "@/types/category";
+
+/**
+ * Only what the menus show. Every category went into the page whole -
+ * descriptions, images, brand lists, timestamps - and the category list is
+ * handed to the drawer, the bar and the footer, so the home page's HTML was
+ * 1.3 MB, most of it menus.
+ */
+function forMenus(categories: Category[]): Category[] {
+  return categories.map(
+    (c) =>
+      ({
+        id: c.id,
+        name: c.name,
+        name_ar: c.name_ar,
+        slug: c.slug,
+        parent: c.parent,
+        is_active: c.is_active,
+      }) as Category
+  );
+}
 
 export default async function StorefrontLayout({ children }: { children: ReactNode }) {
   const cookieStore = await cookies();
@@ -48,16 +69,16 @@ export default async function StorefrontLayout({ children }: { children: ReactNo
         currentLocale={locale}
       />
       {/* Category drawer — sub-header grid icon → all categories tree */}
-      <CategoryDrawer categories={allCategories} locale={locale} />
+      <CategoryDrawer categories={forMenus(allCategories)} locale={locale} />
       <HeaderChrome>
         <AnnouncementBar offers={offers} />
         <Header />
-        <SubHeader categories={navCategories} />
+        <SubHeader categories={forMenus(navCategories)} />
       </HeaderChrome>
       <main className="relative flex-1 overflow-x-clip">
         <RouteTransition>{children}</RouteTransition>
       </main>
-      <Footer categories={featuredCategories} locale={locale} />
+      <Footer categories={forMenus(featuredCategories)} locale={locale} />
       <SupportTicketWidget isGuest={!token} />
     </div>
   );
