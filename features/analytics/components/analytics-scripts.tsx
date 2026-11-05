@@ -37,7 +37,10 @@ export function AnalyticsScripts() {
           />
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-            strategy="afterInteractive"
+            // After the page has loaded: it took ~1 s of main thread while the
+            // page was still becoming usable. Nothing is lost - calls made
+            // before it arrives wait in dataLayer (above) and are sent then.
+            strategy="lazyOnload"
           />
         </>
       )}

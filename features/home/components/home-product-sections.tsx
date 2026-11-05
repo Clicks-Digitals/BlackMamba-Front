@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { ProductCard } from "@/components/shared";
 import type { HomeSection } from "../types";
 import { HomeSlider } from "./home-slider";
+import { DeferredRender } from "@/components/shared/deferred-render";
 
 type LayoutMode = "grid" | "swiper";
 
@@ -56,8 +57,10 @@ export function HomeProductSections({
         const band = (startIndex + index) % 2 === 1;
         const layout = layouts[section.id] ?? (index % 2 === 1 ? "swiper" : "grid");
 
-        return (
-          <div key={section.id}>
+        // Only the first row is built with the page; the rest as they come
+        // near the screen (see DeferredRender).
+        const deferred = startIndex + index > 0;
+        const row = (
             <section
               className={cn(
                 "relative",
@@ -108,7 +111,11 @@ export function HomeProductSections({
                 )}
               </div>
             </section>
+        );
 
+        return (
+          <div key={section.id}>
+            {deferred ? <DeferredRender>{row}</DeferredRender> : row}
             {betweenSlot && index === betweenAfterIndex ? betweenSlot : null}
           </div>
         );

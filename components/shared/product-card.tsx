@@ -47,10 +47,14 @@ export function ProductCard({ product, locale, className }: ProductCardProps) {
   const rating = product.avg_rating;
   const reviews = product.review_count ?? 0;
 
-  const { setCount, getItemRef, upsertItemRef } = useCartStore();
+  // One subscription per card, to its own cart entry: taking the whole store
+  // re-rendered every card on the page whenever anything in the cart changed.
+  const setCount = useCartStore((s) => s.setCount);
+  const getItemRef = useCartStore((s) => s.getItemRef);
+  const upsertItemRef = useCartStore((s) => s.upsertItemRef);
   const [isPending, startTransition] = useTransition();
   const itemKey = buildCartItemKey({ product: product.id, variation: null, combination: null });
-  const isInCart = !!getItemRef(itemKey);
+  const isInCart = useCartStore((s) => !!s.itemRefs[itemKey]);
 
   const needsVariations = product.inventory_mode === "TRACK_VARIATIONS";
   const outOfStock =
