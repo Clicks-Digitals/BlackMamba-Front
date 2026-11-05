@@ -58,8 +58,14 @@ export async function apiClient<T>(
     headers: {
       ...baseHeaders,
       ...(customHeaders as Record<string, string>),
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...(cartToken ? { "X-Cart-Token": cartToken } : {})
+      // A request that asks to be cached (revalidate / tags) is catalogue or
+      // content data - the same for everyone. Next keys its data cache on the
+      // request headers, so sending the visitor's token and cart here gave
+      // every visitor a cache of their own that was almost never hit, and
+      // every page waited on the API. Language and currency stay: they do
+      // change the response, and the cache is kept per pair.
+      ...(token && !hasNextOptions ? { Authorization: `Bearer ${token}` } : {}),
+      ...(cartToken && !hasNextOptions ? { "X-Cart-Token": cartToken } : {})
     },
     ...(hasNextOptions
       ? {
