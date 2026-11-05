@@ -296,18 +296,16 @@ export function ProductsView({
   }, [debouncedSearch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggleFilterValue = useCallback(
-    (filter: Filter, valueKey: string) => {
+    (_filter: Filter, valueKey: string) => {
+      // Every filter takes several values - Full Tower and Mid Tower together
+      // means either. 168 of the 173 filters were stored as single-choice,
+      // the import's default, so ticking a second size dropped the first.
+      // The API matches any value within a filter (filter_by_value_keys).
       updateParams((p) => {
         const raw = p.get("filter_values");
         const set = new Set(raw ? raw.split(",").filter(Boolean) : []);
-        if (filter.is_multiple) {
-          if (set.has(valueKey)) set.delete(valueKey);
-          else set.add(valueKey);
-        } else {
-          const isActive = set.has(valueKey);
-          for (const v of filter.values) set.delete(v.key);
-          if (!isActive) set.add(valueKey);
-        }
+        if (set.has(valueKey)) set.delete(valueKey);
+        else set.add(valueKey);
         if (set.size === 0) p.delete("filter_values");
         else p.set("filter_values", Array.from(set).join(","));
       });

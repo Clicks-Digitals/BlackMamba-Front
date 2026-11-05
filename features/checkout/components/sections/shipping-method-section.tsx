@@ -7,19 +7,23 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import type { ShippingOption } from "@/features/checkout/types";
 import { formatPrice } from "@/lib/utils";
+import { shippingCostFor } from "@/features/checkout/lib/shipping-cost";
 
 interface ShippingMethodSectionProps {
   shippingOptions: ShippingOption[];
   selectedShippingId: string;
   onShippingChange: (id: string) => void;
   stepNumber: number;
+  /** The order total after discounts, for free-delivery thresholds. */
+  orderTotal: number;
 }
 
 export function ShippingMethodSection({
   shippingOptions,
   selectedShippingId,
   onShippingChange,
-  stepNumber
+  stepNumber,
+  orderTotal
 }: ShippingMethodSectionProps) {
   const t = useTranslations("Checkout");
   const locale = useLocale();
@@ -68,7 +72,9 @@ export function ShippingMethodSection({
                           <p className="text-xs text-muted-foreground">{descFor(option)}</p>
                         </div>
                         <span className="text-sm font-bold text-[#EB0B1A] tabular-nums" dir={locale === "ar" ? "auto" : "ltr"}>
-                          {formatPrice(option.price, null, locale)}
+                          {shippingCostFor(option, orderTotal) === 0
+                            ? locale === "ar" ? "مجاني" : "Free"
+                            : formatPrice(option.price, null, locale)}
                         </span>
                       </div>
 

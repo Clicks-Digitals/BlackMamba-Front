@@ -29,6 +29,8 @@ interface OrderSummaryProps {
   onApplyCoupon: () => void;
   onRemoveCoupon: () => void;
   selectedShipping: ShippingOption | undefined;
+  /** After any free-delivery threshold - see shippingCostFor. */
+  shippingPrice: number;
 }
 
 function SubmitOrderButton() {
@@ -61,7 +63,8 @@ export function OrderSummary({
   onCouponInputChange,
   onApplyCoupon,
   onRemoveCoupon,
-  selectedShipping
+  selectedShipping,
+  shippingPrice
 }: OrderSummaryProps) {
   const t = useTranslations("Checkout.orderSummary");
   const locale = useLocale();
@@ -289,7 +292,7 @@ export function OrderSummary({
                 configured is literally called "default". */}
             <span className="text-muted-foreground">{t("shippingLine")}</span>
             <span className="font-semibold text-foreground tabular-nums" dir={locale === "ar" ? "auto" : "ltr"}>
-              {price(selectedShipping.price)}
+              {shippingPrice === 0 ? (locale === "ar" ? "مجاني" : "Free") : price(shippingPrice)}
             </span>
           </div>
         )}

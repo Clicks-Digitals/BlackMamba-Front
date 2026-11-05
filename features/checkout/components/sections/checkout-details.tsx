@@ -14,6 +14,7 @@ import { AddressSection } from "@/features/checkout/components/sections/address-
 import { ShippingMethodSection } from "@/features/checkout/components/sections/shipping-method-section";
 import { PaymentMethodSection } from "@/features/checkout/components/sections/payment-method-section";
 import { OrderSummary } from "@/features/checkout/components/sections/order-summary";
+import { shippingCostFor } from "@/features/checkout/lib/shipping-cost";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { cartToAnalyticsItems, trackBeginCheckout, trackPurchase } from "@/features/analytics";
@@ -137,7 +138,7 @@ export default function CheckoutDetails({
   const subtotalNum = parseFloat(totalAmount) || 0;
   const discountAmount = parseFloat(appliedCoupon?.discountAmount ?? "0") || 0;
   const selectedShipping = shippingOptions.find((s) => s.id === selectedShippingId);
-  const shippingPrice = parseFloat(selectedShipping?.price ?? "0") || 0;
+  const shippingPrice = shippingCostFor(selectedShipping, subtotalNum - discountAmount);
   const finalTotal = (subtotalNum - discountAmount + shippingPrice).toFixed(2);
 
   const currencyCode = cart?.items[0]?.product_details?.currency_info?.code ?? "JOD";
@@ -220,6 +221,7 @@ export default function CheckoutDetails({
                 selectedShippingId={selectedShippingId}
                 onShippingChange={setSelectedShippingId}
                 stepNumber={2}
+                orderTotal={subtotalNum - discountAmount}
               />
 
               <PaymentMethodSection stepNumber={3} />
@@ -236,6 +238,7 @@ export default function CheckoutDetails({
                   onApplyCoupon={handleApplyCoupon}
                   onRemoveCoupon={handleRemoveCoupon}
                   selectedShipping={selectedShipping}
+                  shippingPrice={shippingPrice}
                 />
               </div>
             </div>
@@ -252,6 +255,7 @@ export default function CheckoutDetails({
                 onApplyCoupon={handleApplyCoupon}
                 onRemoveCoupon={handleRemoveCoupon}
                 selectedShipping={selectedShipping}
+                  shippingPrice={shippingPrice}
               />
             </div>
           </div>

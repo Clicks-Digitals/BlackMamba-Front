@@ -16,6 +16,8 @@ export interface ShippingOption {
   description: string;
   description_ar?: string;
   price: string;
+  /** Delivery is free once the order total (after discounts) reaches this. */
+  free_over?: string | null;
   estimated_days_min: number;
   estimated_days_max: number;
   is_active: boolean;

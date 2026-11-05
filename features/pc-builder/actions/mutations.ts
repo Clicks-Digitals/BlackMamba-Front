@@ -202,7 +202,14 @@ export async function cloneSharedBuildAction(shareSlug: string): Promise<ActionS
     headers = { "X-Build-Token": created.data.build_token };
   }
 
-  let latest = created.data;
+  // A signed-in customer gets their existing build back here, parts and all.
+  // Empty it first: the shared parts are checked against what is already in
+  // it, and an old part of another platform would get them refused.
+  const cleared = await apiClient<PCBuild>(`/pc-builder/builds/${created.data.id}/clear/`, {
+    method: "POST",
+    headers
+  });
+  let latest = cleared.ok && cleared.data ? cleared.data : created.data;
   for (const item of shared.data.items) {
     const res = await apiClient<PCBuild>(`/pc-builder/builds/${created.data.id}/items/`, {
       method: "PATCH",

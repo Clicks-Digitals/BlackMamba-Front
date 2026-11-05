@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useOptimistic, useTransition, useState } from "react";
-import { Minus, Plus, Trash2, ChevronDown } from "lucide-react";
+import { Minus, Plus, Trash2, ChevronDown, Share2, Loader2, Truck } from "lucide-react";
 import { SLOT_LABELS } from "@/features/pc-builder/types";
 import { SLOT_ICONS } from "@/features/pc-builder/components/slot-icons";
 import { buildDiscount, partsLabel } from "@/features/pc-builder/lib/cart-line";
@@ -11,17 +11,20 @@ import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useCartStore, buildCartItemKey } from "@/stores/cart-store";
 import { removeCartItemAction, updateCartItemAction } from "@/features/cart/actions/mutations";
+import { shareCartAction } from "@/features/cart/actions/share";
 import { cartItemToAnalyticsItem, trackRemoveFromCart } from "@/features/analytics";
 import type { CartItem } from "@/features/cart/types";
 import { ProductCard } from "@/components/shared/product-card";
 import { CartVariationBadges } from "@/features/cart/components/cart-variation-badges";
-import { cn, formatPrice } from "@/lib/utils";
+import { cn, formatPrice, productHref } from "@/lib/utils";
 import type { Product } from "@/types";
 
 interface YourCartProps {
   items: CartItem[];
   totalAmount: string;
   relatedProducts?: Product[];
+  /** Delivery is free from this order total; null when there is no such offer. */
+  freeDeliveryOver?: number | null;
 }
 
 type OptimisticAction =
@@ -55,13 +58,31 @@ function itemThumbnail(item: CartItem): string | null {
   return item.product_details?.thumbnail ?? null;
 }
 
-export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartProps) {
+export function YourCart({ items, totalAmount, relatedProducts = [], freeDeliveryOver = null }: YourCartProps) {
   const t = useTranslations("Cart");
   const locale = useLocale();
   const ar = locale === "ar";
   const { setCount, removeItemRef, upsertItemRef } = useCartStore();
   const [isPending, startTransition] = useTransition();
   const [expandedBuilds, setExpandedBuilds] = useState<Set<string>>(new Set());
+  const [isSharing, startShare] = useTransition();
+
+  function handleShareCart() {
+    startShare(async () => {
+      const res = await shareCartAction();
+      if (res.status !== "success" || !res.data) {
+        toast.error(res.message);
+        return;
+      }
+      const url = `${window.location.origin}/cart/shared/${res.data.slug}`;
+      try {
+        await navigator.clipboard.writeText(url);
+        toast.success(ar ? "تم نسخ رابط السلة." : "Cart link copied.");
+      } catch {
+        toast.success(url);
+      }
+    });
+  }
 
   const [optimisticItems, applyOptimistic] = useOptimistic(
     items,
@@ -199,7 +220,10 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                     <React.Fragment key={item.id}>
                       <div className="flex flex-col gap-3 sm:grid sm:grid-cols-[1fr_auto_auto] sm:items-center sm:gap-4">
                         <div className="flex items-start gap-3">
-                          <div className="relative size-16 shrink-0 overflow-hidden rounded-lg border border-border bg-muted sm:size-22.5">
+                          <MaybeLink
+                            href={!isBuild && item.product_details ? productHref(item.product_details) : null}
+                            className="relative block size-16 shrink-0 overflow-hidden rounded-lg border border-border bg-muted sm:size-22.5"
+                          >
                             {thumbnail ? (
                               <Image
                                 src={thumbnail}
@@ -213,12 +237,21 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                                 <span className="font-chillax text-lg text-muted-foreground">PC</span>
                               </div>
                             )}
-                          </div>
+                          </MaybeLink>
                           <div className="min-w-0">
                             {categoryLine && !isBuild ? (
                               <p className="text-[11px] text-muted-foreground">{categoryLine}</p>
                             ) : null}
-                            <p className="text-[15px] font-bold text-foreground">{name}</p>
+                            {!isBuild && item.product_details ? (
+                              <Link
+                                href={productHref(item.product_details)}
+                                className="text-[15px] font-bold text-foreground underline-offset-2 hover:text-primary hover:underline"
+                              >
+                                {name}
+                              </Link>
+                            ) : (
+                              <p className="text-[15px] font-bold text-foreground">{name}</p>
+                            )}
                             {/* S19: a withdrawn product used to vanish from
                                 the basket with no explanation. It stays put
                                 now, and says what happened. */}
@@ -413,6 +446,26 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
                     ? "تُحتسب رسوم التوصيل عند إتمام الطلب."
                     : "Delivery is calculated at checkout."}
                 </p>
+                {freeDeliveryOver !== null && (
+                  <p
+                    className={cn(
+                      "flex items-start gap-1.5 rounded-md px-2.5 py-2 text-[12px] font-medium",
+                      subtotal >= freeDeliveryOver ? "bg-emerald-500/10 text-emerald-600" : "bg-primary/8 text-foreground",
+                      ar && "font-cairo"
+                    )}
+                  >
+                    <Truck size={14} className="mt-0.5 shrink-0" />
+                    <span dir={ar ? "auto" : "ltr"}>
+                      {subtotal >= freeDeliveryOver
+                        ? ar
+                          ? "مبروك! التوصيل مجاني لهذا الطلب."
+                          : "Your order qualifies for free delivery."
+                        : ar
+                          ? `أضف ${price(freeDeliveryOver - subtotal)} للحصول على توصيل مجاني.`
+                          : `Add ${price(freeDeliveryOver - subtotal)} more for free delivery.`}
+                    </span>
+                  </p>
+                )}
               </div>
 
               <Link
@@ -421,6 +474,15 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
               >
                 {t("orderNow")}
               </Link>
+              <button
+                type="button"
+                onClick={handleShareCart}
+                disabled={isSharing}
+                className="mt-2 flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-border text-[14px] font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary disabled:opacity-50"
+              >
+                {isSharing ? <Loader2 size={15} className="animate-spin" /> : <Share2 size={15} />}
+                {ar ? "مشاركة السلة" : "Share cart"}
+              </button>
             </div>
           </div>
         </div>
@@ -449,5 +511,15 @@ export function YourCart({ items, totalAmount, relatedProducts = [] }: YourCartP
         )}
       </div>
     </div>
+  );
+}
+
+/** A link when there is somewhere to go (a product), a plain box otherwise (a build). */
+function MaybeLink({ href, className, children }: { href: string | null; className: string; children: React.ReactNode }) {
+  if (!href) return <div className={className}>{children}</div>;
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
   );
 }
